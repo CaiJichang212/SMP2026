@@ -90,7 +90,6 @@ class ParticipantSquadModel(ModelBase):
         
         if budget < 2.0 and total_known >= 5: # 如果测试100节点，改回100
             print("\n [系统判定] 剩余精神力耗尽，且无节点可探，舰队指令系统已下线，提前结束干预！")
-            self.env.end_turn()
             return 1
 
         print(f"\n>>> 远征回合 [{self.schedule.time}] | 预算: {budget}")
@@ -128,8 +127,7 @@ class ParticipantSquadModel(ModelBase):
 
     def _execute_scan(self, node_id):
         if node_id in self.local_nodes:
-            print(f" [系统警报] 节点 {node_id} 已在探明列表中，侦察兵产生幻觉！系统强制扣除 0.1 精神力惩罚。")
-            self.env._deduct_budget(0.1) 
+            print(f" [系统警报] 节点 {node_id} 已在探明列表中，忽略重复扫描请求。")
             return
             
         res = self.env.scan_node(node_id)
