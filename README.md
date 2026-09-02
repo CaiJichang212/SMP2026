@@ -1,4 +1,35 @@
-# 🛸 SMP 2026 星网挑战赛 - 开发者本地调试 SDK
+# 🛸 SMP 2026 星网挑战赛
+
+本仓库同时保存官方 Starter Kit、可测试的策略研发源码、实验资产和最终提交构建流程。
+
+## 研发导航
+
+```text
+SMP2026/
+├── SMP_Starter_Kit/       # 官方 SDK 与受控的 team_submission 交付目录
+├── src/starnet/           # 可测试的策略、状态、运行时和模拟器源码
+├── tests/                 # 单元、契约与集成测试
+├── fixtures/              # 小型固定种子、轨迹和脱敏响应
+├── experiments/           # 实验清单、报告和被忽略的原始结果
+├── scripts/               # 构建、校验、打包与实验入口
+└── docs/                  # 赛题约束、ADR、调研和操作手册
+```
+
+日常策略开发在 `src/starnet/` 进行；提交前执行：
+
+```bash
+python scripts/build_submission.py
+python scripts/validate_submission.py
+python scripts/package_submission.py
+```
+
+最终 ZIP 的根目录只能包含 `config.json`、`prompt/` 和 `starnet_model.py`。本地密钥、日志、
+缓存、实验种子和测试工具不得进入提交包。框架源码位于同级独立仓库 `../casevo`，不要将
+赛题策略提交到该仓库。
+
+---
+
+# 官方 Starter Kit 说明
 
 欢迎参加 **SMP 2026 社交媒体预测挑战赛（拯救地球之星网文明降临）**！
 本 SDK 工具包旨在帮助您在本地环境调试、验证基于 CaseVO 框架编写的智能体系统。

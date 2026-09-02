@@ -1,0 +1,9 @@
+{
+  "global_setting": {"max_budget": 10.0, "max_api_calls": 10},
+  "nodes": [
+    {"id": 1, "w": -10.0, "persona": "暴力", "comm_left": 3},
+    {"id": 2, "w": 5.0, "persona": "和平", "comm_left": 1}
+  ],
+  "edges": [[1, 2]],
+  "prompts": {"1": 15.0, "2": 10.0, "3": -5.0}
+}
