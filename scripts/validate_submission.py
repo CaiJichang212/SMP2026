@@ -44,9 +44,13 @@ def main() -> int:
         model_file = SUBMISSION_DIR / "starnet_model.py"
         if model_file.is_file():
             try:
-                ast.parse(model_file.read_text(encoding="utf-8"), filename=str(model_file))
+                model_source = model_file.read_text(encoding="utf-8")
+                ast.parse(model_source, filename=str(model_file))
             except SyntaxError as exc:
                 errors.append(f"starnet_model.py 语法错误: {exc}")
+            else:
+                if "from starnet" in model_source or "import starnet" in model_source:
+                    errors.append("starnet_model.py 不能依赖 ZIP 外的 starnet 包")
 
         for path in SUBMISSION_DIR.rglob("*"):
             if path.name in FORBIDDEN_NAMES:
