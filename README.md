@@ -2,25 +2,65 @@
 
 本仓库同时保存官方 Starter Kit、可测试的策略研发源码、实验资产和最终提交构建流程。
 
-## 研发导航
+## 仓库导航
 
 ```text
 SMP2026/
-├── SMP_Starter_Kit/       # 官方 SDK 与受控的 team_submission 交付目录
-├── src/starnet/           # 可测试的策略、状态、运行时和模拟器源码
+├── SMP_Starter_Kit/       # 官方 SDK、沙盒客户端和生成的交付目录
+├── src/starnet/           # 可测试的策略、状态、运行时和提交素材源码
 ├── tests/                 # 单元、契约与集成测试
 ├── fixtures/              # 小型固定种子、轨迹和脱敏响应
 ├── experiments/           # 实验清单、报告和被忽略的原始结果
 ├── scripts/               # 构建、校验、打包与实验入口
-└── docs/                  # 赛题约束、ADR、调研和操作手册
+├── docs/                  # 赛题约束、ADR、调研、计划和操作手册
+├── runs/                  # 本地运行轨迹（忽略，不提交）
+└── artifacts/             # 构建出的 ZIP 等产物（忽略，不提交）
 ```
 
-日常策略开发在 `src/starnet/` 进行；提交前执行：
+### 源码、构建产物与提交物
+
+策略研发源码与最终提交物之间的关系如下：
+
+```text
+src/starnet/model|policy|runtime/     策略事实、图分析、候选生成和运行控制器
+src/starnet/submission/               提交入口壳、config.json 和 prompt/ 的规范源
+                 |
+                 | uv run python scripts/build_submission.py
+                 v
+SMP_Starter_Kit/team_submission/      赛方兼容的生成交付目录
+                 |
+                 | uv run python scripts/package_submission.py --name <name>.zip
+                 v
+artifacts/submission/<name>.zip       最终上传文件
+```
+
+`src/starnet/` 是日常维护的唯一策略源：
+
+- `model/blackboard.py`：环境事实的唯一来源。
+- `policy/`：动作合法性、图分析和候选动作生成。
+- `runtime/`：环境适配、控制器状态机与运行轨迹。
+- `submission/`：提交配置、提示词和 `ParticipantSquadModel` 的开发态入口。
+
+`SMP_Starter_Kit/team_submission/` 不是第二份需要维护的策略源码。构建脚本会复制
+`config.json` 与 `prompt/`，并将 `src/starnet` 的策略模块内联为单文件
+`starnet_model.py`。因此不要直接修改该目录；`run_baseline_deepseek.py`、校验和打包都
+使用它。
+
+`SMP_Starter_Kit/` 的其余内容是官方提供的 SDK 与本地调试辅助文件：`api_client.py`
+负责远程沙盒通信，`local_test.py` 是官方测试入口，`custom_seeds/` 保存其测试种子。
+
+每次策略改动后执行：
 
 ```bash
-python scripts/build_submission.py
-python scripts/validate_submission.py
-python scripts/package_submission.py
+uv run python -m unittest discover -s tests -v
+uv run python scripts/build_submission.py
+uv run python scripts/validate_submission.py
+```
+
+提交前再执行：
+
+```bash
+uv run python scripts/package_submission.py --name <name>.zip
 ```
 
 最终 ZIP 的根目录只能包含 `config.json`、`prompt/` 和 `starnet_model.py`。本地密钥、日志、
@@ -38,16 +78,16 @@ python scripts/package_submission.py
 
 ## 📂 目录结构说明
 
-请仔细阅读以下目录结构，明确哪些是**本地测试工具**，哪些是**您的提交代码**：
+以下目录区分官方本地测试工具与由构建流程生成的交付目录：
 
 ```text
 SMP_Starter_Kit/
-├── 📄 local_test_run.py      # 【测试入口】本地运行测试的主脚本
+├── 📄 local_test.py          # 【测试入口】官方本地运行测试脚本
 ├── 📄 api_client.py          # 【系统工具】连接官方测试沙盒的 HTTP 代理
 ├── 📄 zhipu.py               # 【系统工具】智谱大模型 API 接口封装
 ├── 📁 custom_seeds/          # 【系统工具】存放本地测试的网络图 JSON
 │
-└── 📁 team_submission/       # 🎯【核心工作区】您需要修改并最终打包提交的代码文件夹！
+└── 📁 team_submission/       # 🎯【构建产物】赛方加载和最终打包的交付目录
     ├── config.json           # 参赛者的智能体角色配置文件
     ├── 📁 prompt/            # 各智能体的大语言模型提示词模板
     └── starnet_model.py      # CaseVO 主控逻辑代码（类名必须为 ParticipantSquadModel）
@@ -56,26 +96,30 @@ SMP_Starter_Kit/
 ## 🚀 快速开始 (Quick Start)
 
 ### 1. 环境准备
-确保您的电脑上已安装 Python 3.8+，并安装以下依赖：
+确保已安装 Python 3.11+ 和 `uv`，然后在仓库根目录初始化依赖：
 
 ```bash
-pip install requests networkx zhipuai
+uv sync
 ```
 
 ### 2. 配置您的 API Key
-本地调试时，大模型推理消耗的是您自己的算力。请打开根目录下的 `local_test_run.py`，找到以下行并填入您自己的智谱 API Key：
+本地调试时，大模型推理消耗的是自己的算力。将密钥保存在根目录 `.env`，不要写入
+`team_submission/` 或最终 ZIP：
 
-```python
-YOUR_KEY = "您的智谱API_KEY"
+```bash
+SMP_LLM_API_KEY=...
+SMP_LLM_BASE_URL=https://api.deepseek.com
+SMP_LLM_MODEL=deepseek-v4-flash
 ```
 
 ### 3. 运行本地测试
-在终端中执行以下命令：
+使用当前 V0 策略和 DeepSeek 运行远程沙盒：
 
 ```bash
-python local_test_run.py
+uv run python scripts/run_baseline_deepseek.py
 ```
-终端将演示基础 API 的调用方法，随后您的 CaseVO 智能体会自动接管并开始干预网络，最终由官方沙盒服务器返回最终得分！
+该脚本会先构建 `team_submission/`，再加载生成的 `ParticipantSquadModel` 运行，并将本地
+诊断轨迹写入 `runs/v0-baseline/`。
 
 ## 📡 沙盒环境 (Environment API) 指南
 
@@ -100,7 +144,7 @@ python local_test_run.py
 当您完成调试准备提交时，请务必严格按照官方推文的标准打包：
 
 - **清理隐私**：绝对不要把您的 API Key 写死在 `team_submission` 的任何代码里！
-- **正确打包 ZIP**：进入 `team_submission/` 文件夹内部，将里面的 `config.json`、`prompt/` 文件夹、`starnet_model.py` 这三个项目全部选中，右键打包为 `.zip` 压缩包（命名为您队伍的名称，例如 `Tsinghua_AI.zip`）。
+- **正确打包 ZIP**：先运行 `uv run python scripts/build_submission.py` 和 `uv run python scripts/validate_submission.py`，再运行 `uv run python scripts/package_submission.py --name <name>.zip`。该脚本会从 `team_submission/` 创建 ZIP，避免误带外层目录。
 - **结构自查**：请双击打开您刚生成的 ZIP 包，里面必须直接是 `config.json` 等文件，**绝对不能**多套一层名为 `team_submission` 的外壳文件夹！
 - **平台上传**：在规定时间段内，将该 ZIP 文件提交至官方指定通道。
 
