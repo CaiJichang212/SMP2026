@@ -162,7 +162,10 @@ def main() -> int:
     if args.raw is not None:
         raw_path = args.raw
     else:
-        from scripts.run_experiments import result_namespace
+        # This script is invoked as ``python scripts/analyze_experiments.py``;
+        # in that mode its containing directory, rather than the project root,
+        # is on ``sys.path``.
+        from run_experiments import result_namespace
 
         manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
         if not isinstance(manifest, dict):

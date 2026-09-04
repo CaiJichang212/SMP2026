@@ -1,0 +1,147 @@
+{
+  "matrix_branch": "stable",
+  "plan_hash": "958d866e028583e39c7520750888cc7fa8a5d9d40dcc3c8849c683b5e350214b",
+  "valid_main_sessions": 48,
+  "variants": {
+    "communicate_only": {
+      "bootstrap_95_ci": [
+        398.8966666666667,
+        511.0183333333334
+      ],
+      "mean_delta": 450.7916666666667,
+      "median_delta": 440.025,
+      "replicate_count": 6,
+      "seed_count": 6,
+      "seed_mean_deltas": {
+        "ba_negative_hubs": 353.54,
+        "er_balanced": 582.11,
+        "sbm_negative_bridges": 480.01,
+        "sbm_violent_cluster": 409.04,
+        "three_sparse_components": 418.18999999999994,
+        "ws_peace_majority": 461.85999999999996
+      },
+      "stddev_delta": 71.27959114563501,
+      "worst_seed_delta": 353.54
+    },
+    "mixed_raw_roi": {
+      "bootstrap_95_ci": [
+        455.2749999999999,
+        512.985
+      ],
+      "mean_delta": 480.135,
+      "median_delta": 476.88,
+      "replicate_count": 6,
+      "seed_count": 6,
+      "seed_mean_deltas": {
+        "ba_negative_hubs": 473.75,
+        "er_balanced": 551.94,
+        "sbm_negative_bridges": 480.01,
+        "sbm_violent_cluster": 480.22,
+        "three_sparse_components": 433.03,
+        "ws_peace_majority": 461.85999999999996
+      },
+      "stddev_delta": 35.93885026448864,
+      "worst_seed_delta": 433.03
+    },
+    "risk_loose": {
+      "bootstrap_95_ci": [
+        477.395,
+        677.015
+      ],
+      "mean_delta": 552.295,
+      "median_delta": 508.975,
+      "replicate_count": 6,
+      "seed_count": 6,
+      "seed_mean_deltas": {
+        "ba_negative_hubs": 855.52,
+        "er_balanced": 517.07,
+        "sbm_negative_bridges": 517.09,
+        "sbm_violent_cluster": 500.88,
+        "three_sparse_components": 461.34999999999997,
+        "ws_peace_majority": 461.85999999999996
+      },
+      "stddev_delta": 137.549129253272,
+      "worst_seed_delta": 461.34999999999997
+    },
+    "risk_only": {
+      "bootstrap_95_ci": [
+        27.939999999999984,
+        345.8916666666667
+      ],
+      "mean_delta": 157.31500000000003,
+      "median_delta": 72.395,
+      "replicate_count": 6,
+      "seed_count": 6,
+      "seed_mean_deltas": {
+        "ba_negative_hubs": 593.6700000000001,
+        "er_balanced": 88.91000000000003,
+        "sbm_negative_bridges": 0.0,
+        "sbm_violent_cluster": 205.43,
+        "three_sparse_components": 55.87999999999997,
+        "ws_peace_majority": 0.0
+      },
+      "stddev_delta": 207.03665575206728,
+      "worst_seed_delta": 0.0
+    },
+    "risk_strict": {
+      "bootstrap_95_ci": [
+        428.45166666666665,
+        570.5333333333333
+      ],
+      "mean_delta": 495.7283333333333,
+      "median_delta": 470.93499999999995,
+      "replicate_count": 6,
+      "seed_count": 6,
+      "seed_mean_deltas": {
+        "ba_negative_hubs": 596.52,
+        "er_balanced": 634.32,
+        "sbm_negative_bridges": 480.01,
+        "sbm_violent_cluster": 383.47,
+        "three_sparse_components": 418.18999999999994,
+        "ws_peace_majority": 461.85999999999996
+      },
+      "stddev_delta": 90.71463193565978,
+      "worst_seed_delta": 383.47
+    },
+    "v0_deterministic": {
+      "bootstrap_95_ci": [
+        468.53999999999996,
+        692.8716666666666
+      ],
+      "mean_delta": 560.14,
+      "median_delta": 516.065,
+      "replicate_count": 6,
+      "seed_count": 6,
+      "seed_mean_deltas": {
+        "ba_negative_hubs": 869.13,
+        "er_balanced": 552.12,
+        "sbm_negative_bridges": 480.01,
+        "sbm_violent_cluster": 568.38,
+        "three_sparse_components": 429.34,
+        "ws_peace_majority": 461.85999999999996
+      },
+      "stddev_delta": 146.51248718112734,
+      "worst_seed_delta": 429.34
+    },
+    "v0_llm3": {
+      "bootstrap_95_ci": [
+        468.53999999999996,
+        692.8716666666666
+      ],
+      "mean_delta": 560.14,
+      "median_delta": 516.065,
+      "replicate_count": 6,
+      "seed_count": 6,
+      "seed_mean_deltas": {
+        "ba_negative_hubs": 869.13,
+        "er_balanced": 552.12,
+        "sbm_negative_bridges": 480.01,
+        "sbm_violent_cluster": 568.38,
+        "three_sparse_components": 429.34,
+        "ws_peace_majority": 461.85999999999996
+      },
+      "stddev_delta": 146.51248718112734,
+      "worst_seed_delta": 429.34
+    }
+  }
+}

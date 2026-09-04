@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "name": "v1-local-mechanism-probes",
+  "randomization_seed": 20260904,
+  "server_url_env": "SMP_SERVER_URL",
+  "timeout_seconds": 60,
+  "probes": [
+    {
+      "id": "isolated_p1_x0",
+      "seed": {
+        "global_setting": {"max_budget": 60.0, "max_api_calls": 20},
+        "nodes": [{"id": 1, "w": 10.0, "persona": "和平", "r": 1.5, "comm_left": 3}],
+        "edges": [],
+        "prompts": {"1": 15.0, "2": 10.0, "3": -5.0}
+      },
+      "actions": []
+    },
+    {
+      "id": "isolated_p1_x1",
+      "seed": {
+        "global_setting": {"max_budget": 60.0, "max_api_calls": 20},
+        "nodes": [{"id": 1, "w": 10.0, "persona": "和平", "r": 1.5, "comm_left": 3}],
+        "edges": [],
+        "prompts": {"1": 15.0, "2": 10.0, "3": -5.0}
+      },
+      "actions": [{"kind": "comm", "target_node_1": 1, "prompt_id": 1}]
+    },
+    {
+      "id": "isolated_p1_x2",
+      "seed": {
+        "global_setting": {"max_budget": 60.0, "max_api_calls": 20},
+        "nodes": [{"id": 1, "w": 10.0, "persona": "和平", "r": 1.5, "comm_left": 3}],
+        "edges": [],
+        "prompts": {"1": 15.0, "2": 10.0, "3": -5.0}
+      },
+      "actions": [
+        {"kind": "comm", "target_node_1": 1, "prompt_id": 1},
+        {"kind": "comm", "target_node_1": 1, "prompt_id": 1}
+      ]
+    },
+    {
+      "id": "isolated_p1_x3",
+      "seed": {
+        "global_setting": {"max_budget": 60.0, "max_api_calls": 20},
+        "nodes": [{"id": 1, "w": 10.0, "persona": "和平", "r": 1.5, "comm_left": 3}],
+        "edges": [],
+        "prompts": {"1": 15.0, "2": 10.0, "3": -5.0}
+      },
+      "actions": [
+        {"kind": "comm", "target_node_1": 1, "prompt_id": 1},
+        {"kind": "comm", "target_node_1": 1, "prompt_id": 1},
+        {"kind": "comm", "target_node_1": 1, "prompt_id": 1}
+      ]
+    },
+    {
+      "id": "isolated_p2_x1",
+      "seed": {
+        "global_setting": {"max_budget": 60.0, "max_api_calls": 20},
+        "nodes": [{"id": 1, "w": 10.0, "persona": "和平", "r": 1.5, "comm_left": 3}],
+        "edges": [],
+        "prompts": {"1": 15.0, "2": 10.0, "3": -5.0}
+      },
+      "actions": [{"kind": "comm", "target_node_1": 1, "prompt_id": 2}]
+    },
+    {
+      "id": "bridge_control",
+      "seed": {
+        "global_setting": {"max_budget": 60.0, "max_api_calls": 20},
+        "nodes": [
+          {"id": 1, "w": -40.0, "persona": "暴力", "r": 0.2, "comm_left": 3},
+          {"id": 2, "w": 10.0, "persona": "和平", "r": 1.5, "comm_left": 3}
+        ],
+        "edges": [[1, 2]],
+        "prompts": {"1": 15.0, "2": 10.0, "3": -5.0}
+      },
+      "actions": []
+    },
+    {
+      "id": "bridge_comm_p1",
+      "seed": {
+        "global_setting": {"max_budget": 60.0, "max_api_calls": 20},
+        "nodes": [
+          {"id": 1, "w": -40.0, "persona": "暴力", "r": 0.2, "comm_left": 3},
+          {"id": 2, "w": 10.0, "persona": "和平", "r": 1.5, "comm_left": 3}
+        ],
+        "edges": [[1, 2]],
+        "prompts": {"1": 15.0, "2": 10.0, "3": -5.0}
+      },
+      "actions": [{"kind": "comm", "target_node_1": 2, "prompt_id": 1}]
+    },
+    {
+      "id": "bridge_cut",
+      "seed": {
+        "global_setting": {"max_budget": 60.0, "max_api_calls": 20},
+        "nodes": [
+          {"id": 1, "w": -40.0, "persona": "暴力", "r": 0.2, "comm_left": 3},
+          {"id": 2, "w": 10.0, "persona": "和平", "r": 1.5, "comm_left": 3}
+        ],
+        "edges": [[1, 2]],
+        "prompts": {"1": 15.0, "2": 10.0, "3": -5.0}
+      },
+      "actions": [{"kind": "cut", "target_node_1": 1, "target_node_2": 2}]
+    },
+    {
+      "id": "bridge_shield",
+      "seed": {
+        "global_setting": {"max_budget": 60.0, "max_api_calls": 20},
+        "nodes": [
+          {"id": 1, "w": -40.0, "persona": "暴力", "r": 0.2, "comm_left": 3},
+          {"id": 2, "w": 10.0, "persona": "和平", "r": 1.5, "comm_left": 3}
+        ],
+        "edges": [[1, 2]],
+        "prompts": {"1": 15.0, "2": 10.0, "3": -5.0}
+      },
+      "actions": [{"kind": "shield", "target_node_1": 1}]
+    },
+    {
+      "id": "bridge_shield_comm_p1",
+      "seed": {
+        "global_setting": {"max_budget": 60.0, "max_api_calls": 20},
+        "nodes": [
+          {"id": 1, "w": -40.0, "persona": "暴力", "r": 0.2, "comm_left": 3},
+          {"id": 2, "w": 10.0, "persona": "和平", "r": 1.5, "comm_left": 3}
+        ],
+        "edges": [[1, 2]],
+        "prompts": {"1": 15.0, "2": 10.0, "3": -5.0}
+      },
+      "actions": [
+        {"kind": "shield", "target_node_1": 1},
+        {"kind": "comm", "target_node_1": 2, "prompt_id": 1}
+      ]
+    }
+  ]
+}

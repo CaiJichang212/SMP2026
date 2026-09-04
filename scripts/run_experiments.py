@@ -462,6 +462,52 @@ def save_result(result_dir: Path, result: dict[str, Any]) -> None:
     (result_dir / "results.csv").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def adopt_legacy_successes(
+    legacy_path: Path,
+    *,
+    plan: Iterable[Mapping[str, object]],
+    plan_dir: Path,
+    plan_hash: str,
+    payloads: Mapping[str, Mapping[str, object]],
+) -> int:
+    """Copy only successful legacy records into the namespaced result layout.
+
+    A legacy record is accepted only when its immutable session and seed hashes
+    match the current plan.  Protocol-error records are deliberately omitted so
+    ``--resume`` will rerun them rather than treating them as completed.
+    """
+    try:
+        legacy_rows = [json.loads(line) for line in legacy_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    except (OSError, ValueError) as exc:
+        raise ValueError(f"cannot read legacy results: {legacy_path}") from exc
+    by_session = {
+        row.get("session_id"): row
+        for row in legacy_rows
+        if isinstance(row, dict) and isinstance(row.get("session_id"), str)
+    }
+    adopted = 0
+    for raw_spec in plan:
+        session_id = str(raw_spec["session_id"])
+        row = by_session.get(session_id)
+        if row is None or row.get("spec_hash") != raw_spec["spec_hash"]:
+            raise ValueError(f"legacy record does not match planned session: {session_id}")
+        seed_id = str(raw_spec["seed_id"])
+        if row.get("seed_payload_hash") != canonical_hash(payloads[seed_id]):
+            raise ValueError(f"legacy record has different seed payload: {session_id}")
+        if not row.get("comparable"):
+            continue
+        branch = "gate" if raw_spec["phase"] == "gate" else "stable"
+        result = {
+            **row,
+            "plan_hash": plan_hash,
+            "matrix_branch": branch,
+            "baseline": row.get("baseline", BASELINE_METADATA),
+        }
+        save_result(plan_dir / branch, result)
+        adopted += 1
+    return adopted
+
+
 def run_preflight() -> None:
     commands = [
         [sys.executable, "scripts/build_submission.py"],
@@ -480,6 +526,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--timeout", type=float, help="per-request timeout in seconds")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument(
+        "--adopt-legacy",
+        type=Path,
+        help="migrate matching successful legacy JSONL records; protocol errors are rerun",
+    )
     parser.add_argument("--skip-preflight", action="store_true")
     parser.add_argument(
         "--max-new-sessions",
@@ -513,6 +564,15 @@ def main() -> int:
     server_url = os.getenv(str(manifest.get("server_url_env", "SMP_SERVER_URL")), DEFAULT_SERVER_URL)
     payloads = all_seed_payloads()
     payloads["four_node_fixture"] = four_node_fixture()
+    if args.adopt_legacy is not None:
+        adopted = adopt_legacy_successes(
+            args.adopt_legacy,
+            plan=plan,
+            plan_dir=plan_dir,
+            plan_hash=plan_hash,
+            payloads=payloads,
+        )
+        print(f"adopted legacy successes={adopted}; result_dir={plan_dir}")
     if args.max_new_sessions is not None and args.max_new_sessions <= 0:
         raise SystemExit("--max-new-sessions must be positive")
     new_sessions = 0
