@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "name": "v0-matrix",
+  "randomization_seed": 20260904,
+  "baseline": {
+    "project_commit": "c26e6f3",
+    "casevo_commit": "d3b8d1f",
+    "python": "3.12.3",
+    "uv": "0.12.9"
+  },
+  "server_url_env": "SMP_SERVER_URL",
+  "timeout_seconds": 60,
+  "gate_seed": "four_node_fixture",
+  "main_seeds": [
+    "er_balanced",
+    "ba_negative_hubs",
+    "ws_peace_majority",
+    "sbm_negative_bridges",
+    "sbm_violent_cluster",
+    "three_sparse_components"
+  ],
+  "variants": [
+    "scan_only",
+    "v0_deterministic",
+    "v0_llm3",
+    "risk_loose",
+    "risk_strict",
+    "mixed_raw_roi",
+    "communicate_only",
+    "risk_only"
+  ]
+}
