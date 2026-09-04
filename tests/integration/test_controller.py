@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import unittest
 
-from starnet.runtime.controller import ControllerState, RuntimeController
+from starnet.runtime.controller import ControllerState, RuntimeController, StopReason
 
 
 class FakeStarNetEnvironment:
@@ -132,6 +132,59 @@ class RuntimeControllerIntegrationTests(unittest.TestCase):
         self.assertEqual(len(comm_calls), len({call[1] for call in comm_calls}))
         for _, node_id, _ in comm_calls:
             self.assertEqual(controller.blackboard.nodes[node_id].comm_left, 0)
+
+    def test_no_candidates_records_stop_reason_and_action_counts(self) -> None:
+        env = FakeStarNetEnvironment(1, 10.0)
+        env.nodes[1]["persona"] = "暴力"
+        controller = RuntimeController(env, node_count=1)
+
+        self.assertEqual(controller.step(), 0)
+        self.assertEqual(controller.step(), 1)
+
+        self.assertEqual(controller.stop_reason, StopReason.NO_CANDIDATES)
+        self.assertEqual(controller.action_attempts, 1)
+        self.assertEqual(controller.action_successes, 1)
+        self.assertEqual(controller.action_failures, 0)
+
+    def test_action_exception_is_recorded_without_stopping_fallback_controller(self) -> None:
+        env = FakeStarNetEnvironment(1, 10.0)
+
+        def broken_scan(_: int) -> dict[str, object] | None:
+            raise RuntimeError("simulated protocol failure")
+
+        env.scan_node = broken_scan  # type: ignore[method-assign]
+        controller = RuntimeController(env, node_count=1)
+
+        self.assertEqual(controller.step(), 0)
+
+        self.assertEqual(controller.last_action_error, "RuntimeError")
+        self.assertEqual(controller.action_attempts, 1)
+        self.assertEqual(controller.action_successes, 0)
+        self.assertEqual(controller.action_failures, 1)
+
+    def test_four_node_seed_reaches_commander_with_20_or_60_budget(self) -> None:
+        for budget in (20.0, 60.0):
+            with self.subTest(budget=budget):
+                env = FakeStarNetEnvironment(4, budget)
+                env.nodes[1].update(w=10.0, persona="和平", neighbors=[2, 4])
+                env.nodes[2].update(w=-40.0, persona="暴力", neighbors=[1, 3])
+                env.nodes[3].update(w=0.0, persona="中立", neighbors=[2, 4])
+                env.nodes[4].update(w=15.0, persona="和平", neighbors=[1, 3])
+                env.edges = {(1, 2), (2, 3), (3, 4), (1, 4)}
+                payloads: list[dict[str, object]] = []
+
+                def rank(payload: dict[str, object]) -> dict[str, object]:
+                    payloads.append(payload)
+                    return {"mode": "risk_first", "candidate_ids": ["shield:2"]}
+
+                controller = RuntimeController(env, rank, node_count=4)
+                for _ in range(5):
+                    self.assertEqual(controller.step(), 0)
+
+                self.assertEqual(controller.llm_calls, 1)
+                self.assertEqual(len(payloads), 1)
+                self.assertIn("shield:2", controller.candidates)
+                self.assertIn(("shield", 2), env.calls)
 
 
 if __name__ == "__main__":

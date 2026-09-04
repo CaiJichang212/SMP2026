@@ -24,18 +24,25 @@ class NodeState:
 
     w: float
     persona: str
-    comm_left: int
+    comm_left: int | None
 
     @classmethod
     def from_scan(cls, payload: dict[str, Any]) -> "NodeState":
-        required = {"w", "persona", "comm_left", "neighbors"}
+        required = {"w", "persona", "neighbors"}
         missing = required.difference(payload)
         if missing:
             raise ValueError(f"扫描结果缺少字段: {sorted(missing)}")
+        raw_comm_left = payload.get("comm_left")
+        if raw_comm_left is None:
+            comm_left = None
+        elif isinstance(raw_comm_left, bool) or not isinstance(raw_comm_left, int):
+            raise ValueError("扫描结果中的 comm_left 必须是整数或缺失")
+        else:
+            comm_left = max(0, raw_comm_left)
         return cls(
             w=float(payload["w"]),
             persona=str(payload["persona"]),
-            comm_left=max(0, int(payload["comm_left"])),
+            comm_left=comm_left,
         )
 
 
@@ -76,7 +83,8 @@ class Blackboard:
         if "new_w" not in response:
             return False
         node.w = float(response["new_w"])
-        node.comm_left = max(0, node.comm_left - 1)
+        if node.comm_left is not None:
+            node.comm_left = max(0, node.comm_left - 1)
         return True
 
     def record_cut(self, left: int, right: int, success: bool) -> bool:
@@ -147,6 +155,7 @@ def is_legal_action(action: Action, blackboard: Blackboard, budget: float) -> bo
         return (
             action.target_node_2 is None
             and node is not None
+            and node.comm_left is not None
             and node.comm_left > 0
             and action.prompt_id in VALID_PROMPT_IDS
         )
@@ -164,6 +173,7 @@ def is_legal_action(action: Action, blackboard: Blackboard, budget: float) -> bo
 """环境调用的单一入口：只使用赛题公开 API，并以返回值更新黑板。"""
 
 
+from dataclasses import dataclass
 from typing import Any, Protocol
 
 
@@ -175,28 +185,320 @@ class StarNetEnvironment(Protocol):
     def shield_node(self, node_id: int) -> bool: ...
 
 
+@dataclass(frozen=True)
+class ActionOutcome:
+    """Detailed result of one public environment action.
+
+    ``raw_response`` is intentionally preserved for a local trace.  It is not
+    interpreted beyond the existing Blackboard update rules and is never
+    emitted by the submission unless an external caller attaches a trace.
+    """
+
+    action: Action
+    succeeded: bool
+    raw_response: Any = None
+    rejected_reason: str | None = None
+
+
+def apply_action_outcome(
+    env: StarNetEnvironment, blackboard: Blackboard, action: Action, budget: float
+) -> ActionOutcome:
+    """Run one legal action and retain the raw public response for diagnostics."""
+    if not is_legal_action(action, blackboard, budget):
+        return ActionOutcome(action=action, succeeded=False, rejected_reason="illegal_action")
+
+    if action.kind == "scan":
+        response = env.scan_node(action.target_node_1)
+        return ActionOutcome(
+            action=action,
+            succeeded=blackboard.record_scan(action.target_node_1, response),
+            raw_response=response,
+        )
+    if action.kind == "comm":
+        assert action.prompt_id is not None
+        response = env.communicate(action.target_node_1, action.prompt_id)
+        return ActionOutcome(
+            action=action,
+            succeeded=blackboard.record_communication(action.target_node_1, response),
+            raw_response=response,
+        )
+    if action.kind == "cut":
+        assert action.target_node_2 is not None
+        response = env.cut_link(action.target_node_1, action.target_node_2)
+        return ActionOutcome(
+            action=action,
+            succeeded=blackboard.record_cut(action.target_node_1, action.target_node_2, response),
+            raw_response=response,
+        )
+    if action.kind == "shield":
+        response = env.shield_node(action.target_node_1)
+        return ActionOutcome(
+            action=action,
+            succeeded=blackboard.record_shield(action.target_node_1, response),
+            raw_response=response,
+        )
+    return ActionOutcome(action=action, succeeded=False, rejected_reason="unknown_action")
+
+
 def apply_action(
     env: StarNetEnvironment, blackboard: Blackboard, action: Action, budget: float
 ) -> bool:
     """执行已校验动作；失败路径不虚构状态，也不访问环境私有成员。"""
-    if not is_legal_action(action, blackboard, budget):
-        return False
+    return apply_action_outcome(env, blackboard, action, budget).succeeded
 
-    if action.kind == "scan":
-        return blackboard.record_scan(action.target_node_1, env.scan_node(action.target_node_1))
-    if action.kind == "comm":
-        assert action.prompt_id is not None
-        response = env.communicate(action.target_node_1, action.prompt_id)
-        return blackboard.record_communication(action.target_node_1, response)
-    if action.kind == "cut":
-        assert action.target_node_2 is not None
-        success = env.cut_link(action.target_node_1, action.target_node_2)
-        return blackboard.record_cut(action.target_node_1, action.target_node_2, success)
-    if action.kind == "shield":
-        return blackboard.record_shield(action.target_node_1, env.shield_node(action.target_node_1))
-    return False
+
+__all__ = ["ActionOutcome", "StarNetEnvironment", "apply_action", "apply_action_outcome"]
 
 # End inline: src/starnet/runtime/env_adapter.py
+
+# Begin inline: src/starnet/runtime/trace.py
+"""Best-effort structured diagnostics for local StarNet runs.
+
+The trace is deliberately a side channel: a failed sink is disabled and never
+allowed to affect controller decisions or environment calls.  Submission code
+does not create a trace; local tools inject one before the first ``step``.
+"""
+
+
+from collections.abc import Mapping, Sequence
+from dataclasses import asdict, is_dataclass
+from datetime import datetime, timezone
+from enum import Enum
+import json
+import math
+from pathlib import Path
+import re
+import sys
+from typing import Any, Protocol
+
+
+TRACE_SCHEMA_VERSION = 1
+_REDACTED = "[REDACTED]"
+_TRUNCATED = "...[truncated]"
+_MAX_STRING_LENGTH = 2_000
+_MAX_ERROR_LENGTH = 500
+_SENSITIVE_KEY_PARTS = (
+    "api_key",
+    "authorization",
+    "headers",
+    "password",
+    "secret",
+    "token",
+)
+_BEARER_VALUE = re.compile(r"(?i)(bearer\s+)[^\s,;]+")
+_SECRET_ASSIGNMENT = re.compile(
+    r"(?i)\b(api[_-]?key|authorization|password|secret|token)\s*[=:]\s*[^\s,;]+"
+)
+
+
+class TraceSink(Protocol):
+    """One destination for already structured trace records."""
+
+    def emit(self, record: Mapping[str, Any]) -> None: ...
+
+
+def _safe_string(value: str, limit: int = _MAX_STRING_LENGTH) -> str:
+    value = _BEARER_VALUE.sub(r"\1" + _REDACTED, value)
+    value = _SECRET_ASSIGNMENT.sub(r"\1=" + _REDACTED, value)
+    return value if len(value) <= limit else value[:limit] + _TRUNCATED
+
+
+def safe_json_value(value: Any, *, _key: str | None = None) -> Any:
+    """Return a JSON-safe, bounded and credential-redacted representation."""
+    normalized_key = "" if _key is None else _key.lower().replace("-", "_")
+    if any(part in normalized_key for part in _SENSITIVE_KEY_PARTS):
+        return _REDACTED
+    if value is None or isinstance(value, (bool, int)):
+        return value
+    if isinstance(value, float):
+        return value if math.isfinite(value) else None
+    if isinstance(value, str):
+        return _safe_string(value)
+    if isinstance(value, bytes):
+        return _safe_string(value.decode("utf-8", errors="replace"))
+    if isinstance(value, Enum):
+        return safe_json_value(value.value, _key=_key)
+    if is_dataclass(value) and not isinstance(value, type):
+        return safe_json_value(asdict(value), _key=_key)
+    if isinstance(value, Mapping):
+        return {
+            _safe_string(str(key), 200): safe_json_value(item, _key=str(key))
+            for key, item in value.items()
+        }
+    if isinstance(value, (set, frozenset)):
+        return [safe_json_value(item) for item in sorted(value, key=repr)]
+    if isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray)):
+        return [safe_json_value(item) for item in value]
+    return _safe_string(f"<{type(value).__name__}>", 200)
+
+
+def safe_error(exc: BaseException) -> dict[str, str]:
+    """Keep useful exception context without serializing exception internals."""
+    return {
+        "type": type(exc).__name__,
+        "message": _safe_string(str(exc), _MAX_ERROR_LENGTH),
+    }
+
+
+class JsonlTraceSink:
+    """Append one flushed JSON document per event to a local file."""
+
+    def __init__(self, path: Path) -> None:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        self.path = path
+        self._file = path.open("a", encoding="utf-8")
+
+    def emit(self, record: Mapping[str, Any]) -> None:
+        self._file.write(json.dumps(record, ensure_ascii=False, sort_keys=True, allow_nan=False))
+        self._file.write("\n")
+        self._file.flush()
+
+    def close(self) -> None:
+        self._file.close()
+
+
+class ConsoleTraceSink:
+    """Compact local progress display, intentionally limited to outer steps."""
+
+    def __init__(self, stream: Any | None = None) -> None:
+        self.stream = sys.stdout if stream is None else stream
+
+    def emit(self, record: Mapping[str, Any]) -> None:
+        if record.get("event") != "step.completed":
+            return
+        data = record.get("data")
+        if not isinstance(data, Mapping):
+            return
+        action = data.get("action")
+        if isinstance(action, Mapping):
+            action_text = str(action.get("kind", "action"))
+            target = action.get("target_node_1")
+            if target is not None:
+                action_text += f":{target}"
+            second = action.get("target_node_2")
+            if second is not None:
+                action_text += f"-{second}"
+        else:
+            action_text = "none"
+        result = data.get("action_result", "idle")
+        old_state = data.get("state_before", record.get("state"))
+        new_state = record.get("state")
+        selected = data.get("selected_candidate_ids")
+        selected_text = ""
+        if isinstance(selected, list) and selected:
+            selected_text = f" selected={','.join(str(item) for item in selected)}"
+        print(
+            f"step={record.get('step')} {old_state}->{new_state} "
+            f"action={action_text} budget={record.get('budget_before')}->{record.get('budget_after')} "
+            f"result={result}{selected_text}",
+            file=self.stream,
+            flush=True,
+        )
+
+
+class RuntimeTrace:
+    """Fan out ordered trace events while quarantining faulty destinations."""
+
+    def __init__(
+        self,
+        *,
+        run_id: str,
+        seed_id: str,
+        sinks: Sequence[TraceSink] = (),
+    ) -> None:
+        self.run_id = str(run_id)
+        self.seed_id = str(seed_id)
+        self._sinks: list[TraceSink] = list(sinks)
+        self._sequence = 0
+
+    @property
+    def enabled(self) -> bool:
+        return bool(self._sinks)
+
+    @property
+    def sequence(self) -> int:
+        return self._sequence
+
+    def emit(
+        self,
+        event: str,
+        *,
+        step: int,
+        state: object,
+        budget_before: float | None,
+        budget_after: float | None,
+        data: Mapping[str, Any] | None = None,
+    ) -> None:
+        if not self._sinks:
+            return
+        self._sequence += 1
+        try:
+            record = {
+                "schema_version": TRACE_SCHEMA_VERSION,
+                "run_id": self.run_id,
+                "seed_id": self.seed_id,
+                "seq": self._sequence,
+                "timestamp": datetime.now(timezone.utc).isoformat(timespec="milliseconds").replace(
+                    "+00:00", "Z"
+                ),
+                "event": str(event),
+                "step": int(step),
+                "state": safe_json_value(state),
+                "budget_before": safe_json_value(budget_before),
+                "budget_after": safe_json_value(budget_after),
+                "data": safe_json_value(data or {}),
+            }
+        except Exception:
+            # If a caller supplies an unserializable diagnostic object, all
+            # destinations are disabled instead of leaking into strategy flow.
+            self.close()
+            return
+        healthy: list[TraceSink] = []
+        for sink in self._sinks:
+            try:
+                sink.emit(record)
+            except Exception:
+                # A trace sink is diagnostic only.  Do not recursively report its failure.
+                close = getattr(sink, "close", None)
+                if callable(close):
+                    try:
+                        close()
+                    except Exception:
+                        pass
+            else:
+                healthy.append(sink)
+        self._sinks = healthy
+
+    def close(self) -> None:
+        for sink in self._sinks:
+            close = getattr(sink, "close", None)
+            if callable(close):
+                try:
+                    close()
+                except Exception:
+                    pass
+        self._sinks = []
+
+
+class NullRuntimeTrace(RuntimeTrace):
+    """Allocation-free controller default used by the submission entry point."""
+
+    def __init__(self) -> None:
+        super().__init__(run_id="", seed_id="", sinks=())
+
+
+__all__ = [
+    "ConsoleTraceSink",
+    "JsonlTraceSink",
+    "NullRuntimeTrace",
+    "RuntimeTrace",
+    "TRACE_SCHEMA_VERSION",
+    "TraceSink",
+    "safe_error",
+    "safe_json_value",
+]
+
+# End inline: src/starnet/runtime/trace.py
 
 # Begin inline: src/starnet/policy/graph_analysis.py
 """Deterministic NetworkX-derived graph metrics for the intervention policy.
@@ -392,7 +694,7 @@ def _persona_risk(persona: str) -> float:
     return {"暴力": 1.0, "中立": 0.5, "和平": 0.25}.get(persona, 0.5)
 
 
-def _marginal_factor(comm_left: int) -> float:
+def _marginal_factor(comm_left: int | None) -> float:
     return {3: 1.0, 2: 0.5, 1: 0.25}.get(comm_left, 0.0)
 
 
@@ -511,6 +813,15 @@ class Candidate:
     score: float
     roi: float
     reason: str
+
+
+@dataclass(frozen=True)
+class LlmParseResult:
+    """Validated LLM selection and the observable reason for any fallback."""
+
+    candidate_ids: tuple[str, ...]
+    accepted: bool
+    fallback_reason: str | None = None
 
 
 def _candidate_sort_key(candidate: Candidate) -> tuple[int, float, float, str]:
@@ -755,47 +1066,64 @@ def parse_llm_batch(
     budget: float,
 ) -> list[str]:
     """解析 Commander 的 JSON；任意无效或空结果均回退到确定性批次。"""
+    return list(parse_llm_batch_detailed(payload, candidate_map, budget).candidate_ids)
+
+
+def parse_llm_batch_detailed(
+    payload: str | bytes | Mapping[str, Any] | None,
+    candidate_map: Mapping[str, Candidate],
+    budget: float,
+) -> LlmParseResult:
+    """Parse a Commander result while retaining a precise fallback category."""
     fallback = select_deterministic_batch(candidate_map.values(), budget)
     if isinstance(payload, bytes):
         try:
             payload = payload.decode("utf-8")
         except UnicodeDecodeError:
-            return fallback
+            return LlmParseResult(tuple(fallback), False, "invalid_json")
     if isinstance(payload, str):
         try:
             payload = json.loads(payload)
         except (TypeError, ValueError):
-            return fallback
+            return LlmParseResult(tuple(fallback), False, "invalid_json")
     if not isinstance(payload, Mapping):
-        return fallback
+        return LlmParseResult(tuple(fallback), False, "invalid_json")
 
     mode = payload.get("mode")
     candidate_ids = payload.get("candidate_ids")
-    if mode not in VALID_BATCH_MODES or not isinstance(candidate_ids, list) or not candidate_ids:
-        return fallback
+    if mode not in VALID_BATCH_MODES or not isinstance(candidate_ids, list):
+        return LlmParseResult(tuple(fallback), False, "invalid_json")
+    if not candidate_ids:
+        return LlmParseResult(tuple(fallback), False, "empty_selection")
 
     selected = _valid_batch_ids(candidate_ids, candidate_map, budget, MAX_BATCH_SIZE)
-    return selected or fallback
+    if selected:
+        return LlmParseResult(tuple(selected), True)
+    known_ids = [candidate_id for candidate_id in candidate_ids if isinstance(candidate_id, str)]
+    reason = "unknown_candidate" if not any(candidate_id in candidate_map for candidate_id in known_ids) else "empty_selection"
+    return LlmParseResult(tuple(fallback), False, reason)
 
 
 __all__ = [
     "Candidate",
+    "LlmParseResult",
     "MAX_BATCH_SIZE",
     "MAX_CANDIDATES",
     "VALID_BATCH_MODES",
     "generate_candidates",
     "parse_llm_batch",
+    "parse_llm_batch_detailed",
     "select_deterministic_batch",
 ]
 
 # End inline: src/starnet/policy/candidates.py
 
 # Begin inline: src/starnet/runtime/controller.py
-"""确定性扫描、图分析和批次执行的纯 Python 运行时控制器。
+"""Deterministic scan, analysis, and batch execution state machine.
 
-这个模块不依赖 ``agent_mesa``。提交入口可以把 CaseVO 的 Commander 链包装成
-``llm_ranker`` 回调，再把 ``RuntimeController.step()`` 的返回值直接作为模型
-``step()`` 的状态码使用。
+The controller is independent of ``casevo``. A local caller may attach a
+``RuntimeTrace`` after constructing its model and before the first ``step``;
+without that explicit injection all trace paths are inert.
 """
 
 
@@ -811,7 +1139,7 @@ MAX_CONSECUTIVE_INVALID = 3
 
 
 class ControllerState(str, Enum):
-    """控制器的显式状态，便于模拟环境和提交入口观测。"""
+    """Explicit controller state, observable by the submission host."""
 
     INIT = "INIT"
     SCAN_ALL = "SCAN_ALL"
@@ -822,13 +1150,24 @@ class ControllerState(str, Enum):
     STOP = "STOP"
 
 
+class StopReason(str, Enum):
+    """De-identified reasons for normal controller termination."""
+
+    NO_CANDIDATES = "no_candidates"
+    INSUFFICIENT_BUDGET = "insufficient_budget"
+    NO_VALID_ACTIONS = "no_valid_actions"
+    STATE_GUARD = "state_guard"
+    STEP_LIMIT = "step_limit"
+    RUNNER_ERROR = "runner_error"
+
+
 def infer_node_count(initial_budget: float) -> int:
-    """从公开初始预算推断当前赛制规模。"""
+    """Infer the competition network tier from the public starting budget."""
     return 100 if initial_budget >= 150.0 else 50
 
 
 class DeterministicScout:
-    """按固定 ID 顺序扫描，完全不调用 LLM。"""
+    """Scan fixed node IDs in order and never call an LLM."""
 
     def __init__(self, node_count: int) -> None:
         if node_count <= 0:
@@ -841,7 +1180,7 @@ class DeterministicScout:
         return self._next_node_id > self.node_count
 
     def next_action(self, blackboard: Blackboard) -> Action | None:
-        """返回下一个未知 ID 的 scan 动作；已知 ID 不会重复请求环境。"""
+        """Return the next unknown ID scan; known IDs are not requested again."""
         while self._next_node_id <= self.node_count:
             node_id = self._next_node_id
             self._next_node_id += 1
@@ -851,7 +1190,7 @@ class DeterministicScout:
 
 
 class GraphAnalyst:
-    """图分析模块的轻量角色包装，保留单文件提交时的清晰职责边界。"""
+    """Thin role wrapper retained for a clear single-file submission boundary."""
 
     def analyze(self, blackboard: Blackboard) -> GraphAnalysis:
         return analyze_graph(blackboard)
@@ -871,18 +1210,47 @@ LlmRanker = Callable[[dict[str, Any]], object]
 
 @dataclass(frozen=True)
 class BatchPlan:
-    """一次仲裁后的候选 ID 队列及其来源。"""
+    """A candidate queue plus the exact source of its ordering."""
 
     candidate_ids: tuple[str, ...]
-    used_llm: bool
+    source: str
+    fallback_reason: str | None = None
+    request_payload: Mapping[str, Any] | None = None
+    raw_response: object | None = None
+    parsed_candidate_ids: tuple[str, ...] = ()
+    error: Mapping[str, str] | None = None
+
+    @property
+    def used_llm(self) -> bool:
+        """Compatibility alias for the prior two-state plan API."""
+        return self.source == "llm"
+
+
+@dataclass(frozen=True)
+class QueueValidation:
+    candidate_ids: tuple[str, ...]
+    discarded: tuple[dict[str, str], ...]
 
 
 class BatchCommander:
-    """负责 LLM 候选排序、调用配额和确定性回退。"""
+    """Use an LLM only to order Python-validated candidates, with fallback."""
 
     def __init__(self, llm_ranker: LlmRanker | None = None) -> None:
         self.llm_ranker = llm_ranker
         self.llm_calls = 0
+
+    @property
+    def can_request_llm(self) -> bool:
+        return self.llm_ranker is not None and self.llm_calls < MAX_LLM_CALLS
+
+    def preview_payload(
+        self,
+        candidates: Sequence[Candidate],
+        budget: float,
+        analysis: GraphAnalysis,
+    ) -> dict[str, Any]:
+        """Build the exact payload for the next request without consuming quota."""
+        return self._build_payload(candidates, budget, analysis, self.llm_calls + 1)
 
     def plan(
         self,
@@ -890,33 +1258,55 @@ class BatchCommander:
         candidates: Sequence[Candidate],
         budget: float,
         analysis: GraphAnalysis,
+        request_payload: Mapping[str, Any] | None = None,
     ) -> BatchPlan:
-        """返回 LLM 排序或确定性排序，LLM 故障不会传播到评测循环。"""
         candidate_map = {candidate.candidate_id: candidate for candidate in candidates}
-        selected_ids: list[str] = []
-        used_llm = False
+        fallback = tuple(select_deterministic_batch(candidates, budget, MAX_BATCH_ACTIONS))
+        if not candidate_map:
+            return BatchPlan(fallback, "deterministic_fallback", "no_candidates")
+        if self.llm_ranker is None:
+            return BatchPlan(fallback, "deterministic_fallback", "no_llm_ranker")
+        if self.llm_calls >= MAX_LLM_CALLS:
+            return BatchPlan(fallback, "quota_exhausted", "quota_exhausted")
 
-        if self.llm_ranker is not None and self.llm_calls < MAX_LLM_CALLS and candidate_map:
-            # 计数在请求前递增，因此超时和异常也会消耗本次额度。
-            self.llm_calls += 1
-            try:
-                payload = self._build_payload(candidates, budget, analysis)
-                parsed = parse_llm_batch(self.llm_ranker(payload), candidate_map, budget)
-                selected_ids = list(parsed or [])
-                used_llm = bool(selected_ids)
-            except Exception:
-                selected_ids = []
+        # Quota is consumed before the external call, including a timeout.
+        self.llm_calls += 1
+        payload = dict(request_payload or self._build_payload(candidates, budget, analysis, self.llm_calls))
+        try:
+            raw_response = self.llm_ranker(payload)
+        except Exception as exc:
+            return BatchPlan(
+                fallback,
+                "deterministic_fallback",
+                "exception",
+                payload,
+                error=safe_error(exc),
+            )
 
-        if not selected_ids:
-            selected_ids = list(select_deterministic_batch(candidates, budget, MAX_BATCH_ACTIONS))
-
-        return BatchPlan(tuple(selected_ids), used_llm)
+        parsed = parse_llm_batch_detailed(raw_response, candidate_map, budget)
+        if parsed.accepted:
+            return BatchPlan(
+                parsed.candidate_ids,
+                "llm",
+                request_payload=payload,
+                raw_response=raw_response,
+                parsed_candidate_ids=parsed.candidate_ids,
+            )
+        return BatchPlan(
+            parsed.candidate_ids,
+            "deterministic_fallback",
+            parsed.fallback_reason,
+            payload,
+            raw_response,
+            parsed.candidate_ids,
+        )
 
     def _build_payload(
         self,
         candidates: Sequence[Candidate],
         budget: float,
         analysis: GraphAnalysis,
+        llm_call_number: int,
     ) -> dict[str, Any]:
         graph = analysis.graph
         negative_nodes = sorted(
@@ -932,7 +1322,7 @@ class BatchCommander:
         return {
             "stage": ControllerState.PLAN_BATCH.value,
             "budget": budget,
-            "llm_calls": self.llm_calls,
+            "llm_calls": llm_call_number,
             "graph": {
                 "node_count": graph.number_of_nodes(),
                 "edge_count": graph.number_of_edges(),
@@ -946,6 +1336,7 @@ class BatchCommander:
                     "action": asdict(candidate.action),
                     "cost": action_cost(candidate.action),
                     "priority": candidate.priority,
+                    "score": candidate.score,
                     "roi": candidate.roi,
                     "reason": candidate.reason,
                 }
@@ -955,11 +1346,7 @@ class BatchCommander:
 
 
 class RuntimeController:
-    """每次 ``step`` 最多执行一次公开环境调用的 V0 状态机。
-
-    ``step`` 返回 ``0`` 表示应继续调度，返回 ``1`` 表示停止。调用方若维护
-    ``schedule.time``，仅应在 ``last_action_attempted`` 为真时递增一次。
-    """
+    """V0 state machine; each ``step`` performs at most one environment action."""
 
     def __init__(
         self,
@@ -987,6 +1374,17 @@ class RuntimeController:
         self.consecutive_invalid = 0
         self.last_action_attempted = False
         self.last_action_succeeded: bool | None = None
+        self.last_action_error: str | None = None
+        self.action_attempts = 0
+        self.action_successes = 0
+        self.action_failures = 0
+        self.stop_reason: StopReason | None = None
+        self._trace: RuntimeTrace = NullRuntimeTrace()
+        self._step_number = 0
+        self._last_trace_budget_after: float | None = None
+        self._last_step_action: dict[str, Any] | None = None
+        self._last_step_action_result = "idle"
+        self._last_step_selected_ids: list[str] = []
 
     @property
     def llm_calls(self) -> int:
@@ -996,120 +1394,302 @@ class RuntimeController:
     def stopped(self) -> bool:
         return self.state is ControllerState.STOP
 
+    @property
+    def step_number(self) -> int:
+        return self._step_number
+
+    def attach_trace(self, trace: RuntimeTrace) -> None:
+        """Attach optional local diagnostics before the first controller step."""
+        self._trace = trace
+        self._emit(
+            "run.started",
+            self.initial_budget,
+            self.initial_budget,
+            {
+                "node_count": self.scout.node_count,
+                "initial_budget": self.initial_budget,
+                "max_llm_calls": MAX_LLM_CALLS,
+                "max_batch_actions": MAX_BATCH_ACTIONS,
+            },
+        )
+
+    def stop_for_step_limit(self) -> None:
+        """Record a local runner's explicit safety cap as a normal stop event."""
+        if not self.stopped:
+            self._stop(StopReason.STEP_LIMIT, self._current_budget())
+
+    def stop_for_runner_error(self) -> None:
+        """Record a local runner abort without relying on a private environment API."""
+        if not self.stopped:
+            self._stop(StopReason.RUNNER_ERROR, self._current_budget())
+
+    def record_evaluation(self, score: object, *, budget_before: float | None = None) -> None:
+        """Let a local runner append the public evaluation result to the trace."""
+        if not self._trace.enabled:
+            return
+        before = self._current_budget() if budget_before is None else budget_before
+        after = self._trace_budget_after(before)
+        self._emit(
+            "evaluation.completed",
+            before,
+            after,
+            {
+                "score": score,
+                "action_attempts": self.action_attempts,
+                "action_successes": self.action_successes,
+                "action_failures": self.action_failures,
+                "remaining_budget": after,
+                "stop_reason": self.stop_reason.value if self.stop_reason else None,
+            },
+        )
+
     def step(self) -> int:
-        """推进状态机；本方法中任一路径至多调用一次环境 API。"""
+        """Advance the state machine; diagnostics never control this flow."""
+        self._step_number += 1
+        state_before = self.state.value
+        budget_before = self._current_budget()
         self.last_action_attempted = False
         self.last_action_succeeded = None
+        self.last_action_error = None
+        self._last_trace_budget_after = None
+        self._last_step_action = None
+        self._last_step_action_result = "idle"
+        self._last_step_selected_ids = []
+        self._emit(
+            "step.started",
+            budget_before,
+            budget_before,
+            {"state_before": state_before, "action_attempts": self.action_attempts},
+        )
 
-        # 状态转换不触发环境动作，可在同一个调度回合内继续直到需要执行动作。
+        # State transitions have no environment action, so they may be consumed
+        # in this dispatch slot until one public request is needed.
         for _ in range(8):
             if self.state is ControllerState.STOP:
-                return 1
+                return self._complete_step(1, state_before, budget_before)
 
-            budget = float(self.env.get_remaining_budget())
+            budget = self._current_budget()
             if self.state is ControllerState.INIT:
-                self.state = ControllerState.SCAN_ALL
+                self._transition(ControllerState.SCAN_ALL, "initialized", budget)
                 continue
 
             if self.state is ControllerState.SCAN_ALL:
-                return self._scan_next(budget)
+                result = self._scan_next(budget)
+                return self._complete_step(result, state_before, budget_before)
 
             if self.state is ControllerState.ANALYZE:
-                self._refresh_candidates(budget)
-                self.state = ControllerState.PLAN_BATCH if self.candidates else ControllerState.STOP
+                self._refresh_candidates(budget, "analyze")
+                if self.candidates:
+                    self._transition(ControllerState.PLAN_BATCH, "candidates_generated", budget)
+                else:
+                    self._stop(StopReason.NO_CANDIDATES, budget)
                 continue
 
             if self.state is ControllerState.PLAN_BATCH:
                 if self.analysis is None or not self.candidates:
-                    self.state = ControllerState.STOP
+                    self._stop(StopReason.NO_CANDIDATES, budget)
                     continue
-                plan = self.commander.plan(
-                    candidates=list(self.candidates.values()),
-                    budget=budget,
-                    analysis=self.analysis,
-                )
-                self.queue = self._valid_queue(plan.candidate_ids, budget)
-                self.state = ControllerState.EXECUTE if self.queue else ControllerState.STOP
+                self._create_plan(budget)
+                if self.queue:
+                    self._transition(ControllerState.EXECUTE, "validated_queue_available", budget)
+                else:
+                    self._stop(StopReason.NO_VALID_ACTIONS, budget)
                 continue
 
             if self.state is ControllerState.EXECUTE:
-                return self._execute_next(budget)
+                result = self._execute_next(budget)
+                return self._complete_step(result, state_before, budget_before)
 
             if self.state is ControllerState.REANALYZE:
-                self._refresh_candidates(budget)
+                self._refresh_candidates(budget, "reanalyze")
                 previous_queue = self.queue
-                self.queue = self._valid_queue(previous_queue, budget)
+                validation = self._valid_queue(previous_queue, budget)
+                self.queue = list(validation.candidate_ids)
+                self._emit_queue_revalidated("reanalysis", validation, budget)
                 invalidated = len(previous_queue) - len(self.queue)
                 if invalidated:
                     self.consecutive_invalid += invalidated
-                # 状态变化使过半队列失效时，旧批次已不再代表当前图，重新仲裁。
                 if previous_queue and invalidated * 2 > len(previous_queue):
                     self.queue.clear()
+                    self._emit(
+                        "queue.revalidated",
+                        budget,
+                        budget,
+                        {
+                            "source": "reanalysis",
+                            "enqueued_candidate_ids": [],
+                            "discarded": [
+                                {"candidate_id": candidate_id, "reason": "majority_invalidated"}
+                                for candidate_id in validation.candidate_ids
+                            ],
+                        },
+                    )
                 if self.consecutive_invalid >= MAX_CONSECUTIVE_INVALID:
                     self.queue.clear()
                     self.consecutive_invalid = 0
                 if self.queue:
-                    self.state = ControllerState.EXECUTE
+                    self._transition(ControllerState.EXECUTE, "queue_revalidated", budget)
                 elif self.candidates:
-                    self.state = ControllerState.PLAN_BATCH
+                    self._transition(ControllerState.PLAN_BATCH, "queue_empty_after_reanalysis", budget)
                 else:
-                    self.state = ControllerState.STOP
+                    self._stop(StopReason.NO_VALID_ACTIONS, budget)
                 continue
 
-        # 防止未来状态变更产生无界的无动作循环。
-        self.state = ControllerState.STOP
-        return 1
+        self._stop(StopReason.STATE_GUARD, self._current_budget())
+        return self._complete_step(1, state_before, budget_before)
 
     def _scan_next(self, budget: float) -> int:
         action = self.scout.next_action(self.blackboard)
         if action is None:
-            self.state = ControllerState.ANALYZE
+            self._transition(ControllerState.ANALYZE, "scan_exhausted", budget)
+            self._emit("scan.completed", budget, budget, {"blackboard": self.blackboard.snapshot()})
             return 0
         if not is_legal_action(action, self.blackboard, budget):
-            # 预算不足时，剩余扫描不能凭空完成。
-            self.state = ControllerState.STOP
+            self._stop(StopReason.INSUFFICIENT_BUDGET, budget)
             return 1
 
-        self.last_action_attempted = True
-        try:
-            self.last_action_succeeded = apply_action(self.env, self.blackboard, action, budget)
-        except Exception:
-            self.last_action_succeeded = False
+        self._attempt_action(action, f"scan:{action.target_node_1}", budget)
         if self.scout.exhausted:
-            self.state = ControllerState.ANALYZE
+            completed_budget = (
+                self._last_trace_budget_after
+                if self._last_trace_budget_after is not None
+                else budget
+            )
+            self._transition(ControllerState.ANALYZE, "scan_complete", completed_budget)
+            self._emit(
+                "scan.completed",
+                budget,
+                completed_budget,
+                {"blackboard": self.blackboard.snapshot()},
+            )
         return 0
 
     def _execute_next(self, budget: float) -> int:
         if not self.queue:
-            self.state = ControllerState.REANALYZE
+            self._transition(ControllerState.REANALYZE, "queue_depleted", budget)
             return 0
 
         candidate_id = self.queue.pop(0)
         candidate = self.candidates.get(candidate_id)
         if candidate is None or candidate_id in self.failed_actions:
             self.consecutive_invalid += 1
-            self.state = ControllerState.REANALYZE
+            self._emit(
+                "queue.revalidated",
+                budget,
+                budget,
+                {
+                    "source": "execute",
+                    "enqueued_candidate_ids": list(self.queue),
+                    "discarded": [{"candidate_id": candidate_id, "reason": "failed_or_unknown"}],
+                },
+            )
+            self._transition(ControllerState.REANALYZE, "candidate_unavailable", budget)
             return 0
         if not is_legal_action(candidate.action, self.blackboard, budget):
             self.consecutive_invalid += 1
-            self.state = ControllerState.REANALYZE
+            self._emit(
+                "queue.revalidated",
+                budget,
+                budget,
+                {
+                    "source": "execute",
+                    "enqueued_candidate_ids": list(self.queue),
+                    "discarded": [{"candidate_id": candidate_id, "reason": "illegal_action"}],
+                },
+            )
+            self._transition(ControllerState.REANALYZE, "candidate_illegal", budget)
             return 0
 
-        self.last_action_attempted = True
-        try:
-            success = apply_action(self.env, self.blackboard, candidate.action, budget)
-        except Exception:
-            success = False
-        self.last_action_succeeded = success
+        success = self._attempt_action(candidate.action, candidate_id, budget)
         if success:
             self.consecutive_invalid = 0
         else:
             self.failed_actions.add(candidate_id)
             self.consecutive_invalid += 1
-        self.state = ControllerState.REANALYZE
+        self._transition(
+            ControllerState.REANALYZE,
+            "action_succeeded" if success else "action_failed",
+            self._last_trace_budget_after
+            if self._last_trace_budget_after is not None
+            else budget,
+        )
         return 0
 
-    def _refresh_candidates(self, budget: float) -> None:
+    def _attempt_action(self, action: Action, candidate_id: str, budget: float) -> bool:
+        self.last_action_attempted = True
+        self.action_attempts += 1
+        self._last_step_action = asdict(action)
+        before_snapshot = self.blackboard.snapshot() if self._trace.enabled else None
+        self._emit(
+            "action.requested",
+            budget,
+            budget,
+            {"candidate_id": candidate_id, "action": asdict(action)},
+        )
+        try:
+            outcome = apply_action_outcome(self.env, self.blackboard, action, budget)
+        except Exception as exc:
+            self.last_action_succeeded = False
+            self.last_action_error = type(exc).__name__
+            self.action_failures += 1
+            self._last_step_action_result = "exception"
+            budget_after = self._trace_budget_after(budget)
+            self._emit(
+                "action.failed",
+                budget,
+                budget_after,
+                {
+                    "candidate_id": candidate_id,
+                    "action": asdict(action),
+                    "error": safe_error(exc),
+                    "blackboard": self.blackboard.snapshot(),
+                },
+            )
+            return False
+
+        self.last_action_succeeded = outcome.succeeded
+        budget_after = self._trace_budget_after(budget)
+        if outcome.succeeded:
+            self.action_successes += 1
+            self._last_step_action_result = "success"
+            self._emit(
+                "action.completed",
+                budget,
+                budget_after,
+                self._action_trace_data(candidate_id, outcome, before_snapshot),
+            )
+            return True
+
+        self.action_failures += 1
+        self._last_step_action_result = "failed"
+        self._emit(
+            "action.failed",
+            budget,
+            budget_after,
+            self._action_trace_data(candidate_id, outcome, before_snapshot),
+        )
+        return False
+
+    def _action_trace_data(
+        self,
+        candidate_id: str,
+        outcome: ActionOutcome,
+        before_snapshot: dict[str, Any] | None,
+    ) -> dict[str, Any]:
+        data: dict[str, Any] = {
+            "candidate_id": candidate_id,
+            "action": asdict(outcome.action),
+            "raw_response": outcome.raw_response,
+            "success": outcome.succeeded,
+            "rejected_reason": outcome.rejected_reason,
+        }
+        if before_snapshot is not None:
+            data["blackboard_delta"] = self._blackboard_delta(
+                before_snapshot, self.blackboard.snapshot()
+            )
+        return data
+
+    def _refresh_candidates(self, budget: float, phase: str) -> None:
         self.analysis = self.analyst.analyze(self.blackboard)
         candidates = self.analyst.generate_candidates(
             self.analysis,
@@ -1118,40 +1698,294 @@ class RuntimeController:
             self.failed_actions,
         )
         self.candidates = {candidate.candidate_id: candidate for candidate in candidates}
+        self._emit(
+            "analysis.completed",
+            budget,
+            budget,
+            self._analysis_trace_data(self.analysis, phase),
+        )
+        self._emit(
+            "candidates.generated",
+            budget,
+            budget,
+            {
+                "phase": phase,
+                "filtered_count": len(candidates),
+                "candidates": [self._candidate_trace_data(candidate) for candidate in candidates],
+            },
+        )
 
-    def _valid_queue(self, candidate_ids: Sequence[str], budget: float) -> list[str]:
-        """再次校验 LLM/旧队列，过滤未知、失效、冲突和超预算动作。"""
+    def _create_plan(self, budget: float) -> None:
+        assert self.analysis is not None
+        candidates = list(self.candidates.values())
+        request_payload: Mapping[str, Any] | None = None
+        if self.commander.can_request_llm:
+            request_payload = self.commander.preview_payload(candidates, budget, self.analysis)
+            self._emit(
+                "llm.requested",
+                budget,
+                budget,
+                {"payload": request_payload, "llm_call": self.commander.llm_calls + 1},
+            )
+        plan = self.commander.plan(
+            candidates=candidates,
+            budget=budget,
+            analysis=self.analysis,
+            request_payload=request_payload,
+        )
+        if plan.request_payload is not None and plan.error is None:
+            self._emit(
+                "llm.completed",
+                budget,
+                budget,
+                {
+                    "raw_output": plan.raw_response,
+                    "parsed": {
+                        "accepted": plan.source == "llm",
+                        "candidate_ids": list(plan.parsed_candidate_ids),
+                        "fallback_reason": plan.fallback_reason,
+                    },
+                    "llm_calls": self.commander.llm_calls,
+                },
+            )
+        if plan.source != "llm" and (plan.request_payload is not None or plan.source == "quota_exhausted"):
+            self._emit(
+                "llm.failed",
+                budget,
+                budget,
+                {
+                    "source": plan.source,
+                    "fallback_reason": plan.fallback_reason,
+                    "error": plan.error,
+                    "llm_calls": self.commander.llm_calls,
+                },
+            )
+        validation = self._valid_queue(plan.candidate_ids, budget)
+        self.queue = list(validation.candidate_ids)
+        self._last_step_selected_ids = list(self.queue)
+        self._emit(
+            "plan.created",
+            budget,
+            budget,
+            {
+                "source": plan.source,
+                "fallback_reason": plan.fallback_reason,
+                "planned_candidate_ids": list(plan.candidate_ids),
+                "selected_candidate_ids": list(self.queue),
+                "llm_calls": self.commander.llm_calls,
+            },
+        )
+        self._emit_queue_revalidated("plan", validation, budget)
+
+    def _emit_queue_revalidated(
+        self, source: str, validation: QueueValidation, budget: float
+    ) -> None:
+        self._emit(
+            "queue.revalidated",
+            budget,
+            budget,
+            {
+                "source": source,
+                "enqueued_candidate_ids": list(validation.candidate_ids),
+                "discarded": list(validation.discarded),
+            },
+        )
+
+    def _transition(self, state: ControllerState, reason: str, budget: float) -> None:
+        if state is self.state:
+            return
+        previous = self.state
+        self.state = state
+        self._emit(
+            "state.transition",
+            budget,
+            budget,
+            {"old_state": previous.value, "new_state": state.value, "reason": reason},
+        )
+
+    def _stop(self, reason: StopReason, budget: float) -> None:
+        if self.state is ControllerState.STOP:
+            return
+        self.stop_reason = reason
+        self._transition(ControllerState.STOP, reason.value, budget)
+        final_budget = self._trace_budget_after(budget)
+        self._emit(
+            "run.stopped",
+            budget,
+            final_budget,
+            {
+                "reason": reason.value,
+                "blackboard": self.blackboard.snapshot(),
+                "action_attempts": self.action_attempts,
+                "action_successes": self.action_successes,
+                "action_failures": self.action_failures,
+                "remaining_budget": final_budget,
+                "llm_calls": self.commander.llm_calls,
+            },
+        )
+
+    def _complete_step(self, result: int, state_before: str, budget_before: float) -> int:
+        budget_after = (
+            self._last_trace_budget_after
+            if self._last_trace_budget_after is not None
+            else self._trace_budget_after(budget_before)
+        )
+        self._emit(
+            "step.completed",
+            budget_before,
+            budget_after,
+            {
+                "state_before": state_before,
+                "return_code": result,
+                "action": self._last_step_action,
+                "action_result": self._last_step_action_result,
+                "action_attempts": self.action_attempts,
+                "action_successes": self.action_successes,
+                "action_failures": self.action_failures,
+                "selected_candidate_ids": self._last_step_selected_ids,
+            },
+        )
+        return result
+
+    def _emit(
+        self,
+        event: str,
+        budget_before: float | None,
+        budget_after: float | None,
+        data: Mapping[str, Any] | None = None,
+    ) -> None:
+        """Keep all controller records on the trace's best-effort boundary."""
+        self._trace.emit(
+            event,
+            step=self._step_number,
+            state=self.state.value,
+            budget_before=budget_before,
+            budget_after=budget_after,
+            data=data,
+        )
+
+    def _current_budget(self) -> float:
+        return float(self.env.get_remaining_budget())
+
+    def _trace_budget_after(self, fallback: float) -> float:
+        if not self._trace.enabled:
+            return fallback
+        try:
+            budget = self._current_budget()
+        except Exception:
+            budget = fallback
+        self._last_trace_budget_after = budget
+        return budget
+
+    @staticmethod
+    def _candidate_trace_data(candidate: Candidate) -> dict[str, Any]:
+        return {
+            "candidate_id": candidate.candidate_id,
+            "action": asdict(candidate.action),
+            "priority": candidate.priority,
+            "score": candidate.score,
+            "roi": candidate.roi,
+            "reason": candidate.reason,
+        }
+
+    @staticmethod
+    def _analysis_trace_data(analysis: GraphAnalysis, phase: str) -> dict[str, Any]:
+        return {
+            "phase": phase,
+            "node_count": analysis.node_count,
+            "edge_count": analysis.edge_count,
+            "community_count": analysis.community_count,
+            "node_metrics": {
+                node_id: asdict(metrics) for node_id, metrics in sorted(analysis.node_metrics.items())
+            },
+            "edge_metrics": [
+                {"edge": list(edge), **asdict(metrics)}
+                for edge, metrics in sorted(analysis.edge_metrics.items())
+            ],
+        }
+
+    @staticmethod
+    def _blackboard_delta(
+        before: Mapping[str, Any], after: Mapping[str, Any]
+    ) -> dict[str, Any]:
+        before_nodes = before.get("nodes", {})
+        after_nodes = after.get("nodes", {})
+        if not isinstance(before_nodes, Mapping) or not isinstance(after_nodes, Mapping):
+            return {}
+        before_edges = {tuple(edge) for edge in before.get("edges", [])}
+        after_edges = {tuple(edge) for edge in after.get("edges", [])}
+        before_dead = set(before.get("dead_nodes", []))
+        after_dead = set(after.get("dead_nodes", []))
+        common_nodes = set(before_nodes).intersection(after_nodes)
+        return {
+            "added_nodes": {
+                node_id: after_nodes[node_id]
+                for node_id in sorted(set(after_nodes).difference(before_nodes))
+            },
+            "removed_nodes": {
+                node_id: before_nodes[node_id]
+                for node_id in sorted(set(before_nodes).difference(after_nodes))
+            },
+            "updated_nodes": {
+                node_id: {"before": before_nodes[node_id], "after": after_nodes[node_id]}
+                for node_id in sorted(common_nodes)
+                if before_nodes[node_id] != after_nodes[node_id]
+            },
+            "added_edges": [list(edge) for edge in sorted(after_edges.difference(before_edges))],
+            "removed_edges": [list(edge) for edge in sorted(before_edges.difference(after_edges))],
+            "added_dead_nodes": sorted(after_dead.difference(before_dead)),
+            "removed_dead_nodes": sorted(before_dead.difference(after_dead)),
+        }
+
+    def _valid_queue(self, candidate_ids: Sequence[object], budget: float) -> QueueValidation:
+        """Revalidate plan IDs against current facts, conflicts, and budget."""
         accepted: list[str] = []
+        discarded: list[dict[str, str]] = []
         seen: set[str] = set()
         shielded_nodes: set[int] = set()
         cut_endpoints: set[int] = set()
         remaining = budget
-        for candidate_id in candidate_ids:
-            if len(accepted) >= MAX_BATCH_ACTIONS or candidate_id in seen:
+        for raw_candidate_id in candidate_ids:
+            if not isinstance(raw_candidate_id, str):
+                discarded.append({"candidate_id": repr(raw_candidate_id), "reason": "invalid_id"})
+                continue
+            candidate_id = raw_candidate_id
+            if len(accepted) >= MAX_BATCH_ACTIONS:
+                discarded.append({"candidate_id": candidate_id, "reason": "batch_limit"})
+                continue
+            if candidate_id in seen:
+                discarded.append({"candidate_id": candidate_id, "reason": "duplicate"})
                 continue
             seen.add(candidate_id)
             candidate = self.candidates.get(candidate_id)
-            if candidate is None or candidate_id in self.failed_actions:
+            if candidate is None:
+                discarded.append({"candidate_id": candidate_id, "reason": "unknown_candidate"})
+                continue
+            if candidate_id in self.failed_actions:
+                discarded.append({"candidate_id": candidate_id, "reason": "failed_action"})
                 continue
             action = candidate.action
             cost = action_cost(action)
-            if cost > remaining or not is_legal_action(action, self.blackboard, remaining):
+            if cost > remaining:
+                discarded.append({"candidate_id": candidate_id, "reason": "insufficient_budget"})
+                continue
+            if not is_legal_action(action, self.blackboard, remaining):
+                discarded.append({"candidate_id": candidate_id, "reason": "illegal_action"})
                 continue
             if action.kind == "shield":
                 if action.target_node_1 in cut_endpoints:
+                    discarded.append({"candidate_id": candidate_id, "reason": "conflict"})
                     continue
                 shielded_nodes.add(action.target_node_1)
             elif action.kind == "cut":
                 assert action.target_node_2 is not None
-                if (
-                    action.target_node_1 in shielded_nodes
-                    or action.target_node_2 in shielded_nodes
-                ):
+                if action.target_node_1 in shielded_nodes or action.target_node_2 in shielded_nodes:
+                    discarded.append({"candidate_id": candidate_id, "reason": "conflict"})
                     continue
                 cut_endpoints.update((action.target_node_1, action.target_node_2))
             accepted.append(candidate_id)
             remaining -= cost
-        return accepted
+        return QueueValidation(tuple(accepted), tuple(discarded))
 
 
 __all__ = [
@@ -1161,7 +1995,9 @@ __all__ = [
     "DeterministicScout",
     "GraphAnalyst",
     "MAX_LLM_CALLS",
+    "QueueValidation",
     "RuntimeController",
+    "StopReason",
     "infer_node_count",
 ]
 
@@ -1175,7 +2011,7 @@ import threading
 from typing import Any
 
 import networkx as nx
-from agent_mesa import AgentBase, JsonStep, ModelBase
+from casevo import AgentBase, JsonStep, ModelBase
 
 
 

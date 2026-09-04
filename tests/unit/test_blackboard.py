@@ -15,6 +15,13 @@ class BlackboardTests(unittest.TestCase):
         self.assertEqual(board.nodes[3].comm_left, 1)
         self.assertEqual(board.edges, {(1, 3), (3, 5)})
 
+    def test_scan_keeps_unreported_communication_quota_unknown(self) -> None:
+        board = Blackboard()
+
+        board.record_scan(1, {"w": 4, "persona": "和平", "neighbors": []})
+
+        self.assertIsNone(board.nodes[1].comm_left)
+
     def test_failed_communication_does_not_change_weight(self) -> None:
         board = Blackboard()
         board.record_scan(1, {"w": 4, "persona": "和平", "comm_left": 2, "neighbors": []})

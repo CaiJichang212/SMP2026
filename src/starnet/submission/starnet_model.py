@@ -6,7 +6,7 @@ import threading
 from typing import Any
 
 import networkx as nx
-from agent_mesa import AgentBase, JsonStep, ModelBase
+from casevo import AgentBase, JsonStep, ModelBase
 
 from starnet.runtime.controller import RuntimeController
 

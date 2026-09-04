@@ -17,6 +17,7 @@ INLINE_MODULES = (
     "src/starnet/model/blackboard.py",
     "src/starnet/policy/actions.py",
     "src/starnet/runtime/env_adapter.py",
+    "src/starnet/runtime/trace.py",
     "src/starnet/policy/graph_analysis.py",
     "src/starnet/policy/candidates.py",
     "src/starnet/runtime/controller.py",

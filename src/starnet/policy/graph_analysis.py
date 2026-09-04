@@ -193,7 +193,7 @@ def _persona_risk(persona: str) -> float:
     return {"暴力": 1.0, "中立": 0.5, "和平": 0.25}.get(persona, 0.5)
 
 
-def _marginal_factor(comm_left: int) -> float:
+def _marginal_factor(comm_left: int | None) -> float:
     return {3: 1.0, 2: 0.5, 1: 0.25}.get(comm_left, 0.0)
 
 

@@ -6,16 +6,25 @@ from .controller import (
     DeterministicScout,
     GraphAnalyst,
     RuntimeController,
+    StopReason,
     infer_node_count,
 )
-from .env_adapter import apply_action
+from .env_adapter import ActionOutcome, apply_action, apply_action_outcome
+from .trace import ConsoleTraceSink, JsonlTraceSink, RuntimeTrace, TraceSink
 
 __all__ = [
+    "ActionOutcome",
     "BatchCommander",
+    "ConsoleTraceSink",
     "ControllerState",
     "DeterministicScout",
     "GraphAnalyst",
+    "JsonlTraceSink",
     "RuntimeController",
+    "RuntimeTrace",
+    "StopReason",
+    "TraceSink",
     "apply_action",
+    "apply_action_outcome",
     "infer_node_count",
 ]

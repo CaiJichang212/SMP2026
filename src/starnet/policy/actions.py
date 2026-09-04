@@ -43,6 +43,7 @@ def is_legal_action(action: Action, blackboard: Blackboard, budget: float) -> bo
         return (
             action.target_node_2 is None
             and node is not None
+            and node.comm_left is not None
             and node.comm_left > 0
             and action.prompt_id in VALID_PROMPT_IDS
         )

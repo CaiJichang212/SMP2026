@@ -22,18 +22,25 @@ class NodeState:
 
     w: float
     persona: str
-    comm_left: int
+    comm_left: int | None
 
     @classmethod
     def from_scan(cls, payload: dict[str, Any]) -> "NodeState":
-        required = {"w", "persona", "comm_left", "neighbors"}
+        required = {"w", "persona", "neighbors"}
         missing = required.difference(payload)
         if missing:
             raise ValueError(f"扫描结果缺少字段: {sorted(missing)}")
+        raw_comm_left = payload.get("comm_left")
+        if raw_comm_left is None:
+            comm_left = None
+        elif isinstance(raw_comm_left, bool) or not isinstance(raw_comm_left, int):
+            raise ValueError("扫描结果中的 comm_left 必须是整数或缺失")
+        else:
+            comm_left = max(0, raw_comm_left)
         return cls(
             w=float(payload["w"]),
             persona=str(payload["persona"]),
-            comm_left=max(0, int(payload["comm_left"])),
+            comm_left=comm_left,
         )
 
 
@@ -74,7 +81,8 @@ class Blackboard:
         if "new_w" not in response:
             return False
         node.w = float(response["new_w"])
-        node.comm_left = max(0, node.comm_left - 1)
+        if node.comm_left is not None:
+            node.comm_left = max(0, node.comm_left - 1)
         return True
 
     def record_cut(self, left: int, right: int, success: bool) -> bool:

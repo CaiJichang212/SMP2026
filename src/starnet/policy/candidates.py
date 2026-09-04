@@ -31,6 +31,15 @@ class Candidate:
     reason: str
 
 
+@dataclass(frozen=True)
+class LlmParseResult:
+    """Validated LLM selection and the observable reason for any fallback."""
+
+    candidate_ids: tuple[str, ...]
+    accepted: bool
+    fallback_reason: str | None = None
+
+
 def _candidate_sort_key(candidate: Candidate) -> tuple[int, float, float, str]:
     """计划规定的稳定候选排序。"""
     return (
@@ -273,35 +282,52 @@ def parse_llm_batch(
     budget: float,
 ) -> list[str]:
     """解析 Commander 的 JSON；任意无效或空结果均回退到确定性批次。"""
+    return list(parse_llm_batch_detailed(payload, candidate_map, budget).candidate_ids)
+
+
+def parse_llm_batch_detailed(
+    payload: str | bytes | Mapping[str, Any] | None,
+    candidate_map: Mapping[str, Candidate],
+    budget: float,
+) -> LlmParseResult:
+    """Parse a Commander result while retaining a precise fallback category."""
     fallback = select_deterministic_batch(candidate_map.values(), budget)
     if isinstance(payload, bytes):
         try:
             payload = payload.decode("utf-8")
         except UnicodeDecodeError:
-            return fallback
+            return LlmParseResult(tuple(fallback), False, "invalid_json")
     if isinstance(payload, str):
         try:
             payload = json.loads(payload)
         except (TypeError, ValueError):
-            return fallback
+            return LlmParseResult(tuple(fallback), False, "invalid_json")
     if not isinstance(payload, Mapping):
-        return fallback
+        return LlmParseResult(tuple(fallback), False, "invalid_json")
 
     mode = payload.get("mode")
     candidate_ids = payload.get("candidate_ids")
-    if mode not in VALID_BATCH_MODES or not isinstance(candidate_ids, list) or not candidate_ids:
-        return fallback
+    if mode not in VALID_BATCH_MODES or not isinstance(candidate_ids, list):
+        return LlmParseResult(tuple(fallback), False, "invalid_json")
+    if not candidate_ids:
+        return LlmParseResult(tuple(fallback), False, "empty_selection")
 
     selected = _valid_batch_ids(candidate_ids, candidate_map, budget, MAX_BATCH_SIZE)
-    return selected or fallback
+    if selected:
+        return LlmParseResult(tuple(selected), True)
+    known_ids = [candidate_id for candidate_id in candidate_ids if isinstance(candidate_id, str)]
+    reason = "unknown_candidate" if not any(candidate_id in candidate_map for candidate_id in known_ids) else "empty_selection"
+    return LlmParseResult(tuple(fallback), False, reason)
 
 
 __all__ = [
     "Candidate",
+    "LlmParseResult",
     "MAX_BATCH_SIZE",
     "MAX_CANDIDATES",
     "VALID_BATCH_MODES",
     "generate_candidates",
     "parse_llm_batch",
+    "parse_llm_batch_detailed",
     "select_deterministic_batch",
 ]

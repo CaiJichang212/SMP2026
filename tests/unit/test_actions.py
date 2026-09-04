@@ -23,6 +23,12 @@ class ActionValidationTests(unittest.TestCase):
         self.assertFalse(is_legal_action(Action("scan", 1), self.board, 0.5))
         self.assertTrue(is_legal_action(Action("scan", 3), self.board, 0.5))
 
+    def test_communication_requires_reported_remaining_quota(self) -> None:
+        board = Blackboard()
+        board.record_scan(1, {"w": 3, "persona": "和平", "neighbors": []})
+
+        self.assertFalse(is_legal_action(Action("comm", 1, prompt_id=1), board, 100.0))
+
 
 if __name__ == "__main__":
     unittest.main()
