@@ -169,6 +169,64 @@ def is_legal_action(action: Action, blackboard: Blackboard, budget: float) -> bo
 
 # End inline: src/starnet/policy/actions.py
 
+# Begin inline: src/starnet/policy/config.py
+"""Immutable, auditable switches for V0 policy experiments.
+
+The submission always uses :data:`DEFAULT_POLICY_CONFIG`.  Experiment tools may
+pass another instance to ``RuntimeController`` without changing the official
+``ParticipantSquadModel(host_env, person_list, llm)`` contract.
+"""
+
+
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
+class PolicyConfig:
+    """All V0 tuning knobs, deliberately small and serialisable.
+
+    ``max_llm_calls`` is the V0 experiment budget, not a replacement for the
+    contest-wide 120/250 hard caps.  The controller enforces both.
+    """
+
+    shield_threshold: float = 0.55
+    cut_threshold: float = 0.20
+    enable_shield: bool = True
+    enable_cut: bool = True
+    enable_communicate: bool = True
+    p0_exclusive: bool = True
+    mixed_raw_roi: bool = False
+    max_llm_calls: int = 3
+    stop_after_scan: bool = False
+    max_steps: int | None = None
+
+    def __post_init__(self) -> None:
+        for name in ("shield_threshold", "cut_threshold"):
+            value = getattr(self, name)
+            if not isinstance(value, (int, float)) or isinstance(value, bool) or value < 0:
+                raise ValueError(f"{name} must be a non-negative number")
+        if isinstance(self.max_llm_calls, bool) or self.max_llm_calls < 0:
+            raise ValueError("max_llm_calls must be a non-negative integer")
+        if self.max_steps is not None and (
+            isinstance(self.max_steps, bool) or self.max_steps <= 0
+        ):
+            raise ValueError("max_steps must be a positive integer or None")
+
+    def safety_step_limit(self, node_count: int) -> int:
+        """Return the conservative local cap for the current contest tier."""
+        if self.max_steps is not None:
+            return self.max_steps
+        return 115 if node_count <= 50 else 245
+
+    def contest_llm_limit(self, node_count: int) -> int:
+        """The public per-seed LLM cap (preliminary/final respectively)."""
+        return 120 if node_count <= 50 else 250
+
+
+DEFAULT_POLICY_CONFIG = PolicyConfig()
+
+# End inline: src/starnet/policy/config.py
+
 # Begin inline: src/starnet/runtime/env_adapter.py
 """环境调用的单一入口：只使用赛题公开 API，并以返回值更新黑板。"""
 
@@ -824,10 +882,12 @@ class LlmParseResult:
     fallback_reason: str | None = None
 
 
-def _candidate_sort_key(candidate: Candidate) -> tuple[int, float, float, str]:
+def _candidate_sort_key(
+    candidate: Candidate, *, mixed_raw_roi: bool = False
+) -> tuple[int, float, float, str]:
     """计划规定的稳定候选排序。"""
     return (
-        candidate.priority,
+        0 if mixed_raw_roi else candidate.priority,
         -_finite_nonnegative(candidate.roi),
         action_cost(candidate.action),
         candidate.candidate_id,
@@ -864,6 +924,7 @@ def _shield_candidates(
     blackboard: Blackboard,
     budget: float,
     failed_actions: Iterable[object],
+    config: PolicyConfig,
 ) -> list[Candidate]:
     candidates: list[Candidate] = []
     for node_id, node in sorted(blackboard.nodes.items()):
@@ -871,7 +932,7 @@ def _shield_candidates(
         if metrics is None or node.persona != "暴力" or node.w >= 0.0:
             continue
         danger = _finite_nonnegative(metrics.danger)
-        if danger < 0.55:
+        if danger < config.shield_threshold:
             continue
         action = Action("shield", node_id)
         candidate_id = f"shield:{node_id}"
@@ -887,7 +948,10 @@ def _shield_candidates(
                 reason=f"high-risk violent node (danger={danger:.3f})",
             )
         )
-    return sorted(candidates, key=_candidate_sort_key)[:MAX_PRIORITY_CANDIDATES[0]]
+    return sorted(
+        candidates,
+        key=lambda item: _candidate_sort_key(item, mixed_raw_roi=config.mixed_raw_roi),
+    )[:MAX_PRIORITY_CANDIDATES[0]]
 
 
 def _is_negative_bridge(
@@ -915,6 +979,7 @@ def _cut_candidates(
     blackboard: Blackboard,
     budget: float,
     failed_actions: Iterable[object],
+    config: PolicyConfig,
 ) -> list[Candidate]:
     candidates: list[Candidate] = []
     for edge, edge_metrics in sorted(analysis.edge_metrics.items()):
@@ -937,7 +1002,7 @@ def _cut_candidates(
         cut_score = _finite_nonnegative(edge_metrics.negative_flow) * _finite_nonnegative(
             edge_metrics.edge_betweenness
         )
-        if cut_score < 0.20:
+        if cut_score < config.cut_threshold:
             continue
         action = Action("cut", left_id, target_node_2=right_id)
         candidate_id = f"cut:{left_id}-{right_id}"
@@ -953,7 +1018,10 @@ def _cut_candidates(
                 reason=f"cross-community negative bridge (score={cut_score:.3f})",
             )
         )
-    return sorted(candidates, key=_candidate_sort_key)[:MAX_PRIORITY_CANDIDATES[1]]
+    return sorted(
+        candidates,
+        key=lambda item: _candidate_sort_key(item, mixed_raw_roi=config.mixed_raw_roi),
+    )[:MAX_PRIORITY_CANDIDATES[1]]
 
 
 def _communicate_candidates(
@@ -961,6 +1029,7 @@ def _communicate_candidates(
     blackboard: Blackboard,
     budget: float,
     failed_actions: Iterable[object],
+    config: PolicyConfig,
 ) -> list[Candidate]:
     candidates: list[Candidate] = []
     for node_id, node in sorted(blackboard.nodes.items()):
@@ -984,7 +1053,10 @@ def _communicate_candidates(
                 reason=f"positive influence target (score={positive:.3f})",
             )
         )
-    return sorted(candidates, key=_candidate_sort_key)[:MAX_PRIORITY_CANDIDATES[2]]
+    return sorted(
+        candidates,
+        key=lambda item: _candidate_sort_key(item, mixed_raw_roi=config.mixed_raw_roi),
+    )[:MAX_PRIORITY_CANDIDATES[2]]
 
 
 def generate_candidates(
@@ -992,6 +1064,7 @@ def generate_candidates(
     blackboard: Blackboard,
     budget: float,
     failed_actions: Iterable[object] = (),
+    config: PolicyConfig = DEFAULT_POLICY_CONFIG,
 ) -> list[Candidate]:
     """从当前黑板和图指标生成稳定、已校验的候选集。
 
@@ -999,13 +1072,29 @@ def generate_candidates(
     因此高危屏蔽不会被普通增益动作延后。
     """
     failed = frozenset(failed_actions)
-    shields = _shield_candidates(analysis, blackboard, budget, failed)
-    if shields:
+    shields = (
+        _shield_candidates(analysis, blackboard, budget, failed, config)
+        if config.enable_shield
+        else []
+    )
+    if shields and config.p0_exclusive:
         return shields[:MAX_CANDIDATES]
 
-    cuts = _cut_candidates(analysis, blackboard, budget, failed)
-    communications = _communicate_candidates(analysis, blackboard, budget, failed)
-    return (cuts + communications)[:MAX_CANDIDATES]
+    cuts = (
+        _cut_candidates(analysis, blackboard, budget, failed, config)
+        if config.enable_cut
+        else []
+    )
+    communications = (
+        _communicate_candidates(analysis, blackboard, budget, failed, config)
+        if config.enable_communicate
+        else []
+    )
+    candidates = shields + cuts + communications
+    return sorted(
+        candidates,
+        key=lambda item: _candidate_sort_key(item, mixed_raw_roi=config.mixed_raw_roi),
+    )[:MAX_CANDIDATES]
 
 
 def _conflicts(action: Action, selected_actions: Iterable[Action]) -> bool:
@@ -1047,11 +1136,15 @@ def _valid_batch_ids(
 
 
 def select_deterministic_batch(
-    candidates: Iterable[Candidate], budget: float, limit: int = MAX_BATCH_SIZE
+    candidates: Iterable[Candidate], budget: float, limit: int = MAX_BATCH_SIZE,
+    *, config: PolicyConfig = DEFAULT_POLICY_CONFIG,
 ) -> list[str]:
     """规则回退：按稳定优先级取预算内、互不冲突的动作。"""
     candidate_map = {candidate.candidate_id: candidate for candidate in candidates}
-    ordered = sorted(candidate_map.values(), key=_candidate_sort_key)
+    ordered = sorted(
+        candidate_map.values(),
+        key=lambda item: _candidate_sort_key(item, mixed_raw_roi=config.mixed_raw_roi),
+    )
     return _valid_batch_ids(
         (candidate.candidate_id for candidate in ordered),
         candidate_map,
@@ -1064,18 +1157,22 @@ def parse_llm_batch(
     payload: str | bytes | Mapping[str, Any] | None,
     candidate_map: Mapping[str, Candidate],
     budget: float,
+    *,
+    config: PolicyConfig = DEFAULT_POLICY_CONFIG,
 ) -> list[str]:
     """解析 Commander 的 JSON；任意无效或空结果均回退到确定性批次。"""
-    return list(parse_llm_batch_detailed(payload, candidate_map, budget).candidate_ids)
+    return list(parse_llm_batch_detailed(payload, candidate_map, budget, config=config).candidate_ids)
 
 
 def parse_llm_batch_detailed(
     payload: str | bytes | Mapping[str, Any] | None,
     candidate_map: Mapping[str, Candidate],
     budget: float,
+    *,
+    config: PolicyConfig = DEFAULT_POLICY_CONFIG,
 ) -> LlmParseResult:
     """Parse a Commander result while retaining a precise fallback category."""
-    fallback = select_deterministic_batch(candidate_map.values(), budget)
+    fallback = select_deterministic_batch(candidate_map.values(), budget, config=config)
     if isinstance(payload, bytes):
         try:
             payload = payload.decode("utf-8")
@@ -1201,8 +1298,9 @@ class GraphAnalyst:
         blackboard: Blackboard,
         budget: float,
         failed_actions: set[str],
+        config: PolicyConfig,
     ) -> list[Candidate]:
-        return generate_candidates(analysis, blackboard, budget, failed_actions)
+        return generate_candidates(analysis, blackboard, budget, failed_actions, config)
 
 
 LlmRanker = Callable[[dict[str, Any]], object]
@@ -1235,13 +1333,24 @@ class QueueValidation:
 class BatchCommander:
     """Use an LLM only to order Python-validated candidates, with fallback."""
 
-    def __init__(self, llm_ranker: LlmRanker | None = None) -> None:
+    def __init__(
+        self,
+        llm_ranker: LlmRanker | None = None,
+        *,
+        config: PolicyConfig = DEFAULT_POLICY_CONFIG,
+        contest_llm_limit: int | None = None,
+    ) -> None:
         self.llm_ranker = llm_ranker
+        self.config = config
+        self.max_llm_calls = min(
+            config.max_llm_calls,
+            contest_llm_limit if contest_llm_limit is not None else config.max_llm_calls,
+        )
         self.llm_calls = 0
 
     @property
     def can_request_llm(self) -> bool:
-        return self.llm_ranker is not None and self.llm_calls < MAX_LLM_CALLS
+        return self.llm_ranker is not None and self.llm_calls < self.max_llm_calls
 
     def preview_payload(
         self,
@@ -1261,12 +1370,12 @@ class BatchCommander:
         request_payload: Mapping[str, Any] | None = None,
     ) -> BatchPlan:
         candidate_map = {candidate.candidate_id: candidate for candidate in candidates}
-        fallback = tuple(select_deterministic_batch(candidates, budget, MAX_BATCH_ACTIONS))
+        fallback = tuple(select_deterministic_batch(candidates, budget, MAX_BATCH_ACTIONS, config=self.config))
         if not candidate_map:
             return BatchPlan(fallback, "deterministic_fallback", "no_candidates")
         if self.llm_ranker is None:
             return BatchPlan(fallback, "deterministic_fallback", "no_llm_ranker")
-        if self.llm_calls >= MAX_LLM_CALLS:
+        if self.llm_calls >= self.max_llm_calls:
             return BatchPlan(fallback, "quota_exhausted", "quota_exhausted")
 
         # Quota is consumed before the external call, including a timeout.
@@ -1283,7 +1392,7 @@ class BatchCommander:
                 error=safe_error(exc),
             )
 
-        parsed = parse_llm_batch_detailed(raw_response, candidate_map, budget)
+        parsed = parse_llm_batch_detailed(raw_response, candidate_map, budget, config=self.config)
         if parsed.accepted:
             return BatchPlan(
                 parsed.candidate_ids,
@@ -1356,6 +1465,7 @@ class RuntimeController:
         initial_budget: float | None = None,
         node_count: int | None = None,
         blackboard: Blackboard | None = None,
+        config: PolicyConfig = DEFAULT_POLICY_CONFIG,
     ) -> None:
         self.env = env
         self.blackboard = blackboard if blackboard is not None else Blackboard()
@@ -1363,9 +1473,15 @@ class RuntimeController:
             env.get_remaining_budget() if initial_budget is None else initial_budget
         )
         self.node_count = infer_node_count(self.initial_budget) if node_count is None else node_count
+        self.config = config
         self.scout = DeterministicScout(self.node_count)
         self.analyst = GraphAnalyst()
-        self.commander = BatchCommander(llm_ranker)
+        # The experiment may forbid LLM use even when the official model has a ranker.
+        self.commander = BatchCommander(
+            llm_ranker if config.max_llm_calls else None,
+            config=config,
+            contest_llm_limit=config.contest_llm_limit(self.node_count),
+        )
         self.state = ControllerState.INIT
         self.analysis: GraphAnalysis | None = None
         self.candidates: dict[str, Candidate] = {}
@@ -1408,7 +1524,8 @@ class RuntimeController:
             {
                 "node_count": self.scout.node_count,
                 "initial_budget": self.initial_budget,
-                "max_llm_calls": MAX_LLM_CALLS,
+                "max_llm_calls": self.commander.max_llm_calls,
+                "safety_step_limit": self.config.safety_step_limit(self.node_count),
                 "max_batch_actions": MAX_BATCH_ACTIONS,
             },
         )
@@ -1445,6 +1562,12 @@ class RuntimeController:
 
     def step(self) -> int:
         """Advance the state machine; diagnostics never control this flow."""
+        # This consumes the last permitted outer call as a stop-only call.  It
+        # leaves five calls of headroom beneath the published 120/250 limits.
+        if self._step_number + 1 >= self.config.safety_step_limit(self.node_count):
+            self._step_number += 1
+            self._stop(StopReason.STEP_LIMIT, self._current_budget())
+            return self._complete_step(1, self.state.value, self._current_budget())
         self._step_number += 1
         state_before = self.state.value
         budget_before = self._current_budget()
@@ -1555,7 +1678,10 @@ class RuntimeController:
                 if self._last_trace_budget_after is not None
                 else budget
             )
-            self._transition(ControllerState.ANALYZE, "scan_complete", completed_budget)
+            if self.config.stop_after_scan:
+                self._stop(StopReason.NO_CANDIDATES, completed_budget)
+            else:
+                self._transition(ControllerState.ANALYZE, "scan_complete", completed_budget)
             self._emit(
                 "scan.completed",
                 budget,
@@ -1696,6 +1822,7 @@ class RuntimeController:
             self.blackboard,
             budget,
             self.failed_actions,
+            self.config,
         )
         self.candidates = {candidate.candidate_id: candidate for candidate in candidates}
         self._emit(
