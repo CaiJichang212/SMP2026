@@ -10,6 +10,7 @@ from typing import Any
 
 from starnet.model.blackboard import Blackboard, Edge, NodeState, normalize_edge
 from starnet.policy.actions import Action, action_cost, is_legal_action
+from starnet.policy.config import DEFAULT_POLICY_CONFIG, PolicyConfig
 from starnet.policy.graph_analysis import EdgeMetrics, GraphAnalysis, NodeMetrics
 
 
@@ -40,10 +41,12 @@ class LlmParseResult:
     fallback_reason: str | None = None
 
 
-def _candidate_sort_key(candidate: Candidate) -> tuple[int, float, float, str]:
+def _candidate_sort_key(
+    candidate: Candidate, *, mixed_raw_roi: bool = False
+) -> tuple[int, float, float, str]:
     """计划规定的稳定候选排序。"""
     return (
-        candidate.priority,
+        0 if mixed_raw_roi else candidate.priority,
         -_finite_nonnegative(candidate.roi),
         action_cost(candidate.action),
         candidate.candidate_id,
@@ -80,6 +83,7 @@ def _shield_candidates(
     blackboard: Blackboard,
     budget: float,
     failed_actions: Iterable[object],
+    config: PolicyConfig,
 ) -> list[Candidate]:
     candidates: list[Candidate] = []
     for node_id, node in sorted(blackboard.nodes.items()):
@@ -87,7 +91,7 @@ def _shield_candidates(
         if metrics is None or node.persona != "暴力" or node.w >= 0.0:
             continue
         danger = _finite_nonnegative(metrics.danger)
-        if danger < 0.55:
+        if danger < config.shield_threshold:
             continue
         action = Action("shield", node_id)
         candidate_id = f"shield:{node_id}"
@@ -103,7 +107,10 @@ def _shield_candidates(
                 reason=f"high-risk violent node (danger={danger:.3f})",
             )
         )
-    return sorted(candidates, key=_candidate_sort_key)[:MAX_PRIORITY_CANDIDATES[0]]
+    return sorted(
+        candidates,
+        key=lambda item: _candidate_sort_key(item, mixed_raw_roi=config.mixed_raw_roi),
+    )[:MAX_PRIORITY_CANDIDATES[0]]
 
 
 def _is_negative_bridge(
@@ -131,6 +138,7 @@ def _cut_candidates(
     blackboard: Blackboard,
     budget: float,
     failed_actions: Iterable[object],
+    config: PolicyConfig,
 ) -> list[Candidate]:
     candidates: list[Candidate] = []
     for edge, edge_metrics in sorted(analysis.edge_metrics.items()):
@@ -153,7 +161,7 @@ def _cut_candidates(
         cut_score = _finite_nonnegative(edge_metrics.negative_flow) * _finite_nonnegative(
             edge_metrics.edge_betweenness
         )
-        if cut_score < 0.20:
+        if cut_score < config.cut_threshold:
             continue
         action = Action("cut", left_id, target_node_2=right_id)
         candidate_id = f"cut:{left_id}-{right_id}"
@@ -169,7 +177,10 @@ def _cut_candidates(
                 reason=f"cross-community negative bridge (score={cut_score:.3f})",
             )
         )
-    return sorted(candidates, key=_candidate_sort_key)[:MAX_PRIORITY_CANDIDATES[1]]
+    return sorted(
+        candidates,
+        key=lambda item: _candidate_sort_key(item, mixed_raw_roi=config.mixed_raw_roi),
+    )[:MAX_PRIORITY_CANDIDATES[1]]
 
 
 def _communicate_candidates(
@@ -177,6 +188,7 @@ def _communicate_candidates(
     blackboard: Blackboard,
     budget: float,
     failed_actions: Iterable[object],
+    config: PolicyConfig,
 ) -> list[Candidate]:
     candidates: list[Candidate] = []
     for node_id, node in sorted(blackboard.nodes.items()):
@@ -200,7 +212,10 @@ def _communicate_candidates(
                 reason=f"positive influence target (score={positive:.3f})",
             )
         )
-    return sorted(candidates, key=_candidate_sort_key)[:MAX_PRIORITY_CANDIDATES[2]]
+    return sorted(
+        candidates,
+        key=lambda item: _candidate_sort_key(item, mixed_raw_roi=config.mixed_raw_roi),
+    )[:MAX_PRIORITY_CANDIDATES[2]]
 
 
 def generate_candidates(
@@ -208,6 +223,7 @@ def generate_candidates(
     blackboard: Blackboard,
     budget: float,
     failed_actions: Iterable[object] = (),
+    config: PolicyConfig = DEFAULT_POLICY_CONFIG,
 ) -> list[Candidate]:
     """从当前黑板和图指标生成稳定、已校验的候选集。
 
@@ -215,13 +231,29 @@ def generate_candidates(
     因此高危屏蔽不会被普通增益动作延后。
     """
     failed = frozenset(failed_actions)
-    shields = _shield_candidates(analysis, blackboard, budget, failed)
-    if shields:
+    shields = (
+        _shield_candidates(analysis, blackboard, budget, failed, config)
+        if config.enable_shield
+        else []
+    )
+    if shields and config.p0_exclusive:
         return shields[:MAX_CANDIDATES]
 
-    cuts = _cut_candidates(analysis, blackboard, budget, failed)
-    communications = _communicate_candidates(analysis, blackboard, budget, failed)
-    return (cuts + communications)[:MAX_CANDIDATES]
+    cuts = (
+        _cut_candidates(analysis, blackboard, budget, failed, config)
+        if config.enable_cut
+        else []
+    )
+    communications = (
+        _communicate_candidates(analysis, blackboard, budget, failed, config)
+        if config.enable_communicate
+        else []
+    )
+    candidates = shields + cuts + communications
+    return sorted(
+        candidates,
+        key=lambda item: _candidate_sort_key(item, mixed_raw_roi=config.mixed_raw_roi),
+    )[:MAX_CANDIDATES]
 
 
 def _conflicts(action: Action, selected_actions: Iterable[Action]) -> bool:
@@ -263,11 +295,15 @@ def _valid_batch_ids(
 
 
 def select_deterministic_batch(
-    candidates: Iterable[Candidate], budget: float, limit: int = MAX_BATCH_SIZE
+    candidates: Iterable[Candidate], budget: float, limit: int = MAX_BATCH_SIZE,
+    *, config: PolicyConfig = DEFAULT_POLICY_CONFIG,
 ) -> list[str]:
     """规则回退：按稳定优先级取预算内、互不冲突的动作。"""
     candidate_map = {candidate.candidate_id: candidate for candidate in candidates}
-    ordered = sorted(candidate_map.values(), key=_candidate_sort_key)
+    ordered = sorted(
+        candidate_map.values(),
+        key=lambda item: _candidate_sort_key(item, mixed_raw_roi=config.mixed_raw_roi),
+    )
     return _valid_batch_ids(
         (candidate.candidate_id for candidate in ordered),
         candidate_map,
@@ -280,18 +316,22 @@ def parse_llm_batch(
     payload: str | bytes | Mapping[str, Any] | None,
     candidate_map: Mapping[str, Candidate],
     budget: float,
+    *,
+    config: PolicyConfig = DEFAULT_POLICY_CONFIG,
 ) -> list[str]:
     """解析 Commander 的 JSON；任意无效或空结果均回退到确定性批次。"""
-    return list(parse_llm_batch_detailed(payload, candidate_map, budget).candidate_ids)
+    return list(parse_llm_batch_detailed(payload, candidate_map, budget, config=config).candidate_ids)
 
 
 def parse_llm_batch_detailed(
     payload: str | bytes | Mapping[str, Any] | None,
     candidate_map: Mapping[str, Candidate],
     budget: float,
+    *,
+    config: PolicyConfig = DEFAULT_POLICY_CONFIG,
 ) -> LlmParseResult:
     """Parse a Commander result while retaining a precise fallback category."""
-    fallback = select_deterministic_batch(candidate_map.values(), budget)
+    fallback = select_deterministic_batch(candidate_map.values(), budget, config=config)
     if isinstance(payload, bytes):
         try:
             payload = payload.decode("utf-8")

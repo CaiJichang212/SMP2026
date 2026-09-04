@@ -16,6 +16,7 @@ REQUIRED_DIRECTORY = "prompt"
 INLINE_MODULES = (
     "src/starnet/model/blackboard.py",
     "src/starnet/policy/actions.py",
+    "src/starnet/policy/config.py",
     "src/starnet/runtime/env_adapter.py",
     "src/starnet/runtime/trace.py",
     "src/starnet/policy/graph_analysis.py",

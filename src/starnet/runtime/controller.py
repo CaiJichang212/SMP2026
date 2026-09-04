@@ -20,6 +20,7 @@ from starnet.policy.candidates import (
     select_deterministic_batch,
 )
 from starnet.policy.graph_analysis import GraphAnalysis, analyze_graph
+from starnet.policy.config import DEFAULT_POLICY_CONFIG, PolicyConfig
 from starnet.runtime.env_adapter import ActionOutcome, StarNetEnvironment, apply_action_outcome
 from starnet.runtime.trace import NullRuntimeTrace, RuntimeTrace, safe_error
 
@@ -92,8 +93,9 @@ class GraphAnalyst:
         blackboard: Blackboard,
         budget: float,
         failed_actions: set[str],
+        config: PolicyConfig,
     ) -> list[Candidate]:
-        return generate_candidates(analysis, blackboard, budget, failed_actions)
+        return generate_candidates(analysis, blackboard, budget, failed_actions, config)
 
 
 LlmRanker = Callable[[dict[str, Any]], object]
@@ -126,13 +128,24 @@ class QueueValidation:
 class BatchCommander:
     """Use an LLM only to order Python-validated candidates, with fallback."""
 
-    def __init__(self, llm_ranker: LlmRanker | None = None) -> None:
+    def __init__(
+        self,
+        llm_ranker: LlmRanker | None = None,
+        *,
+        config: PolicyConfig = DEFAULT_POLICY_CONFIG,
+        contest_llm_limit: int | None = None,
+    ) -> None:
         self.llm_ranker = llm_ranker
+        self.config = config
+        self.max_llm_calls = min(
+            config.max_llm_calls,
+            contest_llm_limit if contest_llm_limit is not None else config.max_llm_calls,
+        )
         self.llm_calls = 0
 
     @property
     def can_request_llm(self) -> bool:
-        return self.llm_ranker is not None and self.llm_calls < MAX_LLM_CALLS
+        return self.llm_ranker is not None and self.llm_calls < self.max_llm_calls
 
     def preview_payload(
         self,
@@ -152,12 +165,12 @@ class BatchCommander:
         request_payload: Mapping[str, Any] | None = None,
     ) -> BatchPlan:
         candidate_map = {candidate.candidate_id: candidate for candidate in candidates}
-        fallback = tuple(select_deterministic_batch(candidates, budget, MAX_BATCH_ACTIONS))
+        fallback = tuple(select_deterministic_batch(candidates, budget, MAX_BATCH_ACTIONS, config=self.config))
         if not candidate_map:
             return BatchPlan(fallback, "deterministic_fallback", "no_candidates")
         if self.llm_ranker is None:
             return BatchPlan(fallback, "deterministic_fallback", "no_llm_ranker")
-        if self.llm_calls >= MAX_LLM_CALLS:
+        if self.llm_calls >= self.max_llm_calls:
             return BatchPlan(fallback, "quota_exhausted", "quota_exhausted")
 
         # Quota is consumed before the external call, including a timeout.
@@ -174,7 +187,7 @@ class BatchCommander:
                 error=safe_error(exc),
             )
 
-        parsed = parse_llm_batch_detailed(raw_response, candidate_map, budget)
+        parsed = parse_llm_batch_detailed(raw_response, candidate_map, budget, config=self.config)
         if parsed.accepted:
             return BatchPlan(
                 parsed.candidate_ids,
@@ -247,6 +260,7 @@ class RuntimeController:
         initial_budget: float | None = None,
         node_count: int | None = None,
         blackboard: Blackboard | None = None,
+        config: PolicyConfig = DEFAULT_POLICY_CONFIG,
     ) -> None:
         self.env = env
         self.blackboard = blackboard if blackboard is not None else Blackboard()
@@ -254,9 +268,15 @@ class RuntimeController:
             env.get_remaining_budget() if initial_budget is None else initial_budget
         )
         self.node_count = infer_node_count(self.initial_budget) if node_count is None else node_count
+        self.config = config
         self.scout = DeterministicScout(self.node_count)
         self.analyst = GraphAnalyst()
-        self.commander = BatchCommander(llm_ranker)
+        # The experiment may forbid LLM use even when the official model has a ranker.
+        self.commander = BatchCommander(
+            llm_ranker if config.max_llm_calls else None,
+            config=config,
+            contest_llm_limit=config.contest_llm_limit(self.node_count),
+        )
         self.state = ControllerState.INIT
         self.analysis: GraphAnalysis | None = None
         self.candidates: dict[str, Candidate] = {}
@@ -299,7 +319,8 @@ class RuntimeController:
             {
                 "node_count": self.scout.node_count,
                 "initial_budget": self.initial_budget,
-                "max_llm_calls": MAX_LLM_CALLS,
+                "max_llm_calls": self.commander.max_llm_calls,
+                "safety_step_limit": self.config.safety_step_limit(self.node_count),
                 "max_batch_actions": MAX_BATCH_ACTIONS,
             },
         )
@@ -336,6 +357,12 @@ class RuntimeController:
 
     def step(self) -> int:
         """Advance the state machine; diagnostics never control this flow."""
+        # This consumes the last permitted outer call as a stop-only call.  It
+        # leaves five calls of headroom beneath the published 120/250 limits.
+        if self._step_number + 1 >= self.config.safety_step_limit(self.node_count):
+            self._step_number += 1
+            self._stop(StopReason.STEP_LIMIT, self._current_budget())
+            return self._complete_step(1, self.state.value, self._current_budget())
         self._step_number += 1
         state_before = self.state.value
         budget_before = self._current_budget()
@@ -446,7 +473,10 @@ class RuntimeController:
                 if self._last_trace_budget_after is not None
                 else budget
             )
-            self._transition(ControllerState.ANALYZE, "scan_complete", completed_budget)
+            if self.config.stop_after_scan:
+                self._stop(StopReason.NO_CANDIDATES, completed_budget)
+            else:
+                self._transition(ControllerState.ANALYZE, "scan_complete", completed_budget)
             self._emit(
                 "scan.completed",
                 budget,
@@ -587,6 +617,7 @@ class RuntimeController:
             self.blackboard,
             budget,
             self.failed_actions,
+            self.config,
         )
         self.candidates = {candidate.candidate_id: candidate for candidate in candidates}
         self._emit(
