@@ -1,5 +1,5 @@
 from chromadb import Documents, EmbeddingFunction, Embeddings
-from agent_mesa import LLM_INTERFACE
+from casevo import LLM_INTERFACE
 import requests
 import time
 import json

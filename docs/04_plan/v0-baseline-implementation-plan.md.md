@@ -17,7 +17,7 @@
 - LLM 只能返回候选 ID 的有序批次，不能自行创造动作或参数；每个种子最多调用 3 次。
 - LLM 超时、异常、非法 JSON、未知候选、空结果时，自动采用确定性排序，不中止评测。
 - 不调用 `_deduct_budget()`、`end_turn()` 或其他环境私有方法。
-- 保持赛方入口不变：`ParticipantSquadModel(host_env, person_list, llm)`、`step()`、`agent_mesa` 导入名以及 ZIP 根目录三项契约。
+- 保持赛方入口不变：`ParticipantSquadModel(host_env, person_list, llm)`、`step()`、`casevo` 导入名以及 ZIP 根目录三项契约。
 - 通过单元测试、模拟环境集成测试、提交目录校验和打包检查；真实远程沙盒结果与本地结构检查分开记录。
 
 ## 2. 总体架构与状态机
@@ -355,7 +355,7 @@ Commander 的输入只包含：
 - 更新 `config.json` 与仲裁提示词，移除所有“最多 5 节点”和“1 到 5”硬编码。
 - 扩展 `scripts/build_submission.py`：按固定顺序把纯 Python 策略模块组装进生成的单文件，去掉 `from starnet...` 内部导入，并在写入交付目录前执行 `ast.parse()`。
 - 生成文件不得依赖 ZIP 中不存在的本地包；允许的外部依赖只有官方运行时和 NetworkX。
-- 在项目依赖中明确 Python `>=3.11` 与 NetworkX；不修改同级 `casevo` 仓库，也不因为本机导入失败擅自把提交导入名从 `agent_mesa` 改为 `casevo`。
+- 在项目依赖中明确 Python `>=3.11` 与 NetworkX；不修改同级 `casevo` 仓库，并使用 `casevo` 作为提交与本地调试的统一导入名。
 - 更新文档导航，加入 `04_plan/`，并保存本计划文件。
 - 构建后仍由现有校验和打包脚本产生根目录仅含 `config.json`、`prompt/`、`starnet_model.py` 的 ZIP。
 
@@ -426,7 +426,7 @@ python scripts/package_submission.py --name v0-baseline.zip
 - 文件中不存在 `from starnet`、私有环境方法、硬编码 API Key 和 `end_turn()`。
 - ZIP 根目录直接包含三项赛方契约内容，没有外层目录。
 - `ParticipantSquadModel` 类名、继承关系、构造参数和 `step()` 保持不变。
-- 在具备官方 `agent_mesa` 的干净 Python 3.11+ 环境中完成一次导入烟雾测试。
+- 在具备官方 `casevo` 的干净 Python 3.11+ 环境中完成一次导入烟雾测试。
 - 远程沙盒测试必须使用新 session，关闭 `local_test.py` 的手工 API 演示，记录最终分、剩余预算、环境动作数和 LLM 调用数。
 
 ## 9. 执行安排

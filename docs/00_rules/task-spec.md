@@ -68,7 +68,7 @@ $$
 
 1. 压缩包目录结构
 
-```js
+```python
 team_submission.zip
 ├── config.json            # 参赛者的智能体角色配置文件
 ├── prompt/                 # 存放各智能体大模型提示词模板的文件夹
@@ -116,7 +116,7 @@ env.shield_node(node_id: int)
 以下为您提供一个官方基线示例框架，您可以直接在此基础上进行扩充与优化：
 
 ```js
-from agent_mesa import ModelBase
+from casevo import ModelBase
 # TODO: 引入您基于 casevo AgentBase 自定义编写的智能体类
 # from your_agents import CommanderAgent, ScoutAgent 
 
@@ -160,4 +160,3 @@ class ParticipantSquadModel(ModelBase):
 
 - 离线部署：https://github.com/rgCASS/casevo
 - 示例代码：https://github.com/raoneng26/SMP2026
-

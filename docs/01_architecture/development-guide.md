@@ -1,6 +1,6 @@
 # SMP2026 星网干预任务解读和上手文档
 
-> 本文以更新后的 [`任务文档`](../00_rules/task-spec.md) 和仓库内 [`SMP_Starter_Kit`](../../SMP_Starter_Kit/) 为准，说明如何基于 casevo（Starter Kit 中的导入名为 `agent_mesa`）开发并提交参赛程序。它针对当前随仓库提供的 SDK 和基线代码，而不是对未公开评测实现的猜测。若天池公告、评测镜像或赛方新样例与本文不一致，应始终以赛方最新要求为准。
+> 本文以更新后的 [`任务文档`](../00_rules/task-spec.md) 和仓库内 [`SMP_Starter_Kit`](../../SMP_Starter_Kit/) 为准，说明如何基于 `casevo` 开发并提交参赛程序。`casevo` 是本项目与赛方运行时的 Python 导入名。
 
 ## 1. 任务全貌：受预算约束的部分可观测图决策
 
@@ -90,22 +90,16 @@ casevo 是基于 Mesa 的多智能体框架。当前源码的关键能力为：
 
 Starter Kit 用一个内部的 3 节点 `agent_graph` 表示“指挥官—侦察兵—执行官”的协作关系；真实星网不应直接塞入该图。真实星网的已知部分由 `local_nodes`、`local_edges` 和 `dead_nodes` 维护，这种“智能体协作图 + 环境已知图”分离的设计是合理的。
 
-### 2.2 `agent_mesa` 与本仓库 `casevo` 的命名差异
+### 2.2 `casevo` 导入契约
 
-赛题文字称指定框架为 casevo，但 Starter Kit 的 `starnet_model.py` 和 `zhipu.py` 使用：
+赛方指定框架和 Python 导入名均为 `casevo`。提交入口和 LLM 适配器应分别使用：
 
 ```python
-from agent_mesa import AgentBase, JsonStep, ModelBase
-from agent_mesa import LLM_INTERFACE
+from casevo import AgentBase, JsonStep, ModelBase
+from casevo import LLM_INTERFACE
 ```
 
-本仓库附带源码的导入名则是 `casevo`，例如 `from casevo import AgentBase, JsonStep, ModelBase`。在当前工作区的实际解释器中，`casevo` 可找到，而 `agent_mesa` 不可找到；同时 `chromadb` 也尚未安装。因此 Starter Kit 不能在本机直接启动，并不是策略本身的错误。
-
-处理原则如下：
-
-1. **提交时优先遵循官方评测镜像和 Starter Kit 的导入约定**。若赛方镜像提供 `agent_mesa`，不要擅自改名。
-2. **本地调试前先确认赛方依赖说明**。若官方确认 `agent_mesa` 是旧包名或要求使用本仓库 casevo，再一致地修改本地测试文件与提交文件的导入；不要只修改其中一处。
-3. 不要把“本机能导入 casevo”误当成评测镜像的依赖契约。依赖/命名未澄清时，应向赛方咨询，而不是在 ZIP 中捆绑非官方框架替代品。
+`agent_mesa` 是早期 Starter Kit 中遗留的错误导入名，不应再作为本地或评测环境的依赖契约。框架未安装时，应安装赛方指定的 CaseVO 发行版本；不要在 ZIP 中伪造、捆绑或替代框架。
 
 ## 3. 本地上手：先跑通最短闭环
 
@@ -114,22 +108,18 @@ from agent_mesa import LLM_INTERFACE
 Starter Kit README 写的是 Python 3.8+ 与 `requests networkx zhipuai`，但仓库内 casevo 0.3.19 的 `pyproject.toml` 要求 Python 3.11+，并依赖 Mesa 2.4.0 和 ChromaDB。为避免版本不匹配，建议使用 Python 3.11 或更高版本，并以赛方公布的安装方式为最终依据。
 
 ```bash
-cd /Users/lzc/TNTprojectZ/AprojectZ/SMP2026casevo
-python3.11 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
+cd /path/to/SMP2026
+uv sync
 
-# Starter Kit 的网络与本地测试依赖
-python -m pip install requests networkx zhipuai
+# 为本地 Starter Kit 联调安装运行时和 HTTP 客户端。
+# ../casevo 是与本项目同级的 CaseVO 源码仓库；新增依赖后应提交 pyproject.toml 和 uv.lock。
+uv add --editable ../casevo requests
 
-# 仅当赛方确认本地使用本仓库 casevo 命名空间时安装
-python -m pip install ./casevo
-
-# 先检查评测/本地所需的命名空间，而不是直接修改示例代码
-python -c "import agent_mesa; print('agent_mesa OK')"
+# 检查本地运行时导入
+uv run python -c "import casevo; print('casevo OK')"
 ```
 
-最后一条若报 `ModuleNotFoundError`，说明缺少赛方提供的 `agent_mesa` 运行时或存在命名迁移问题。应先确认官方说明。不要仅为绕过导入错误而在提交包中硬编码环境替身；这既不能验证真实评测契约，也可能违反框架接入要求。
+最后一条若报 `ModuleNotFoundError`，说明本地缺少 CaseVO 运行时或其依赖。应按赛方指定的版本安装；不要仅为绕过导入错误而在提交包中硬编码环境替身。
 
 ### 3.2 本地配置与运行
 
@@ -139,8 +129,8 @@ python -c "import agent_mesa; print('agent_mesa OK')"
 4. 从该目录运行实际存在的入口：
 
 ```bash
-cd /Users/lzc/TNTprojectZ/AprojectZ/SMP2026casevo/SMP2026/SMP_Starter_Kit
-python local_test.py
+cd /path/to/SMP2026/SMP_Starter_Kit
+uv run python local_test.py
 ```
 
 注意 README 中写作 `local_test_run.py`，而当前仓库实际文件为 `local_test.py`；以上命令以文件系统为准。

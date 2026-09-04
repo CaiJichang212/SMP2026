@@ -25,14 +25,14 @@ SMP_Starter_Kit/
 ## 🚀 快速开始 (Quick Start)
 
 ### 1. 环境准备
-确保您的电脑上已安装 Python 3.8+，并安装以下依赖：
+确保您的电脑上已安装 Python 3.11+。在仓库根目录初始化受控开发环境：
 
 ```bash
-pip install requests networkx zhipuai
+uv sync
 ```
 
 ### 2. 配置您的 API Key
-本地调试时，大模型推理消耗的是您自己的算力。请打开根目录下的 `local_test_run.py`，找到以下行并填入您自己的智谱 API Key：
+本地调试时，大模型推理消耗的是您自己的算力。请打开 `local_test.py`，找到以下行并填入您自己的智谱 API Key：
 
 ```python
 YOUR_KEY = "您的智谱API_KEY"
@@ -42,7 +42,8 @@ YOUR_KEY = "您的智谱API_KEY"
 在终端中执行以下命令：
 
 ```bash
-python local_test_run.py
+cd SMP_Starter_Kit
+uv run python local_test.py
 ```
 终端将演示基础 API 的调用方法，随后您的 CaseVO 智能体会自动接管并开始干预网络，最终由官方沙盒服务器返回最终得分！
 
