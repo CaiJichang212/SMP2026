@@ -11,6 +11,21 @@ from zhipu import ZhipuLLM
 from api_client import RemoteStarNetEnv
 from team_submission.starnet_model import ParticipantSquadModel
 
+
+MIN_STATE_CHANGING_ACTION_COST = 2.0
+
+
+def local_step_limit(seed: dict) -> int:
+    """读取自定义种子中的本地回合保护值。"""
+    settings = seed.get("global_setting")
+    if not isinstance(settings, dict):
+        raise ValueError("种子缺少 global_setting 配置")
+    limit = settings.get("max_api_calls")
+    if isinstance(limit, bool) or not isinstance(limit, int) or limit <= 0:
+        raise ValueError("global_setting.max_api_calls 必须是正整数")
+    return limit
+
+
 def run():
     print(" 欢迎来到 SMP 2026 星网挑战赛 - 本地测试沙盒")
     print("==================================================")
@@ -21,6 +36,7 @@ def run():
     
     with open(SEED_FILE, 'r', encoding='utf-8') as f:
         my_seed = json.load(f)
+    max_steps = local_step_limit(my_seed)
 
     # 2. 实例化远程环境（连接官方测试服务器）
     SERVER_URL = "http://8.222.218.162:5000" 
@@ -71,7 +87,11 @@ def run():
         squad_model = ParticipantSquadModel(host_env=env, person_list=person_list, llm=llm)
         
         step_count = 0
-        while env.get_remaining_budget() >= 2.0 and step_count < 50:
+        # 预算低于 2 时只能扫描，已无法执行会改变网络状态的干预操作。
+        while (
+            env.get_remaining_budget() >= MIN_STATE_CHANGING_ACTION_COST
+            and step_count < max_steps
+        ):
             print(f"\n[回合 {step_count+1}] 开始，当前预算: {env.get_remaining_budget()}")
             squad_model.step()
             step_count += 1
@@ -81,7 +101,7 @@ def run():
         os.chdir(original_cwd)
     
     print("\n==================================================")
-    print(" 干预行动结束，已耗尽预算或触达步数上限。")
+    print(" 干预行动结束：预算不足以继续干预，或触达种子配置的本地回合保护上限。")
     print("\n 正在让服务器执行物理共识推演结算，请稍候...")
     final_score = env.trigger_eval()
     print(f" 本地测试完毕，您的最终综合援助意愿得分为: {final_score}")
