@@ -43,7 +43,7 @@ artifacts/submission/<name>.zip       最终上传文件
 
 `SMP_Starter_Kit/team_submission/` 不是第二份需要维护的策略源码。构建脚本会复制
 `config.json` 与 `prompt/`，并将 `src/starnet` 的策略模块内联为单文件
-`starnet_model.py`。因此不要直接修改该目录；`run_baseline_deepseek.py`、校验和打包都
+`starnet_model.py`。因此不要直接修改该目录；本地 OpenAI 兼容模型运行器、校验和打包都
 使用它。
 
 `SMP_Starter_Kit/` 的其余内容是官方提供的 SDK 与本地调试辅助文件：`api_client.py`
@@ -108,18 +108,23 @@ uv sync
 
 ```bash
 SMP_LLM_API_KEY=...
-SMP_LLM_BASE_URL=https://api.deepseek.com
-SMP_LLM_MODEL=deepseek-v4-flash
+SMP_LLM_BASE_URL=http://43.133.177.230:3819/v1
+SMP_LLM_MODEL=gpt-5.6-luna
 ```
 
 ### 3. 运行本地测试
-使用当前 V0 策略和 DeepSeek 运行远程沙盒：
+使用当前 V0 策略和 OpenAI Chat Completions 兼容模型运行远程沙盒：
 
 ```bash
-uv run python scripts/run_baseline_deepseek.py
+uv run python scripts/run_baseline_openai.py
 ```
 该脚本会先构建 `team_submission/`，再加载生成的 `ParticipantSquadModel` 运行，并将本地
 诊断轨迹写入 `runs/v0-baseline/`。
+
+运行器使用标准的 `POST /v1/chat/completions`、Bearer API Key 和
+`response_format: {"type":"json_object"}`；`SMP_LLM_BASE_URL` 可以带或不带 `/v1`，
+会被规范化为正确的端点。默认配置对应本仓库测试的 `gpt-5.6-luna` 网关。模型请求超时、
+HTTP 错误或格式错误不会重试，以确保一次控制器 LLM 计数只对应一次远程请求，并立即走确定性回退。
 
 ## 📡 沙盒环境 (Environment API) 指南
 

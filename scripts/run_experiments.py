@@ -21,7 +21,14 @@ import sys
 import time
 from typing import Any, Callable, Iterable, Mapping
 
-import requests
+# Support both ``python scripts/run_experiments.py`` and imports from the
+# repository-root test suite.  See the matching fallback in the local runner.
+try:
+    from scripts.openai_compat import DEFAULT_BASE_URL, DEFAULT_MODEL, OpenAICompatibleChat
+except ModuleNotFoundError as exc:
+    if exc.name != "scripts":
+        raise
+    from openai_compat import DEFAULT_BASE_URL, DEFAULT_MODEL, OpenAICompatibleChat
 
 from starnet.experiments.seeds import all_seed_payloads
 from starnet.model.blackboard import Blackboard
@@ -210,8 +217,9 @@ def llm_ranker(timeout: float) -> Callable[[dict[str, Any]], object]:
     api_key = os.getenv("SMP_LLM_API_KEY")
     if not api_key:
         raise RuntimeError("SMP_LLM_API_KEY is required only for v0_llm3")
-    base_url = os.getenv("SMP_LLM_BASE_URL", "https://api.deepseek.com").rstrip("/")
-    model = os.getenv("SMP_LLM_MODEL", "deepseek-v4-flash")
+    base_url = os.getenv("SMP_LLM_BASE_URL", DEFAULT_BASE_URL)
+    model = os.getenv("SMP_LLM_MODEL", DEFAULT_MODEL)
+    client = OpenAICompatibleChat(api_key, base_url, model, timeout)
 
     def rank(payload: dict[str, Any]) -> object:
         prompt = (
@@ -219,22 +227,7 @@ def llm_ranker(timeout: float) -> Callable[[dict[str, Any]], object]:
             "You may order only these candidate IDs; do not create actions.\n"
             + json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
         )
-        response = requests.post(
-            f"{base_url}/chat/completions",
-            headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
-            json={
-                "model": model,
-                "messages": [{"role": "user", "content": prompt}],
-                "temperature": 0.0,
-                "response_format": {"type": "json_object"},
-            },
-            timeout=timeout,
-        )
-        response.raise_for_status()
-        try:
-            return response.json()["choices"][0]["message"]["content"]
-        except (KeyError, IndexError, TypeError, ValueError) as exc:
-            raise RuntimeError("LLM response had no chat completion") from exc
+        return client.complete_json(prompt)
 
     return rank
 

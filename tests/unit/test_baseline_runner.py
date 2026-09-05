@@ -1,11 +1,11 @@
-"""DeepSeek 本地运行器的脱敏诊断辅助函数测试。"""
+"""本地 OpenAI 兼容运行器的脱敏诊断辅助函数测试。"""
 
 from __future__ import annotations
 
 from types import SimpleNamespace
 import unittest
 
-from scripts.run_baseline_deepseek import default_step_limit, seed_budget, seed_snapshot_matches
+from scripts.run_baseline_openai import default_step_limit, seed_budget, seed_snapshot_matches
 
 
 class BaselineRunnerTests(unittest.TestCase):

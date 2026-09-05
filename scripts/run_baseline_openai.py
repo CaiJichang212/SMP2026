@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""使用 DeepSeek-V4-Flash 在官方沙盒上运行 V0 baseline。"""
+"""使用 OpenAI API 兼容模型在官方沙盒上运行 V0 baseline。"""
 
 from __future__ import annotations
 
@@ -14,14 +14,22 @@ from pathlib import Path
 from typing import Mapping, Sequence
 from uuid import uuid4
 
-import requests
 from casevo import LLM_INTERFACE
+
+# ``python scripts/run_baseline_openai.py`` puts this directory, rather than
+# the repository root, on ``sys.path``.  Keep the package import for tests and
+# the sibling import for the documented direct-script entry point.
+try:
+    from scripts.openai_compat import DEFAULT_BASE_URL, DEFAULT_MODEL, OpenAICompatibleChat
+except ModuleNotFoundError as exc:
+    if exc.name != "scripts":
+        raise
+    from openai_compat import DEFAULT_BASE_URL, DEFAULT_MODEL, OpenAICompatibleChat
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 STARTER_KIT = PROJECT_ROOT / "SMP_Starter_Kit"
 DEFAULT_SERVER_URL = "http://8.222.218.162:5000"
-DEFAULT_MODEL = "deepseek-v4-flash"
 MIN_INTERVENTION_COST = 2.0
 STEP_TRANSITION_HEADROOM = 2
 DEFAULT_LOG_DIR = PROJECT_ROOT / "runs" / "v0-baseline"
@@ -53,38 +61,15 @@ class DisabledEmbedding:
         return "starnet_disabled_embedding"
 
 
-class DeepSeekLLM(LLM_INTERFACE):
-    """CaseVO 的最小 DeepSeek Chat Completions 适配器。"""
+class OpenAICompatibleLLM(LLM_INTERFACE):
+    """CaseVO 的最小 OpenAI Chat Completions 兼容适配器。"""
 
     def __init__(self, api_key: str, base_url: str, model: str, timeout: float) -> None:
-        self.api_key = api_key
-        self.base_url = base_url.rstrip("/")
-        self.model = model
-        self.timeout = timeout
+        self.chat = OpenAICompatibleChat(api_key, base_url, model, timeout)
         self.embedding = DisabledEmbedding()
 
     def send_message(self, prompt: str, json_flag: bool = False) -> str:
-        response = requests.post(
-            f"{self.base_url}/chat/completions",
-            headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"},
-            json={
-                "model": self.model,
-                "messages": [{"role": "user", "content": prompt}],
-                "temperature": 0.2,
-                "response_format": {"type": "json_object"},
-            },
-            timeout=self.timeout,
-        )
-        if not response.ok:
-            raise RuntimeError(f"DeepSeek request failed with HTTP {response.status_code}")
-        payload = response.json()
-        try:
-            content = payload["choices"][0]["message"]["content"]
-        except (KeyError, IndexError, TypeError) as exc:
-            raise RuntimeError("DeepSeek response did not contain a chat completion") from exc
-        if not isinstance(content, str) or not content.strip():
-            raise RuntimeError("DeepSeek returned an empty chat completion")
-        return content
+        return self.chat.complete_json(prompt)
 
     def send_embedding(self, text_list: Sequence[str]) -> list[list[float]]:
         return self.embedding(text_list)
@@ -240,8 +225,8 @@ def main() -> int:
     if node_count <= 0:
         raise SystemExit("无法从种子推断节点数；请通过 --node-count 指定正整数。")
 
-    base_url = os.getenv("SMP_LLM_BASE_URL", "https://api.deepseek.com")
-    llm = DeepSeekLLM(api_key, base_url, args.model, args.timeout)
+    base_url = os.getenv("SMP_LLM_BASE_URL", DEFAULT_BASE_URL)
+    llm = OpenAICompatibleLLM(api_key, base_url, args.model, args.timeout)
     env = RemoteStarNetEnv(api_url=args.server_url, custom_seed_data=seed, timeout=args.timeout)
     initial_budget = env.get_remaining_budget()
     max_steps = args.max_steps or default_step_limit(node_count, initial_budget)
@@ -261,8 +246,8 @@ def main() -> int:
     try:
         person_list = json.loads((STARTER_KIT / "team_submission" / "config.json").read_text(encoding="utf-8"))["person"]
         model = ParticipantSquadModel(host_env=env, person_list=person_list, llm=llm)
-        # The submission default intentionally has no LLM calls.  This named
-        # DeepSeek baseline is the explicit retained three-call experiment.
+        # The submission default intentionally has no LLM calls.  This local
+        # OpenAI-compatible run is the explicit retained three-call experiment.
         model.controller = RuntimeController(
             env,
             model.commander_agent.rank_candidates,
