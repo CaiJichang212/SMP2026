@@ -2,7 +2,7 @@
 """Run the V0 reproducibility gate and parameter matrix against fresh sessions.
 
 Credentials are read only from ``.env``/environment and are never serialized.
-Use ``--dry-run`` to inspect the deterministic 68-session stable plan.
+Use ``--dry-run`` to inspect the deterministic manifest-derived stable plan.
 """
 
 from __future__ import annotations
@@ -26,7 +26,8 @@ import requests
 from starnet.experiments.seeds import all_seed_payloads
 from starnet.model.blackboard import Blackboard
 from starnet.policy.actions import Action, is_legal_action
-from starnet.policy.config import PolicyConfig
+from starnet.policy.config import PolicyConfig, PolicyMode
+from starnet.policy.calibration import DEFAULT_CALIBRATION_PROFILE
 from starnet.runtime.controller import RuntimeController
 from starnet.runtime.env_adapter import apply_action_outcome
 from starnet.runtime.trace import RuntimeTrace
@@ -92,6 +93,7 @@ def variant_config(name: str) -> PolicyConfig:
         "mixed_raw_roi": PolicyConfig(p0_exclusive=False, mixed_raw_roi=True, **common),
         "communicate_only": PolicyConfig(enable_shield=False, enable_cut=False, **common),
         "risk_only": PolicyConfig(enable_communicate=False, **common),
+        "v1_cmg": PolicyConfig(policy_mode=PolicyMode.V1_CMG, **common),
     }
     try:
         return configs[name]
@@ -103,6 +105,11 @@ def session_spec(
     *, seed_id: str, variant: str, phase: str, repetition: int = 1, block: int | None = None
 ) -> dict[str, Any]:
     config = asdict(variant_config(variant)) if phase == "main" else {"gate_policy": variant}
+    if variant == "v1_cmg" and phase == "main":
+        # Profile content is strategy content.  A changed/fail-closed profile
+        # must invalidate resumed sessions even inside the same manifest tree.
+        config["calibration_profile_hash"] = DEFAULT_CALIBRATION_PROFILE.profile_hash
+        config["calibration_profile_verified"] = DEFAULT_CALIBRATION_PROFILE.verified
     spec = {
         "phase": phase,
         "seed_id": seed_id,
@@ -117,7 +124,7 @@ def session_spec(
 
 
 def stable_plan(manifest: Mapping[str, object]) -> list[dict[str, Any]]:
-    """Return the specified 20-session gate plus stable 48-session matrix."""
+    """Return the fixed 20-session gate plus the manifest-defined matrix."""
     gate = [
         session_spec(seed_id="four_node_fixture", variant=policy, phase="gate", repetition=block, block=block)
         for block in range(1, 6)
@@ -127,10 +134,14 @@ def stable_plan(manifest: Mapping[str, object]) -> list[dict[str, Any]]:
     variants = manifest.get("variants")
     if not isinstance(seeds, list) or not isinstance(variants, list):
         raise ValueError("manifest must provide main_seeds and variants arrays")
+    repetitions = manifest.get("main_repetitions", 1)
+    if isinstance(repetitions, bool) or not isinstance(repetitions, int) or repetitions <= 0:
+        raise ValueError("main_repetitions must be a positive integer")
     main = [
-        session_spec(seed_id=str(seed), variant=str(variant), phase="main")
+        session_spec(seed_id=str(seed), variant=str(variant), phase="main", repetition=repetition)
         for seed in seeds
         for variant in variants
+        for repetition in range(1, repetitions + 1)
     ]
     return gate + main
 
@@ -549,7 +560,8 @@ def main() -> int:
     if args.dry_run:
         for spec in randomized_order(plan, int(manifest["randomization_seed"])):
             print(json.dumps(spec, ensure_ascii=False, sort_keys=True))
-        print(f"dry-run sessions={len(plan)} (gate=20, stable-matrix=48)")
+        main_count = sum(spec["phase"] == "main" for spec in plan)
+        print(f"dry-run sessions={len(plan)} (gate={len(plan) - main_count}, stable-matrix={main_count})")
         return 0
     load_local_env(PROJECT_ROOT / ".env")
     if not args.skip_preflight:

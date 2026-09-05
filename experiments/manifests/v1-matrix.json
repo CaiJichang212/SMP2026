@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "name": "v1-cmg-paired-matrix",
+  "randomization_seed": 20260905,
+  "server_url_env": "SMP_SERVER_URL",
+  "timeout_seconds": 60,
+  "gate_seed": "four_node_fixture",
+  "main_seeds": [
+    "er_balanced",
+    "ba_negative_hubs",
+    "ws_peace_majority",
+    "sbm_negative_bridges",
+    "sbm_violent_cluster",
+    "three_sparse_components"
+  ],
+  "variants": ["scan_only", "v0_deterministic", "v1_cmg"],
+  "main_repetitions": 3,
+  "pairing": "Comparison accepts only matching plan_hash, matrix_branch, seed_id and repetition."
+}

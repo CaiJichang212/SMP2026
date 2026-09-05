@@ -227,6 +227,8 @@ def main() -> int:
         ConsoleTraceSink,
         JsonlTraceSink,
         ParticipantSquadModel,
+        PolicyConfig,
+        RuntimeController,
         RuntimeTrace,
     )
 
@@ -259,6 +261,15 @@ def main() -> int:
     try:
         person_list = json.loads((STARTER_KIT / "team_submission" / "config.json").read_text(encoding="utf-8"))["person"]
         model = ParticipantSquadModel(host_env=env, person_list=person_list, llm=llm)
+        # The submission default intentionally has no LLM calls.  This named
+        # DeepSeek baseline is the explicit retained three-call experiment.
+        model.controller = RuntimeController(
+            env,
+            model.commander_agent.rank_candidates,
+            initial_budget=initial_budget,
+            node_count=node_count,
+            config=PolicyConfig(max_llm_calls=3),
+        )
         # 仅使小型自定义种子可完成一轮扫描；提交模型仍由公开预算推断正式赛制规模。
         model.controller.scout.node_count = node_count
         if not args.no_trace:

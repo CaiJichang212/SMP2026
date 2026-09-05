@@ -17,10 +17,12 @@ INLINE_MODULES = (
     "src/starnet/model/blackboard.py",
     "src/starnet/policy/actions.py",
     "src/starnet/policy/config.py",
+    "src/starnet/policy/calibration.py",
     "src/starnet/runtime/env_adapter.py",
     "src/starnet/runtime/trace.py",
     "src/starnet/policy/graph_analysis.py",
     "src/starnet/policy/candidates.py",
+    "src/starnet/policy/cmg.py",
     "src/starnet/runtime/controller.py",
     "src/starnet/submission/starnet_model.py",
 )

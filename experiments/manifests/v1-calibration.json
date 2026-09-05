@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "name": "v1-cmg-calibration",
+  "randomization_seed": 20260905,
+  "response_protocol": {
+    "personas": ["和平", "暴力", "中立"],
+    "prompt_ids": [1, 2, 3],
+    "initial_w": [-30, 0, 30],
+    "repetitions": 5,
+    "communications_per_session": 3
+  },
+  "settlement_protocol": {
+    "graph_families": ["isolated", "edge", "path3", "path5", "triangle", "star5", "disconnected"],
+    "splits": ["calibration", "selection", "gate"],
+    "repetitions": 5,
+    "actions": ["control", "comm", "cut", "shield"],
+    "split_rule": "A base graph id belongs to exactly one split; action variants never cross splits."
+  },
+  "grid": {
+    "rho": [0, 0.5, 1, 2],
+    "gamma": [0, 1],
+    "a": [0.1, 0.25, 0.5, 0.75],
+    "b": [0, 0.25, 0.5]
+  },
+  "gate": {
+    "minimum_spearman": 0.9,
+    "maximum_median_normalized_mae": 0.05,
+    "maximum_score_spread_fraction": 0.02,
+    "required_repetitions": 5
+  }
+}
