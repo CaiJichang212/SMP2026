@@ -1,0 +1,81 @@
+{
+  "analysis_status": "insufficient_noncomparable_data",
+  "comparable_probe_count": 0,
+  "duplicate_probe_ids": [],
+  "expected_probe_count": 10,
+  "experiment": "v1-local-mechanism-probes",
+  "invalid_reasons": {
+    "bridge_comm_p1": [
+      "protocol_error:RemoteProtocolError",
+      "scan_snapshot_mismatch_or_missing",
+      "missing_finite_score",
+      "runner_marked_noncomparable"
+    ],
+    "bridge_control": [
+      "protocol_error:RemoteProtocolError",
+      "scan_snapshot_mismatch_or_missing",
+      "missing_finite_score",
+      "runner_marked_noncomparable"
+    ],
+    "bridge_cut": [
+      "protocol_error:RemoteProtocolError",
+      "scan_snapshot_mismatch_or_missing",
+      "missing_finite_score",
+      "runner_marked_noncomparable"
+    ],
+    "bridge_shield": [
+      "protocol_error:RemoteProtocolError",
+      "scan_snapshot_mismatch_or_missing",
+      "missing_finite_score",
+      "runner_marked_noncomparable"
+    ],
+    "bridge_shield_comm_p1": [
+      "protocol_error:RemoteProtocolError",
+      "scan_snapshot_mismatch_or_missing",
+      "missing_finite_score",
+      "runner_marked_noncomparable"
+    ],
+    "isolated_p1_x0": [
+      "protocol_error:RemoteProtocolError",
+      "scan_snapshot_mismatch_or_missing",
+      "missing_finite_score",
+      "runner_marked_noncomparable"
+    ],
+    "isolated_p1_x1": [
+      "protocol_error:RemoteProtocolError",
+      "scan_snapshot_mismatch_or_missing",
+      "missing_finite_score",
+      "runner_marked_noncomparable"
+    ],
+    "isolated_p1_x2": [
+      "protocol_error:RemoteProtocolError",
+      "scan_snapshot_mismatch_or_missing",
+      "missing_finite_score",
+      "runner_marked_noncomparable"
+    ],
+    "isolated_p1_x3": [
+      "protocol_error:RemoteProtocolError",
+      "scan_snapshot_mismatch_or_missing",
+      "missing_finite_score",
+      "runner_marked_noncomparable"
+    ],
+    "isolated_p2_x1": [
+      "protocol_error:RemoteProtocolError",
+      "scan_snapshot_mismatch_or_missing",
+      "missing_finite_score",
+      "runner_marked_noncomparable"
+    ]
+  },
+  "mechanism_metrics": null,
+  "missing_probe_ids": [],
+  "observed_probe_count": 10,
+  "plan_hash": "7360deb234e104982f0d8380a8cad62b224a8d3678c81b2e9ad24859ef2e4187",
+  "protocol_error_counts": {
+    "RemoteProtocolError": 10
+  },
+  "protocol_error_detail_counts": {
+    "remote sandbox protocol error at /api/start_session: request failed (ConnectionError)": 10
+  },
+  "schema_version": 1,
+  "unexpected_probe_ids": []
+}

@@ -239,6 +239,11 @@ def main() -> int:
         try:
             new_rows.append(run_probe(probe, plan_hash=plan_hash, server_url=server_url, timeout=timeout))
         except Exception as exc:
+            # RemoteProtocolError deliberately carries only a public endpoint
+            # and exception class (never an HTTP body or credentials).  Keep
+            # that diagnostic so a failed availability gate can distinguish a
+            # transport issue from a malformed session response.
+            detail = str(exc) if type(exc).__name__ == "RemoteProtocolError" else None
             new_rows.append(
                 {
                     "schema_version": 1,
@@ -249,6 +254,7 @@ def main() -> int:
                     "final_score": None,
                     "comparable": False,
                     "protocol_error": type(exc).__name__,
+                    "protocol_error_detail": detail,
                     "completed_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
                 }
             )

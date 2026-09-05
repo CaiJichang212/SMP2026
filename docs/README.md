@@ -8,5 +8,6 @@
 - [`02_research/`](02_research/)：算法调研与策略路线。
 - [`03_experiments/`](03_experiments/)：可提交的实验结论与版本说明。
   - [`V1 推荐方案`](03_experiments/v1-recommended-design.md)：本地机制探针、V0 问题分析与结算器驱动的响应感知 Greedy 设计。
+  - [`V1.0 实验方案`](03_experiments/v1-experiment-protocol.md)：预注册的校准、门禁、配对主矩阵和当前 fail-closed 决策。
 - [`04_plan/`](04_plan/)：版本实施计划与验收口径。
 - [`runbooks/`](runbooks/)：本地开发、远程沙盒和提交操作手册。
