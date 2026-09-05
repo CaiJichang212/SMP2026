@@ -9,6 +9,7 @@ from tempfile import TemporaryDirectory
 import unittest
 
 from starnet.runtime.controller import RuntimeController
+from starnet.policy.config import PolicyConfig
 from starnet.runtime.trace import ConsoleTraceSink, JsonlTraceSink, RuntimeTrace, safe_json_value
 
 
@@ -141,6 +142,7 @@ class RuntimeTraceTests(unittest.TestCase):
             environment,
             lambda _: {"mode": "risk_first", "candidate_ids": ["shield:2"]},
             node_count=4,
+            config=PolicyConfig(max_llm_calls=3),
         )
         controller.attach_trace(RuntimeTrace(run_id="run", seed_id="seed", sinks=[sink]))
         run_to_first_intervention(controller)
@@ -172,7 +174,7 @@ class RuntimeTraceTests(unittest.TestCase):
         for response, source, reason in cases:
             with self.subTest(reason=reason):
                 sink = MemorySink()
-                controller = RuntimeController(TraceEnvironment(), lambda _: response, node_count=4)
+                controller = RuntimeController(TraceEnvironment(), lambda _: response, node_count=4, config=PolicyConfig(max_llm_calls=3))
                 controller.attach_trace(RuntimeTrace(run_id="run", seed_id="seed", sinks=[sink]))
                 run_to_first_intervention(controller)
                 plan = next(record for record in sink.records if record["event"] == "plan.created")
@@ -181,7 +183,7 @@ class RuntimeTraceTests(unittest.TestCase):
                 self.assertEqual(failure["data"]["fallback_reason"], reason)
 
         sink = MemorySink()
-        controller = RuntimeController(TraceEnvironment(), lambda _: {"mode": "risk_first", "candidate_ids": []}, node_count=4)
+        controller = RuntimeController(TraceEnvironment(), lambda _: {"mode": "risk_first", "candidate_ids": []}, node_count=4, config=PolicyConfig(max_llm_calls=3))
         controller.commander.llm_calls = 3
         controller.attach_trace(RuntimeTrace(run_id="run", seed_id="seed", sinks=[sink]))
         run_to_first_intervention(controller)
@@ -194,7 +196,7 @@ class RuntimeTraceTests(unittest.TestCase):
         def broken_ranker(_: dict[str, object]) -> object:
             raise TimeoutError("request token=top-secret timed out")
 
-        controller = RuntimeController(TraceEnvironment(), broken_ranker, node_count=4)
+        controller = RuntimeController(TraceEnvironment(), broken_ranker, node_count=4, config=PolicyConfig(max_llm_calls=3))
         controller.attach_trace(RuntimeTrace(run_id="run", seed_id="seed", sinks=[sink]))
         run_to_first_intervention(controller)
         failure = next(record for record in sink.records if record["event"] == "llm.failed")

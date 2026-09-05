@@ -3,8 +3,11 @@
 from __future__ import annotations
 
 import unittest
+from dataclasses import asdict
 
 from starnet.runtime.controller import ControllerState, RuntimeController, StopReason
+from starnet.policy.calibration import CalibrationProfile
+from starnet.policy.config import PolicyConfig, PolicyMode
 
 
 class FakeStarNetEnvironment:
@@ -87,6 +90,33 @@ class FakeStarNetEnvironment:
 
 
 class RuntimeControllerIntegrationTests(unittest.TestCase):
+    @staticmethod
+    def _active_profile() -> CalibrationProfile:
+        draft = CalibrationProfile(
+            gate_passed=True,
+            settlement_residual_std={"comm": 0.0, "cut": 0.0, "shield": 0.0},
+            response_mean={"和平|1|1": 10.0, "中立|1|1": 10.0},
+            response_std={"和平|1|1": 0.0, "中立|1|1": 0.0},
+            manifest_hash="manifest",
+            data_hash="data",
+        )
+        return CalibrationProfile(**{**asdict(draft), "profile_hash": draft.computed_hash()})
+
+    def test_unverified_cmg_profile_is_exact_v0_fallback(self) -> None:
+        left, right = FakeStarNetEnvironment(4, 60.0), FakeStarNetEnvironment(4, 60.0)
+        v0 = RuntimeController(left, node_count=4, config=PolicyConfig(max_llm_calls=0))
+        v1 = RuntimeController(
+            right,
+            node_count=4,
+            config=PolicyConfig(max_llm_calls=0, policy_mode=PolicyMode.V1_CMG),
+        )
+        for _ in range(20):
+            if not v0.stopped:
+                v0.step()
+            if not v1.stopped:
+                v1.step()
+        self.assertEqual(left.calls, right.calls)
+        self.assertEqual(v1.llm_calls, 0)
     def test_50_node_scan_is_fixed_cost_and_never_calls_llm(self) -> None:
         env = FakeStarNetEnvironment(50, 100.0)
         llm_payloads: list[dict[str, object]] = []
@@ -177,7 +207,7 @@ class RuntimeControllerIntegrationTests(unittest.TestCase):
                     payloads.append(payload)
                     return {"mode": "risk_first", "candidate_ids": ["shield:2"]}
 
-                controller = RuntimeController(env, rank, node_count=4)
+                controller = RuntimeController(env, rank, node_count=4, config=PolicyConfig(max_llm_calls=3))
                 for _ in range(5):
                     self.assertEqual(controller.step(), 0)
 

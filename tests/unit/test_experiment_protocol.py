@@ -10,6 +10,7 @@ from scripts.run_experiments import (
     GATE_POLICIES,
     gate_is_stable,
     result_namespace,
+    session_spec,
     stable_plan,
     variant_config,
 )
@@ -39,6 +40,11 @@ class ExperimentProtocolTests(unittest.TestCase):
         self.assertEqual(sum(item["phase"] == "main" for item in plan), 48)
         self.assertEqual(variant_config("v0_llm3").max_llm_calls, 3)
         self.assertEqual(variant_config("v0_deterministic").max_llm_calls, 0)
+
+    def test_v1_session_identity_contains_frozen_profile_identity(self) -> None:
+        spec = session_spec(seed_id="seed", variant="v1_cmg", phase="main")
+        self.assertIn("calibration_profile_hash", spec["config"])
+        self.assertIn("calibration_profile_verified", spec["config"])
 
     def test_gate_requires_matching_hashes_and_two_percent_spread(self) -> None:
         rows = [

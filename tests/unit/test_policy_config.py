@@ -38,7 +38,7 @@ class TinyEnvironment:
 class PolicyConfigTests(unittest.TestCase):
     def test_default_is_immutable_v0_configuration(self) -> None:
         self.assertTrue(DEFAULT_POLICY_CONFIG.p0_exclusive)
-        self.assertEqual(DEFAULT_POLICY_CONFIG.max_llm_calls, 3)
+        self.assertEqual(DEFAULT_POLICY_CONFIG.max_llm_calls, 0)
         self.assertEqual(DEFAULT_POLICY_CONFIG.safety_step_limit(50), 115)
         self.assertEqual(DEFAULT_POLICY_CONFIG.safety_step_limit(100), 245)
         with self.assertRaises(Exception):
