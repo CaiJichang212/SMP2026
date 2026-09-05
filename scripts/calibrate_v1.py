@@ -198,6 +198,22 @@ def build_report(manifest: Mapping[str, Any], rows: list[Mapping[str, Any]]) -> 
             candidate.computed_hash(),
         ),
     )
+    candidate_models = {
+        model: {
+            "parameters": {
+                "rho": candidate.rho,
+                "gamma": candidate.gamma,
+                "a": candidate.a,
+                "b": candidate.b,
+            },
+            "calibration_mae": mae(calibration, candidate),
+            "selection_spearman": spearman(
+                [score_for_row(row, candidate) for row in selection],
+                [_score(row) for row in selection],
+            ),
+        }
+        for model, candidate in tuned_by_model.items()
+    }
     actual = [_score(row) for row in gate]
     predicted = [score_for_row(row, selected) for row in gate]
     ordering = spearman(predicted, actual)
@@ -259,6 +275,7 @@ def build_report(manifest: Mapping[str, Any], rows: list[Mapping[str, Any]]) -> 
             "missing_response_keys": sorted(required_keys.difference(means) | required_keys.difference(stds)),
         },
         "selection_model": selected.model,
+        "candidate_models": candidate_models,
         "manifest_hash": manifest_hash,
         "data_hash": data_hash,
     }
