@@ -8,6 +8,7 @@ from dataclasses import asdict
 from starnet.runtime.controller import ControllerState, RuntimeController, StopReason
 from starnet.policy.calibration import CalibrationProfile
 from starnet.policy.config import PolicyConfig, PolicyMode
+from starnet.runtime.stage import ContestStage
 
 
 class FakeStarNetEnvironment:
@@ -133,7 +134,7 @@ class RuntimeControllerIntegrationTests(unittest.TestCase):
 
     def test_100_node_scan_uses_200_budget_tier(self) -> None:
         env = FakeStarNetEnvironment(100, 200.0)
-        controller = RuntimeController(env)
+        controller = RuntimeController(env, stage=ContestStage.FINAL)
 
         for _ in range(100):
             self.assertEqual(controller.step(), 0)
@@ -215,6 +216,35 @@ class RuntimeControllerIntegrationTests(unittest.TestCase):
                 self.assertEqual(len(payloads), 1)
                 self.assertIn("shield:2", controller.candidates)
                 self.assertIn(("shield", 2), env.calls)
+
+    def test_commander_single_candidate_protocol_is_accepted(self) -> None:
+        env = FakeStarNetEnvironment(4, 60.0)
+        env.nodes[1].update(w=10.0, persona="和平", neighbors=[2, 4])
+        env.nodes[2].update(w=-40.0, persona="暴力", neighbors=[1, 3])
+        env.nodes[3].update(w=0.0, persona="中立", neighbors=[2, 4])
+        env.nodes[4].update(w=15.0, persona="和平", neighbors=[1, 3])
+        env.edges = {(1, 2), (2, 3), (3, 4), (1, 4)}
+        payloads: list[dict[str, object]] = []
+
+        def rank(payload: dict[str, object]) -> dict[str, object]:
+            payloads.append(payload)
+            self.assertIn("state_version", payload)
+            self.assertIn("candidate_ids", payload)
+            self.assertIn("shield:2", payload["candidate_ids"])
+            return {
+                "state_version": payload["state_version"],
+                "mode": "single_action",
+                "candidate_id": "shield:2",
+                "reason_code": "risk",
+                "evidence_ids": ["shield:2"],
+            }
+
+        controller = RuntimeController(env, rank, node_count=4, config=PolicyConfig(max_llm_calls=1))
+        for _ in range(5):
+            controller.step()
+        self.assertEqual(controller.llm_calls, 1)
+        self.assertEqual(len(payloads), 1)
+        self.assertIn(("shield", 2), env.calls)
 
 
 if __name__ == "__main__":

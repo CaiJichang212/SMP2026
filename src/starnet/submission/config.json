@@ -1,19 +1,20 @@
 {
+  "stage": "preliminary",
   "person": [
     {
-      "role": "确定性侦察官",
+      "role": "ScoutAnalystAgent",
       "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
       "focus": "固定扫描与情报完整性。"
     },
     {
-      "role": "图谱分析官",
-      "character": "使用确定性图算法分析已扫描子图，生成已经过合法性检查的干预候选。",
-      "focus": "网络结构、风险和候选评分。"
+      "role": "ExecutorAgent",
+      "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+      "focus": "动作校验与反馈。"
     },
     {
-      "role": "批次指挥官",
-      "character": "只在 Python 给出的合法候选 ID 中排序，不创造动作、节点、边或话术编号。",
-      "focus": "风险优先、增长优先或平衡的批次仲裁。"
+      "role": "CommanderAgent",
+      "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+      "focus": "受限决策。"
     }
   ]
 }

@@ -6,6 +6,7 @@ import unittest
 
 from starnet.policy.config import DEFAULT_POLICY_CONFIG, PolicyConfig
 from starnet.runtime.controller import RuntimeController, StopReason
+from starnet.runtime.stage import ContestStage
 
 
 class TinyEnvironment:
@@ -36,11 +37,13 @@ class TinyEnvironment:
 
 
 class PolicyConfigTests(unittest.TestCase):
-    def test_default_is_immutable_v0_configuration(self) -> None:
+    def test_default_is_immutable_conservative_b1_configuration(self) -> None:
         self.assertTrue(DEFAULT_POLICY_CONFIG.p0_exclusive)
         self.assertEqual(DEFAULT_POLICY_CONFIG.max_llm_calls, 0)
-        self.assertEqual(DEFAULT_POLICY_CONFIG.safety_step_limit(50), 115)
-        self.assertEqual(DEFAULT_POLICY_CONFIG.safety_step_limit(100), 245)
+        self.assertFalse(DEFAULT_POLICY_CONFIG.enable_shield)
+        self.assertFalse(DEFAULT_POLICY_CONFIG.enable_cut)
+        self.assertEqual(DEFAULT_POLICY_CONFIG.safety_step_limit(50), 117)
+        self.assertEqual(DEFAULT_POLICY_CONFIG.safety_step_limit(100), 247)
         with self.assertRaises(Exception):
             DEFAULT_POLICY_CONFIG.max_llm_calls = 0  # type: ignore[misc]
 
@@ -62,7 +65,8 @@ class PolicyConfigTests(unittest.TestCase):
         self.assertEqual(controller.step_number, 2)
         self.assertEqual(controller.stop_reason, StopReason.STEP_LIMIT)
         final_controller = RuntimeController(
-            TinyEnvironment(), lambda _: {}, node_count=100, config=PolicyConfig(max_llm_calls=999)
+            TinyEnvironment(), lambda _: {}, node_count=100, stage=ContestStage.FINAL,
+            config=PolicyConfig(max_llm_calls=999)
         )
         self.assertEqual(final_controller.commander.max_llm_calls, 250)
 

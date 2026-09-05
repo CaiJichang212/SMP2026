@@ -16,6 +16,8 @@ class PolicyMode(str, Enum):
 
     V0_DETERMINISTIC = "v0_deterministic"
     V1_CMG = "v1_cmg"
+    B1_PERSUASION = "b1_persuasion"
+    B2_INFLUENCE = "b2_influence"
 
 
 @dataclass(frozen=True)
@@ -28,6 +30,8 @@ class PolicyConfig:
 
     shield_threshold: float = 0.55
     cut_threshold: float = 0.20
+    # P0 is not calibrated: structural actions are off by default and the
+    # official submission has no switch that can silently enable them.
     enable_shield: bool = True
     enable_cut: bool = True
     enable_communicate: bool = True
@@ -68,11 +72,20 @@ class PolicyConfig:
         """Return the conservative local cap for the current contest tier."""
         if self.max_steps is not None:
             return self.max_steps
-        return 115 if node_count <= 50 else 245
+        return 117 if node_count <= 50 else 247
 
     def contest_llm_limit(self, node_count: int) -> int:
         """The public per-seed LLM cap (preliminary/final respectively)."""
         return 120 if node_count <= 50 else 250
 
 
-DEFAULT_POLICY_CONFIG = PolicyConfig()
+# The only configuration used by the submission: P0 is unverified, therefore
+# structural candidate generation and CMG are fail-closed.  ``PolicyConfig``
+# itself keeps legacy experiment defaults so historical offline fixtures remain
+# reproducible; it is never selected by the submission implicitly.
+DEFAULT_POLICY_CONFIG = PolicyConfig(
+    enable_shield=False,
+    enable_cut=False,
+    max_llm_calls=0,
+    policy_mode=PolicyMode.B1_PERSUASION,
+)

@@ -42,7 +42,7 @@ class CandidateGenerationTests(unittest.TestCase):
             {"w": w, "persona": persona, "comm_left": comm_left, "neighbors": neighbors},
         )
 
-    def test_high_risk_violent_node_is_p0_and_hides_lower_priorities(self) -> None:
+    def test_unverified_default_never_generates_structure_actions(self) -> None:
         self._scan(1, w=-5, persona="暴力", comm_left=3, neighbors=[2])
         self._scan(2, w=2, persona="和平", comm_left=3, neighbors=[1])
         graph = analysis(
@@ -52,9 +52,9 @@ class CandidateGenerationTests(unittest.TestCase):
 
         candidates = generate_candidates(graph, self.board, budget=10.0)
 
-        self.assertEqual([candidate.candidate_id for candidate in candidates], ["shield:1"])
+        self.assertEqual([candidate.candidate_id for candidate in candidates], ["comm:2:1"])
 
-    def test_cross_community_negative_bridge_generates_cut(self) -> None:
+    def test_unverified_default_keeps_cut_closed(self) -> None:
         self._scan(1, w=-3, persona="暴力", comm_left=3, neighbors=[2])
         self._scan(2, w=2, persona="中立", comm_left=3, neighbors=[1])
         graph = analysis(
@@ -64,7 +64,7 @@ class CandidateGenerationTests(unittest.TestCase):
 
         candidates = generate_candidates(graph, self.board, budget=5.0)
 
-        self.assertEqual([candidate.candidate_id for candidate in candidates], ["cut:1-2", "comm:2:1"])
+        self.assertEqual([candidate.candidate_id for candidate in candidates], ["comm:2:1"])
 
     def test_communication_requires_positive_nonviolent_node_quota_and_budget(self) -> None:
         self._scan(1, w=1, persona="和平", comm_left=1, neighbors=[])

@@ -15,6 +15,7 @@ from starnet.model.blackboard import Blackboard
 from starnet.policy.actions import Action, action_cost, is_legal_action
 from starnet.policy.candidates import (
     Candidate,
+    LlmParseResult,
     generate_candidates,
     parse_llm_batch_detailed,
     select_deterministic_batch,
@@ -29,6 +30,8 @@ from starnet.policy.cmg import (
     ScoredCandidate,
     choose_cmg_action,
 )
+from starnet.policy.baseline import persuasion_candidates
+from starnet.runtime.stage import ContestStage, StageSpec, stage_spec
 from starnet.runtime.env_adapter import ActionOutcome, StarNetEnvironment, apply_action_outcome
 from starnet.runtime.trace import NullRuntimeTrace, RuntimeTrace, safe_error
 
@@ -61,11 +64,6 @@ class StopReason(str, Enum):
     STEP_LIMIT = "step_limit"
     RUNNER_ERROR = "runner_error"
     NO_POSITIVE_GAIN = "no_positive_gain"
-
-
-def infer_node_count(initial_budget: float) -> int:
-    """Infer the competition network tier from the public starting budget."""
-    return 100 if initial_budget >= 150.0 else 50
 
 
 class DeterministicScout:
@@ -162,9 +160,10 @@ class BatchCommander:
         candidates: Sequence[Candidate],
         budget: float,
         analysis: GraphAnalysis,
+        state_version: int = 0,
     ) -> dict[str, Any]:
         """Build the exact payload for the next request without consuming quota."""
-        return self._build_payload(candidates, budget, analysis, self.llm_calls + 1)
+        return self._build_payload(candidates, budget, analysis, self.llm_calls + 1, state_version)
 
     def plan(
         self,
@@ -173,6 +172,7 @@ class BatchCommander:
         budget: float,
         analysis: GraphAnalysis,
         request_payload: Mapping[str, Any] | None = None,
+        state_version: int = 0,
     ) -> BatchPlan:
         candidate_map = {candidate.candidate_id: candidate for candidate in candidates}
         fallback = tuple(select_deterministic_batch(candidates, budget, MAX_BATCH_ACTIONS, config=self.config))
@@ -185,7 +185,7 @@ class BatchCommander:
 
         # Quota is consumed before the external call, including a timeout.
         self.llm_calls += 1
-        payload = dict(request_payload or self._build_payload(candidates, budget, analysis, self.llm_calls))
+        payload = dict(request_payload or self._build_payload(candidates, budget, analysis, self.llm_calls, state_version))
         try:
             raw_response = self.llm_ranker(payload)
         except Exception as exc:
@@ -197,7 +197,7 @@ class BatchCommander:
                 error=safe_error(exc),
             )
 
-        parsed = parse_llm_batch_detailed(raw_response, candidate_map, budget, config=self.config)
+        parsed = self._parse_response(raw_response, candidate_map, budget, payload)
         if parsed.accepted:
             return BatchPlan(
                 parsed.candidate_ids,
@@ -221,6 +221,7 @@ class BatchCommander:
         budget: float,
         analysis: GraphAnalysis,
         llm_call_number: int,
+        state_version: int,
     ) -> dict[str, Any]:
         graph = analysis.graph
         negative_nodes = sorted(
@@ -235,6 +236,8 @@ class BatchCommander:
         )
         return {
             "stage": ControllerState.PLAN_BATCH.value,
+            "state_version": state_version,
+            "mode": "single_action",
             "budget": budget,
             "llm_calls": llm_call_number,
             "graph": {
@@ -256,7 +259,38 @@ class BatchCommander:
                 }
                 for candidate in candidates
             ],
+            "candidate_ids": [candidate.candidate_id for candidate in candidates],
         }
+
+    def _parse_response(
+        self,
+        raw_response: object,
+        candidate_map: Mapping[str, Candidate],
+        budget: float,
+        payload: Mapping[str, Any],
+    ) -> LlmParseResult:
+        """Accept the current one-candidate protocol, then legacy fixtures.
+
+        The submission Commander emits the strict form.  Supporting the old
+        batch form here keeps historical local experiments reproducible without
+        allowing it to weaken the submission's decision boundary.
+        """
+        fallback = tuple(select_deterministic_batch(candidate_map.values(), budget, config=self.config))
+        if isinstance(raw_response, Mapping) and {
+            "state_version", "mode", "candidate_id", "reason_code", "evidence_ids"
+        } == set(raw_response):
+            candidate_id = raw_response.get("candidate_id")
+            evidence_ids = raw_response.get("evidence_ids")
+            if raw_response.get("state_version") != payload.get("state_version"):
+                return LlmParseResult(fallback, False, "stale_state_version")
+            if not isinstance(candidate_id, str) or candidate_id not in candidate_map:
+                return LlmParseResult(fallback, False, "unknown_candidate")
+            if not isinstance(evidence_ids, list) or any(
+                not isinstance(item, str) or item not in candidate_map for item in evidence_ids
+            ):
+                return LlmParseResult(fallback, False, "invalid_evidence_ids")
+            return LlmParseResult((candidate_id,), True)
+        return parse_llm_batch_detailed(raw_response, candidate_map, budget, config=self.config)
 
 
 class RuntimeController:
@@ -269,20 +303,35 @@ class RuntimeController:
         *,
         initial_budget: float | None = None,
         node_count: int | None = None,
+        stage: ContestStage | str | None = None,
         blackboard: Blackboard | None = None,
         config: PolicyConfig = DEFAULT_POLICY_CONFIG,
         calibration_profile: CalibrationProfile = DEFAULT_CALIBRATION_PROFILE,
     ) -> None:
         self.env = env
-        self.blackboard = blackboard if blackboard is not None else Blackboard()
+        # Stage selection is an explicit deployment input. ``node_count`` is a
+        # test seam only; the submission never supplies it and never infers a
+        # stage from a remote budget response.
+        # The submission always supplies an explicit stage.  A test/development
+        # caller that explicitly supplies the official 100-node count gets the
+        # matching final envelope; no budget, scanned id, or observation is
+        # ever used to infer a stage.
+        if stage is None:
+            stage = ContestStage.FINAL if node_count == 100 else ContestStage.PRELIMINARY
+        self.stage: StageSpec = stage_spec(stage)
+        selected_node_count = self.stage.node_count if node_count is None else node_count
+        self.blackboard = blackboard if blackboard is not None else Blackboard(selected_node_count)
         self.initial_budget = float(
             env.get_remaining_budget() if initial_budget is None else initial_budget
         )
-        self.node_count = infer_node_count(self.initial_budget) if node_count is None else node_count
+        self.node_count = selected_node_count
+        self.blackboard.set_budget(self.initial_budget)
         self.config = config
+        self._safe_step_limit = config.max_steps if config.max_steps is not None else self.stage.safe_step_limit
         self.calibration_profile = calibration_profile
         self.policy_mode = config.policy_mode
         self.response_ledger = ResponseLedger()
+        self.response_estimates: dict[int, float] = {}
         self.cmg_candidate: ScoredCandidate | None = None
         self.cmg_fallback_reason: str | None = None
         self.scout = DeterministicScout(self.node_count)
@@ -291,7 +340,7 @@ class RuntimeController:
         self.commander = BatchCommander(
             llm_ranker if config.max_llm_calls else None,
             config=config,
-            contest_llm_limit=config.contest_llm_limit(self.node_count),
+            contest_llm_limit=self.stage.llm_limit,
         )
         self.state = ControllerState.INIT
         self.analysis: GraphAnalysis | None = None
@@ -336,7 +385,7 @@ class RuntimeController:
                 "node_count": self.scout.node_count,
                 "initial_budget": self.initial_budget,
                 "max_llm_calls": self.commander.max_llm_calls,
-                "safety_step_limit": self.config.safety_step_limit(self.node_count),
+                "safety_step_limit": self._safe_step_limit,
                 "max_batch_actions": MAX_BATCH_ACTIONS,
                 "policy_mode": self.policy_mode.value,
                 "calibration_profile_hash": self.calibration_profile.profile_hash or None,
@@ -377,11 +426,12 @@ class RuntimeController:
         """Advance the state machine; diagnostics never control this flow."""
         # This consumes the last permitted outer call as a stop-only call.  It
         # leaves five calls of headroom beneath the published 120/250 limits.
-        if self._step_number + 1 >= self.config.safety_step_limit(self.node_count):
+        if self._step_number + 1 >= self._safe_step_limit:
             self._step_number += 1
             self._stop(StopReason.STEP_LIMIT, self._current_budget())
             return self._complete_step(1, self.state.value, self._current_budget())
         self._step_number += 1
+        self.blackboard.outer_steps = self._step_number
         state_before = self.state.value
         budget_before = self._current_budget()
         self.last_action_attempted = False
@@ -415,6 +465,12 @@ class RuntimeController:
 
             if self.state is ControllerState.ANALYZE:
                 self._refresh_candidates(budget, "analyze")
+                if (
+                    self.policy_mode in {PolicyMode.B1_PERSUASION, PolicyMode.B2_INFLUENCE}
+                    and budget < 2.0
+                ):
+                    self._stop(StopReason.INSUFFICIENT_BUDGET, budget)
+                    continue
                 if self._cmg_enabled:
                     self._transition(ControllerState.PLAN_CMG, "cmg_enabled", budget)
                 elif self.candidates:
@@ -424,7 +480,10 @@ class RuntimeController:
                 continue
 
             if self.state is ControllerState.PLAN_BATCH:
-                if self.analysis is None or not self.candidates:
+                if not self.candidates or (
+                    self.analysis is None
+                    and self.policy_mode not in {PolicyMode.B1_PERSUASION, PolicyMode.B2_INFLUENCE}
+                ):
                     self._stop(StopReason.NO_CANDIDATES, budget)
                     continue
                 self._create_plan(budget)
@@ -446,6 +505,16 @@ class RuntimeController:
 
             if self.state is ControllerState.REANALYZE:
                 self._refresh_candidates(budget, "reanalyze")
+                if self.policy_mode in {PolicyMode.B1_PERSUASION, PolicyMode.B2_INFLUENCE}:
+                    # A successful communicate response changes the next-slot
+                    # estimate. Rebuild the max-heap rather than consuming a
+                    # stale batch planned before that feedback.
+                    self.queue.clear()
+                    if self.candidates:
+                        self._transition(ControllerState.PLAN_BATCH, "persuasion_heap_refreshed", budget)
+                    else:
+                        self._stop(StopReason.NO_POSITIVE_GAIN, budget)
+                    continue
                 previous_queue = self.queue
                 validation = self._valid_queue(previous_queue, budget)
                 self.queue = list(validation.candidate_ids)
@@ -648,6 +717,11 @@ class RuntimeController:
         self.last_action_attempted = True
         self.action_attempts += 1
         self._last_step_action = asdict(action)
+        before_w = (
+            self.blackboard.nodes[action.target_node_1].w
+            if action.kind == "comm" and action.target_node_1 in self.blackboard.nodes
+            else None
+        )
         before_snapshot = self.blackboard.snapshot() if self._trace.enabled else None
         self._emit(
             "action.requested",
@@ -656,6 +730,7 @@ class RuntimeController:
             {"candidate_id": candidate_id, "action": asdict(action)},
         )
         try:
+            self.blackboard.env_calls += 1
             outcome = apply_action_outcome(self.env, self.blackboard, action, budget)
         except Exception as exc:
             self.last_action_succeeded = False
@@ -676,9 +751,21 @@ class RuntimeController:
             )
             return False
 
+        try:
+            self.blackboard.set_budget(self._current_budget())
+        except Exception:
+            # Do not manufacture a debit after an ambiguous response.  The
+            # controller will stop naturally once no action can be validated.
+            self.blackboard.unresolved_nodes.add(action.target_node_1)
         self.last_action_succeeded = outcome.succeeded
         budget_after = self._trace_budget_after(budget)
         if outcome.succeeded:
+            if action.kind == "comm":
+                node = self.blackboard.nodes.get(action.target_node_1)
+                if isinstance(before_w, (int, float)) and node is not None:
+                    self.response_estimates.setdefault(
+                        action.target_node_1, max(0.0, node.w - float(before_w))
+                    )
             self.action_successes += 1
             self._last_step_action_result = "success"
             self._emit(
@@ -732,6 +819,32 @@ class RuntimeController:
         return data
 
     def _refresh_candidates(self, budget: float, phase: str) -> None:
+        if self.policy_mode in {PolicyMode.B1_PERSUASION, PolicyMode.B2_INFLUENCE}:
+            # P0 remains unverified by default. B2 is impossible without a
+            # frozen influence archive and therefore transparently becomes B1.
+            use_influence = self.policy_mode is PolicyMode.B2_INFLUENCE and self.calibration_profile.b2_eligible
+            candidates = persuasion_candidates(
+                self.blackboard,
+                budget,
+                self.response_estimates,
+                self.calibration_profile,
+                use_influence=use_influence,
+                failed_actions=self.failed_actions,
+            )
+            self.analysis = None
+            self.candidates = {candidate.candidate_id: candidate for candidate in candidates}
+            self._emit(
+                "candidates.generated",
+                budget,
+                budget,
+                {
+                    "phase": phase,
+                    "mode": "b2" if use_influence else "b1",
+                    "filtered_count": len(candidates),
+                    "candidates": [self._candidate_trace_data(candidate) for candidate in candidates],
+                },
+            )
+            return
         self.analysis = self.analyst.analyze(self.blackboard)
         candidates = self.analyst.generate_candidates(
             self.analysis,
@@ -759,23 +872,36 @@ class RuntimeController:
         )
 
     def _create_plan(self, budget: float) -> None:
-        assert self.analysis is not None
         candidates = list(self.candidates.values())
+        if self.policy_mode in {PolicyMode.B1_PERSUASION, PolicyMode.B2_INFLUENCE}:
+            # The max-heap is already Python-optimal.  The LLM may never alter
+            # a non-tied allocation, so do not spend a call merely to restate it.
+            validation = self._valid_queue([candidate.candidate_id for candidate in candidates[:1]], budget)
+            self.queue = list(validation.candidate_ids)
+            self._last_step_selected_ids = list(self.queue)
+            self._emit_queue_revalidated("persuasion_heap", validation, budget)
+            return
+        assert self.analysis is not None
         request_payload: Mapping[str, Any] | None = None
         if self.commander.can_request_llm:
-            request_payload = self.commander.preview_payload(candidates, budget, self.analysis)
+            request_payload = self.commander.preview_payload(
+                candidates, budget, self.analysis, self.blackboard.state_version
+            )
             self._emit(
                 "llm.requested",
                 budget,
                 budget,
                 {"payload": request_payload, "llm_call": self.commander.llm_calls + 1},
             )
+        llm_before = self.commander.llm_calls
         plan = self.commander.plan(
             candidates=candidates,
             budget=budget,
             analysis=self.analysis,
             request_payload=request_payload,
+            state_version=self.blackboard.state_version,
         )
+        self.blackboard.llm_attempts += self.commander.llm_calls - llm_before
         if plan.request_payload is not None and plan.error is None:
             self._emit(
                 "llm.completed",

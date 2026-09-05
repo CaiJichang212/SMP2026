@@ -7,7 +7,6 @@ from .controller import (
     GraphAnalyst,
     RuntimeController,
     StopReason,
-    infer_node_count,
 )
 from .env_adapter import ActionOutcome, apply_action, apply_action_outcome
 from .trace import ConsoleTraceSink, JsonlTraceSink, RuntimeTrace, TraceSink
@@ -26,5 +25,4 @@ __all__ = [
     "TraceSink",
     "apply_action",
     "apply_action_outcome",
-    "infer_node_count",
 ]

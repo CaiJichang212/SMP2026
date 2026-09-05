@@ -36,6 +36,9 @@ class CalibrationProfile:
     manifest_hash: str = ""
     data_hash: str = ""
     profile_hash: str = ""
+    # Values are public, held-out-validated terminal influence coefficients.
+    # An empty map is intentional: it makes B2 unavailable rather than guessed.
+    target_influence: Mapping[str, float] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         if self.model not in {"degree", "degroot", "friedkin_johnsen"}:
@@ -43,7 +46,7 @@ class CalibrationProfile:
         for value in (self.rho, self.gamma, self.a, self.b):
             if not isinstance(value, (int, float)) or not math.isfinite(value):
                 raise ValueError("calibration parameters must be finite")
-        for values in (self.settlement_residual_std, self.response_mean, self.response_std):
+        for values in (self.settlement_residual_std, self.response_mean, self.response_std, self.target_influence):
             for value in values.values():
                 if not isinstance(value, (int, float)) or not math.isfinite(value):
                     raise ValueError("calibration values must be finite")
@@ -75,6 +78,10 @@ class CalibrationProfile:
     def residual_for(self, action_kind: str) -> float:
         value = self.settlement_residual_std.get(action_kind)
         return max(0.0, float(value)) if value is not None else math.inf
+
+    @property
+    def b2_eligible(self) -> bool:
+        return self.verified and bool(self.target_influence)
 
 
 # Deliberately fail closed until ``scripts/calibrate_v1.py freeze`` emits a

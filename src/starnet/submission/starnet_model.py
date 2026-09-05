@@ -2,13 +2,15 @@
 
 from __future__ import annotations
 
-import threading
+import json
+from pathlib import Path
 from typing import Any
 
 import networkx as nx
-from casevo import AgentBase, JsonStep, ModelBase
+from casevo import AgentBase, ModelBase
 
 from starnet.runtime.controller import RuntimeController
+from starnet.runtime.stage import ContestStage
 
 
 class BaseStarAgent(AgentBase):
@@ -18,30 +20,37 @@ class BaseStarAgent(AgentBase):
         return None
 
 
-class ScoutAgent(BaseStarAgent):
-    """已注册的侦察角色；固定 ID 扫描由 DeterministicScout 完成。"""
-
-
-class GraphAnalystAgent(BaseStarAgent):
-    """已注册的图分析角色；NetworkX 计算在 Python 控制器中保持确定性。"""
+class ScoutAnalystAgent(BaseStarAgent):
+    """Produces only Python-validated scan facts and candidate evidence."""
 
 
 class CommanderAgent(BaseStarAgent):
-    """只允许 LLM 对 Python 生成的候选 ID 批次排序。"""
+    """One direct CaseVO Prompt call; never uses ThoughtChain retries."""
 
     def __init__(self, unique_id: int, model: ModelBase, description: dict[str, Any]) -> None:
         super().__init__(unique_id, model, description, None)
-        self.setup_chain(
-            {"rank": [JsonStep(0, self.model.prompt_factory.get_template("commander_react.txt"))]}
-        )
-        self._lock = threading.Lock()
+        self._prompt = self.model.prompt_factory.get_template("commander_react.txt")
 
     def rank_candidates(self, payload: dict[str, Any]) -> object:
-        """返回 JsonStep 已解析的 JSON；异常交由控制器走确定性回退。"""
-        with self._lock:
-            self.chains["rank"].set_input(payload)
-            self.chains["rank"].run_step()
-            return self.chains["rank"].get_output().get("json")
+        """Return one strict decision object or raise for deterministic fallback."""
+        raw = self._prompt.send_prompt(payload, agent=self, model=self.model)
+        if not isinstance(raw, str):
+            raise ValueError("commander response must be text")
+        decision = json.loads(raw)
+        required = {"state_version", "mode", "candidate_id", "reason_code", "evidence_ids"}
+        if not isinstance(decision, dict) or set(decision) != required:
+            raise ValueError("commander response schema mismatch")
+        if decision["state_version"] != payload.get("state_version"):
+            raise ValueError("stale commander state_version")
+        if decision["candidate_id"] not in set(payload.get("candidate_ids", [])):
+            raise ValueError("commander selected an illegal candidate")
+        if not isinstance(decision["evidence_ids"], list):
+            raise ValueError("commander evidence_ids must be a list")
+        return decision
+
+
+class ExecutorAgent(BaseStarAgent):
+    """The controller remains the final public-API and action validator."""
 
 
 class ParticipantSquadModel(ModelBase):
@@ -51,22 +60,24 @@ class ParticipantSquadModel(ModelBase):
         agent_graph = nx.Graph()
         agent_graph.add_nodes_from((0, 1, 2))
         agent_graph.add_edges_from(((0, 1), (1, 2)))
-        super().__init__(agent_graph, llm)
+        prompt_path = Path(__file__).resolve().parent / "prompt"
+        super().__init__(agent_graph, llm, prompt_path=str(prompt_path.resolve()), reflect_file="reflect.txt")
         self.env = host_env
 
         descriptions = list(person_list)
         while len(descriptions) < 3:
             descriptions.append({"role": "星网策略角色"})
-        self.scout_agent = ScoutAgent(0, self, descriptions[0], None)
-        self.analyst_agent = GraphAnalystAgent(1, self, descriptions[1], None)
+        self.scout_agent = ScoutAnalystAgent(0, self, descriptions[0], None)
         self.commander_agent = CommanderAgent(2, self, descriptions[2])
+        self.executor_agent = ExecutorAgent(1, self, descriptions[1], None)
         self.add_agent(self.scout_agent, 0)
-        self.add_agent(self.analyst_agent, 1)
+        self.add_agent(self.executor_agent, 1)
         self.add_agent(self.commander_agent, 2)
 
         self.controller = RuntimeController(
             host_env,
             llm_ranker=self.commander_agent.rank_candidates,
+            stage=ContestStage.PRELIMINARY,
         )
 
     def step(self) -> int:

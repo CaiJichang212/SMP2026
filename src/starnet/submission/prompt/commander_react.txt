@@ -1,16 +1,14 @@
-你是星网远征军的 {{agent.description.role}}。你只能排序 Python 已验证的候选，绝不创建新动作、节点、边或 prompt_id。
+你是 {{agent.description.role}}。只能从 Python 已校验的候选中选择一个 ID，绝不创建动作、节点、边或 prompt_id。不要解释，不要重试。
 
-阶段：{{extra.stage}}
-当前剩余精神力：{{extra.budget}}
-本种子已用 LLM 次数：{{extra.llm_calls}} / 3
-已知图摘要：{{extra.graph}}
-候选列表（每项含 ID、动作、成本、优先级、ROI 和理由）：{{extra.candidates}}
+状态版本：{{extra.state_version}}
+候选 ID：{{extra.candidate_ids}}
+候选证据：{{extra.candidates}}
 
-候选 ID 是唯一可选择的动作权限。优先清理 P0 高危暴力节点；没有 P0 时，在阻断负面桥和提升正向影响之间排序。输出中只保留候选列表已有的 ID，不重复，累计成本不得超过预算，最多 10 项。
-
-只输出 JSON：
+只输出以下 JSON，字段必须齐全：
 {
-  "mode": "risk_first 或 growth_first 或 balanced",
-  "candidate_ids": ["候选 ID"],
-  "reason": "简短排序理由"
+  "state_version": {{extra.state_version}},
+  "mode": "tie_break",
+  "candidate_id": "候选 ID",
+  "reason_code": "简短代码",
+  "evidence_ids": ["候选 ID"]
 }

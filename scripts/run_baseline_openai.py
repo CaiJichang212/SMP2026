@@ -180,6 +180,11 @@ def parse_args() -> argparse.Namespace:
         help="本地种子的节点数；省略时从 seed 的 nodes 数组推断，仅影响本地调试。",
     )
     parser.add_argument(
+        "--stage",
+        choices=("preliminary", "final"),
+        help="显式资源阶段；省略时仅本地 runner 会把显式 100 节点覆盖映射为复赛。",
+    )
+    parser.add_argument(
         "--max-steps",
         type=int,
         help="覆盖自动计算的本地步数上限；省略时会覆盖完整扫描与干预阶段。",
@@ -213,6 +218,7 @@ def main() -> int:
         JsonlTraceSink,
         ParticipantSquadModel,
         PolicyConfig,
+        ContestStage,
         RuntimeController,
         RuntimeTrace,
     )
@@ -224,6 +230,11 @@ def main() -> int:
     node_count = args.node_count if args.node_count is not None else seeded_node_count
     if node_count <= 0:
         raise SystemExit("无法从种子推断节点数；请通过 --node-count 指定正整数。")
+    stage = (
+        ContestStage(args.stage)
+        if args.stage is not None
+        else (ContestStage.FINAL if node_count == 100 else ContestStage.PRELIMINARY)
+    )
 
     base_url = os.getenv("SMP_LLM_BASE_URL", DEFAULT_BASE_URL)
     llm = OpenAICompatibleLLM(api_key, base_url, args.model, args.timeout)
@@ -253,6 +264,7 @@ def main() -> int:
             model.commander_agent.rank_candidates,
             initial_budget=initial_budget,
             node_count=node_count,
+            stage=stage,
             config=PolicyConfig(max_llm_calls=3),
         )
         # 仅使小型自定义种子可完成一轮扫描；提交模型仍由公开预算推断正式赛制规模。
