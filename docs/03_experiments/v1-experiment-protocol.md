@@ -78,4 +78,4 @@ uv run python scripts/analyze_v1_local_probes.py \
 
 历史首轮小图记录有 10/10 个可比较结果，说明该受控条件下首次游说、重复游说和两节点桥图的局部结算可被测得；详细表见 [`v1-local-mechanism-probes-reference.md`](../../experiments/reports/v1-local-mechanism-probes-reference.md)。
 
-2026-09-05 对同一 manifest 的新 session 复跑为 0/10 可比较、10/10 `RemoteProtocolError`；安全诊断均为在 `/api/start_session` 的 `ConnectionError`。这只能证明当时无法建立本地调试会话，不能区分本机网络与服务端可用性，也不能把历史结果当作本次重跑的替身；详见 [`v1-local-mechanism-probes-rerun-20260905.md`](../../experiments/reports/v1-local-mechanism-probes-rerun-20260905.md)。当前结论是：**保持 `v0_deterministic` 默认路径，不冻结 CMG 档案，不运行/解释 V1 主矩阵，也不增加 LLM 调用。**
+2026-09-05 的首次独立复跑为 0/10 可比较、10/10 `RemoteProtocolError`；安全诊断均为在 `/api/start_session` 的 `ConnectionError`。SDK 声称恢复后，以同一 manifest 再建一批新 session，结果仍只有 1/10 可比较，其他 9 个在 `/api/start_session` 成功后于 `/api/get_budget` 收到 `HTTPError`。赛方随后确认网关已扩容加固后，第三批新 session 仍只有 1/10 可比较：7 个 `/api/get_budget` 与 2 个 `/api/scan` 为 `HTTPError`。这些独立批次都不能以历史结果替代、填补或合并；最新执行记录见 [`v1-execution-post-gateway-recovery-20260905.md`](v1-execution-post-gateway-recovery-20260905.md)。当前结论不变：**保持 `v0_deterministic` 默认路径，不冻结 CMG 档案，不运行/解释 V1 主矩阵，也不增加 LLM 调用。**
