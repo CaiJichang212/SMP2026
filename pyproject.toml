@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "smp2026-starnet"
-version = "0.1.0"
+version = "0.2.0"
 description = "SMP 2026 星网干预赛题的可复现实验与提交构建工程"
 requires-python = ">=3.11"
 dependencies = [
