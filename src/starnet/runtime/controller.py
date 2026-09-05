@@ -21,6 +21,14 @@ from starnet.policy.candidates import (
 )
 from starnet.policy.graph_analysis import GraphAnalysis, analyze_graph
 from starnet.policy.config import DEFAULT_POLICY_CONFIG, PolicyConfig
+from starnet.policy.config import PolicyMode
+from starnet.policy.calibration import CalibrationProfile, DEFAULT_CALIBRATION_PROFILE
+from starnet.policy.cmg import (
+    CMGPlanningError,
+    ResponseLedger,
+    ScoredCandidate,
+    choose_cmg_action,
+)
 from starnet.runtime.env_adapter import ActionOutcome, StarNetEnvironment, apply_action_outcome
 from starnet.runtime.trace import NullRuntimeTrace, RuntimeTrace, safe_error
 
@@ -37,6 +45,7 @@ class ControllerState(str, Enum):
     SCAN_ALL = "SCAN_ALL"
     ANALYZE = "ANALYZE"
     PLAN_BATCH = "PLAN_BATCH"
+    PLAN_CMG = "PLAN_CMG"
     EXECUTE = "EXECUTE"
     REANALYZE = "REANALYZE"
     STOP = "STOP"
@@ -51,6 +60,7 @@ class StopReason(str, Enum):
     STATE_GUARD = "state_guard"
     STEP_LIMIT = "step_limit"
     RUNNER_ERROR = "runner_error"
+    NO_POSITIVE_GAIN = "no_positive_gain"
 
 
 def infer_node_count(initial_budget: float) -> int:
@@ -250,7 +260,7 @@ class BatchCommander:
 
 
 class RuntimeController:
-    """V0 state machine; each ``step`` performs at most one environment action."""
+    """V0 state machine plus fail-closed V1 CMG; one public action per step."""
 
     def __init__(
         self,
@@ -261,6 +271,7 @@ class RuntimeController:
         node_count: int | None = None,
         blackboard: Blackboard | None = None,
         config: PolicyConfig = DEFAULT_POLICY_CONFIG,
+        calibration_profile: CalibrationProfile = DEFAULT_CALIBRATION_PROFILE,
     ) -> None:
         self.env = env
         self.blackboard = blackboard if blackboard is not None else Blackboard()
@@ -269,6 +280,11 @@ class RuntimeController:
         )
         self.node_count = infer_node_count(self.initial_budget) if node_count is None else node_count
         self.config = config
+        self.calibration_profile = calibration_profile
+        self.policy_mode = config.policy_mode
+        self.response_ledger = ResponseLedger()
+        self.cmg_candidate: ScoredCandidate | None = None
+        self.cmg_fallback_reason: str | None = None
         self.scout = DeterministicScout(self.node_count)
         self.analyst = GraphAnalyst()
         # The experiment may forbid LLM use even when the official model has a ranker.
@@ -322,6 +338,8 @@ class RuntimeController:
                 "max_llm_calls": self.commander.max_llm_calls,
                 "safety_step_limit": self.config.safety_step_limit(self.node_count),
                 "max_batch_actions": MAX_BATCH_ACTIONS,
+                "policy_mode": self.policy_mode.value,
+                "calibration_profile_hash": self.calibration_profile.profile_hash or None,
             },
         )
 
@@ -397,7 +415,9 @@ class RuntimeController:
 
             if self.state is ControllerState.ANALYZE:
                 self._refresh_candidates(budget, "analyze")
-                if self.candidates:
+                if self._cmg_enabled:
+                    self._transition(ControllerState.PLAN_CMG, "cmg_enabled", budget)
+                elif self.candidates:
                     self._transition(ControllerState.PLAN_BATCH, "candidates_generated", budget)
                 else:
                     self._stop(StopReason.NO_CANDIDATES, budget)
@@ -412,6 +432,12 @@ class RuntimeController:
                     self._transition(ControllerState.EXECUTE, "validated_queue_available", budget)
                 else:
                     self._stop(StopReason.NO_VALID_ACTIONS, budget)
+                continue
+
+            if self.state is ControllerState.PLAN_CMG:
+                result = self._plan_cmg(budget)
+                if result is not None:
+                    return self._complete_step(result, state_before, budget_before)
                 continue
 
             if self.state is ControllerState.EXECUTE:
@@ -486,6 +512,8 @@ class RuntimeController:
         return 0
 
     def _execute_next(self, budget: float) -> int:
+        if self.cmg_candidate is not None:
+            return self._execute_cmg(budget)
         if not self.queue:
             self._transition(ControllerState.REANALYZE, "queue_depleted", budget)
             return 0
@@ -534,6 +562,86 @@ class RuntimeController:
             if self._last_trace_budget_after is not None
             else budget,
         )
+        return 0
+
+    @property
+    def _cmg_enabled(self) -> bool:
+        return (
+            self.policy_mode is PolicyMode.V1_CMG
+            and self.cmg_fallback_reason is None
+            and self.calibration_profile.verified
+        )
+
+    def _fallback_to_v0(self, reason: str, budget: float) -> None:
+        """Sticky, state-preserving escape hatch: never try CMG again this session."""
+        if self.cmg_fallback_reason is None:
+            self.cmg_fallback_reason = reason
+            self._emit(
+                "cmg.fallback",
+                budget,
+                budget,
+                {"reason": reason, "profile_hash": self.calibration_profile.profile_hash or None},
+            )
+        self.cmg_candidate = None
+        # Candidate generation may have happened before the failed CMG action.
+        # Rebuild it so P0 exclusivity no longer hides lower-priority V0 work.
+        self._transition(ControllerState.ANALYZE, "cmg_fallback", budget)
+
+    def _plan_cmg(self, budget: float) -> int | None:
+        """Plan exactly one action from a copied public state, without I/O."""
+        try:
+            candidate = choose_cmg_action(
+                self.blackboard,
+                self.response_ledger,
+                self.calibration_profile,
+                budget,
+                cut_limit=self.config.cmg_cut_limit,
+                iterations=self.config.cmg_iteration_limit,
+                threshold=self.config.cmg_convergence_threshold,
+                planning_seconds=self.config.cmg_planning_seconds,
+            )
+        except CMGPlanningError as exc:
+            self._fallback_to_v0(str(exc), budget)
+            return None
+        if candidate is None:
+            self._stop(StopReason.NO_POSITIVE_GAIN, budget)
+            return None
+        self.cmg_candidate = candidate
+        self._last_step_selected_ids = [candidate.candidate_id]
+        self._emit(
+            "cmg.planned",
+            budget,
+            budget,
+            self._cmg_trace_data(candidate),
+        )
+        self._transition(ControllerState.EXECUTE, "positive_cmg_action", budget)
+        return None
+
+    def _execute_cmg(self, budget: float) -> int:
+        candidate = self.cmg_candidate
+        if candidate is None or not is_legal_action(candidate.action, self.blackboard, budget):
+            self._fallback_to_v0("illegal_hypothesis", budget)
+            return 0
+        before_w = None
+        if candidate.action.kind == "comm":
+            node = self.blackboard.nodes.get(candidate.action.target_node_1)
+            before_w = node.w if node is not None else None
+        success = self._attempt_action(candidate.action, candidate.candidate_id, budget)
+        if success and candidate.action.kind == "comm" and before_w is not None:
+            node = self.blackboard.nodes.get(candidate.action.target_node_1)
+            if node is not None:
+                try:
+                    self.response_ledger.record_success(candidate.action.target_node_1, before_w, node.w)
+                except CMGPlanningError as exc:
+                    self._fallback_to_v0(str(exc), self._last_trace_budget_after or budget)
+                    return 0
+        if not success:
+            self.failed_actions.add(candidate.candidate_id)
+            self._fallback_to_v0("action_rejected", self._last_trace_budget_after or budget)
+            return 0
+        self.cmg_candidate = None
+        next_budget = self._last_trace_budget_after if self._last_trace_budget_after is not None else budget
+        self._transition(ControllerState.ANALYZE, "cmg_action_succeeded" if success else "cmg_action_failed", next_budget)
         return 0
 
     def _attempt_action(self, action: Action, candidate_id: str, budget: float) -> bool:
@@ -590,6 +698,19 @@ class RuntimeController:
             self._action_trace_data(candidate_id, outcome, before_snapshot),
         )
         return False
+
+    @staticmethod
+    def _cmg_trace_data(candidate: ScoredCandidate) -> dict[str, Any]:
+        return {
+            "candidate_id": candidate.candidate_id,
+            "action": asdict(candidate.action),
+            "score_before": candidate.score_before,
+            "score_after": candidate.score_after,
+            "gain": candidate.gain,
+            "sigma": candidate.sigma,
+            "lcb_roi": candidate.lcb_roi,
+            "predicted_response_delta": candidate.response_delta,
+        }
 
     def _action_trace_data(
         self,
