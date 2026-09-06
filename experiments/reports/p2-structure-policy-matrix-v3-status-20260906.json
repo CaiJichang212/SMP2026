@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "experiment": "p2-b3-b4-vs-b1-paired-policy-matrix",
+  "status": "incomplete_runner_stopped",
+  "manifest": "experiments/manifests/p2-structure-policy-matrix-v3.json",
+  "calibration_report": "experiments/reports/p2-topology-holdout-v2-20260906.json",
+  "plan_hash": "f2fb152130f13ead5d7030f244e5a55ef04a28dfc07a361c2e422f5806ef6425",
+  "raw_result_root": "experiments/raw/p2-structure-policy-matrix-v3-20260906/f2fb152130f13ead",
+  "gate": {"planned": 20, "completed_comparable": 20, "failures": 0, "stable": true},
+  "main_matrix": {
+    "planned": 216,
+    "completed_comparable": 1,
+    "failures": 0,
+    "single_completed_session": {
+      "variant": "b3_single_structure",
+      "seed_id": "ba_negative_hubs-50-r1",
+      "repetition": 1,
+      "final_score": 530.23,
+      "action_counts": {"scan": 50, "comm": 13, "cut": 1, "shield": 9}
+    }
+  },
+  "decision": "No paired statistics and no B3/B4 performance claim. Keep B1 default. The v3 cohort is superseded by the low-memory fix and must not be mixed with a restarted versioned cohort."
+}

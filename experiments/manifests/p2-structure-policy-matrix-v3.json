@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "name": "p2-b3-b4-vs-b1-paired-policy-matrix",
+  "randomization_seed": 20260906,
+  "server_url_env": "SMP_SERVER_URL",
+  "timeout_seconds": 60,
+  "calibration_report": "experiments/reports/p2-topology-holdout-v2-20260906.json",
+  "main_seeds": [
+    "er_balanced-50-r1", "er_balanced-50-r2", "er_balanced-100-r1", "er_balanced-100-r2",
+    "ba_negative_hubs-50-r1", "ba_negative_hubs-50-r2", "ba_negative_hubs-100-r1", "ba_negative_hubs-100-r2",
+    "ws_peace_majority-50-r1", "ws_peace_majority-50-r2", "ws_peace_majority-100-r1", "ws_peace_majority-100-r2",
+    "sbm_negative_bridges-50-r1", "sbm_negative_bridges-50-r2", "sbm_negative_bridges-100-r1", "sbm_negative_bridges-100-r2",
+    "sbm_violent_cluster-50-r1", "sbm_violent_cluster-50-r2", "sbm_violent_cluster-100-r1", "sbm_violent_cluster-100-r2",
+    "three_sparse_components-50-r1", "three_sparse_components-50-r2", "three_sparse_components-100-r1", "three_sparse_components-100-r2"
+  ],
+  "variants": ["b1_persuasion", "b3_single_structure", "b4_beam_structure"],
+  "main_repetitions": 3,
+  "pairing": "Same deterministic seed payload and repetition. Reject a whole block from a comparison if either member is not comparable; no imputation.",
+  "primary_comparisons": ["b3_single_structure-b1_persuasion", "b4_beam_structure-b1_persuasion", "b4_beam_structure-b3_single_structure"],
+  "gate": {
+    "bootstrap_samples": 10000,
+    "minimum_ci_lower_bound": 0.0,
+    "minimum_family_mean": 0.0,
+    "maximum_new_protocol_or_action_failures": 0,
+    "require_structure_action_observed": true
+  }
+}
