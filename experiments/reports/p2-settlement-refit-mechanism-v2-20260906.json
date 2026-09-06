@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "experiment": "p2-settlement-refit-mechanism-v2",
+  "manifest": "experiments/manifests/p2-settlement-refit-mechanism-v2.json",
+  "plan_hash": "b67d1aa9510ae613",
+  "raw_results": "experiments/raw/p2-settlement-refit-mechanism-v2-20260906/b67d1aa9510ae613/results.jsonl",
+  "completed_sessions": 29,
+  "comparable_sessions": 29,
+  "protocol_failures": 0,
+  "action_failures": 0,
+  "candidate_model": {
+    "name": "component_degree_plus_one",
+    "formula": "sum over connected components C of |C| / sum_{i in C}(degree_i + 1) * sum_{i in C}((degree_i + 1) * w_i)",
+    "status": "post_failure hypothesis; unavailable to the runtime until a separately preregistered topology-held-out gate passes"
+  },
+  "mechanism_results": {
+    "path5_impulse_coefficients": {"endpoint": 0.769, "near_endpoint": 1.154, "middle": 1.154},
+    "triangle_impulse_coefficient": 1.0,
+    "star5_impulse_coefficients": {"center": 1.923, "leaf": 0.769},
+    "maximum_absolute_prediction_error": 0.004285714285714448,
+    "mean_absolute_prediction_error": 0.00094353921940172
+  },
+  "archived_v1_reanalysis": {
+    "source": "experiments/raw/v1-calibration-20260906/5dca23011f908f59/calibration.jsonl",
+    "selection_model": "component_degree_plus_one",
+    "gate_spearman": 1.0,
+    "gate_median_normalized_mae": 0.000018228217280392614,
+    "gate_passed": false,
+    "blocking_reason": "The archived V1 calibration, selection and gate splits reuse every topology family and differ only in opinion layout. It is not a topology-held-out validation and cannot freeze CalibrationProfile."
+  },
+  "decision": "Keep DEFAULT_CALIBRATION_PROFILE.gate_passed=false and retain no-LLM B1 as the submission default."
+}

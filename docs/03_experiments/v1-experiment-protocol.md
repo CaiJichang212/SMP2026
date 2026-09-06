@@ -6,7 +6,10 @@
 
 实验分为“机制辨识 → 结算器校准 → 端到端配对验证”三层；上一层没有通过，下一层不产生晋级结论。实验和提交严格分离：只有本地 runner 在回合结束后调用 `trigger_eval()`；提交代码不得调用它，也不得读取实验文件或自定义 seed 的私有字段（尤其是 `r`）。
 
-截至 2026-09-05，默认 `CalibrationProfile` 仍为未验证状态。因此 `v1_cmg` 的运行路径必须 fail-closed 回退到与 `v0_deterministic` 相同的安全候选生成和合法性检查；在完成以下门禁前，绝不切换提交默认策略。
+截至 2026-09-06，默认 `CalibrationProfile` 仍为未验证状态。P2.2 已验证离线
+`component_degree_plus_one` 结算器，但尚未验证结构策略收益；因此 `v1_cmg` 的运行
+路径必须 fail-closed 回退到与 `v0_deterministic` 相同的安全候选生成和合法性检查，
+在 P2.3 结构策略门禁及后续必要门禁完成前，绝不切换提交默认策略。
 
 ## 研究问题与预注册判据
 
@@ -39,7 +42,9 @@
 
 每个基础图执行 `{control, comm, cut, shield}` 四个预注册动作（不可用动作记录为设计性缺失，不临时换动作），每个动作 5 个独立 session。因此共有 `21 × 4 × 5 = 420` session。动作和重复在固定随机种子下交错执行；每条记录包含扫描后的公开 `Blackboard` 快照、动作、游说反馈、最终分、终态哈希、预算、失败与协议字段。
 
-候选结算器严格限定为已有三类：degree-weighted、DeGroot、Friedkin–Johnsen；其参数格点以 [`v1-calibration.json`](../../experiments/manifests/v1-calibration.json) 的 `rho/gamma/a/b` 为准。
+原始 V1 校准候选为三类：degree-weighted、DeGroot、Friedkin–Johnsen；P2.1/P2.2
+另行加入 `component_degree_plus_one`，并以拓扑两两不相交的清单验证。参数格点以
+[`v1-calibration.json`](../../experiments/manifests/v1-calibration.json) 的 `rho/gamma/a/b` 为准。
 
 1. 只用 `calibration` 拟合每个模型族的候选参数。
 2. 只在 `selection` 中，从已冻结的各族候选选择模型；不能查看 `gate`。
@@ -83,3 +88,10 @@ uv run python scripts/analyze_v1_local_probes.py \
 更新（2026-09-06）：从可访问官方沙盒的网络路径执行了另一套预注册 P0 固定终态门禁，20/20 可比，四种终态各 5 次的分数相对跨度均为 0；详见 [`P0–P3 实验方案与本地结果`](p0-p3-experiment-plan-and-local-results-20260906.md)。这恢复了后续校准的前置可用性，但不替代本方案的 P1 响应表和 P2 图留出校准。因此当前结论仍是：**保持 B1/无 LLM 默认路径，不冻结 CMG 档案，不运行或解释 V1 主矩阵，直至 P1–P2 门禁通过。**
 
 再次更新（2026-09-06）：已完成 P1/P2 的 555 个新会话（135 响应、420 图留出结算），且均可比。响应覆盖、重复稳定性和 gate Spearman（0.9543）通过；然而最佳模型的 gate 图级归一化 MAE 为 10.24%，超过预注册 5% 上限。因此 P2 门禁失败，结论不变。数据、候选模型和误差拓扑见 [`V1 校准与结构门禁结果`](../../experiments/reports/v1-calibration-20260906.md)。
+
+最终更新（2026-09-06）：P2.2 已按拓扑不相交的 calibration=`path4/star4/square`、
+selection=`path6/star6/triangle_tail`、gate=`path7/star7/bow_tie` 完成 540/540 个
+可比会话。`component_degree_plus_one` 的 gate Spearman 为 1.0000、归一化 MAE 中位数
+为 0.00553%，结算器门禁通过；但 `target_influence` 与 `structure_gate_passed` 尚未
+形成运行时档案，故默认仍为 B1。下一步是单独的 P2.3 B3/B4 对 B1 配对策略收益验证，
+而非直接运行或解释 P3。

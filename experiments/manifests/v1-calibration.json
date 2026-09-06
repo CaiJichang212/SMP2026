@@ -14,8 +14,9 @@
     "splits": ["calibration", "selection", "gate"],
     "repetitions": 5,
     "actions": ["control", "comm", "cut", "shield"],
-    "split_rule": "A base graph id belongs to exactly one split; action variants never cross splits."
+    "split_rule": "Historical V1 reuses graph families across opinion layouts; topology_holdout_required records that this cohort cannot promote a profile. P2.2 must use disjoint topology families."
   },
+  "topology_holdout_required": true,
   "grid": {
     "rho": [0, 0.5, 1, 2],
     "gamma": [0, 1],
