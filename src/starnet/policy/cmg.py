@@ -165,6 +165,18 @@ class SettlementPredictor:
             raise CMGPlanningError("nonfinite_state")
         if self.profile.model == "degree":
             return sum(max(1, graph.degree(node)) * weights[node] for node in nodes)
+        if self.profile.model == "component_degree_plus_one":
+            # Empirical P2.1 hypothesis.  Each connected component preserves
+            # its own normalized (degree + 1) weighted opinion.  This is
+            # deliberately a candidate model, never a default assumption:
+            # CalibrationProfile still has to pass a topology-held-out gate
+            # before any runtime planner can use it.
+            return sum(
+                len(component)
+                * sum((graph.degree(node) + 1) * weights[node] for node in component)
+                / sum(graph.degree(node) + 1 for node in component)
+                for component in nx.connected_components(graph)
+            )
         transition = self._transition(graph, nodes)
         if self.profile.model == "degroot":
             settled = self._iterate(transition, weights)

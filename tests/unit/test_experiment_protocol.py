@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from dataclasses import asdict
 import unittest
 
 from scripts.analyze_experiments import paired_deltas, require_single_main_cohort, summarize
@@ -12,9 +13,11 @@ from scripts.run_experiments import (
     result_namespace,
     session_spec,
     stable_plan,
+    unstable_plan,
     variant_config,
 )
 from starnet.experiments.seeds import all_seed_payloads, seed_payload
+from starnet.policy.calibration import CalibrationProfile
 
 
 class ExperimentProtocolTests(unittest.TestCase):
@@ -45,6 +48,13 @@ class ExperimentProtocolTests(unittest.TestCase):
         spec = session_spec(seed_id="seed", variant="v1_cmg", phase="main")
         self.assertIn("calibration_profile_hash", spec["config"])
         self.assertIn("calibration_profile_verified", spec["config"])
+
+    def test_unstable_plan_keeps_experimental_profile_identity(self) -> None:
+        draft = CalibrationProfile(gate_passed=True, manifest_hash="m", data_hash="d")
+        profile = CalibrationProfile(**{**asdict(draft), "profile_hash": draft.computed_hash()})
+        plan = unstable_plan({"variants": ["b3_single_structure"]}, profile)
+        self.assertTrue(plan)
+        self.assertTrue(all(item["config"]["calibration_profile_hash"] == profile.profile_hash for item in plan))
 
     def test_100_node_topology_personas_follow_scaled_boundaries(self) -> None:
         bridge = seed_payload("sbm_negative_bridges", 100)

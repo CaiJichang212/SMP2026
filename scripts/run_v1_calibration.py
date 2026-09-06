@@ -114,6 +114,61 @@ def settlement_seed(family: str, layout: str) -> tuple[dict[str, Any], tuple[int
     )
 
 
+def settlement_seed_from_topology(
+    family: str, topology: Mapping[str, Any], layout: str,
+) -> tuple[dict[str, Any], dict[str, dict[str, object]]]:
+    """Build a public custom seed from a manifest-defined topology.
+
+    P2.2 needs topology-disjoint splits, so its graph definitions live in the
+    frozen manifest rather than in this historical V1 runner.  Only declared
+    actions are emitted; no target is inferred or substituted at runtime.
+    """
+    node_count, raw_edges, targets = topology.get("node_count"), topology.get("edges"), topology.get("targets")
+    if not isinstance(node_count, int) or node_count <= 0 or not isinstance(raw_edges, list) or not isinstance(targets, Mapping):
+        raise ValueError(f"invalid topology {family}")
+    edges: list[tuple[int, int]] = []
+    for edge in raw_edges:
+        if not isinstance(edge, list) or len(edge) != 2 or any(not isinstance(node, int) for node in edge):
+            raise ValueError(f"invalid edge in topology {family}")
+        left, right = edge
+        if left == right or not 1 <= left <= node_count or not 1 <= right <= node_count:
+            raise ValueError(f"invalid edge endpoint in topology {family}")
+        edges.append(tuple(sorted((left, right))))
+    if len(edges) != len(set(edges)):
+        raise ValueError(f"duplicate edge in topology {family}")
+    violent_w, peace_w, neutral_w = _layout_weights(layout)
+    nodes = [
+        {"id": node_id, "w": violent_w, "persona": "暴力", "r": 0.2, "comm_left": 3}
+        if node_id == 1 else
+        {"id": node_id, "w": peace_w, "persona": "和平", "r": 1.5, "comm_left": 3}
+        if node_id == 2 else
+        {"id": node_id, "w": neutral_w, "persona": "中立", "r": 1.0, "comm_left": 3}
+        for node_id in range(1, node_count + 1)
+    ]
+    comm_target, shield_target, cut_edge = targets.get("comm"), targets.get("shield"), targets.get("cut")
+    if not isinstance(comm_target, int) or not isinstance(shield_target, int) or not isinstance(cut_edge, list) or len(cut_edge) != 2:
+        raise ValueError(f"invalid action targets in topology {family}")
+    if comm_target not in range(1, node_count + 1) or shield_target not in range(1, node_count + 1):
+        raise ValueError(f"action target outside topology {family}")
+    normalized_cut = tuple(sorted((int(cut_edge[0]), int(cut_edge[1]))))
+    if normalized_cut not in set(edges):
+        raise ValueError(f"cut target is not an edge in topology {family}")
+    return (
+        {
+            "global_setting": {"max_budget": 60.0, "max_api_calls": 120},
+            "nodes": nodes,
+            "edges": [list(edge) for edge in edges],
+            "prompts": {"1": 15.0, "2": 10.0, "3": -5.0},
+        },
+        {
+            "control": {"kind": "control"},
+            "comm": {"kind": "comm", "target_node_1": comm_target, "prompt_id": 1},
+            "cut": {"kind": "cut", "target_node_1": normalized_cut[0], "target_node_2": normalized_cut[1]},
+            "shield": {"kind": "shield", "target_node_1": shield_target},
+        },
+    )
+
+
 def response_specs(manifest: Mapping[str, Any]) -> list[dict[str, Any]]:
     protocol = manifest.get("response_protocol")
     if not isinstance(protocol, Mapping):
@@ -150,37 +205,58 @@ def settlement_specs(manifest: Mapping[str, Any]) -> list[dict[str, Any]]:
     families, splits, actions, repetitions = (
         protocol.get("graph_families"), protocol.get("splits"), protocol.get("actions"), protocol.get("repetitions"),
     )
-    if not all(isinstance(value, list) for value in (families, splits, actions)) or not isinstance(repetitions, int):
+    if not isinstance(splits, list) or not isinstance(actions, list) or not isinstance(repetitions, int):
         raise ValueError("invalid settlement_protocol")
     if set(splits) != {"calibration", "selection", "gate"}:
         raise ValueError("settlement splits must be calibration, selection, gate")
-    layouts = {"calibration": "positive", "selection": "mixed", "gate": "negative_bridge"}
+    topologies = protocol.get("topologies")
+    layouts_by_split = protocol.get("layouts_by_split")
+    if isinstance(topologies, Mapping):
+        if not isinstance(families, Mapping) or not isinstance(layouts_by_split, Mapping):
+            raise ValueError("topology protocol requires graph_families and layouts_by_split mappings")
+        families_by_split = families
+    elif isinstance(families, list):
+        families_by_split = {str(split): families for split in splits}
+        topologies = None
+        layouts_by_split = {"calibration": ["positive"], "selection": ["mixed"], "gate": ["negative_bridge"]}
+    else:
+        raise ValueError("invalid graph_families")
     specs: list[dict[str, Any]] = []
-    for family in families:
-        if not isinstance(family, str):
-            raise ValueError("invalid graph family")
-        for split in splits:
-            if not isinstance(split, str):
-                raise ValueError("invalid split")
-            seed, cut_edge = settlement_seed(family, layouts[split])
-            graph_id = f"{family}-{layouts[split]}"
-            action_map: dict[str, dict[str, object]] = {
-                "control": {"kind": "control"},
-                "comm": {"kind": "comm", "target_node_1": 2, "prompt_id": 1},
-                "cut": {"kind": "cut", "target_node_1": cut_edge[0], "target_node_2": cut_edge[1]},
-                "shield": {"kind": "shield", "target_node_1": 1},
-            }
-            for action_name in actions:
-                if action_name not in action_map:
-                    raise ValueError(f"unknown settlement action {action_name}")
-                for repetition in range(1, repetitions + 1):
-                    spec = {
-                        "kind": "settlement_session", "split": split, "graph_id": graph_id,
-                        "action": action_map[action_name], "repetition": repetition, "seed": seed,
-                    }
-                    spec["session_id"] = f"settlement-{graph_id}-{action_name}-r{repetition}"
-                    spec["spec_hash"] = canonical_hash(spec)
-                    specs.append(spec)
+    for split in splits:
+        if not isinstance(split, str) or not isinstance(families_by_split.get(split), list) or not isinstance(layouts_by_split.get(split), list):
+            raise ValueError("invalid topology split")
+        for family in families_by_split[split]:
+            if not isinstance(family, str):
+                raise ValueError("invalid graph family")
+            if topologies is None:
+                seed, cut_edge = settlement_seed(family, str(layouts_by_split[split][0]))
+                action_map: dict[str, dict[str, object]] = {
+                    "control": {"kind": "control"}, "comm": {"kind": "comm", "target_node_1": 2, "prompt_id": 1},
+                    "cut": {"kind": "cut", "target_node_1": cut_edge[0], "target_node_2": cut_edge[1]}, "shield": {"kind": "shield", "target_node_1": 1},
+                }
+                layouts = [str(layouts_by_split[split][0])]
+            else:
+                topology = topologies.get(family)
+                if not isinstance(topology, Mapping):
+                    raise ValueError(f"missing topology {family}")
+                layouts = layouts_by_split[split]
+            for layout in layouts:
+                if not isinstance(layout, str):
+                    raise ValueError("invalid layout")
+                if topologies is not None:
+                    seed, action_map = settlement_seed_from_topology(family, topology, layout)
+                graph_id = f"{family}-{layout}"
+                for action_name in actions:
+                    if action_name not in action_map:
+                        raise ValueError(f"unknown settlement action {action_name}")
+                    for repetition in range(1, repetitions + 1):
+                        spec = {
+                            "kind": "settlement_session", "split": split, "graph_id": graph_id,
+                            "action": action_map[action_name], "repetition": repetition, "seed": seed,
+                        }
+                        spec["session_id"] = f"settlement-{graph_id}-{action_name}-r{repetition}"
+                        spec["spec_hash"] = canonical_hash(spec)
+                        specs.append(spec)
     return specs
 
 

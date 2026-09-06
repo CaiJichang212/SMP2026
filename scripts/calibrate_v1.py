@@ -141,10 +141,35 @@ def spearman(expected: list[float], actual: list[float]) -> float:
 
 
 def profile_grid() -> list[CalibrationProfile]:
-    profiles = [CalibrationProfile(False, model="degree")]
+    profiles = [
+        CalibrationProfile(False, model="degree"),
+        CalibrationProfile(False, model="component_degree_plus_one"),
+    ]
     profiles += [CalibrationProfile(False, model="degroot", rho=rho, gamma=gamma) for rho in RHO_GRID for gamma in GAMMA_GRID]
     profiles += [CalibrationProfile(False, model="friedkin_johnsen", rho=rho, gamma=gamma, a=a, b=b) for rho in RHO_GRID for gamma in GAMMA_GRID for a in A_GRID for b in B_GRID]
     return profiles
+
+
+def topology_holdout(rows_by_split: Mapping[str, Iterable[Mapping[str, Any]]]) -> bool:
+    """Require graph *shapes*, not merely opinion layouts, to be held out.
+
+    A graph ID is conventionally ``<family>-<layout>``.  The old V1 matrix
+    reused every family in each split and varied only layouts; that is useful
+    for diagnosis but cannot qualify a settlement model for runtime use.
+    """
+    families: dict[str, set[str]] = {}
+    for split, rows in rows_by_split.items():
+        families[split] = {
+            str(row.get("graph_id", "")).split("-", 1)[0]
+            for row in rows
+            if str(row.get("graph_id", ""))
+        }
+    required = ("calibration", "selection", "gate")
+    return all(families.get(name) for name in required) and not any(
+        families[left].intersection(families[right])
+        for index, left in enumerate(required)
+        for right in required[index + 1:]
+    )
 
 
 def split_rows(rows: Iterable[Mapping[str, Any]], split: str) -> list[Mapping[str, Any]]:
@@ -178,6 +203,26 @@ def _median_graph_normalized_mae(rows: Iterable[Mapping[str, Any]], profile: Cal
     )
 
 
+def family_normalized_mae(rows: Iterable[Mapping[str, Any]], profile: CalibrationProfile) -> dict[str, float]:
+    """Mean graph-range-normalized error for each held-out topology family."""
+    by_graph: dict[str, list[tuple[float, float]]] = {}
+    for row in rows:
+        try:
+            score = _score(row)
+            prediction = score_for_row(row, profile)
+        except (CMGPlanningError, ValueError, ZeroDivisionError):
+            return {}
+        by_graph.setdefault(str(row.get("graph_id", "unknown")), []).append((score, abs(prediction - score)))
+    by_family: dict[str, list[float]] = {}
+    for graph_id, values in by_graph.items():
+        family = graph_id.split("-", 1)[0]
+        normalized = statistics.fmean(error for _score_value, error in values) / max(
+            1.0, max(score for score, _error in values) - min(score for score, _error in values)
+        )
+        by_family.setdefault(family, []).append(normalized)
+    return {family: statistics.fmean(values) for family, values in by_family.items()}
+
+
 def response_statistics(rows: Iterable[Mapping[str, Any]]) -> tuple[dict[str, float], dict[str, float], dict[str, int]]:
     grouped: dict[str, list[float]] = {}
     for row in rows:
@@ -200,8 +245,25 @@ def settlement_coverage(rows: Iterable[Mapping[str, Any]], manifest: Mapping[str
     families, splits, actions, repetitions = (
         protocol.get("graph_families"), protocol.get("splits"), protocol.get("actions"), protocol.get("repetitions"),
     )
-    if not all(isinstance(value, list) for value in (families, splits, actions)) or not isinstance(repetitions, int):
+    if not isinstance(splits, list) or not isinstance(actions, list) or not isinstance(repetitions, int):
         return False
+    if isinstance(families, Mapping):
+        families_by_split = families
+    elif isinstance(families, list):
+        families_by_split = {str(split): families for split in splits}
+    else:
+        return False
+    raw_layouts = protocol.get("layouts_by_split")
+    if isinstance(raw_layouts, Mapping):
+        layouts_by_split = raw_layouts
+    else:
+        # Historical V1 used one split-specific layout; retain its exact
+        # expected IDs while applying the same strict identity check.
+        layouts_by_split = {
+            "calibration": ["positive"],
+            "selection": ["mixed"],
+            "gate": ["negative_bridge"],
+        }
     by_split_graph_action: dict[tuple[str, str, str], list[Mapping[str, Any]]] = {}
     for row in rows:
         if row.get("comparable") is not True:
@@ -213,14 +275,26 @@ def settlement_coverage(rows: Iterable[Mapping[str, Any]], manifest: Mapping[str
         key = (str(row.get("split")), str(row.get("graph_id")), action_kind)
         by_split_graph_action.setdefault(key, []).append(row)
     for split in splits:
+        expected_families = families_by_split.get(str(split))
+        layouts = layouts_by_split.get(str(split))
+        if not isinstance(expected_families, list) or not isinstance(layouts, list):
+            return False
+        expected_graphs = {f"{family}-{layout}" for family in expected_families for layout in layouts}
         graphs = {graph_id for row_split, graph_id, _action in by_split_graph_action if row_split == split}
-        if len(graphs) != len(families):
+        # Count equality is insufficient: an undeclared graph could otherwise
+        # replace a held-out family and still pass the coverage gate.
+        if graphs != expected_graphs:
             return False
         for graph_id in graphs:
             for action in actions:
                 if len(by_split_graph_action.get((str(split), graph_id, str(action)), [])) != repetitions:
                     return False
-    return len(by_split_graph_action) == len(splits) * len(families) * len(actions)
+    expected_cells = sum(
+        len(families_by_split.get(str(split), [])) * len(layouts_by_split.get(str(split), []))
+        for split in splits
+    ) * len(actions)
+    actual_splits = {split for split, _graph, _action in by_split_graph_action}
+    return actual_splits == {str(split) for split in splits} and len(by_split_graph_action) == expected_cells
 
 
 def required_response_keys(manifest: Mapping[str, Any]) -> set[str]:
@@ -246,12 +320,18 @@ def build_report(manifest: Mapping[str, Any], rows: list[Mapping[str, Any]]) -> 
     if not calibration or not selection or not gate:
         return {"gate_passed": False, "reason": "missing_required_split"}
     complete_settlement = settlement_coverage(calibration + selection + gate, manifest)
+    require_topology_holdout = bool(manifest.get("topology_holdout_required", False))
+    topology_is_held_out = topology_holdout({
+        "calibration": calibration,
+        "selection": selection,
+        "gate": gate,
+    })
     tuned_by_model = {
         model: min(
             (candidate for candidate in profile_grid() if candidate.model == model),
             key=lambda candidate: (mae(calibration, candidate), candidate.computed_hash()),
         )
-        for model in ("degree", "degroot", "friedkin_johnsen")
+        for model in ("degree", "component_degree_plus_one", "degroot", "friedkin_johnsen")
     }
     # Calibration tunes each family.  Selection can choose only among those
     # frozen candidates and does not inspect the gate split.
@@ -278,6 +358,14 @@ def build_report(manifest: Mapping[str, Any], rows: list[Mapping[str, Any]]) -> 
     }
     ordering = model_spearman(gate, selected)
     normalized_mae = _median_graph_normalized_mae(gate, selected)
+    family_mae = family_normalized_mae(gate, selected)
+    raw_gate = manifest.get("gate")
+    max_family_mae = raw_gate.get("maximum_family_mean_normalized_mae", math.inf) if isinstance(raw_gate, Mapping) else math.inf
+    family_mae_passed = bool(
+        isinstance(max_family_mae, (int, float))
+        and family_mae
+        and all(value <= float(max_family_mae) for value in family_mae.values())
+    )
     terminal_groups: dict[tuple[str, str], list[Mapping[str, Any]]] = {}
     for row in gate:
         terminal_groups.setdefault((str(row.get("terminal_hash")), str(row.get("graph_id"))), []).append(row)
@@ -317,10 +405,12 @@ def build_report(manifest: Mapping[str, Any], rows: list[Mapping[str, Any]]) -> 
     criteria_passed = bool(
         ordering >= 0.90
         and normalized_mae <= 0.05
+        and family_mae_passed
         and deterministic
         and response_coverage
         and residual_coverage
         and complete_settlement
+        and (not require_topology_holdout or topology_is_held_out)
     )
     provisional = CalibrationProfile(
         criteria_passed,
@@ -343,10 +433,14 @@ def build_report(manifest: Mapping[str, Any], rows: list[Mapping[str, Any]]) -> 
         "gate": {
             "spearman": ordering,
             "median_normalized_mae": normalized_mae,
+            "family_mean_normalized_mae": family_mae,
+            "family_mean_normalized_mae_passed": family_mae_passed,
             "terminal_deterministic": deterministic,
             "response_prior_coverage": response_coverage,
             "response_sample_counts": response_counts,
             "settlement_complete": complete_settlement,
+            "topology_holdout_required": require_topology_holdout,
+            "topology_held_out": topology_is_held_out,
             "settlement_residual_coverage": residual_coverage,
             "structure_action_residual_coverage": residual_coverage,
             "structure_qualification": {

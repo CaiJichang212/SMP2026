@@ -69,6 +69,18 @@ class StructuralPlannerTests(unittest.TestCase):
         after = planner.influence_coefficients(changed)
         self.assertNotEqual(before, after)
 
+    def test_component_score_does_not_retain_full_graph_state_cache(self) -> None:
+        profile = active_profile()
+        payload = asdict(profile)
+        payload["model"] = "component_degree_plus_one"
+        payload["profile_hash"] = ""
+        component = CalibrationProfile(**payload)
+        component = CalibrationProfile(**{**asdict(component), "profile_hash": component.computed_hash()})
+        graph = board({node: (float(node), "和平", 3) for node in range(1, 8)}, [(node, node + 1) for node in range(1, 7)])
+        planner = StructuralPlanner(component)
+        planner.structure_candidates(graph, 20.0)
+        self.assertEqual(planner._score_cache, {})
+
     def test_b4_can_keep_a_complete_negative_first_combo(self) -> None:
         graph = board({1: (0.0, "中立", 0), 2: (0.0, "中立", 0), 3: (0.0, "中立", 0)},
                       [(1, 2), (2, 3)])

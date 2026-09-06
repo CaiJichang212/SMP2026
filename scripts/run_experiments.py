@@ -34,7 +34,7 @@ from starnet.experiments.seeds import all_seed_payloads, seed_payload
 from starnet.model.blackboard import Blackboard
 from starnet.policy.actions import Action, is_legal_action
 from starnet.policy.config import LLMMode, PolicyConfig, PolicyMode
-from starnet.policy.calibration import DEFAULT_CALIBRATION_PROFILE
+from starnet.policy.calibration import CalibrationProfile, DEFAULT_CALIBRATION_PROFILE
 from starnet.runtime.controller import RuntimeController
 from starnet.runtime.env_adapter import apply_action_outcome
 from starnet.runtime.trace import RuntimeTrace
@@ -126,14 +126,15 @@ def variant_config(name: str) -> PolicyConfig:
 
 
 def session_spec(
-    *, seed_id: str, variant: str, phase: str, repetition: int = 1, block: int | None = None
+    *, seed_id: str, variant: str, phase: str, repetition: int = 1, block: int | None = None,
+    calibration_profile: CalibrationProfile = DEFAULT_CALIBRATION_PROFILE,
 ) -> dict[str, Any]:
     config = asdict(variant_config(variant)) if phase == "main" else {"gate_policy": variant}
     if variant in {"v1_cmg", "b2_influence", "b3_single_structure", "b4_beam_structure", "b5_adaptive", "b5_step_llm", "b5_event_llm"} and phase == "main":
         # Profile content is strategy content.  A changed/fail-closed profile
         # must invalidate resumed sessions even inside the same manifest tree.
-        config["calibration_profile_hash"] = DEFAULT_CALIBRATION_PROFILE.profile_hash
-        config["calibration_profile_verified"] = DEFAULT_CALIBRATION_PROFILE.verified
+        config["calibration_profile_hash"] = calibration_profile.profile_hash
+        config["calibration_profile_verified"] = calibration_profile.verified
         config["scenario_profile_verified"] = False
     spec = {
         "phase": phase,
@@ -148,10 +149,13 @@ def session_spec(
     return spec
 
 
-def stable_plan(manifest: Mapping[str, object]) -> list[dict[str, Any]]:
+def stable_plan(
+    manifest: Mapping[str, object], calibration_profile: CalibrationProfile = DEFAULT_CALIBRATION_PROFILE,
+) -> list[dict[str, Any]]:
     """Return the fixed 20-session gate plus the manifest-defined matrix."""
     gate = [
-        session_spec(seed_id="four_node_fixture", variant=policy, phase="gate", repetition=block, block=block)
+        session_spec(seed_id="four_node_fixture", variant=policy, phase="gate", repetition=block, block=block,
+                     calibration_profile=calibration_profile)
         for block in range(1, 6)
         for policy in GATE_POLICIES
     ]
@@ -163,7 +167,8 @@ def stable_plan(manifest: Mapping[str, object]) -> list[dict[str, Any]]:
     if isinstance(repetitions, bool) or not isinstance(repetitions, int) or repetitions <= 0:
         raise ValueError("main_repetitions must be a positive integer")
     main = [
-        session_spec(seed_id=str(seed), variant=str(variant), phase="main", repetition=repetition)
+        session_spec(seed_id=str(seed), variant=str(variant), phase="main", repetition=repetition,
+                     calibration_profile=calibration_profile)
         for seed in seeds
         for variant in variants
         for repetition in range(1, repetitions + 1)
@@ -171,12 +176,17 @@ def stable_plan(manifest: Mapping[str, object]) -> list[dict[str, Any]]:
     return gate + main
 
 
-def unstable_plan(manifest: Mapping[str, object]) -> list[dict[str, Any]]:
+def unstable_plan(
+    manifest: Mapping[str, object], calibration_profile: CalibrationProfile = DEFAULT_CALIBRATION_PROFILE,
+) -> list[dict[str, Any]]:
     variants = manifest.get("variants")
     if not isinstance(variants, list):
         raise ValueError("manifest must provide variants")
     return [
-        session_spec(seed_id=seed, variant=str(variant), phase="main", repetition=repetition)
+        session_spec(
+            seed_id=seed, variant=str(variant), phase="main", repetition=repetition,
+            calibration_profile=calibration_profile,
+        )
         for seed in UNSTABLE_SEEDS
         for variant in variants
         for repetition in (1, 2)
@@ -270,7 +280,8 @@ def _result_base(spec: Mapping[str, object], seed: Mapping[str, object]) -> dict
 
 
 def run_main_session(
-    spec: Mapping[str, object], seed: dict[str, Any], *, server_url: str, timeout: float
+    spec: Mapping[str, object], seed: dict[str, Any], *, server_url: str, timeout: float,
+    calibration_profile: CalibrationProfile = DEFAULT_CALIBRATION_PROFILE,
 ) -> dict[str, Any]:
     """Run one configuration in a fresh server session using public APIs only."""
     sys.path.insert(0, str(PROJECT_ROOT / "SMP_Starter_Kit"))
@@ -282,7 +293,10 @@ def run_main_session(
     initial_budget = env.get_remaining_budget()
     config = variant_config(str(spec["variant"]))
     ranker = llm_ranker(timeout) if str(spec["variant"]) in {"v0_llm3", "b5_step_llm", "b5_event_llm"} else None
-    controller = RuntimeController(env, ranker, initial_budget=initial_budget, node_count=len(seed["nodes"]), config=config)
+    controller = RuntimeController(
+        env, ranker, initial_budget=initial_budget, node_count=len(seed["nodes"]), config=config,
+        calibration_profile=calibration_profile,
+    )
     collector = ActionCollector()
     controller.attach_trace(RuntimeTrace(run_id=str(spec["session_id"]), seed_id=str(spec["seed_id"]), sinks=[collector]))
     scan_hash: str | None = None
@@ -560,6 +574,10 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--skip-preflight", action="store_true")
     parser.add_argument(
+        "--experimental-calibration-report", type=Path,
+        help="Offline-only P2 profile report; never modifies the submission default.",
+    )
+    parser.add_argument(
         "--max-new-sessions",
         type=int,
         help="bounded resumable batch size; useful when the runner is externally time-sliced",
@@ -567,12 +585,38 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def experimental_profile_from_report(path: Path) -> CalibrationProfile:
+    """Create a runtime-local structural qualification from a reviewed report.
+
+    This is deliberately an experiment-only injection.  The sentinel archive
+    makes the profile structurally eligible, while StructuralPlanner computes
+    actual per-node influence from each scanned topology rather than using
+    node IDs from this payload.
+    """
+    report = json.loads(path.read_text(encoding="utf-8"))
+    winner = report.get("winner") if isinstance(report, Mapping) else None
+    if not isinstance(winner, Mapping) or report.get("gate_passed") is not True:
+        raise ValueError("experimental calibration report must be gate-passed")
+    payload = dict(winner)
+    payload.update({
+        "structure_gate_passed": True,
+        "target_influence": {"__runtime_component_degree_plus_one__": 1.0},
+        "profile_hash": "",
+    })
+    provisional = CalibrationProfile(**payload)
+    return CalibrationProfile(**{**asdict(provisional), "profile_hash": provisional.computed_hash()})
+
+
 def main() -> int:
     args = parse_args()
     manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
     if not isinstance(manifest, dict):
         raise SystemExit("manifest root must be an object")
-    plan = stable_plan(manifest)
+    calibration_profile = (
+        experimental_profile_from_report(args.experimental_calibration_report)
+        if args.experimental_calibration_report is not None else DEFAULT_CALIBRATION_PROFILE
+    )
+    plan = stable_plan(manifest, calibration_profile)
     if args.dry_run:
         for spec in randomized_order(plan, int(manifest["randomization_seed"])):
             print(json.dumps(spec, ensure_ascii=False, sort_keys=True))
@@ -636,7 +680,9 @@ def main() -> int:
             if args.max_new_sessions is not None and new_sessions >= args.max_new_sessions:
                 break
             try:
-                row = run_gate_session(spec, seed, server_url=server_url, timeout=timeout) if spec["phase"] == "gate" else run_main_session(spec, seed, server_url=server_url, timeout=timeout)
+                row = run_gate_session(spec, seed, server_url=server_url, timeout=timeout) if spec["phase"] == "gate" else run_main_session(
+                    spec, seed, server_url=server_url, timeout=timeout, calibration_profile=calibration_profile,
+                )
             except Exception as exc:
                 row = _result_base(spec, seed)
                 row.update({"final_score": None, "comparable": False, "protocol_error": type(exc).__name__, "elapsed_seconds": None})
@@ -668,7 +714,10 @@ def main() -> int:
         print(f"gate incomplete; newly_run={new_sessions}; result_dir={plan_dir}")
         return 0
     matrix_branch = "stable" if stable else "unstable"
-    main_specs = [spec for spec in plan if spec["phase"] == "main"] if stable else unstable_plan(manifest)
+    main_specs = (
+        [spec for spec in plan if spec["phase"] == "main"]
+        if stable else unstable_plan(manifest, calibration_profile)
+    )
     run_specs(main_specs, matrix_branch=matrix_branch)
     print(
         f"completed gate_stable={stable}; main_sessions={len(main_specs)}; "

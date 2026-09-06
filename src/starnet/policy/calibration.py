@@ -47,7 +47,12 @@ class CalibrationProfile:
     scenario_gate_passed: bool = False
 
     def __post_init__(self) -> None:
-        if self.model not in {"degree", "degroot", "friedkin_johnsen"}:
+        if self.model not in {
+            "degree",
+            "component_degree_plus_one",
+            "degroot",
+            "friedkin_johnsen",
+        }:
             raise ValueError("unknown settlement model")
         for value in (self.rho, self.gamma, self.a, self.b):
             if not isinstance(value, (int, float)) or not math.isfinite(value):

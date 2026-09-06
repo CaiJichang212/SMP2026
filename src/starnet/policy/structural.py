@@ -113,6 +113,16 @@ class StructuralPlanner:
         self._score_cache: dict[tuple[object, ...], float] = {}
 
     @property
+    def _cache_safe(self) -> bool:
+        """Only cache small-model scores; graph-state keys are expensive.
+
+        The verified component score is O(V+E), while a cache key serialises
+        every node and edge.  Retaining hundreds of such keys costs far more
+        memory than recomputing the closed-form score on 50/100-node graphs.
+        """
+        return self._score_fn is not None or self.profile.model != "component_degree_plus_one"
+
+    @property
     def eligible(self) -> bool:
         return self.profile.structure_eligible
 
@@ -126,7 +136,13 @@ class StructuralPlanner:
                   self.profile.a, self.profile.b, self.predictor.iterations,
                   self.predictor.threshold)
         key = params + _state_key(state)
+        if not self._cache_safe:
+            return float(self.predictor.score(state))
         if key not in self._score_cache:
+            # Bound hypothetical-state retention for unverified/legacy models.
+            # Eviction changes neither a score nor candidate ordering.
+            if len(self._score_cache) >= 256:
+                self._score_cache.clear()
             self._score_cache[key] = float(self.predictor.score(state))
         return self._score_cache[key]
 
@@ -320,11 +336,16 @@ class StructuralPlanner:
         if baseline is None:
             return ()
         if mode is PolicyMode.B3_SINGLE_STRUCTURE:
+            # Score every legal structure action for coverage, but retain only
+            # the same bounded set that can later become runnable candidates.
+            # Keeping every full persuasion completion is the dominant memory
+            # cost on 100-node dense graphs.
             plans: list[PlanCandidate] = [baseline]
             for item in self.structure_candidates(board, budget):
                 plan = self._make_plan(initial, (item.action,), budget, remaining_steps, baseline_score)
                 if plan is not None and plan.conservative_gain > 0:
                     plans.append(plan)
+                    plans = sorted(plans, key=lambda item: (-item.conservative_gain, item.candidate_id))[: self.candidate_limit + 1]
             return tuple(sorted(plans, key=lambda item: (-item.conservative_gain, item.candidate_id)))
 
         # Beam state keeps structural actions only.  Every terminal state is
@@ -345,6 +366,11 @@ class StructuralPlanner:
                         terminals.append(plan)
                         expanded.append((plan.conservative_gain, plan.candidate_id,
                                          state.apply(item.action), next_sequence))
+            # Only the top beam can be expanded and only the top runnable
+            # plans can reach the controller; discard the rest immediately.
+            terminals = sorted(
+                terminals, key=lambda item: (-item.conservative_gain, item.candidate_id)
+            )[: self.candidate_limit + 1]
             unique: dict[tuple[object, ...], tuple[float, str, PredictiveState, tuple[Action, ...]]] = {}
             for item in sorted(expanded, key=lambda value: (-value[0], value[1])):
                 unique.setdefault(_state_key(item[2]), item)
@@ -354,7 +380,7 @@ class StructuralPlanner:
         accepted = [item for item in terminals if item.conservative_gain > 0 or not item.structure_actions]
         # Deduplicate plans and make the stable ordering explicit.
         dedup = {item.candidate_id: item for item in accepted}
-        return tuple(sorted(dedup.values(), key=lambda item: (-item.conservative_gain, item.candidate_id)))
+        return tuple(sorted(dedup.values(), key=lambda item: (-item.conservative_gain, item.candidate_id))[: self.candidate_limit + 1])
 
     def plan(
         self, board: Blackboard, budget: float, remaining_steps: int,
