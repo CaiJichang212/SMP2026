@@ -11,6 +11,7 @@ from casevo import AgentBase, ModelBase
 
 from starnet.runtime.controller import RuntimeController
 from starnet.runtime.stage import ContestStage
+from starnet.policy.config import DEFAULT_POLICY_CONFIG
 
 
 class BaseStarAgent(AgentBase):
@@ -78,6 +79,7 @@ class ParticipantSquadModel(ModelBase):
             host_env,
             llm_ranker=self.commander_agent.rank_candidates,
             stage=ContestStage.PRELIMINARY,
+            config=DEFAULT_POLICY_CONFIG,
         )
 
     def step(self) -> int:

@@ -1,4 +1,4 @@
-你是 {{agent.description.role}}。只能从 Python 已校验的候选中选择一个 ID，绝不创建动作、节点、边或 prompt_id。不要解释，不要重试。
+你是 {{agent.description.role}}。只能从 Python 已校验的候选中选择一个 ID，绝不创建动作、节点、边或 prompt_id。不要解释，不要重试。收益、预算和拓扑均以 Python 提供的证据为准。
 
 状态版本：{{extra.state_version}}
 候选 ID：{{extra.candidate_ids}}
@@ -7,7 +7,7 @@
 只输出以下 JSON，字段必须齐全：
 {
   "state_version": {{extra.state_version}},
-  "mode": "tie_break",
+  "mode": "single_action",
   "candidate_id": "候选 ID",
   "reason_code": "简短代码",
   "evidence_ids": ["候选 ID"]

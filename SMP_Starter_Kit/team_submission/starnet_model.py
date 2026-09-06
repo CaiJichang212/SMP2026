@@ -5,6 +5,7 @@ from __future__ import annotations
 
 
 from dataclasses import asdict, dataclass
+import math
 from typing import Any
 
 
@@ -32,6 +33,17 @@ class NodeState:
         missing = required.difference(payload)
         if missing:
             raise ValueError(f"扫描结果缺少字段: {sorted(missing)}")
+        raw_w = payload["w"]
+        if isinstance(raw_w, bool) or not isinstance(raw_w, (int, float)) or not math.isfinite(raw_w):
+            raise ValueError("扫描结果中的 w 必须是有限数值")
+        if not isinstance(payload["persona"], str):
+            raise ValueError("扫描结果中的 persona 必须是字符串")
+        neighbors = payload["neighbors"]
+        if not isinstance(neighbors, list) or any(
+            isinstance(node_id, bool) or not isinstance(node_id, int) or node_id <= 0
+            for node_id in neighbors
+        ):
+            raise ValueError("扫描结果中的 neighbors 必须是正整数列表")
         raw_comm_left = payload.get("comm_left")
         if raw_comm_left is None:
             comm_left = None
@@ -40,22 +52,76 @@ class NodeState:
         else:
             comm_left = max(0, raw_comm_left)
         return cls(
-            w=float(payload["w"]),
-            persona=str(payload["persona"]),
+            w=float(raw_w),
+            persona=payload["persona"],
             comm_left=comm_left,
         )
 
 
 class Blackboard:
-    """已探明存活节点、有效已知边与不可扫描节点的唯一事实来源。"""
+    """Environment facts only, with an append-only action audit trail.
 
-    def __init__(self) -> None:
+    This deliberately does not contain predictions or LLM prose.  A caller may
+    use the snapshot as decision evidence, but every field here must originate
+    in an explicit stage contract or a public environment response.
+    """
+
+    def __init__(self, node_count: int | None = None) -> None:
+        if node_count is not None and (isinstance(node_count, bool) or node_count <= 0):
+            raise ValueError("node_count must be a positive integer or None")
+        self.node_count = node_count
         self.nodes: dict[int, NodeState] = {}
         self.edges: set[Edge] = set()
         self.dead_nodes: set[int] = set()
+        self.shielded_ids: set[int] = set()
+        self.nonexistent_ids: set[int] = set()
+        self.confirmed_non_edges: set[Edge] = set()
+        self.unresolved_nodes: set[int] = set()
+        self.budget_units: int | None = None
+        self.outer_steps = 0
+        self.llm_attempts = 0
+        self.env_calls = 0
+        self.state_version = 0
+        self.events: list[dict[str, Any]] = []
 
     def can_scan(self, node_id: int) -> bool:
-        return node_id > 0 and node_id not in self.nodes and node_id not in self.dead_nodes
+        return (
+            node_id > 0
+            and (self.node_count is None or node_id <= self.node_count)
+            and node_id not in self.nodes
+            and node_id not in self.dead_nodes
+        )
+
+    @property
+    def scanned_ids(self) -> set[int]:
+        return set(self.nodes) | set(self.dead_nodes)
+
+    @property
+    def frontier_ids(self) -> set[int]:
+        return {
+            node_id
+            for edge in self.edges
+            for node_id in edge
+            if node_id not in self.scanned_ids and node_id not in self.dead_nodes
+        }
+
+    @property
+    def unseen_ids(self) -> set[int]:
+        if self.node_count is None:
+            return set()
+        return set(range(1, self.node_count + 1)).difference(self.scanned_ids).difference(self.frontier_ids)
+
+    def set_budget(self, budget: float) -> None:
+        if isinstance(budget, bool) or not isinstance(budget, (int, float)) or not math.isfinite(budget):
+            raise ValueError("budget must be a finite number")
+        units = round(float(budget) * 2)
+        if not math.isclose(float(budget) * 2, units, abs_tol=1e-7):
+            raise ValueError("budget must be representable in 0.5 units")
+        self.budget_units = max(0, units)
+
+    def record_event(self, kind: str, **data: Any) -> None:
+        self.state_version += 1
+        self.events.append({"version": self.state_version, "kind": kind, **data})
 
     def record_scan(self, node_id: int, payload: dict[str, Any] | None) -> bool:
         """写入真实扫描结果；空结果只表示该 ID 当前不可用。"""
@@ -63,14 +129,25 @@ class Blackboard:
             return False
         if payload is None:
             self.dead_nodes.add(node_id)
+            self.nonexistent_ids.add(node_id)
+            self.record_event("scan", node_id=node_id, status="unavailable")
             return True
 
         state = NodeState.from_scan(payload)
         self.nodes[node_id] = state
-        for neighbor in payload["neighbors"]:
-            neighbor_id = int(neighbor)
-            if neighbor_id > 0 and neighbor_id != node_id:
+        for neighbor_id in payload["neighbors"]:
+            if (
+                neighbor_id > 0
+                and neighbor_id != node_id
+                and (self.node_count is None or neighbor_id <= self.node_count)
+            ):
                 self.edges.add(normalize_edge(node_id, neighbor_id))
+        scanned = set(self.nodes)
+        for other_id in scanned.difference({node_id}):
+            edge = normalize_edge(node_id, other_id)
+            if other_id not in set(payload["neighbors"]):
+                self.confirmed_non_edges.add(edge)
+        self.record_event("scan", node_id=node_id, status="success")
         return True
 
     def record_communication(self, node_id: int, response: dict[str, Any]) -> bool:
@@ -79,18 +156,24 @@ class Blackboard:
         if node is None or response.get("status") != "success":
             if node is not None and response.get("status") == "max_comm_reached":
                 node.comm_left = 0
+                self.record_event("communicate", node_id=node_id, status="max_comm_reached")
             return False
         if "new_w" not in response:
             return False
         node.w = float(response["new_w"])
-        if node.comm_left is not None:
+        raw_comm_left = response.get("comm_left")
+        if isinstance(raw_comm_left, int) and not isinstance(raw_comm_left, bool):
+            node.comm_left = max(0, raw_comm_left)
+        elif node.comm_left is not None:
             node.comm_left = max(0, node.comm_left - 1)
+        self.record_event("communicate", node_id=node_id, status="success", new_w=node.w)
         return True
 
     def record_cut(self, left: int, right: int, success: bool) -> bool:
         if not success:
             return False
         self.edges.discard(normalize_edge(left, right))
+        self.record_event("cut", left=left, right=right, status="success")
         return True
 
     def record_shield(self, node_id: int, success: bool) -> bool:
@@ -99,6 +182,8 @@ class Blackboard:
         del self.nodes[node_id]
         self.edges = {edge for edge in self.edges if node_id not in edge}
         self.dead_nodes.add(node_id)
+        self.shielded_ids.add(node_id)
+        self.record_event("shield", node_id=node_id, status="success")
         return True
 
     def snapshot(self) -> dict[str, Any]:
@@ -107,6 +192,20 @@ class Blackboard:
             "nodes": {node_id: asdict(state) for node_id, state in sorted(self.nodes.items())},
             "edges": [list(edge) for edge in sorted(self.edges)],
             "dead_nodes": sorted(self.dead_nodes),
+            "shielded_ids": sorted(self.shielded_ids),
+            "nonexistent_ids": sorted(self.nonexistent_ids),
+            "confirmed_non_edges": [list(edge) for edge in sorted(self.confirmed_non_edges)],
+            "frontier_ids": sorted(self.frontier_ids),
+            "unseen_ids": sorted(self.unseen_ids),
+            "unresolved_nodes": sorted(self.unresolved_nodes),
+            "resources": {
+                "budget_units": self.budget_units,
+                "outer_steps": self.outer_steps,
+                "llm_attempts": self.llm_attempts,
+                "env_calls": self.env_calls,
+            },
+            "state_version": self.state_version,
+            "events": list(self.events),
         }
 
 # End inline: src/starnet/model/blackboard.py
@@ -187,6 +286,29 @@ class PolicyMode(str, Enum):
 
     V0_DETERMINISTIC = "v0_deterministic"
     V1_CMG = "v1_cmg"
+    B1_PERSUASION = "b1_persuasion"
+    B2_INFLUENCE = "b2_influence"
+    B3_SINGLE_STRUCTURE = "b3_single_structure"
+    B4_BEAM_STRUCTURE = "b4_beam_structure"
+    B5_ADAPTIVE = "b5_adaptive"
+
+
+class LLMSchedule(str, Enum):
+    """When the commander may be consulted.
+
+    The gate is independent of ``max_llm_calls``: ``OFF`` is useful for
+    deterministic ablations, while ``STEP`` and ``EVENT`` describe when a
+    caller may spend an already-authorised call.
+    """
+
+    OFF = "off"
+    STEP = "step"
+    EVENT = "event"
+
+
+# Friendly aliases used by experiment manifests and older notebooks.
+LLMMode = LLMSchedule
+LlmSchedule = LLMSchedule
 
 
 @dataclass(frozen=True)
@@ -199,6 +321,8 @@ class PolicyConfig:
 
     shield_threshold: float = 0.55
     cut_threshold: float = 0.20
+    # P0 is not calibrated: structural actions are off by default and the
+    # official submission has no switch that can silently enable them.
     enable_shield: bool = True
     enable_cut: bool = True
     enable_communicate: bool = True
@@ -214,13 +338,21 @@ class PolicyConfig:
     cmg_iteration_limit: int = 200
     cmg_convergence_threshold: float = 1e-8
     cmg_planning_seconds: float = 1.0
+    # ``None`` means the compatibility default: explicit positive LLM budget
+    # opts into STEP, while the ordinary zero-budget configuration is OFF.
+    llm_schedule: LLMSchedule | None = None
+    structure_depth: int = 2
+    structure_width: int = 4
+    structure_candidate_limit: int = 12
+    adaptive_initial_preliminary: int = 4
+    adaptive_initial_final: int = 8
 
     def __post_init__(self) -> None:
         for name in ("shield_threshold", "cut_threshold"):
             value = getattr(self, name)
             if not isinstance(value, (int, float)) or isinstance(value, bool) or value < 0:
                 raise ValueError(f"{name} must be a non-negative number")
-        if isinstance(self.max_llm_calls, bool) or self.max_llm_calls < 0:
+        if isinstance(self.max_llm_calls, bool) or not isinstance(self.max_llm_calls, int) or self.max_llm_calls < 0:
             raise ValueError("max_llm_calls must be a non-negative integer")
         if self.max_steps is not None and (
             isinstance(self.max_steps, bool) or self.max_steps <= 0
@@ -228,6 +360,18 @@ class PolicyConfig:
             raise ValueError("max_steps must be a positive integer or None")
         if not isinstance(self.policy_mode, PolicyMode):
             raise ValueError("policy_mode must be a PolicyMode")
+        if self.llm_schedule is None:
+            object.__setattr__(
+                self, "llm_schedule",
+                LLMSchedule.STEP if self.max_llm_calls > 0 else LLMSchedule.OFF,
+            )
+        if not isinstance(self.llm_schedule, LLMSchedule):
+            raise ValueError("llm_schedule must be an LLMSchedule")
+        for name in ("structure_depth", "structure_width", "structure_candidate_limit",
+                     "adaptive_initial_preliminary", "adaptive_initial_final"):
+            value = getattr(self, name)
+            if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
+                raise ValueError(f"{name} must be a positive integer")
         if isinstance(self.cmg_cut_limit, bool) or self.cmg_cut_limit <= 0:
             raise ValueError("cmg_cut_limit must be a positive integer")
         if isinstance(self.cmg_iteration_limit, bool) or self.cmg_iteration_limit <= 0:
@@ -239,14 +383,23 @@ class PolicyConfig:
         """Return the conservative local cap for the current contest tier."""
         if self.max_steps is not None:
             return self.max_steps
-        return 115 if node_count <= 50 else 245
+        return 117 if node_count <= 50 else 247
 
     def contest_llm_limit(self, node_count: int) -> int:
         """The public per-seed LLM cap (preliminary/final respectively)."""
         return 120 if node_count <= 50 else 250
 
 
-DEFAULT_POLICY_CONFIG = PolicyConfig()
+# The only configuration used by the submission: P0 is unverified, therefore
+# structural candidate generation and CMG are fail-closed.  ``PolicyConfig``
+# itself keeps legacy experiment defaults so historical offline fixtures remain
+# reproducible; it is never selected by the submission implicitly.
+DEFAULT_POLICY_CONFIG = PolicyConfig(
+    enable_shield=False,
+    enable_cut=False,
+    max_llm_calls=0,
+    policy_mode=PolicyMode.B1_PERSUASION,
+)
 
 # End inline: src/starnet/policy/config.py
 
@@ -288,6 +441,15 @@ class CalibrationProfile:
     manifest_hash: str = ""
     data_hash: str = ""
     profile_hash: str = ""
+    # Values are public, held-out-validated terminal influence coefficients.
+    # An empty map is intentional: it makes B2 unavailable rather than guessed.
+    target_influence: Mapping[str, float] = field(default_factory=dict)
+    # Separate qualification for irreversible structure actions.  Keeping it
+    # independent from ``gate_passed`` prevents a settlement-only calibration
+    # from silently enabling B3/B4.
+    structure_gate_passed: bool = False
+    structure_action_residual_std: Mapping[str, float] = field(default_factory=dict)
+    scenario_gate_passed: bool = False
 
     def __post_init__(self) -> None:
         if self.model not in {"degree", "degroot", "friedkin_johnsen"}:
@@ -295,7 +457,8 @@ class CalibrationProfile:
         for value in (self.rho, self.gamma, self.a, self.b):
             if not isinstance(value, (int, float)) or not math.isfinite(value):
                 raise ValueError("calibration parameters must be finite")
-        for values in (self.settlement_residual_std, self.response_mean, self.response_std):
+        for values in (self.settlement_residual_std, self.structure_action_residual_std,
+                       self.response_mean, self.response_std, self.target_influence):
             for value in values.values():
                 if not isinstance(value, (int, float)) or not math.isfinite(value):
                     raise ValueError("calibration values must be finite")
@@ -328,12 +491,128 @@ class CalibrationProfile:
         value = self.settlement_residual_std.get(action_kind)
         return max(0.0, float(value)) if value is not None else math.inf
 
+    @property
+    def b2_eligible(self) -> bool:
+        return self.verified and bool(self.target_influence)
+
+    @property
+    def structure_eligible(self) -> bool:
+        required = ("comm", "cut", "shield")
+        residuals = self.structure_action_residual_std or self.settlement_residual_std
+        return (
+            self.verified
+            and self.structure_gate_passed
+            and bool(self.target_influence)
+            and all(action in residuals and math.isfinite(float(residuals[action])) for action in required)
+        )
+
+    @property
+    def scenario_eligible(self) -> bool:
+        return self.structure_eligible and self.scenario_gate_passed
+
 
 # Deliberately fail closed until ``scripts/calibrate_v1.py freeze`` emits a
 # reviewed literal profile.  Runtime code never reads experiment artefacts.
 DEFAULT_CALIBRATION_PROFILE = CalibrationProfile(gate_passed=False)
 
 # End inline: src/starnet/policy/calibration.py
+
+# Begin inline: src/starnet/policy/baseline.py
+"""Conservative P1 persuasion allocation.
+
+No topology action is constructed in this module.  It intentionally works from
+the scanned graph only and returns one independently legal communication slot
+per eligible node, so a fresh maximum can be selected after every public
+response.
+"""
+
+
+from collections.abc import Mapping
+import math
+
+
+
+def _turn(node_comm_left: int) -> int:
+    """Map verified remaining slots to the next 1/2/3 diminishing slot."""
+    return 4 - node_comm_left
+
+
+def _response(
+    node_id: int, persona: str, turn: int, responses: Mapping[int, float], profile: CalibrationProfile,
+    ledger: ResponseLedger | None = None,
+) -> float:
+    if ledger is not None:
+        posterior = ledger.predicted_delta(node_id, persona, 1, profile, turn=turn)
+        if posterior is not None and math.isfinite(posterior[0]):
+            return max(0.0, float(posterior[0]))
+    observed = responses.get(node_id)
+    if observed is not None and math.isfinite(observed):
+        # The stored observation is always the first successful response for
+        # this node.  Later legal slots have the published 1, 1/2, 1/4
+        # marginal multiplier; do not rank a repeated persuasion as if it
+        # were another first attempt.
+        return max(0.0, float(observed)) * (1.0, 0.5, 0.25)[turn - 1]
+    prior = profile.response_prior(persona, 1, turn) if profile.verified else None
+    return max(0.0, prior[0]) if prior is not None else 1.0
+
+
+def persuasion_candidates(
+    blackboard: Blackboard,
+    budget: float,
+    responses: Mapping[int, float],
+    profile: CalibrationProfile,
+    *,
+    use_influence: bool = False,
+    failed_actions: frozenset[str] | set[str] = frozenset(),
+    ledger: ResponseLedger | None = None,
+) -> list[Candidate]:
+    """Return stable B1/B2 communication candidates with non-negative gain.
+
+    B1 uses exact observed degree times a response estimate. B2 may replace the
+    degree term only when the frozen calibration profile contains a held-out
+    influence coefficient for that target. Missing coefficients fail back to
+    the B1 term; a caller must not claim a B2 result in that case.
+    """
+    result: list[Candidate] = []
+    for node_id, node in sorted(blackboard.nodes.items()):
+        if node.comm_left is None or node.comm_left <= 0:
+            continue
+        turn = _turn(node.comm_left)
+        if turn not in (1, 2, 3):
+            continue
+        action = Action("comm", node_id, prompt_id=1)
+        candidate_id = f"comm:{node_id}:{turn}"
+        if candidate_id in failed_actions:
+            continue
+        if not is_legal_action(action, blackboard, budget):
+            continue
+        degree = sum(node_id in edge for edge in blackboard.edges)
+        response = _response(node_id, node.persona, turn, responses, profile, ledger)
+        coefficient = float(degree)
+        if use_influence:
+            raw_h = profile.target_influence.get(str(node_id))
+            if raw_h is not None and math.isfinite(float(raw_h)):
+                coefficient = max(0.0, float(raw_h))
+        gain = coefficient * response
+        if gain <= 0.0:
+            continue
+        result.append(
+            Candidate(
+                candidate_id=candidate_id,
+                action=action,
+                priority=0,
+                score=gain,
+                roi=gain / action_cost(action),
+                reason=("held-out influence" if use_influence else "observed degree")
+                + f" × response, slot {turn}",
+            )
+        )
+    return sorted(result, key=lambda item: (-item.roi, item.candidate_id))
+
+
+__all__ = ["persuasion_candidates"]
+
+# End inline: src/starnet/policy/baseline.py
 
 # Begin inline: src/starnet/runtime/env_adapter.py
 """环境调用的单一入口：只使用赛题公开 API，并以返回值更新黑板。"""
@@ -979,6 +1258,7 @@ class Candidate:
     score: float
     roi: float
     reason: str
+    evidence_ids: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -1342,14 +1622,25 @@ class CMGPlanningError(RuntimeError):
 
 @dataclass
 class ResponseLedger:
-    """Observed successful communications only; no inference from comm_left."""
+    """Online posterior keyed by ``persona × prompt × turn``.
+
+    A node's own successful response sequence is preferred.  Until that exists,
+    the posterior is pooled by the exact calibration key, then falls back to
+    the frozen calibration prior.
+    """
 
     successful_comm_count: dict[int, int] = field(default_factory=dict)
     observed_deltas: dict[int, list[float]] = field(default_factory=dict)
     first_delta: dict[int, float] = field(default_factory=dict)
     last_w: dict[int, float] = field(default_factory=dict)
+    posterior_count: dict[str, int] = field(default_factory=dict)
+    posterior_mean: dict[str, float] = field(default_factory=dict)
+    posterior_m2: dict[str, float] = field(default_factory=dict)
 
-    def record_success(self, node_id: int, before_w: float, new_w: float) -> None:
+    def record_success(
+        self, node_id: int, before_w: float, new_w: float,
+        *, persona: str | None = None, prompt_id: int = 1, turn: int | None = None,
+    ) -> None:
         delta = float(new_w) - float(before_w)
         if not math.isfinite(delta):
             raise CMGPlanningError("nonfinite_response")
@@ -1358,21 +1649,47 @@ class ResponseLedger:
         self.successful_comm_count[node_id] = len(values)
         self.first_delta.setdefault(node_id, delta)
         self.last_w[node_id] = float(new_w)
+        if persona is not None and turn in (1, 2, 3):
+            key = CalibrationProfile.response_key(persona, prompt_id, turn)
+            count = self.posterior_count.get(key, 0) + 1
+            old_mean = self.posterior_mean.get(key, 0.0)
+            difference = delta - old_mean
+            mean = old_mean + difference / count
+            self.posterior_count[key] = count
+            self.posterior_mean[key] = mean
+            self.posterior_m2[key] = self.posterior_m2.get(key, 0.0) + difference * (delta - mean)
 
     def predicted_delta(
-        self, node_id: int, persona: str, prompt_id: int, profile: CalibrationProfile
+        self, node_id: int, persona: str, prompt_id: int, profile: CalibrationProfile,
+        turn: int | None = None,
     ) -> tuple[float, float] | None:
         count = self.successful_comm_count.get(node_id, 0)
         if count == 0:
-            return profile.response_prior(persona, prompt_id, 1)
+            return self.posterior_for(persona, prompt_id, turn or 1, profile)
         first = self.first_delta.get(node_id)
         if first is None:
             return None
-        if count == 1:
+        # The copied predictive state may include further hypothetical slots
+        # beyond the real ledger.  Honour its actual slot number when given;
+        # without one preserve the historical "next observed slot" API.
+        target_turn = turn if turn in (1, 2, 3) else count + 1
+        if target_turn == 2:
             return first * 0.5, 0.0
-        if count == 2:
+        if target_turn == 3:
             return first * 0.25, 0.0
         return None
+
+    def posterior_for(
+        self, persona: str, prompt_id: int, turn: int, profile: CalibrationProfile
+    ) -> tuple[float, float] | None:
+        """Return the observed group posterior, or the calibrated prior."""
+        key = CalibrationProfile.response_key(persona, prompt_id, turn)
+        count = self.posterior_count.get(key, 0)
+        if count:
+            mean = self.posterior_mean[key]
+            variance = self.posterior_m2.get(key, 0.0) / max(1, count - 1)
+            return mean, math.sqrt(max(0.0, variance))
+        return profile.response_prior(persona, prompt_id, turn)
 
 
 @dataclass(frozen=True)
@@ -1568,6 +1885,680 @@ def choose_cmg_action(
 
 # End inline: src/starnet/policy/cmg.py
 
+# Begin inline: src/starnet/policy/structural.py
+"""Fail-closed structural planning for B3 and B4.
+
+The planner only operates on a copied :class:`PredictiveState`.  It never
+calls the environment and never writes the Blackboard.  A plan is ordered as
+``structure actions, then persuasion completion``; this makes it impossible
+to count persuasion on a node that a later hypothetical shield removes.
+"""
+
+
+from collections.abc import Callable, Iterable
+from dataclasses import dataclass
+import hashlib
+import json
+import math
+from typing import Any
+
+import networkx as nx
+
+
+
+@dataclass(frozen=True)
+class PlanCandidate:
+    """A complete executable plan and its first public action."""
+
+    candidate_id: str
+    actions: tuple[Action, ...]
+    first_action: Action | None
+    cost: float
+    steps: int
+    predicted_final_score: float
+    gain: float
+    risk: float
+    topology_summary: dict[str, Any]
+    evidence_ids: tuple[str, ...] = ()
+    structure_actions: tuple[Action, ...] = ()
+    persuasion_actions: tuple[Action, ...] = ()
+
+    @property
+    def conservative_gain(self) -> float:
+        return self.gain - self.risk
+
+    @property
+    def full_plan(self) -> tuple[Action, ...]:
+        return self.actions
+
+    @property
+    def first_public_action(self) -> Action | None:
+        return self.first_action
+
+    @property
+    def predicted_score(self) -> float:
+        return self.predicted_final_score
+
+    @property
+    def valid(self) -> bool:
+        return self.first_action is not None and self.cost >= 0 and self.steps == len(self.actions)
+
+
+@dataclass(frozen=True)
+class StructuralActionScore:
+    action: Action
+    score_before: float
+    score_after: float
+    gain: float
+    risk: float
+    category: str
+    evidence_id: str
+
+
+def _action_id(action: Action) -> str:
+    if action.kind == "comm":
+        return f"comm:{action.target_node_1}:{action.prompt_id}"
+    if action.kind == "cut":
+        return f"cut:{action.target_node_1}-{action.target_node_2}"
+    return f"{action.kind}:{action.target_node_1}"
+
+
+def _state_key(state: PredictiveState) -> tuple[object, ...]:
+    return (
+        tuple((node, state.nodes[node].w, state.nodes[node].persona, state.nodes[node].comm_left)
+              for node in sorted(state.nodes)),
+        tuple(sorted(state.edges)),
+    )
+
+
+class StructuralPlanner:
+    """Deterministic B3 single-action and B4 depth-two beam planner."""
+
+    def __init__(
+        self,
+        profile: CalibrationProfile,
+        *,
+        ledger: ResponseLedger | None = None,
+        depth: int = 2,
+        width: int = 4,
+        candidate_limit: int = 12,
+        predictor: SettlementPredictor | None = None,
+        score_fn: Callable[[PredictiveState], float] | None = None,
+    ) -> None:
+        if depth <= 0 or width <= 0 or candidate_limit <= 0:
+            raise ValueError("beam and candidate limits must be positive")
+        self.profile = profile
+        self.ledger = ledger or ResponseLedger()
+        self.depth, self.width, self.candidate_limit = depth, width, candidate_limit
+        self.predictor = predictor or SettlementPredictor(profile)
+        self._score_fn = score_fn
+        self._score_cache: dict[tuple[object, ...], float] = {}
+
+    @property
+    def eligible(self) -> bool:
+        return self.profile.structure_eligible
+
+    def _score(self, state: PredictiveState) -> float:
+        if self._score_fn is not None:
+            value = float(self._score_fn(state))
+            if not math.isfinite(value):
+                raise ValueError("nonfinite score")
+            return value
+        params = (self.profile.model, self.profile.rho, self.profile.gamma,
+                  self.profile.a, self.profile.b, self.predictor.iterations,
+                  self.predictor.threshold)
+        key = params + _state_key(state)
+        if key not in self._score_cache:
+            self._score_cache[key] = float(self.predictor.score(state))
+        return self._score_cache[key]
+
+    def influence_coefficients(self, state: PredictiveState, delta: float = 1.0) -> dict[int, float]:
+        """Recompute score sensitivities for this exact topology."""
+        if delta <= 0 or not math.isfinite(delta):
+            raise ValueError("delta must be positive and finite")
+        base = self._score(state)
+        result: dict[int, float] = {}
+        for node_id in sorted(state.nodes):
+            changed = PredictiveState(
+                nodes={node: type(value)(value.w, value.persona, value.comm_left)
+                       for node, value in state.nodes.items()},
+                edges=set(state.edges), dead_nodes=set(state.dead_nodes),
+            )
+            changed.nodes[node_id].w += delta
+            result[node_id] = (self._score(changed) - base) / delta
+        return result
+
+    def _structure_scores(self, state: PredictiveState, budget: float) -> list[StructuralActionScore]:
+        board = state.to_blackboard()
+        before = self._score(state)
+        scores: list[StructuralActionScore] = []
+        # Full scans by action class are intentional: candidate coverage must
+        # not be replaced by a negative-node/bridge heuristic.
+        actions = [Action("shield", node_id) for node_id in sorted(state.nodes)]
+        actions += [Action("cut", left, target_node_2=right) for left, right in sorted(state.edges)]
+        residuals = self.profile.structure_action_residual_std or self.profile.settlement_residual_std
+        for action in actions:
+            if not is_legal_action(action, board, budget):
+                continue
+            after_state = state.apply(action)
+            after = self._score(after_state)
+            residual = float(residuals.get(action.kind, math.inf))
+            if not math.isfinite(residual):
+                continue
+            category = "shield" if action.kind == "shield" else "cut"
+            scores.append(StructuralActionScore(
+                action, before, after, after - before, max(0.0, residual), category,
+                f"structure:{_action_id(action)}",
+            ))
+        return scores
+
+    def structure_candidates(self, board: Blackboard, budget: float) -> tuple[StructuralActionScore, ...]:
+        """Cheap full scan + class-balanced finite scoring layer."""
+        if not self.eligible:
+            return ()
+        raw = self._structure_scores(PredictiveState.from_blackboard(board), budget)
+        selected: list[StructuralActionScore] = []
+        for category in ("shield", "cut"):
+            category_items = sorted(
+                (item for item in raw if item.category == category),
+                key=lambda item: (-item.gain, item.action.kind, _action_id(item.action)),
+            )
+            selected.extend(category_items[:4])
+        selected_ids = {_action_id(item.action) for item in selected}
+        remainder = sorted(
+            (item for item in raw if _action_id(item.action) not in selected_ids),
+            key=lambda item: (-item.gain, item.action.kind, _action_id(item.action)),
+        )
+        selected.extend(remainder[:max(0, self.candidate_limit - len(selected))])
+        return tuple(selected[: self.candidate_limit])
+
+    # Names kept deliberately small for experiment drivers and notebooks.
+    score_actions = structure_candidates
+
+    def _response_delta(self, state: PredictiveState, action: Action) -> float | None:
+        node = state.nodes.get(action.target_node_1)
+        if node is None or action.prompt_id is None:
+            return None
+        turn = 4 - int(node.comm_left or 0)
+        if turn not in (1, 2, 3):
+            return None
+        response = self.ledger.predicted_delta(
+            action.target_node_1, node.persona, action.prompt_id, self.profile, turn=turn
+        )
+        return None if response is None else max(0.0, float(response[0]))
+
+    def _complete_persuasion(
+        self, state: PredictiveState, budget: float, remaining_steps: int,
+    ) -> tuple[PredictiveState, tuple[Action, ...], float]:
+        """Fill residual resources greedily after all structure actions."""
+        actions: list[Action] = []
+        current = state
+        left_budget, left_steps = budget, remaining_steps
+        while left_budget >= 2.0 and left_steps > 0:
+            options: list[tuple[float, str, Action, PredictiveState]] = []
+            board = current.to_blackboard()
+            current_score = self._score(current)
+            for node_id in sorted(current.nodes):
+                action = Action("comm", node_id, prompt_id=1)
+                if not is_legal_action(action, board, left_budget):
+                    continue
+                delta = self._response_delta(current, action)
+                if delta is None:
+                    continue
+                after_state = current.apply(action, delta)
+                gain = self._score(after_state) - current_score
+                if math.isfinite(gain) and gain > 0:
+                    options.append((gain, _action_id(action), action, after_state))
+            if not options:
+                break
+            _, _, action, current = max(options, key=lambda item: (item[0], "".join(reversed(item[1]))))
+            actions.append(action)
+            left_budget -= action_cost(action)
+            left_steps -= 1
+        return current, tuple(actions), budget - left_budget
+
+    def _make_plan(
+        self, initial: PredictiveState, structure: tuple[Action, ...],
+        budget: float, remaining_steps: int, baseline_score: float,
+    ) -> PlanCandidate | None:
+        state = initial
+        left_budget, left_steps = budget, remaining_steps
+        for action in structure:
+            board = state.to_blackboard()
+            if left_steps <= 0 or not is_legal_action(action, board, left_budget):
+                return None
+            state = state.apply(action)
+            left_budget -= action_cost(action)
+            left_steps -= 1
+        structure_state = state
+        state, persuasion, _persuasion_cost = self._complete_persuasion(state, left_budget, left_steps)
+        actions = structure + persuasion
+        if not actions:
+            return PlanCandidate("complete", (), None, 0.0, 0, baseline_score, 0.0, 0.0,
+                                 self._topology_summary(initial), (), (), ())
+        cost = sum(action_cost(action) for action in actions)
+        residuals = self.profile.structure_action_residual_std or self.profile.settlement_residual_std
+        risk_sq = sum(float(residuals.get(action.kind, 0.0)) ** 2 for action in structure)
+        # Response priors are expressed in opinion units while the plan gain
+        # is terminal-score units.  Reproduce each hypothetical communication
+        # from its pre-action state and transform ± one standard deviation
+        # through the same settlement predictor before combining uncertainty.
+        risk_state = structure_state
+        comm_residual = float(residuals.get("comm", self.profile.residual_for("comm")))
+        for action in persuasion:
+            node = risk_state.nodes.get(action.target_node_1)
+            if node is None or action.prompt_id is None or node.comm_left is None:
+                return None
+            turn = 4 - node.comm_left
+            response = self.ledger.predicted_delta(
+                action.target_node_1, node.persona, action.prompt_id, self.profile, turn=turn
+            )
+            if response is None:
+                return None
+            delta, response_std = max(0.0, float(response[0])), max(0.0, float(response[1]))
+            mean_state = risk_state.apply(action, delta)
+            mean_score = self._score(mean_state)
+            if response_std > 0.0:
+                high_score = self._score(risk_state.apply(action, delta + response_std))
+                low_score = self._score(risk_state.apply(action, delta - response_std))
+                response_score_std = max(abs(high_score - mean_score), abs(mean_score - low_score))
+            else:
+                response_score_std = 0.0
+            if not math.isfinite(comm_residual) or not math.isfinite(response_score_std):
+                return None
+            risk_sq += math.hypot(comm_residual, response_score_std) ** 2
+            risk_state = mean_state
+        final_score = self._score(state)
+        gain = final_score - baseline_score
+        identifier = "plan:" + "|".join(_action_id(action) for action in actions)
+        return PlanCandidate(
+            identifier, actions, actions[0], cost, len(actions), final_score, gain,
+            math.sqrt(max(0.0, risk_sq)), self._topology_summary(state),
+            tuple(f"plan:{_action_id(action)}" for action in actions),
+            structure, persuasion,
+        )
+
+    @staticmethod
+    def _topology_summary(state: PredictiveState) -> dict[str, Any]:
+        graph = nx.Graph()
+        graph.add_nodes_from(state.nodes)
+        graph.add_edges_from(state.edges)
+        return {
+            "nodes": len(state.nodes),
+            "edges": len(state.edges),
+            "components": 0 if not state.nodes else nx.number_connected_components(graph),
+            "shielded": sorted(state.dead_nodes),
+        }
+
+    def plan_candidates(
+        self, board: Blackboard, budget: float, remaining_steps: int,
+        mode: PolicyMode = PolicyMode.B4_BEAM_STRUCTURE,
+    ) -> tuple[PlanCandidate, ...]:
+        if not self.eligible:
+            return ()
+        initial = PredictiveState.from_blackboard(board)
+        baseline_score = self._score(initial)
+        baseline = self._make_plan(initial, (), budget, remaining_steps, baseline_score)
+        if baseline is None:
+            return ()
+        if mode is PolicyMode.B3_SINGLE_STRUCTURE:
+            plans: list[PlanCandidate] = [baseline]
+            for item in self.structure_candidates(board, budget):
+                plan = self._make_plan(initial, (item.action,), budget, remaining_steps, baseline_score)
+                if plan is not None and plan.conservative_gain > 0:
+                    plans.append(plan)
+            return tuple(sorted(plans, key=lambda item: (-item.conservative_gain, item.candidate_id)))
+
+        # Beam state keeps structural actions only.  Every terminal state is
+        # independently completed with persuasion and can stop immediately.
+        pool = list(self.structure_candidates(board, budget))
+        beam: list[tuple[PredictiveState, tuple[Action, ...]]] = [(initial, ())]
+        terminals: list[PlanCandidate] = [baseline]
+        for _depth in range(min(self.depth, remaining_steps)):
+            expanded: list[tuple[float, str, PredictiveState, tuple[Action, ...]]] = []
+            for state, sequence in beam:
+                available = self._structure_scores(state, budget - sum(action_cost(a) for a in sequence))
+                for item in available:
+                    if item.action in sequence:
+                        continue
+                    next_sequence = sequence + (item.action,)
+                    plan = self._make_plan(initial, next_sequence, budget, remaining_steps, baseline_score)
+                    if plan is not None:
+                        terminals.append(plan)
+                        expanded.append((plan.conservative_gain, plan.candidate_id,
+                                         state.apply(item.action), next_sequence))
+            unique: dict[tuple[object, ...], tuple[float, str, PredictiveState, tuple[Action, ...]]] = {}
+            for item in sorted(expanded, key=lambda value: (-value[0], value[1])):
+                unique.setdefault(_state_key(item[2]), item)
+            beam = [(item[2], item[3]) for item in list(unique.values())[: self.width]]
+            if not beam:
+                break
+        accepted = [item for item in terminals if item.conservative_gain > 0 or not item.structure_actions]
+        # Deduplicate plans and make the stable ordering explicit.
+        dedup = {item.candidate_id: item for item in accepted}
+        return tuple(sorted(dedup.values(), key=lambda item: (-item.conservative_gain, item.candidate_id)))
+
+    def plan(
+        self, board: Blackboard, budget: float, remaining_steps: int,
+        mode: PolicyMode = PolicyMode.B4_BEAM_STRUCTURE,
+    ) -> PlanCandidate | None:
+        """Return the best complete plan, or ``None`` when the gate is closed."""
+        plans = self.plan_candidates(board, budget, remaining_steps, mode)
+        return plans[0] if plans else None
+
+
+__all__ = ["PlanCandidate", "StructuralActionScore", "StructuralPlanner"]
+
+# End inline: src/starnet/policy/structural.py
+
+# Begin inline: src/starnet/policy/adaptive.py
+"""B5 adaptive exploration primitives.
+
+The scenario layer is deliberately small and explicit.  A scenario is a
+possible completion of unknown facts, never a replacement for Blackboard
+facts.  If validation is unavailable, callers must use the deterministic
+full-scan scout.
+"""
+
+
+from collections.abc import Callable, Mapping, Sequence
+from dataclasses import dataclass
+import math
+import random
+
+import networkx as nx
+
+
+
+@dataclass(frozen=True)
+class Scenario:
+    scenario_id: str
+    state: PredictiveState
+    observations: Mapping[int, Mapping[str, object]]
+    weight: float = 1.0
+
+
+@dataclass(frozen=True)
+class ScenarioProfile:
+    """Independently validated hidden-state hypotheses for B5."""
+
+    scenarios: tuple[Scenario, ...] = ()
+    gate_passed: bool = False
+    independent_validation_passed: bool = False
+
+    @property
+    def verified(self) -> bool:
+        return (
+            self.gate_passed and self.independent_validation_passed
+            and bool(self.scenarios)
+            and all(math.isfinite(float(item.weight)) and item.weight >= 0 for item in self.scenarios)
+            and sum(item.weight for item in self.scenarios) > 0
+        )
+
+    @classmethod
+    def from_states(cls, states: Sequence[PredictiveState]) -> "ScenarioProfile":
+        scenarios = tuple(
+            Scenario(str(index), state, {}, 1.0) for index, state in enumerate(states)
+        )
+        return cls(scenarios, True, True)
+
+    def normalized(self) -> tuple[tuple[Scenario, float], ...]:
+        total = sum(max(0.0, float(item.weight)) for item in self.scenarios)
+        if not self.verified or total <= 0:
+            return ()
+        return tuple((item, float(item.weight) / total) for item in self.scenarios)
+
+    def is_consistent(self, board: Blackboard) -> bool:
+        """Reject scenarios contradicting any observed node, edge, or non-edge."""
+        if not self.verified:
+            return False
+        for scenario, _weight in self.normalized():
+            # A public unavailable/shielded result is a fact, not a latent
+            # variable.  A scenario retaining that node (or an incident edge)
+            # cannot be used for a later VOI calculation.
+            if (
+                board.dead_nodes.intersection(scenario.state.nodes)
+                or not board.dead_nodes.issubset(scenario.state.dead_nodes)
+                or any(board.dead_nodes.intersection(edge) for edge in scenario.state.edges)
+                or board.dead_nodes.intersection(scenario.observations)
+            ):
+                return False
+            for node_id, observed in board.nodes.items():
+                possible = scenario.state.nodes.get(node_id)
+                if possible is None:
+                    return False
+                if (
+                    not math.isclose(possible.w, observed.w, abs_tol=1e-9)
+                    or possible.persona != observed.persona
+                    or possible.comm_left != observed.comm_left
+                ):
+                    return False
+            if not board.edges.issubset(scenario.state.edges):
+                return False
+            if any(edge in scenario.state.edges for edge in board.confirmed_non_edges):
+                return False
+            # A recorded scan response is part of the scenario's hidden state;
+            # accepting a payload that contradicts it would fabricate VOI.
+            for node_id, payload in scenario.observations.items():
+                possible = scenario.state.nodes.get(node_id)
+                if possible is None or not _observation_matches_state(node_id, payload, scenario.state):
+                    return False
+        return True
+
+
+@dataclass(frozen=True)
+class ScanValue:
+    node_id: int
+    voi: float
+    evidence_ids: tuple[str, ...]
+
+
+def _apply_observation(state: PredictiveState, node_id: int, payload: Mapping[str, object]) -> PredictiveState | None:
+    raw_w = payload.get("w")
+    persona = payload.get("persona")
+    raw_comm = payload.get("comm_left")
+    neighbors = payload.get("neighbors")
+    if not isinstance(raw_w, (int, float)) or isinstance(raw_w, bool) or not math.isfinite(float(raw_w)):
+        return None
+    if not isinstance(persona, str) or not isinstance(neighbors, list):
+        return None
+    if raw_comm is not None and (not isinstance(raw_comm, int) or isinstance(raw_comm, bool)):
+        return None
+    nodes = {key: NodeState(value.w, value.persona, value.comm_left) for key, value in state.nodes.items()}
+    nodes[node_id] = NodeState(float(raw_w), persona, raw_comm)
+    edges = {edge for edge in state.edges if node_id not in edge}
+    for neighbor in neighbors:
+        if isinstance(neighbor, int) and not isinstance(neighbor, bool) and neighbor != node_id:
+            edges.add((min(node_id, neighbor), max(node_id, neighbor)))
+    return PredictiveState(nodes, edges, set(state.dead_nodes))
+
+
+def _scenario_observation(scenario: Scenario, node_id: int) -> Mapping[str, object] | None:
+    """Return the fixed scan result implied by one complete scenario."""
+    recorded = scenario.observations.get(node_id)
+    if recorded is not None:
+        return recorded
+    node = scenario.state.nodes.get(node_id)
+    if node is None or node_id in scenario.state.dead_nodes:
+        return None
+    return {
+        "w": node.w,
+        "persona": node.persona,
+        "comm_left": node.comm_left,
+        "neighbors": sorted(
+            right if left == node_id else left
+            for left, right in scenario.state.edges
+            if node_id in (left, right)
+        ),
+    }
+
+
+def _observation_matches_state(
+    node_id: int, payload: Mapping[str, object], state: PredictiveState
+) -> bool:
+    """Check that a recorded scenario observation does not contradict state."""
+    expected = _scenario_observation(Scenario("", state, {}, 1.0), node_id)
+    if expected is None:
+        return False
+    return (
+        payload.get("w") == expected["w"]
+        and payload.get("persona") == expected["persona"]
+        and payload.get("comm_left", expected["comm_left"]) == expected["comm_left"]
+        and isinstance(payload.get("neighbors"), list)
+        and sorted(payload["neighbors"]) == expected["neighbors"]
+    )
+
+
+def evaluate_scan_voi(
+    board: Blackboard,
+    node_id: int,
+    profile: ScenarioProfile,
+    value_fn: Callable[[PredictiveState], float],
+    *,
+    branch_value_fn: Callable[[PredictiveState], float] | None = None,
+    scan_cost: float = 0.5,
+) -> ScanValue:
+    """Evaluate a fixed prior and its observation branches without resampling.
+
+    ``value_fn`` evaluates the current public state.  ``branch_value_fn`` (or
+    ``value_fn`` when omitted) evaluates that same state after one fixed scan
+    result; callers normally give it the reduced budget/step envelope.  Thus
+    the branch can rerun a bounded legal planner without peeking at the
+    scenario's full hidden state.  Set ``scan_cost`` to zero only when the
+    branch function already receives reduced resources.
+    """
+    if not profile.is_consistent(board) or not board.can_scan(node_id):
+        return ScanValue(node_id, -math.inf, ())
+    before_state = PredictiveState.from_blackboard(board)
+    before = float(value_fn(before_state))
+    if not math.isfinite(before):
+        return ScanValue(node_id, -math.inf, ())
+    weighted_after = 0.0
+    evidence: list[str] = []
+    for scenario, weight in profile.normalized()[:8]:
+        observation = _scenario_observation(scenario, node_id)
+        after_state = _apply_observation(before_state, node_id, observation) if observation else None
+        if after_state is None:
+            # A scenario without an observation does not create artificial VOI.
+            after = before
+        else:
+            after = float((branch_value_fn or value_fn)(after_state))
+            evidence.append(f"scenario:{scenario.scenario_id}:scan:{node_id}")
+        if not math.isfinite(before) or not math.isfinite(after):
+            return ScanValue(node_id, -math.inf, tuple(evidence))
+        weighted_after += weight * after
+    # The value function is evaluated on the same scenario before and after;
+    # charge the information action exactly once here.
+    return ScanValue(node_id, weighted_after - before - scan_cost, tuple(evidence))
+
+
+class AdaptiveScout:
+    """Frontier/blind mixed scout with deterministic pseudo-random starts."""
+
+    def __init__(self, node_count: int, *, initial_count: int, seed: int = 20260905) -> None:
+        if node_count <= 0 or initial_count <= 0:
+            raise ValueError("node_count and initial_count must be positive")
+        self.node_count = node_count
+        self.initial_count = min(node_count, initial_count)
+        self._rng = random.Random(seed)
+        self._initial = iter(sorted(self._rng.sample(range(1, node_count + 1), self.initial_count)))
+        self.scan_count = 0
+
+    @property
+    def exhausted(self) -> bool:
+        return self.scan_count >= self.node_count
+
+    def _rank(self, board: Blackboard) -> list[int]:
+        unknown = [node for node in range(1, self.node_count + 1) if board.can_scan(node)]
+        frontier = board.frontier_ids
+        graph = nx.Graph()
+        graph.add_edges_from(board.edges)
+        seen_components: dict[int, int] = {}
+        for component_id, component in enumerate(nx.connected_components(graph)):
+            for node in component:
+                seen_components[node] = component_id
+        coverage: dict[int, int] = {}
+        for node in board.nodes:
+            component = seen_components.get(node, node)
+            coverage[component] = coverage.get(component, 0) + 1
+        def key(node: int) -> tuple[int, int, int, int]:
+            adjacent_seen = sum(node in edge for edge in board.edges)
+            region = seen_components.get(node, node)
+            return (0 if node in frontier else 1, -adjacent_seen, coverage.get(region, 0), node)
+        return sorted(unknown, key=key)
+
+    def candidate_ids(self, board: Blackboard) -> tuple[int, ...]:
+        """Expose the bounded frontier/blind pool without consuming a scan."""
+        return tuple(self._rank(board))
+
+    def next_action(self, board: Blackboard, *, voi: Mapping[int, float] | None = None) -> Action | None:
+        while True:
+            try:
+                node_id = next(self._initial)
+            except StopIteration:
+                break
+            if board.can_scan(node_id):
+                self.scan_count += 1
+                return Action("scan", node_id)
+        choices = self._rank(board)
+        if voi:
+            choices = sorted(choices, key=lambda node: (-float(voi.get(node, -math.inf)), node))
+        if not choices:
+            return None
+        self.scan_count += 1
+        return Action("scan", choices[0])
+
+
+__all__ = ["AdaptiveScout", "ScanValue", "Scenario", "ScenarioProfile", "evaluate_scan_voi"]
+
+# End inline: src/starnet/policy/adaptive.py
+
+# Begin inline: src/starnet/runtime/stage.py
+"""Explicit contest-stage contract.
+
+The stage is deployment configuration, never an observation inferred from a
+budget response or from the ids that happened to be scanned.  Keeping this in
+one small module makes the resource envelope reviewable and testable.
+"""
+
+
+from dataclasses import dataclass
+from enum import Enum
+
+
+class ContestStage(str, Enum):
+    PRELIMINARY = "preliminary"
+    FINAL = "final"
+
+
+@dataclass(frozen=True)
+class StageSpec:
+    name: ContestStage
+    node_count: int
+    budget_units: int
+    step_limit: int
+    llm_limit: int
+    safe_step_limit: int
+    safe_llm_limit: int
+
+    @property
+    def budget(self) -> float:
+        return self.budget_units / 2.0
+
+
+PRELIMINARY = StageSpec(ContestStage.PRELIMINARY, 50, 200, 120, 120, 117, 115)
+FINAL = StageSpec(ContestStage.FINAL, 100, 400, 250, 250, 247, 245)
+
+
+def stage_spec(value: ContestStage | str) -> StageSpec:
+    stage = ContestStage(value)
+    return PRELIMINARY if stage is ContestStage.PRELIMINARY else FINAL
+
+
+__all__ = ["ContestStage", "FINAL", "PRELIMINARY", "StageSpec", "stage_spec"]
+
+# End inline: src/starnet/runtime/stage.py
+
 # Begin inline: src/starnet/runtime/controller.py
 """Deterministic scan, analysis, and batch execution state machine.
 
@@ -1613,11 +2604,6 @@ class StopReason(str, Enum):
     NO_POSITIVE_GAIN = "no_positive_gain"
 
 
-def infer_node_count(initial_budget: float) -> int:
-    """Infer the competition network tier from the public starting budget."""
-    return 100 if initial_budget >= 150.0 else 50
-
-
 class DeterministicScout:
     """Scan fixed node IDs in order and never call an LLM."""
 
@@ -1659,6 +2645,16 @@ class GraphAnalyst:
 
 
 LlmRanker = Callable[[dict[str, Any]], object]
+
+
+def _action_name(action: Any) -> str:
+    if action is None:
+        return "stop"
+    if getattr(action, "kind", None) == "comm":
+        return f"comm:{action.target_node_1}:{action.prompt_id}"
+    if getattr(action, "kind", None) == "cut":
+        return f"cut:{action.target_node_1}-{action.target_node_2}"
+    return f"{action.kind}:{action.target_node_1}"
 
 
 @dataclass(frozen=True)
@@ -1705,16 +2701,21 @@ class BatchCommander:
 
     @property
     def can_request_llm(self) -> bool:
-        return self.llm_ranker is not None and self.llm_calls < self.max_llm_calls
+        return (
+            self.config.llm_schedule is not LLMSchedule.OFF
+            and self.llm_ranker is not None
+            and self.llm_calls < self.max_llm_calls
+        )
 
     def preview_payload(
         self,
         candidates: Sequence[Candidate],
         budget: float,
         analysis: GraphAnalysis,
+        state_version: int = 0,
     ) -> dict[str, Any]:
         """Build the exact payload for the next request without consuming quota."""
-        return self._build_payload(candidates, budget, analysis, self.llm_calls + 1)
+        return self._build_payload(candidates, budget, analysis, self.llm_calls + 1, state_version)
 
     def plan(
         self,
@@ -1723,19 +2724,20 @@ class BatchCommander:
         budget: float,
         analysis: GraphAnalysis,
         request_payload: Mapping[str, Any] | None = None,
+        state_version: int = 0,
     ) -> BatchPlan:
         candidate_map = {candidate.candidate_id: candidate for candidate in candidates}
         fallback = tuple(select_deterministic_batch(candidates, budget, MAX_BATCH_ACTIONS, config=self.config))
         if not candidate_map:
             return BatchPlan(fallback, "deterministic_fallback", "no_candidates")
-        if self.llm_ranker is None:
+        if self.config.llm_schedule is LLMSchedule.OFF or self.llm_ranker is None:
             return BatchPlan(fallback, "deterministic_fallback", "no_llm_ranker")
         if self.llm_calls >= self.max_llm_calls:
             return BatchPlan(fallback, "quota_exhausted", "quota_exhausted")
 
         # Quota is consumed before the external call, including a timeout.
         self.llm_calls += 1
-        payload = dict(request_payload or self._build_payload(candidates, budget, analysis, self.llm_calls))
+        payload = dict(request_payload or self._build_payload(candidates, budget, analysis, self.llm_calls, state_version))
         try:
             raw_response = self.llm_ranker(payload)
         except Exception as exc:
@@ -1747,7 +2749,7 @@ class BatchCommander:
                 error=safe_error(exc),
             )
 
-        parsed = parse_llm_batch_detailed(raw_response, candidate_map, budget, config=self.config)
+        parsed = self._parse_response(raw_response, candidate_map, budget, payload)
         if parsed.accepted:
             return BatchPlan(
                 parsed.candidate_ids,
@@ -1771,6 +2773,7 @@ class BatchCommander:
         budget: float,
         analysis: GraphAnalysis,
         llm_call_number: int,
+        state_version: int,
     ) -> dict[str, Any]:
         graph = analysis.graph
         negative_nodes = sorted(
@@ -1785,6 +2788,8 @@ class BatchCommander:
         )
         return {
             "stage": ControllerState.PLAN_BATCH.value,
+            "state_version": state_version,
+            "mode": "single_action",
             "budget": budget,
             "llm_calls": llm_call_number,
             "graph": {
@@ -1803,10 +2808,46 @@ class BatchCommander:
                     "score": candidate.score,
                     "roi": candidate.roi,
                     "reason": candidate.reason,
+                    "evidence_ids": list(candidate.evidence_ids or (candidate.candidate_id,)),
                 }
                 for candidate in candidates
             ],
+            "candidate_ids": [candidate.candidate_id for candidate in candidates],
         }
+
+    def _parse_response(
+        self,
+        raw_response: object,
+        candidate_map: Mapping[str, Candidate],
+        budget: float,
+        payload: Mapping[str, Any],
+    ) -> LlmParseResult:
+        """Accept the current one-candidate protocol, then legacy fixtures.
+
+        The submission Commander emits the strict form.  Supporting the old
+        batch form here keeps historical local experiments reproducible without
+        allowing it to weaken the submission's decision boundary.
+        """
+        fallback = tuple(select_deterministic_batch(candidate_map.values(), budget, config=self.config))
+        if isinstance(raw_response, Mapping) and {
+            "state_version", "mode", "candidate_id", "reason_code", "evidence_ids"
+        } == set(raw_response):
+            candidate_id = raw_response.get("candidate_id")
+            evidence_ids = raw_response.get("evidence_ids")
+            if raw_response.get("state_version") != payload.get("state_version"):
+                return LlmParseResult(fallback, False, "stale_state_version")
+            if not isinstance(candidate_id, str) or candidate_id not in candidate_map:
+                return LlmParseResult(fallback, False, "unknown_candidate")
+            selected = candidate_map[candidate_id]
+            allowed_evidence = set(selected.evidence_ids) or {candidate_id}
+            if (
+                not isinstance(evidence_ids, list)
+                or not evidence_ids
+                or any(not isinstance(item, str) or item not in allowed_evidence for item in evidence_ids)
+            ):
+                return LlmParseResult(fallback, False, "invalid_evidence_ids")
+            return LlmParseResult((candidate_id,), True)
+        return parse_llm_batch_detailed(raw_response, candidate_map, budget, config=self.config)
 
 
 class RuntimeController:
@@ -1819,35 +2860,74 @@ class RuntimeController:
         *,
         initial_budget: float | None = None,
         node_count: int | None = None,
+        stage: ContestStage | str | None = None,
         blackboard: Blackboard | None = None,
         config: PolicyConfig = DEFAULT_POLICY_CONFIG,
         calibration_profile: CalibrationProfile = DEFAULT_CALIBRATION_PROFILE,
+        scenario_profile: ScenarioProfile | None = None,
     ) -> None:
         self.env = env
-        self.blackboard = blackboard if blackboard is not None else Blackboard()
+        # Stage selection is an explicit deployment input. ``node_count`` is a
+        # test seam only; the submission never supplies it and never infers a
+        # stage from a remote budget response.
+        # The submission always supplies an explicit stage.  A test/development
+        # caller that explicitly supplies the official 100-node count gets the
+        # matching final envelope; no budget, scanned id, or observation is
+        # ever used to infer a stage.
+        if stage is None:
+            stage = ContestStage.FINAL if node_count == 100 else ContestStage.PRELIMINARY
+        self.stage: StageSpec = stage_spec(stage)
+        selected_node_count = self.stage.node_count if node_count is None else node_count
+        self.blackboard = blackboard if blackboard is not None else Blackboard(selected_node_count)
         self.initial_budget = float(
             env.get_remaining_budget() if initial_budget is None else initial_budget
         )
-        self.node_count = infer_node_count(self.initial_budget) if node_count is None else node_count
+        self.node_count = selected_node_count
+        self.blackboard.set_budget(self.initial_budget)
         self.config = config
+        self._safe_step_limit = config.max_steps if config.max_steps is not None else self.stage.safe_step_limit
         self.calibration_profile = calibration_profile
         self.policy_mode = config.policy_mode
+        self.effective_policy_mode = config.policy_mode
+        self.scenario_profile = scenario_profile
         self.response_ledger = ResponseLedger()
+        self.response_estimates: dict[int, float] = {}
         self.cmg_candidate: ScoredCandidate | None = None
         self.cmg_fallback_reason: str | None = None
-        self.scout = DeterministicScout(self.node_count)
+        if (
+            config.policy_mode is PolicyMode.B5_ADAPTIVE
+            and calibration_profile.scenario_eligible
+            and scenario_profile is not None
+            and scenario_profile.verified
+            and scenario_profile.is_consistent(self.blackboard)
+        ):
+            initial_count = (
+                config.adaptive_initial_final if self.stage is stage_spec(ContestStage.FINAL)
+                else config.adaptive_initial_preliminary
+            )
+            self.scout = AdaptiveScout(self.node_count, initial_count=initial_count)
+        else:
+            # Invalid/missing scenario qualification intentionally means B5
+            # scans exactly as the B4 full-scan fallback.
+            self.scout = DeterministicScout(self.node_count)
         self.analyst = GraphAnalyst()
+        self.structural_plans: dict[str, PlanCandidate] = {}
+        self.structural_planner: StructuralPlanner | None = None
+        self._event_llm_pending = config.llm_schedule is LLMSchedule.EVENT
         # The experiment may forbid LLM use even when the official model has a ranker.
         self.commander = BatchCommander(
             llm_ranker if config.max_llm_calls else None,
             config=config,
-            contest_llm_limit=config.contest_llm_limit(self.node_count),
+            contest_llm_limit=self.stage.llm_limit,
         )
         self.state = ControllerState.INIT
         self.analysis: GraphAnalysis | None = None
         self.candidates: dict[str, Candidate] = {}
         self.queue: list[str] = []
-        self.failed_actions: set[str] = set()
+        # Store both plan IDs and immutable public Action identities.  A B4
+        # plan may share a first action with other plans, so a rejected action
+        # must suppress every such plan on the next replan.
+        self.failed_actions: set[str | Action] = set()
         self.consecutive_invalid = 0
         self.last_action_attempted = False
         self.last_action_succeeded: bool | None = None
@@ -1886,7 +2966,7 @@ class RuntimeController:
                 "node_count": self.scout.node_count,
                 "initial_budget": self.initial_budget,
                 "max_llm_calls": self.commander.max_llm_calls,
-                "safety_step_limit": self.config.safety_step_limit(self.node_count),
+                "safety_step_limit": self._safe_step_limit,
                 "max_batch_actions": MAX_BATCH_ACTIONS,
                 "policy_mode": self.policy_mode.value,
                 "calibration_profile_hash": self.calibration_profile.profile_hash or None,
@@ -1927,11 +3007,12 @@ class RuntimeController:
         """Advance the state machine; diagnostics never control this flow."""
         # This consumes the last permitted outer call as a stop-only call.  It
         # leaves five calls of headroom beneath the published 120/250 limits.
-        if self._step_number + 1 >= self.config.safety_step_limit(self.node_count):
+        if self._step_number + 1 >= self._safe_step_limit:
             self._step_number += 1
             self._stop(StopReason.STEP_LIMIT, self._current_budget())
             return self._complete_step(1, self.state.value, self._current_budget())
         self._step_number += 1
+        self.blackboard.outer_steps = self._step_number
         state_before = self.state.value
         budget_before = self._current_budget()
         self.last_action_attempted = False
@@ -1965,6 +3046,17 @@ class RuntimeController:
 
             if self.state is ControllerState.ANALYZE:
                 self._refresh_candidates(budget, "analyze")
+                if (
+                    self.policy_mode is PolicyMode.B5_ADAPTIVE
+                    and isinstance(self.scout, AdaptiveScout)
+                    and not self.scout.exhausted
+                    and not self.candidates
+                ):
+                    self._transition(ControllerState.SCAN_ALL, "adaptive_scan_has_no_positive_plan", budget)
+                    continue
+                if self.effective_policy_mode in {PolicyMode.B1_PERSUASION, PolicyMode.B2_INFLUENCE} and budget < 2.0:
+                    self._stop(StopReason.INSUFFICIENT_BUDGET, budget)
+                    continue
                 if self._cmg_enabled:
                     self._transition(ControllerState.PLAN_CMG, "cmg_enabled", budget)
                 elif self.candidates:
@@ -1974,7 +3066,10 @@ class RuntimeController:
                 continue
 
             if self.state is ControllerState.PLAN_BATCH:
-                if self.analysis is None or not self.candidates:
+                if not self.candidates or (
+                    self.analysis is None
+                    and self.effective_policy_mode not in {PolicyMode.B1_PERSUASION, PolicyMode.B2_INFLUENCE}
+                ):
                     self._stop(StopReason.NO_CANDIDATES, budget)
                     continue
                 self._create_plan(budget)
@@ -1996,6 +3091,16 @@ class RuntimeController:
 
             if self.state is ControllerState.REANALYZE:
                 self._refresh_candidates(budget, "reanalyze")
+                if self.effective_policy_mode in {PolicyMode.B1_PERSUASION, PolicyMode.B2_INFLUENCE}:
+                    # A successful communicate response changes the next-slot
+                    # estimate. Rebuild the max-heap rather than consuming a
+                    # stale batch planned before that feedback.
+                    self.queue.clear()
+                    if self.candidates:
+                        self._transition(ControllerState.PLAN_BATCH, "persuasion_heap_refreshed", budget)
+                    else:
+                        self._stop(StopReason.NO_POSITIVE_GAIN, budget)
+                    continue
                 previous_queue = self.queue
                 validation = self._valid_queue(previous_queue, budget)
                 self.queue = list(validation.candidate_ids)
@@ -2033,7 +3138,55 @@ class RuntimeController:
         return self._complete_step(1, state_before, budget_before)
 
     def _scan_next(self, budget: float) -> int:
-        action = self.scout.next_action(self.blackboard)
+        voi: dict[int, float] = {}
+        if (
+            isinstance(self.scout, AdaptiveScout)
+            and self.scenario_profile is not None
+            and self.calibration_profile.scenario_eligible
+            and self.scenario_profile.verified
+            and self.scenario_profile.is_consistent(self.blackboard)
+            and self.scout.scan_count >= self.scout.initial_count
+        ):
+            # Keep one legal follow-up communication and one outer step after
+            # an information action; scanning cannot consume the last useful
+            # resource slot.
+            if budget < 2.5 or self._safe_step_limit - self._step_number <= 1:
+                self._stop(StopReason.INSUFFICIENT_BUDGET, budget)
+                return 1
+            predictor = SettlementPredictor(self.calibration_profile)
+            remaining_steps = max(0, self._safe_step_limit - self._step_number)
+
+            def future_value(state: PredictiveState, available_budget: float, available_steps: int) -> float:
+                """Replan from a public observation branch under its resources."""
+                branch_planner = StructuralPlanner(
+                    self.calibration_profile,
+                    ledger=self.response_ledger,
+                    depth=self.config.structure_depth,
+                    width=self.config.structure_width,
+                    candidate_limit=self.config.structure_candidate_limit,
+                )
+                plans = branch_planner.plan_candidates(
+                    state.to_blackboard(), available_budget, available_steps,
+                    PolicyMode.B4_BEAM_STRUCTURE,
+                )
+                return plans[0].predicted_final_score if plans else predictor.score(state)
+
+            for node_id in self.scout.candidate_ids(self.blackboard)[:8]:
+                value = evaluate_scan_voi(
+                    self.blackboard,
+                    node_id,
+                    self.scenario_profile,
+                    lambda state: future_value(state, budget, remaining_steps),
+                    branch_value_fn=lambda state: future_value(
+                        state, budget - action_cost(Action("scan", node_id)), remaining_steps - 1
+                    ),
+                    scan_cost=0.0,
+                )
+                voi[node_id] = value.voi
+            if not any(value > 0.0 for value in voi.values()):
+                self._stop(StopReason.NO_POSITIVE_GAIN, budget)
+                return 1
+        action = self.scout.next_action(self.blackboard, voi=voi) if isinstance(self.scout, AdaptiveScout) else self.scout.next_action(self.blackboard)
         if action is None:
             self._transition(ControllerState.ANALYZE, "scan_exhausted", budget)
             self._emit("scan.completed", budget, budget, {"blackboard": self.blackboard.snapshot()})
@@ -2043,7 +3196,8 @@ class RuntimeController:
             return 1
 
         self._attempt_action(action, f"scan:{action.target_node_1}", budget)
-        if self.scout.exhausted:
+        adaptive_checkpoint = isinstance(self.scout, AdaptiveScout) and self.scout.scan_count >= self.scout.initial_count
+        if self.scout.exhausted or adaptive_checkpoint:
             completed_budget = (
                 self._last_trace_budget_after
                 if self._last_trace_budget_after is not None
@@ -2052,7 +3206,14 @@ class RuntimeController:
             if self.config.stop_after_scan:
                 self._stop(StopReason.NO_CANDIDATES, completed_budget)
             else:
-                self._transition(ControllerState.ANALYZE, "scan_complete", completed_budget)
+                self._transition(
+                    ControllerState.ANALYZE,
+                    "adaptive_initial_scan_complete" if adaptive_checkpoint and not self.scout.exhausted else "scan_complete",
+                    completed_budget,
+                )
+            scanned_count = len(self.blackboard.scanned_ids)
+            if scanned_count == self.scout.node_count or scanned_count % 4 == 0:
+                self._event_llm_pending = True
             self._emit(
                 "scan.completed",
                 budget,
@@ -2070,7 +3231,7 @@ class RuntimeController:
 
         candidate_id = self.queue.pop(0)
         candidate = self.candidates.get(candidate_id)
-        if candidate is None or candidate_id in self.failed_actions:
+        if candidate is None or candidate_id in self.failed_actions or candidate.action in self.failed_actions:
             self.consecutive_invalid += 1
             self._emit(
                 "queue.revalidated",
@@ -2101,9 +3262,12 @@ class RuntimeController:
 
         success = self._attempt_action(candidate.action, candidate_id, budget)
         if success:
+            if self.config.llm_schedule is LLMSchedule.EVENT:
+                self._event_llm_pending = True
             self.consecutive_invalid = 0
         else:
             self.failed_actions.add(candidate_id)
+            self.failed_actions.add(candidate.action)
             self.consecutive_invalid += 1
         self._transition(
             ControllerState.REANALYZE,
@@ -2172,21 +3336,10 @@ class RuntimeController:
         if candidate is None or not is_legal_action(candidate.action, self.blackboard, budget):
             self._fallback_to_v0("illegal_hypothesis", budget)
             return 0
-        before_w = None
-        if candidate.action.kind == "comm":
-            node = self.blackboard.nodes.get(candidate.action.target_node_1)
-            before_w = node.w if node is not None else None
         success = self._attempt_action(candidate.action, candidate.candidate_id, budget)
-        if success and candidate.action.kind == "comm" and before_w is not None:
-            node = self.blackboard.nodes.get(candidate.action.target_node_1)
-            if node is not None:
-                try:
-                    self.response_ledger.record_success(candidate.action.target_node_1, before_w, node.w)
-                except CMGPlanningError as exc:
-                    self._fallback_to_v0(str(exc), self._last_trace_budget_after or budget)
-                    return 0
         if not success:
             self.failed_actions.add(candidate.candidate_id)
+            self.failed_actions.add(candidate.action)
             self._fallback_to_v0("action_rejected", self._last_trace_budget_after or budget)
             return 0
         self.cmg_candidate = None
@@ -2198,6 +3351,14 @@ class RuntimeController:
         self.last_action_attempted = True
         self.action_attempts += 1
         self._last_step_action = asdict(action)
+        before_w = (
+            self.blackboard.nodes[action.target_node_1].w
+            if action.kind == "comm" and action.target_node_1 in self.blackboard.nodes
+            else None
+        )
+        before_node = self.blackboard.nodes.get(action.target_node_1)
+        before_persona = before_node.persona if before_node is not None else None
+        before_comm_left = before_node.comm_left if before_node is not None else None
         before_snapshot = self.blackboard.snapshot() if self._trace.enabled else None
         self._emit(
             "action.requested",
@@ -2206,6 +3367,7 @@ class RuntimeController:
             {"candidate_id": candidate_id, "action": asdict(action)},
         )
         try:
+            self.blackboard.env_calls += 1
             outcome = apply_action_outcome(self.env, self.blackboard, action, budget)
         except Exception as exc:
             self.last_action_succeeded = False
@@ -2226,9 +3388,30 @@ class RuntimeController:
             )
             return False
 
+        try:
+            self.blackboard.set_budget(self._current_budget())
+        except Exception:
+            # Do not manufacture a debit after an ambiguous response.  The
+            # controller will stop naturally once no action can be validated.
+            self.blackboard.unresolved_nodes.add(action.target_node_1)
         self.last_action_succeeded = outcome.succeeded
         budget_after = self._trace_budget_after(budget)
         if outcome.succeeded:
+            if action.kind == "comm":
+                node = self.blackboard.nodes.get(action.target_node_1)
+                if isinstance(before_w, (int, float)) and node is not None:
+                    self.response_estimates.setdefault(
+                        action.target_node_1, max(0.0, node.w - float(before_w))
+                    )
+                    if before_persona is not None and before_comm_left in (1, 2, 3):
+                        self.response_ledger.record_success(
+                            action.target_node_1,
+                            float(before_w),
+                            node.w,
+                            persona=before_persona,
+                            prompt_id=action.prompt_id or 1,
+                            turn=4 - before_comm_left,
+                        )
             self.action_successes += 1
             self._last_step_action_result = "success"
             self._emit(
@@ -2262,6 +3445,22 @@ class RuntimeController:
             "predicted_response_delta": candidate.response_delta,
         }
 
+    @staticmethod
+    def _plan_trace_data(plan: PlanCandidate) -> dict[str, Any]:
+        return {
+            "candidate_id": plan.candidate_id,
+            "actions": [_action_name(action) for action in plan.actions],
+            "first_action": _action_name(plan.first_action),
+            "cost": plan.cost,
+            "steps": plan.steps,
+            "predicted_final_score": plan.predicted_final_score,
+            "gain": plan.gain,
+            "risk": plan.risk,
+            "conservative_gain": plan.conservative_gain,
+            "topology": plan.topology_summary,
+            "evidence_ids": list(plan.evidence_ids),
+        }
+
     def _action_trace_data(
         self,
         candidate_id: str,
@@ -2282,7 +3481,107 @@ class RuntimeController:
         return data
 
     def _refresh_candidates(self, budget: float, phase: str) -> None:
+        requested_mode = self.policy_mode
+        if requested_mode is PolicyMode.B5_ADAPTIVE:
+            requested_mode = PolicyMode.B4_BEAM_STRUCTURE
+
+        if requested_mode in {PolicyMode.B3_SINGLE_STRUCTURE, PolicyMode.B4_BEAM_STRUCTURE}:
+            # B3/B4 are opt-in and require all three action residuals, a
+            # settlement model, and held-out influence evidence.  Otherwise
+            # the same session transparently returns to the simpler baseline.
+            if not self.calibration_profile.structure_eligible:
+                self.effective_policy_mode = (
+                    PolicyMode.B2_INFLUENCE
+                    if self.calibration_profile.b2_eligible
+                    else PolicyMode.B1_PERSUASION
+                )
+            else:
+                self.effective_policy_mode = requested_mode
+        else:
+            self.effective_policy_mode = requested_mode
+
+        if self.effective_policy_mode in {PolicyMode.B1_PERSUASION, PolicyMode.B2_INFLUENCE}:
+            # P0 remains unverified by default. B2 is impossible without a
+            # frozen influence archive and therefore transparently becomes B1.
+            use_influence = self.effective_policy_mode is PolicyMode.B2_INFLUENCE and self.calibration_profile.b2_eligible
+            candidates = persuasion_candidates(
+                self.blackboard,
+                budget,
+                self.response_estimates,
+                self.calibration_profile,
+                use_influence=use_influence,
+                failed_actions=self.failed_actions,
+                ledger=self.response_ledger,
+            )
+            self.analysis = None
+            self.candidates = {candidate.candidate_id: candidate for candidate in candidates}
+            self._emit(
+                "candidates.generated",
+                budget,
+                budget,
+                {
+                    "phase": phase,
+                    "mode": "b2" if use_influence else "b1",
+                    "filtered_count": len(candidates),
+                    "candidates": [self._candidate_trace_data(candidate) for candidate in candidates],
+                },
+            )
+            return
         self.analysis = self.analyst.analyze(self.blackboard)
+
+        if self.effective_policy_mode in {PolicyMode.B3_SINGLE_STRUCTURE, PolicyMode.B4_BEAM_STRUCTURE}:
+            if self.config.llm_schedule is LLMSchedule.EVENT:
+                self._event_llm_pending = True
+            self.structural_planner = StructuralPlanner(
+                self.calibration_profile,
+                ledger=self.response_ledger,
+                depth=self.config.structure_depth,
+                width=self.config.structure_width,
+                candidate_limit=self.config.structure_candidate_limit,
+            )
+            plans = self.structural_planner.plan_candidates(
+                self.blackboard,
+                budget,
+                max(0, self._safe_step_limit - self._step_number),
+                self.effective_policy_mode,
+            )
+            self.structural_plans = {plan.candidate_id: plan for plan in plans}
+            self.candidates = {
+                plan.candidate_id: Candidate(
+                    plan.candidate_id,
+                    plan.first_action,
+                    0,
+                    plan.gain,
+                    max(0.0, plan.conservative_gain) / max(plan.cost, 0.5),
+                    "complete structural plan " + ",".join(_action_name(item) for item in plan.actions),
+                    plan.evidence_ids,
+                )
+                for plan in plans
+                if plan.first_action is not None
+                and plan.candidate_id not in self.failed_actions
+                and plan.first_action not in self.failed_actions
+                and is_legal_action(plan.first_action, self.blackboard, budget)
+            }
+            self._emit(
+                "structural.planned",
+                budget,
+                budget,
+                {
+                    "phase": phase,
+                    "mode": self.effective_policy_mode.value,
+                    "eligible": self.calibration_profile.structure_eligible,
+                    "plans": [self._plan_trace_data(plan) for plan in plans],
+                },
+            )
+            candidates = list(self.candidates.values())
+            self._emit(
+                "candidates.generated", budget, budget,
+                {"phase": phase, "mode": self.effective_policy_mode.value,
+                 "filtered_count": len(candidates),
+                 "candidates": [self._candidate_trace_data(candidate) for candidate in candidates]},
+            )
+            return
+
         candidates = self.analyst.generate_candidates(
             self.analysis,
             self.blackboard,
@@ -2309,23 +3608,40 @@ class RuntimeController:
         )
 
     def _create_plan(self, budget: float) -> None:
-        assert self.analysis is not None
         candidates = list(self.candidates.values())
+        if self.effective_policy_mode in {PolicyMode.B1_PERSUASION, PolicyMode.B2_INFLUENCE}:
+            # The max-heap is already Python-optimal.  The LLM may never alter
+            # a non-tied allocation, so do not spend a call merely to restate it.
+            validation = self._valid_queue([candidate.candidate_id for candidate in candidates[:1]], budget)
+            self.queue = list(validation.candidate_ids)
+            self._last_step_selected_ids = list(self.queue)
+            self._emit_queue_revalidated("persuasion_heap", validation, budget)
+            return
+        assert self.analysis is not None
         request_payload: Mapping[str, Any] | None = None
-        if self.commander.can_request_llm:
-            request_payload = self.commander.preview_payload(candidates, budget, self.analysis)
+        if self.commander.can_request_llm and self.config.llm_schedule is not LLMSchedule.OFF and (
+            self.config.llm_schedule is LLMSchedule.STEP or self._event_llm_pending
+        ):
+            request_payload = self.commander.preview_payload(
+                candidates, budget, self.analysis, self.blackboard.state_version
+            )
             self._emit(
                 "llm.requested",
                 budget,
                 budget,
                 {"payload": request_payload, "llm_call": self.commander.llm_calls + 1},
             )
+        llm_before = self.commander.llm_calls
         plan = self.commander.plan(
             candidates=candidates,
             budget=budget,
             analysis=self.analysis,
             request_payload=request_payload,
+            state_version=self.blackboard.state_version,
         )
+        self.blackboard.llm_attempts += self.commander.llm_calls - llm_before
+        if request_payload is not None:
+            self._event_llm_pending = False
         if plan.request_payload is not None and plan.error is None:
             self._emit(
                 "llm.completed",
@@ -2353,7 +3669,14 @@ class RuntimeController:
                     "llm_calls": self.commander.llm_calls,
                 },
             )
-        validation = self._valid_queue(plan.candidate_ids, budget)
+        requested_candidate_ids = plan.candidate_ids
+        if self.effective_policy_mode in {PolicyMode.B3_SINGLE_STRUCTURE, PolicyMode.B4_BEAM_STRUCTURE}:
+            # A structural candidate represents a *complete alternative plan*,
+            # not an independently composable batch item.  Execute only its
+            # first public action, then discard the plan and replan from the
+            # observed result.
+            requested_candidate_ids = requested_candidate_ids[:1]
+        validation = self._valid_queue(requested_candidate_ids, budget)
         self.queue = list(validation.candidate_ids)
         self._last_step_selected_ids = list(self.queue)
         self._emit(
@@ -2558,6 +3881,9 @@ class RuntimeController:
                 discarded.append({"candidate_id": candidate_id, "reason": "failed_action"})
                 continue
             action = candidate.action
+            if action in self.failed_actions:
+                discarded.append({"candidate_id": candidate_id, "reason": "failed_action"})
+                continue
             cost = action_cost(action)
             if cost > remaining:
                 discarded.append({"candidate_id": candidate_id, "reason": "insufficient_budget"})
@@ -2600,11 +3926,12 @@ __all__ = [
 """赛方入口：保留 CaseVO 编排，把策略计算委托给可测试的纯 Python 控制器。"""
 
 
-import threading
+import json
+from pathlib import Path
 from typing import Any
 
 import networkx as nx
-from casevo import AgentBase, JsonStep, ModelBase
+from casevo import AgentBase, ModelBase
 
 
 
@@ -2615,30 +3942,37 @@ class BaseStarAgent(AgentBase):
         return None
 
 
-class ScoutAgent(BaseStarAgent):
-    """已注册的侦察角色；固定 ID 扫描由 DeterministicScout 完成。"""
-
-
-class GraphAnalystAgent(BaseStarAgent):
-    """已注册的图分析角色；NetworkX 计算在 Python 控制器中保持确定性。"""
+class ScoutAnalystAgent(BaseStarAgent):
+    """Produces only Python-validated scan facts and candidate evidence."""
 
 
 class CommanderAgent(BaseStarAgent):
-    """只允许 LLM 对 Python 生成的候选 ID 批次排序。"""
+    """One direct CaseVO Prompt call; never uses ThoughtChain retries."""
 
     def __init__(self, unique_id: int, model: ModelBase, description: dict[str, Any]) -> None:
         super().__init__(unique_id, model, description, None)
-        self.setup_chain(
-            {"rank": [JsonStep(0, self.model.prompt_factory.get_template("commander_react.txt"))]}
-        )
-        self._lock = threading.Lock()
+        self._prompt = self.model.prompt_factory.get_template("commander_react.txt")
 
     def rank_candidates(self, payload: dict[str, Any]) -> object:
-        """返回 JsonStep 已解析的 JSON；异常交由控制器走确定性回退。"""
-        with self._lock:
-            self.chains["rank"].set_input(payload)
-            self.chains["rank"].run_step()
-            return self.chains["rank"].get_output().get("json")
+        """Return one strict decision object or raise for deterministic fallback."""
+        raw = self._prompt.send_prompt(payload, agent=self, model=self.model)
+        if not isinstance(raw, str):
+            raise ValueError("commander response must be text")
+        decision = json.loads(raw)
+        required = {"state_version", "mode", "candidate_id", "reason_code", "evidence_ids"}
+        if not isinstance(decision, dict) or set(decision) != required:
+            raise ValueError("commander response schema mismatch")
+        if decision["state_version"] != payload.get("state_version"):
+            raise ValueError("stale commander state_version")
+        if decision["candidate_id"] not in set(payload.get("candidate_ids", [])):
+            raise ValueError("commander selected an illegal candidate")
+        if not isinstance(decision["evidence_ids"], list):
+            raise ValueError("commander evidence_ids must be a list")
+        return decision
+
+
+class ExecutorAgent(BaseStarAgent):
+    """The controller remains the final public-API and action validator."""
 
 
 class ParticipantSquadModel(ModelBase):
@@ -2648,22 +3982,25 @@ class ParticipantSquadModel(ModelBase):
         agent_graph = nx.Graph()
         agent_graph.add_nodes_from((0, 1, 2))
         agent_graph.add_edges_from(((0, 1), (1, 2)))
-        super().__init__(agent_graph, llm)
+        prompt_path = Path(__file__).resolve().parent / "prompt"
+        super().__init__(agent_graph, llm, prompt_path=str(prompt_path.resolve()), reflect_file="reflect.txt")
         self.env = host_env
 
         descriptions = list(person_list)
         while len(descriptions) < 3:
             descriptions.append({"role": "星网策略角色"})
-        self.scout_agent = ScoutAgent(0, self, descriptions[0], None)
-        self.analyst_agent = GraphAnalystAgent(1, self, descriptions[1], None)
+        self.scout_agent = ScoutAnalystAgent(0, self, descriptions[0], None)
         self.commander_agent = CommanderAgent(2, self, descriptions[2])
+        self.executor_agent = ExecutorAgent(1, self, descriptions[1], None)
         self.add_agent(self.scout_agent, 0)
-        self.add_agent(self.analyst_agent, 1)
+        self.add_agent(self.executor_agent, 1)
         self.add_agent(self.commander_agent, 2)
 
         self.controller = RuntimeController(
             host_env,
             llm_ranker=self.commander_agent.rank_candidates,
+            stage=ContestStage.PRELIMINARY,
+            config=DEFAULT_POLICY_CONFIG,
         )
 
     def step(self) -> int:

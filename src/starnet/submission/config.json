@@ -1,5 +1,7 @@
 {
   "stage": "preliminary",
+  "policy_mode": "b1_persuasion",
+  "llm_schedule": "off",
   "person": [
     {
       "role": "ScoutAnalystAgent",
