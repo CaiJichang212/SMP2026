@@ -22,15 +22,19 @@ from starnet.policy.candidates import (
 )
 from starnet.policy.graph_analysis import GraphAnalysis, analyze_graph
 from starnet.policy.config import DEFAULT_POLICY_CONFIG, PolicyConfig
-from starnet.policy.config import PolicyMode
+from starnet.policy.config import LLMSchedule, PolicyMode
+from starnet.policy.adaptive import AdaptiveScout, ScenarioProfile, evaluate_scan_voi
 from starnet.policy.calibration import CalibrationProfile, DEFAULT_CALIBRATION_PROFILE
 from starnet.policy.cmg import (
     CMGPlanningError,
+    PredictiveState,
     ResponseLedger,
     ScoredCandidate,
+    SettlementPredictor,
     choose_cmg_action,
 )
 from starnet.policy.baseline import persuasion_candidates
+from starnet.policy.structural import PlanCandidate, StructuralPlanner
 from starnet.runtime.stage import ContestStage, StageSpec, stage_spec
 from starnet.runtime.env_adapter import ActionOutcome, StarNetEnvironment, apply_action_outcome
 from starnet.runtime.trace import NullRuntimeTrace, RuntimeTrace, safe_error
@@ -109,6 +113,16 @@ class GraphAnalyst:
 LlmRanker = Callable[[dict[str, Any]], object]
 
 
+def _action_name(action: Any) -> str:
+    if action is None:
+        return "stop"
+    if getattr(action, "kind", None) == "comm":
+        return f"comm:{action.target_node_1}:{action.prompt_id}"
+    if getattr(action, "kind", None) == "cut":
+        return f"cut:{action.target_node_1}-{action.target_node_2}"
+    return f"{action.kind}:{action.target_node_1}"
+
+
 @dataclass(frozen=True)
 class BatchPlan:
     """A candidate queue plus the exact source of its ordering."""
@@ -153,7 +167,11 @@ class BatchCommander:
 
     @property
     def can_request_llm(self) -> bool:
-        return self.llm_ranker is not None and self.llm_calls < self.max_llm_calls
+        return (
+            self.config.llm_schedule is not LLMSchedule.OFF
+            and self.llm_ranker is not None
+            and self.llm_calls < self.max_llm_calls
+        )
 
     def preview_payload(
         self,
@@ -178,7 +196,7 @@ class BatchCommander:
         fallback = tuple(select_deterministic_batch(candidates, budget, MAX_BATCH_ACTIONS, config=self.config))
         if not candidate_map:
             return BatchPlan(fallback, "deterministic_fallback", "no_candidates")
-        if self.llm_ranker is None:
+        if self.config.llm_schedule is LLMSchedule.OFF or self.llm_ranker is None:
             return BatchPlan(fallback, "deterministic_fallback", "no_llm_ranker")
         if self.llm_calls >= self.max_llm_calls:
             return BatchPlan(fallback, "quota_exhausted", "quota_exhausted")
@@ -256,6 +274,7 @@ class BatchCommander:
                     "score": candidate.score,
                     "roi": candidate.roi,
                     "reason": candidate.reason,
+                    "evidence_ids": list(candidate.evidence_ids or (candidate.candidate_id,)),
                 }
                 for candidate in candidates
             ],
@@ -285,8 +304,12 @@ class BatchCommander:
                 return LlmParseResult(fallback, False, "stale_state_version")
             if not isinstance(candidate_id, str) or candidate_id not in candidate_map:
                 return LlmParseResult(fallback, False, "unknown_candidate")
-            if not isinstance(evidence_ids, list) or any(
-                not isinstance(item, str) or item not in candidate_map for item in evidence_ids
+            selected = candidate_map[candidate_id]
+            allowed_evidence = set(selected.evidence_ids) or {candidate_id}
+            if (
+                not isinstance(evidence_ids, list)
+                or not evidence_ids
+                or any(not isinstance(item, str) or item not in allowed_evidence for item in evidence_ids)
             ):
                 return LlmParseResult(fallback, False, "invalid_evidence_ids")
             return LlmParseResult((candidate_id,), True)
@@ -307,6 +330,7 @@ class RuntimeController:
         blackboard: Blackboard | None = None,
         config: PolicyConfig = DEFAULT_POLICY_CONFIG,
         calibration_profile: CalibrationProfile = DEFAULT_CALIBRATION_PROFILE,
+        scenario_profile: ScenarioProfile | None = None,
     ) -> None:
         self.env = env
         # Stage selection is an explicit deployment input. ``node_count`` is a
@@ -330,12 +354,32 @@ class RuntimeController:
         self._safe_step_limit = config.max_steps if config.max_steps is not None else self.stage.safe_step_limit
         self.calibration_profile = calibration_profile
         self.policy_mode = config.policy_mode
+        self.effective_policy_mode = config.policy_mode
+        self.scenario_profile = scenario_profile
         self.response_ledger = ResponseLedger()
         self.response_estimates: dict[int, float] = {}
         self.cmg_candidate: ScoredCandidate | None = None
         self.cmg_fallback_reason: str | None = None
-        self.scout = DeterministicScout(self.node_count)
+        if (
+            config.policy_mode is PolicyMode.B5_ADAPTIVE
+            and calibration_profile.scenario_eligible
+            and scenario_profile is not None
+            and scenario_profile.verified
+            and scenario_profile.is_consistent(self.blackboard)
+        ):
+            initial_count = (
+                config.adaptive_initial_final if self.stage is stage_spec(ContestStage.FINAL)
+                else config.adaptive_initial_preliminary
+            )
+            self.scout = AdaptiveScout(self.node_count, initial_count=initial_count)
+        else:
+            # Invalid/missing scenario qualification intentionally means B5
+            # scans exactly as the B4 full-scan fallback.
+            self.scout = DeterministicScout(self.node_count)
         self.analyst = GraphAnalyst()
+        self.structural_plans: dict[str, PlanCandidate] = {}
+        self.structural_planner: StructuralPlanner | None = None
+        self._event_llm_pending = config.llm_schedule is LLMSchedule.EVENT
         # The experiment may forbid LLM use even when the official model has a ranker.
         self.commander = BatchCommander(
             llm_ranker if config.max_llm_calls else None,
@@ -346,7 +390,10 @@ class RuntimeController:
         self.analysis: GraphAnalysis | None = None
         self.candidates: dict[str, Candidate] = {}
         self.queue: list[str] = []
-        self.failed_actions: set[str] = set()
+        # Store both plan IDs and immutable public Action identities.  A B4
+        # plan may share a first action with other plans, so a rejected action
+        # must suppress every such plan on the next replan.
+        self.failed_actions: set[str | Action] = set()
         self.consecutive_invalid = 0
         self.last_action_attempted = False
         self.last_action_succeeded: bool | None = None
@@ -466,9 +513,14 @@ class RuntimeController:
             if self.state is ControllerState.ANALYZE:
                 self._refresh_candidates(budget, "analyze")
                 if (
-                    self.policy_mode in {PolicyMode.B1_PERSUASION, PolicyMode.B2_INFLUENCE}
-                    and budget < 2.0
+                    self.policy_mode is PolicyMode.B5_ADAPTIVE
+                    and isinstance(self.scout, AdaptiveScout)
+                    and not self.scout.exhausted
+                    and not self.candidates
                 ):
+                    self._transition(ControllerState.SCAN_ALL, "adaptive_scan_has_no_positive_plan", budget)
+                    continue
+                if self.effective_policy_mode in {PolicyMode.B1_PERSUASION, PolicyMode.B2_INFLUENCE} and budget < 2.0:
                     self._stop(StopReason.INSUFFICIENT_BUDGET, budget)
                     continue
                 if self._cmg_enabled:
@@ -482,7 +534,7 @@ class RuntimeController:
             if self.state is ControllerState.PLAN_BATCH:
                 if not self.candidates or (
                     self.analysis is None
-                    and self.policy_mode not in {PolicyMode.B1_PERSUASION, PolicyMode.B2_INFLUENCE}
+                    and self.effective_policy_mode not in {PolicyMode.B1_PERSUASION, PolicyMode.B2_INFLUENCE}
                 ):
                     self._stop(StopReason.NO_CANDIDATES, budget)
                     continue
@@ -505,7 +557,7 @@ class RuntimeController:
 
             if self.state is ControllerState.REANALYZE:
                 self._refresh_candidates(budget, "reanalyze")
-                if self.policy_mode in {PolicyMode.B1_PERSUASION, PolicyMode.B2_INFLUENCE}:
+                if self.effective_policy_mode in {PolicyMode.B1_PERSUASION, PolicyMode.B2_INFLUENCE}:
                     # A successful communicate response changes the next-slot
                     # estimate. Rebuild the max-heap rather than consuming a
                     # stale batch planned before that feedback.
@@ -552,7 +604,55 @@ class RuntimeController:
         return self._complete_step(1, state_before, budget_before)
 
     def _scan_next(self, budget: float) -> int:
-        action = self.scout.next_action(self.blackboard)
+        voi: dict[int, float] = {}
+        if (
+            isinstance(self.scout, AdaptiveScout)
+            and self.scenario_profile is not None
+            and self.calibration_profile.scenario_eligible
+            and self.scenario_profile.verified
+            and self.scenario_profile.is_consistent(self.blackboard)
+            and self.scout.scan_count >= self.scout.initial_count
+        ):
+            # Keep one legal follow-up communication and one outer step after
+            # an information action; scanning cannot consume the last useful
+            # resource slot.
+            if budget < 2.5 or self._safe_step_limit - self._step_number <= 1:
+                self._stop(StopReason.INSUFFICIENT_BUDGET, budget)
+                return 1
+            predictor = SettlementPredictor(self.calibration_profile)
+            remaining_steps = max(0, self._safe_step_limit - self._step_number)
+
+            def future_value(state: PredictiveState, available_budget: float, available_steps: int) -> float:
+                """Replan from a public observation branch under its resources."""
+                branch_planner = StructuralPlanner(
+                    self.calibration_profile,
+                    ledger=self.response_ledger,
+                    depth=self.config.structure_depth,
+                    width=self.config.structure_width,
+                    candidate_limit=self.config.structure_candidate_limit,
+                )
+                plans = branch_planner.plan_candidates(
+                    state.to_blackboard(), available_budget, available_steps,
+                    PolicyMode.B4_BEAM_STRUCTURE,
+                )
+                return plans[0].predicted_final_score if plans else predictor.score(state)
+
+            for node_id in self.scout.candidate_ids(self.blackboard)[:8]:
+                value = evaluate_scan_voi(
+                    self.blackboard,
+                    node_id,
+                    self.scenario_profile,
+                    lambda state: future_value(state, budget, remaining_steps),
+                    branch_value_fn=lambda state: future_value(
+                        state, budget - action_cost(Action("scan", node_id)), remaining_steps - 1
+                    ),
+                    scan_cost=0.0,
+                )
+                voi[node_id] = value.voi
+            if not any(value > 0.0 for value in voi.values()):
+                self._stop(StopReason.NO_POSITIVE_GAIN, budget)
+                return 1
+        action = self.scout.next_action(self.blackboard, voi=voi) if isinstance(self.scout, AdaptiveScout) else self.scout.next_action(self.blackboard)
         if action is None:
             self._transition(ControllerState.ANALYZE, "scan_exhausted", budget)
             self._emit("scan.completed", budget, budget, {"blackboard": self.blackboard.snapshot()})
@@ -562,7 +662,8 @@ class RuntimeController:
             return 1
 
         self._attempt_action(action, f"scan:{action.target_node_1}", budget)
-        if self.scout.exhausted:
+        adaptive_checkpoint = isinstance(self.scout, AdaptiveScout) and self.scout.scan_count >= self.scout.initial_count
+        if self.scout.exhausted or adaptive_checkpoint:
             completed_budget = (
                 self._last_trace_budget_after
                 if self._last_trace_budget_after is not None
@@ -571,7 +672,14 @@ class RuntimeController:
             if self.config.stop_after_scan:
                 self._stop(StopReason.NO_CANDIDATES, completed_budget)
             else:
-                self._transition(ControllerState.ANALYZE, "scan_complete", completed_budget)
+                self._transition(
+                    ControllerState.ANALYZE,
+                    "adaptive_initial_scan_complete" if adaptive_checkpoint and not self.scout.exhausted else "scan_complete",
+                    completed_budget,
+                )
+            scanned_count = len(self.blackboard.scanned_ids)
+            if scanned_count == self.scout.node_count or scanned_count % 4 == 0:
+                self._event_llm_pending = True
             self._emit(
                 "scan.completed",
                 budget,
@@ -589,7 +697,7 @@ class RuntimeController:
 
         candidate_id = self.queue.pop(0)
         candidate = self.candidates.get(candidate_id)
-        if candidate is None or candidate_id in self.failed_actions:
+        if candidate is None or candidate_id in self.failed_actions or candidate.action in self.failed_actions:
             self.consecutive_invalid += 1
             self._emit(
                 "queue.revalidated",
@@ -620,9 +728,12 @@ class RuntimeController:
 
         success = self._attempt_action(candidate.action, candidate_id, budget)
         if success:
+            if self.config.llm_schedule is LLMSchedule.EVENT:
+                self._event_llm_pending = True
             self.consecutive_invalid = 0
         else:
             self.failed_actions.add(candidate_id)
+            self.failed_actions.add(candidate.action)
             self.consecutive_invalid += 1
         self._transition(
             ControllerState.REANALYZE,
@@ -691,21 +802,10 @@ class RuntimeController:
         if candidate is None or not is_legal_action(candidate.action, self.blackboard, budget):
             self._fallback_to_v0("illegal_hypothesis", budget)
             return 0
-        before_w = None
-        if candidate.action.kind == "comm":
-            node = self.blackboard.nodes.get(candidate.action.target_node_1)
-            before_w = node.w if node is not None else None
         success = self._attempt_action(candidate.action, candidate.candidate_id, budget)
-        if success and candidate.action.kind == "comm" and before_w is not None:
-            node = self.blackboard.nodes.get(candidate.action.target_node_1)
-            if node is not None:
-                try:
-                    self.response_ledger.record_success(candidate.action.target_node_1, before_w, node.w)
-                except CMGPlanningError as exc:
-                    self._fallback_to_v0(str(exc), self._last_trace_budget_after or budget)
-                    return 0
         if not success:
             self.failed_actions.add(candidate.candidate_id)
+            self.failed_actions.add(candidate.action)
             self._fallback_to_v0("action_rejected", self._last_trace_budget_after or budget)
             return 0
         self.cmg_candidate = None
@@ -722,6 +822,9 @@ class RuntimeController:
             if action.kind == "comm" and action.target_node_1 in self.blackboard.nodes
             else None
         )
+        before_node = self.blackboard.nodes.get(action.target_node_1)
+        before_persona = before_node.persona if before_node is not None else None
+        before_comm_left = before_node.comm_left if before_node is not None else None
         before_snapshot = self.blackboard.snapshot() if self._trace.enabled else None
         self._emit(
             "action.requested",
@@ -766,6 +869,15 @@ class RuntimeController:
                     self.response_estimates.setdefault(
                         action.target_node_1, max(0.0, node.w - float(before_w))
                     )
+                    if before_persona is not None and before_comm_left in (1, 2, 3):
+                        self.response_ledger.record_success(
+                            action.target_node_1,
+                            float(before_w),
+                            node.w,
+                            persona=before_persona,
+                            prompt_id=action.prompt_id or 1,
+                            turn=4 - before_comm_left,
+                        )
             self.action_successes += 1
             self._last_step_action_result = "success"
             self._emit(
@@ -799,6 +911,22 @@ class RuntimeController:
             "predicted_response_delta": candidate.response_delta,
         }
 
+    @staticmethod
+    def _plan_trace_data(plan: PlanCandidate) -> dict[str, Any]:
+        return {
+            "candidate_id": plan.candidate_id,
+            "actions": [_action_name(action) for action in plan.actions],
+            "first_action": _action_name(plan.first_action),
+            "cost": plan.cost,
+            "steps": plan.steps,
+            "predicted_final_score": plan.predicted_final_score,
+            "gain": plan.gain,
+            "risk": plan.risk,
+            "conservative_gain": plan.conservative_gain,
+            "topology": plan.topology_summary,
+            "evidence_ids": list(plan.evidence_ids),
+        }
+
     def _action_trace_data(
         self,
         candidate_id: str,
@@ -819,10 +947,29 @@ class RuntimeController:
         return data
 
     def _refresh_candidates(self, budget: float, phase: str) -> None:
-        if self.policy_mode in {PolicyMode.B1_PERSUASION, PolicyMode.B2_INFLUENCE}:
+        requested_mode = self.policy_mode
+        if requested_mode is PolicyMode.B5_ADAPTIVE:
+            requested_mode = PolicyMode.B4_BEAM_STRUCTURE
+
+        if requested_mode in {PolicyMode.B3_SINGLE_STRUCTURE, PolicyMode.B4_BEAM_STRUCTURE}:
+            # B3/B4 are opt-in and require all three action residuals, a
+            # settlement model, and held-out influence evidence.  Otherwise
+            # the same session transparently returns to the simpler baseline.
+            if not self.calibration_profile.structure_eligible:
+                self.effective_policy_mode = (
+                    PolicyMode.B2_INFLUENCE
+                    if self.calibration_profile.b2_eligible
+                    else PolicyMode.B1_PERSUASION
+                )
+            else:
+                self.effective_policy_mode = requested_mode
+        else:
+            self.effective_policy_mode = requested_mode
+
+        if self.effective_policy_mode in {PolicyMode.B1_PERSUASION, PolicyMode.B2_INFLUENCE}:
             # P0 remains unverified by default. B2 is impossible without a
             # frozen influence archive and therefore transparently becomes B1.
-            use_influence = self.policy_mode is PolicyMode.B2_INFLUENCE and self.calibration_profile.b2_eligible
+            use_influence = self.effective_policy_mode is PolicyMode.B2_INFLUENCE and self.calibration_profile.b2_eligible
             candidates = persuasion_candidates(
                 self.blackboard,
                 budget,
@@ -830,6 +977,7 @@ class RuntimeController:
                 self.calibration_profile,
                 use_influence=use_influence,
                 failed_actions=self.failed_actions,
+                ledger=self.response_ledger,
             )
             self.analysis = None
             self.candidates = {candidate.candidate_id: candidate for candidate in candidates}
@@ -846,6 +994,60 @@ class RuntimeController:
             )
             return
         self.analysis = self.analyst.analyze(self.blackboard)
+
+        if self.effective_policy_mode in {PolicyMode.B3_SINGLE_STRUCTURE, PolicyMode.B4_BEAM_STRUCTURE}:
+            if self.config.llm_schedule is LLMSchedule.EVENT:
+                self._event_llm_pending = True
+            self.structural_planner = StructuralPlanner(
+                self.calibration_profile,
+                ledger=self.response_ledger,
+                depth=self.config.structure_depth,
+                width=self.config.structure_width,
+                candidate_limit=self.config.structure_candidate_limit,
+            )
+            plans = self.structural_planner.plan_candidates(
+                self.blackboard,
+                budget,
+                max(0, self._safe_step_limit - self._step_number),
+                self.effective_policy_mode,
+            )
+            self.structural_plans = {plan.candidate_id: plan for plan in plans}
+            self.candidates = {
+                plan.candidate_id: Candidate(
+                    plan.candidate_id,
+                    plan.first_action,
+                    0,
+                    plan.gain,
+                    max(0.0, plan.conservative_gain) / max(plan.cost, 0.5),
+                    "complete structural plan " + ",".join(_action_name(item) for item in plan.actions),
+                    plan.evidence_ids,
+                )
+                for plan in plans
+                if plan.first_action is not None
+                and plan.candidate_id not in self.failed_actions
+                and plan.first_action not in self.failed_actions
+                and is_legal_action(plan.first_action, self.blackboard, budget)
+            }
+            self._emit(
+                "structural.planned",
+                budget,
+                budget,
+                {
+                    "phase": phase,
+                    "mode": self.effective_policy_mode.value,
+                    "eligible": self.calibration_profile.structure_eligible,
+                    "plans": [self._plan_trace_data(plan) for plan in plans],
+                },
+            )
+            candidates = list(self.candidates.values())
+            self._emit(
+                "candidates.generated", budget, budget,
+                {"phase": phase, "mode": self.effective_policy_mode.value,
+                 "filtered_count": len(candidates),
+                 "candidates": [self._candidate_trace_data(candidate) for candidate in candidates]},
+            )
+            return
+
         candidates = self.analyst.generate_candidates(
             self.analysis,
             self.blackboard,
@@ -873,7 +1075,7 @@ class RuntimeController:
 
     def _create_plan(self, budget: float) -> None:
         candidates = list(self.candidates.values())
-        if self.policy_mode in {PolicyMode.B1_PERSUASION, PolicyMode.B2_INFLUENCE}:
+        if self.effective_policy_mode in {PolicyMode.B1_PERSUASION, PolicyMode.B2_INFLUENCE}:
             # The max-heap is already Python-optimal.  The LLM may never alter
             # a non-tied allocation, so do not spend a call merely to restate it.
             validation = self._valid_queue([candidate.candidate_id for candidate in candidates[:1]], budget)
@@ -883,7 +1085,9 @@ class RuntimeController:
             return
         assert self.analysis is not None
         request_payload: Mapping[str, Any] | None = None
-        if self.commander.can_request_llm:
+        if self.commander.can_request_llm and self.config.llm_schedule is not LLMSchedule.OFF and (
+            self.config.llm_schedule is LLMSchedule.STEP or self._event_llm_pending
+        ):
             request_payload = self.commander.preview_payload(
                 candidates, budget, self.analysis, self.blackboard.state_version
             )
@@ -902,6 +1106,8 @@ class RuntimeController:
             state_version=self.blackboard.state_version,
         )
         self.blackboard.llm_attempts += self.commander.llm_calls - llm_before
+        if request_payload is not None:
+            self._event_llm_pending = False
         if plan.request_payload is not None and plan.error is None:
             self._emit(
                 "llm.completed",
@@ -929,7 +1135,14 @@ class RuntimeController:
                     "llm_calls": self.commander.llm_calls,
                 },
             )
-        validation = self._valid_queue(plan.candidate_ids, budget)
+        requested_candidate_ids = plan.candidate_ids
+        if self.effective_policy_mode in {PolicyMode.B3_SINGLE_STRUCTURE, PolicyMode.B4_BEAM_STRUCTURE}:
+            # A structural candidate represents a *complete alternative plan*,
+            # not an independently composable batch item.  Execute only its
+            # first public action, then discard the plan and replan from the
+            # observed result.
+            requested_candidate_ids = requested_candidate_ids[:1]
+        validation = self._valid_queue(requested_candidate_ids, budget)
         self.queue = list(validation.candidate_ids)
         self._last_step_selected_ids = list(self.queue)
         self._emit(
@@ -1134,6 +1347,9 @@ class RuntimeController:
                 discarded.append({"candidate_id": candidate_id, "reason": "failed_action"})
                 continue
             action = candidate.action
+            if action in self.failed_actions:
+                discarded.append({"candidate_id": candidate_id, "reason": "failed_action"})
+                continue
             cost = action_cost(action)
             if cost > remaining:
                 discarded.append({"candidate_id": candidate_id, "reason": "insufficient_budget"})

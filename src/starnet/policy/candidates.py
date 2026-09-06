@@ -30,6 +30,7 @@ class Candidate:
     score: float
     roi: float
     reason: str
+    evidence_ids: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)

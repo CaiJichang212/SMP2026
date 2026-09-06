@@ -14,6 +14,7 @@ import math
 from starnet.model.blackboard import Blackboard
 from starnet.policy.actions import Action, action_cost, is_legal_action
 from starnet.policy.calibration import CalibrationProfile
+from starnet.policy.cmg import ResponseLedger
 from starnet.policy.candidates import Candidate
 
 
@@ -23,8 +24,13 @@ def _turn(node_comm_left: int) -> int:
 
 
 def _response(
-    node_id: int, persona: str, turn: int, responses: Mapping[int, float], profile: CalibrationProfile
+    node_id: int, persona: str, turn: int, responses: Mapping[int, float], profile: CalibrationProfile,
+    ledger: ResponseLedger | None = None,
 ) -> float:
+    if ledger is not None:
+        posterior = ledger.predicted_delta(node_id, persona, 1, profile, turn=turn)
+        if posterior is not None and math.isfinite(posterior[0]):
+            return max(0.0, float(posterior[0]))
     observed = responses.get(node_id)
     if observed is not None and math.isfinite(observed):
         # The stored observation is always the first successful response for
@@ -44,6 +50,7 @@ def persuasion_candidates(
     *,
     use_influence: bool = False,
     failed_actions: frozenset[str] | set[str] = frozenset(),
+    ledger: ResponseLedger | None = None,
 ) -> list[Candidate]:
     """Return stable B1/B2 communication candidates with non-negative gain.
 
@@ -66,7 +73,7 @@ def persuasion_candidates(
         if not is_legal_action(action, blackboard, budget):
             continue
         degree = sum(node_id in edge for edge in blackboard.edges)
-        response = _response(node_id, node.persona, turn, responses, profile)
+        response = _response(node_id, node.persona, turn, responses, profile, ledger)
         coefficient = float(degree)
         if use_influence:
             raw_h = profile.target_influence.get(str(node_id))

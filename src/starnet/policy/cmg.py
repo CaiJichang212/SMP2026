@@ -21,14 +21,25 @@ class CMGPlanningError(RuntimeError):
 
 @dataclass
 class ResponseLedger:
-    """Observed successful communications only; no inference from comm_left."""
+    """Online posterior keyed by ``persona × prompt × turn``.
+
+    A node's own successful response sequence is preferred.  Until that exists,
+    the posterior is pooled by the exact calibration key, then falls back to
+    the frozen calibration prior.
+    """
 
     successful_comm_count: dict[int, int] = field(default_factory=dict)
     observed_deltas: dict[int, list[float]] = field(default_factory=dict)
     first_delta: dict[int, float] = field(default_factory=dict)
     last_w: dict[int, float] = field(default_factory=dict)
+    posterior_count: dict[str, int] = field(default_factory=dict)
+    posterior_mean: dict[str, float] = field(default_factory=dict)
+    posterior_m2: dict[str, float] = field(default_factory=dict)
 
-    def record_success(self, node_id: int, before_w: float, new_w: float) -> None:
+    def record_success(
+        self, node_id: int, before_w: float, new_w: float,
+        *, persona: str | None = None, prompt_id: int = 1, turn: int | None = None,
+    ) -> None:
         delta = float(new_w) - float(before_w)
         if not math.isfinite(delta):
             raise CMGPlanningError("nonfinite_response")
@@ -37,21 +48,47 @@ class ResponseLedger:
         self.successful_comm_count[node_id] = len(values)
         self.first_delta.setdefault(node_id, delta)
         self.last_w[node_id] = float(new_w)
+        if persona is not None and turn in (1, 2, 3):
+            key = CalibrationProfile.response_key(persona, prompt_id, turn)
+            count = self.posterior_count.get(key, 0) + 1
+            old_mean = self.posterior_mean.get(key, 0.0)
+            difference = delta - old_mean
+            mean = old_mean + difference / count
+            self.posterior_count[key] = count
+            self.posterior_mean[key] = mean
+            self.posterior_m2[key] = self.posterior_m2.get(key, 0.0) + difference * (delta - mean)
 
     def predicted_delta(
-        self, node_id: int, persona: str, prompt_id: int, profile: CalibrationProfile
+        self, node_id: int, persona: str, prompt_id: int, profile: CalibrationProfile,
+        turn: int | None = None,
     ) -> tuple[float, float] | None:
         count = self.successful_comm_count.get(node_id, 0)
         if count == 0:
-            return profile.response_prior(persona, prompt_id, 1)
+            return self.posterior_for(persona, prompt_id, turn or 1, profile)
         first = self.first_delta.get(node_id)
         if first is None:
             return None
-        if count == 1:
+        # The copied predictive state may include further hypothetical slots
+        # beyond the real ledger.  Honour its actual slot number when given;
+        # without one preserve the historical "next observed slot" API.
+        target_turn = turn if turn in (1, 2, 3) else count + 1
+        if target_turn == 2:
             return first * 0.5, 0.0
-        if count == 2:
+        if target_turn == 3:
             return first * 0.25, 0.0
         return None
+
+    def posterior_for(
+        self, persona: str, prompt_id: int, turn: int, profile: CalibrationProfile
+    ) -> tuple[float, float] | None:
+        """Return the observed group posterior, or the calibrated prior."""
+        key = CalibrationProfile.response_key(persona, prompt_id, turn)
+        count = self.posterior_count.get(key, 0)
+        if count:
+            mean = self.posterior_mean[key]
+            variance = self.posterior_m2.get(key, 0.0) / max(1, count - 1)
+            return mean, math.sqrt(max(0.0, variance))
+        return profile.response_prior(persona, prompt_id, turn)
 
 
 @dataclass(frozen=True)

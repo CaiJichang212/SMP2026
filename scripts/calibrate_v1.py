@@ -272,6 +272,12 @@ def build_report(manifest: Mapping[str, Any], rows: list[Mapping[str, Any]]) -> 
             "terminal_deterministic": deterministic,
             "response_prior_coverage": response_coverage,
             "settlement_residual_coverage": residual_coverage,
+            "structure_action_residual_coverage": residual_coverage,
+            "structure_qualification": {
+                "structure_gate_passed": False,
+                "eligible": profile.structure_eligible,
+                "reason": "requires a separately reviewed influence archive and structure holdout",
+            },
             "missing_response_keys": sorted(required_keys.difference(means) | required_keys.difference(stds)),
         },
         "selection_model": selected.model,

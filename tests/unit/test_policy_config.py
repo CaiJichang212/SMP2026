@@ -5,6 +5,10 @@ from __future__ import annotations
 import unittest
 
 from starnet.policy.config import DEFAULT_POLICY_CONFIG, PolicyConfig
+from starnet.policy.actions import Action
+from starnet.policy.candidates import Candidate
+from starnet.policy.config import PolicyMode
+from starnet.policy.graph_analysis import analyze_graph
 from starnet.runtime.controller import RuntimeController, StopReason
 from starnet.runtime.stage import ContestStage
 
@@ -75,6 +79,41 @@ class PolicyConfigTests(unittest.TestCase):
             PolicyConfig(max_llm_calls=-1)
         with self.assertRaises(ValueError):
             PolicyConfig(max_steps=0)
+
+    def test_structural_plan_selection_never_builds_a_batch(self) -> None:
+        environment = TinyEnvironment()
+        controller = RuntimeController(
+            environment,
+            node_count=2,
+            config=PolicyConfig(policy_mode=PolicyMode.B3_SINGLE_STRUCTURE, max_llm_calls=0),
+        )
+        controller.blackboard.record_scan(1, {"w": 1.0, "persona": "和平", "comm_left": 3, "neighbors": []})
+        controller.blackboard.record_scan(2, {"w": 1.0, "persona": "和平", "comm_left": 3, "neighbors": []})
+        controller.analysis = analyze_graph(controller.blackboard)
+        controller.effective_policy_mode = PolicyMode.B3_SINGLE_STRUCTURE
+        first = Candidate("plan:first", Action("comm", 1, prompt_id=1), 0, 2.0, 2.0, "first")
+        second = Candidate("plan:second", Action("comm", 2, prompt_id=1), 0, 1.0, 1.0, "second")
+        controller.candidates = {first.candidate_id: first, second.candidate_id: second}
+
+        controller._create_plan(10.0)
+
+        self.assertEqual(controller.queue, ["plan:first"])
+
+    def test_failed_first_action_suppresses_every_shared_plan(self) -> None:
+        environment = TinyEnvironment()
+        controller = RuntimeController(environment, node_count=1)
+        controller.blackboard.record_scan(1, {"w": 1.0, "persona": "和平", "comm_left": 3, "neighbors": []})
+        action = Action("comm", 1, prompt_id=1)
+        controller.candidates = {
+            "plan:left": Candidate("plan:left", action, 0, 1.0, 1.0, "left"),
+            "plan:right": Candidate("plan:right", action, 0, 1.0, 1.0, "right"),
+        }
+        controller.failed_actions.add(action)
+
+        validation = controller._valid_queue(["plan:left", "plan:right"], 10.0)
+
+        self.assertEqual(validation.candidate_ids, ())
+        self.assertEqual([item["reason"] for item in validation.discarded], ["failed_action", "failed_action"])
 
 
 if __name__ == "__main__":

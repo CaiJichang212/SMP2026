@@ -39,6 +39,12 @@ class CalibrationProfile:
     # Values are public, held-out-validated terminal influence coefficients.
     # An empty map is intentional: it makes B2 unavailable rather than guessed.
     target_influence: Mapping[str, float] = field(default_factory=dict)
+    # Separate qualification for irreversible structure actions.  Keeping it
+    # independent from ``gate_passed`` prevents a settlement-only calibration
+    # from silently enabling B3/B4.
+    structure_gate_passed: bool = False
+    structure_action_residual_std: Mapping[str, float] = field(default_factory=dict)
+    scenario_gate_passed: bool = False
 
     def __post_init__(self) -> None:
         if self.model not in {"degree", "degroot", "friedkin_johnsen"}:
@@ -46,7 +52,8 @@ class CalibrationProfile:
         for value in (self.rho, self.gamma, self.a, self.b):
             if not isinstance(value, (int, float)) or not math.isfinite(value):
                 raise ValueError("calibration parameters must be finite")
-        for values in (self.settlement_residual_std, self.response_mean, self.response_std, self.target_influence):
+        for values in (self.settlement_residual_std, self.structure_action_residual_std,
+                       self.response_mean, self.response_std, self.target_influence):
             for value in values.values():
                 if not isinstance(value, (int, float)) or not math.isfinite(value):
                     raise ValueError("calibration values must be finite")
@@ -82,6 +89,21 @@ class CalibrationProfile:
     @property
     def b2_eligible(self) -> bool:
         return self.verified and bool(self.target_influence)
+
+    @property
+    def structure_eligible(self) -> bool:
+        required = ("comm", "cut", "shield")
+        residuals = self.structure_action_residual_std or self.settlement_residual_std
+        return (
+            self.verified
+            and self.structure_gate_passed
+            and bool(self.target_influence)
+            and all(action in residuals and math.isfinite(float(residuals[action])) for action in required)
+        )
+
+    @property
+    def scenario_eligible(self) -> bool:
+        return self.structure_eligible and self.scenario_gate_passed
 
 
 # Deliberately fail closed until ``scripts/calibrate_v1.py freeze`` emits a
