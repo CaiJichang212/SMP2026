@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 import unittest
+from unittest.mock import patch
 
-from scripts.calibrate_v1 import build_report, required_response_keys, score_for_row
+from scripts.calibrate_v1 import build_report, mae, required_response_keys, score_for_row
 from starnet.policy.calibration import CalibrationProfile
+from starnet.policy.cmg import CMGPlanningError
 
 
 SNAPSHOT = {
@@ -38,3 +40,10 @@ class V1CalibrationTests(unittest.TestCase):
     def test_required_response_keys_cover_every_preregistered_turn(self) -> None:
         manifest = {"response_protocol": {"personas": ["和平", "中立"], "prompt_ids": [1, 2], "communications_per_session": 3}}
         self.assertEqual(len(required_response_keys(manifest)), 12)
+
+    def test_nonconvergent_predictor_is_scored_as_infinite_error(self) -> None:
+        # A divergent grid candidate must be rejected rather than aborting
+        # the complete calibration analysis.
+        row = {"before_snapshot": SNAPSHOT, "action": {"kind": "control"}, "final_score": 1.0}
+        with patch("scripts.calibrate_v1.score_for_row", side_effect=CMGPlanningError("nonconvergent")):
+            self.assertEqual(mae([row], CalibrationProfile(False)), float("inf"))

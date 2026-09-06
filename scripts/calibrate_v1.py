@@ -21,7 +21,7 @@ from typing import Any, Iterable, Mapping
 from starnet.model.blackboard import Blackboard, NodeState
 from starnet.policy.actions import Action
 from starnet.policy.calibration import CalibrationProfile, canonical_hash
-from starnet.policy.cmg import PredictiveState, SettlementPredictor
+from starnet.policy.cmg import CMGPlanningError, PredictiveState, SettlementPredictor
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -97,8 +97,24 @@ def _score(row: Mapping[str, Any]) -> float:
 
 
 def mae(rows: Iterable[Mapping[str, Any]], profile: CalibrationProfile) -> float:
-    errors = [abs(score_for_row(row, profile) - _score(row)) for row in rows]
+    try:
+        errors = [abs(score_for_row(row, profile) - _score(row)) for row in rows]
+    except (CMGPlanningError, ValueError, ZeroDivisionError):
+        # A divergent numerical hypothesis is a failed candidate, not a
+        # runner failure.  Keeping it in the grid with infinite loss makes
+        # selection deterministic and preserves the preregistered search set.
+        return math.inf
     return statistics.fmean(errors) if errors else math.inf
+
+
+def model_spearman(rows: Iterable[Mapping[str, Any]], profile: CalibrationProfile) -> float:
+    materialized = list(rows)
+    try:
+        predicted = [score_for_row(row, profile) for row in materialized]
+        actual = [_score(row) for row in materialized]
+    except (CMGPlanningError, ValueError, ZeroDivisionError):
+        return math.nan
+    return spearman(predicted, actual)
 
 
 def spearman(expected: list[float], actual: list[float]) -> float:
@@ -132,23 +148,40 @@ def profile_grid() -> list[CalibrationProfile]:
 
 
 def split_rows(rows: Iterable[Mapping[str, Any]], split: str) -> list[Mapping[str, Any]]:
-    return [row for row in rows if row.get("split") == split and row.get("kind", "settlement") == "settlement"]
+    return [
+        row for row in rows
+        if row.get("split") == split and row.get("kind", "settlement") == "settlement"
+        # Legacy offline fixtures predate the explicit comparability field.
+        # They remain useful for pure predictor tests; live rows must be
+        # explicitly comparable and an explicit False is always excluded.
+        and row.get("comparable") is not False
+    ]
 
 
 def _median_graph_normalized_mae(rows: Iterable[Mapping[str, Any]], profile: CalibrationProfile) -> float:
-    by_graph: dict[str, list[float]] = {}
+    by_graph: dict[str, list[tuple[float, float]]] = {}
     for row in rows:
-        score = _score(row)
-        prediction = score_for_row(row, profile)
+        try:
+            score = _score(row)
+            prediction = score_for_row(row, profile)
+        except (CMGPlanningError, ValueError, ZeroDivisionError):
+            return math.inf
         graph = str(row.get("graph_id", "unknown"))
-        by_graph.setdefault(graph, []).append(abs(prediction - score) / max(1.0, abs(score)))
-    return statistics.median(statistics.fmean(errors) for errors in by_graph.values()) if by_graph else math.inf
+        by_graph.setdefault(graph, []).append((score, abs(prediction - score)))
+    return (
+        statistics.median(
+            statistics.fmean(error for _score_value, error in values)
+            / max(1.0, max(score_value for score_value, _error in values) - min(score_value for score_value, _error in values))
+            for values in by_graph.values()
+        )
+        if by_graph else math.inf
+    )
 
 
-def response_statistics(rows: Iterable[Mapping[str, Any]]) -> tuple[dict[str, float], dict[str, float]]:
+def response_statistics(rows: Iterable[Mapping[str, Any]]) -> tuple[dict[str, float], dict[str, float], dict[str, int]]:
     grouped: dict[str, list[float]] = {}
     for row in rows:
-        if row.get("kind") != "response" or not row.get("success"):
+        if row.get("kind") != "response" or not row.get("success") or row.get("comparable") is not True:
             continue
         key = CalibrationProfile.response_key(str(row["persona"]), int(row.get("prompt_id", 1)), int(row["turn"]))
         delta = row.get("delta_w")
@@ -156,7 +189,38 @@ def response_statistics(rows: Iterable[Mapping[str, Any]]) -> tuple[dict[str, fl
             grouped.setdefault(key, []).append(float(delta))
     means = {key: statistics.fmean(values) for key, values in grouped.items()}
     stds = {key: statistics.pstdev(values) if len(values) > 1 else 0.0 for key, values in grouped.items()}
-    return means, stds
+    return means, stds, {key: len(values) for key, values in grouped.items()}
+
+
+def settlement_coverage(rows: Iterable[Mapping[str, Any]], manifest: Mapping[str, Any]) -> bool:
+    """Require every preregistered graph/action cell and all five repeats."""
+    protocol = manifest.get("settlement_protocol")
+    if not isinstance(protocol, Mapping):
+        return False
+    families, splits, actions, repetitions = (
+        protocol.get("graph_families"), protocol.get("splits"), protocol.get("actions"), protocol.get("repetitions"),
+    )
+    if not all(isinstance(value, list) for value in (families, splits, actions)) or not isinstance(repetitions, int):
+        return False
+    by_split_graph_action: dict[tuple[str, str, str], list[Mapping[str, Any]]] = {}
+    for row in rows:
+        if row.get("comparable") is not True:
+            return False
+        raw_action = row.get("action")
+        action_kind = raw_action.get("kind") if isinstance(raw_action, Mapping) else None
+        if not isinstance(action_kind, str):
+            return False
+        key = (str(row.get("split")), str(row.get("graph_id")), action_kind)
+        by_split_graph_action.setdefault(key, []).append(row)
+    for split in splits:
+        graphs = {graph_id for row_split, graph_id, _action in by_split_graph_action if row_split == split}
+        if len(graphs) != len(families):
+            return False
+        for graph_id in graphs:
+            for action in actions:
+                if len(by_split_graph_action.get((str(split), graph_id, str(action)), [])) != repetitions:
+                    return False
+    return len(by_split_graph_action) == len(splits) * len(families) * len(actions)
 
 
 def required_response_keys(manifest: Mapping[str, Any]) -> set[str]:
@@ -181,6 +245,7 @@ def build_report(manifest: Mapping[str, Any], rows: list[Mapping[str, Any]]) -> 
     calibration, selection, gate = (split_rows(rows, name) for name in ("calibration", "selection", "gate"))
     if not calibration or not selection or not gate:
         return {"gate_passed": False, "reason": "missing_required_split"}
+    complete_settlement = settlement_coverage(calibration + selection + gate, manifest)
     tuned_by_model = {
         model: min(
             (candidate for candidate in profile_grid() if candidate.model == model),
@@ -193,8 +258,8 @@ def build_report(manifest: Mapping[str, Any], rows: list[Mapping[str, Any]]) -> 
     selected = max(
         tuned_by_model.values(),
         key=lambda candidate: (
-            -math.inf if math.isnan(spearman([score_for_row(row, candidate) for row in selection], [_score(row) for row in selection]))
-            else spearman([score_for_row(row, candidate) for row in selection], [_score(row) for row in selection]),
+            -math.inf if math.isnan(model_spearman(selection, candidate)
+            ) else model_spearman(selection, candidate),
             candidate.computed_hash(),
         ),
     )
@@ -207,16 +272,11 @@ def build_report(manifest: Mapping[str, Any], rows: list[Mapping[str, Any]]) -> 
                 "b": candidate.b,
             },
             "calibration_mae": mae(calibration, candidate),
-            "selection_spearman": spearman(
-                [score_for_row(row, candidate) for row in selection],
-                [_score(row) for row in selection],
-            ),
+            "selection_spearman": model_spearman(selection, candidate),
         }
         for model, candidate in tuned_by_model.items()
     }
-    actual = [_score(row) for row in gate]
-    predicted = [score_for_row(row, selected) for row in gate]
-    ordering = spearman(predicted, actual)
+    ordering = model_spearman(gate, selected)
     normalized_mae = _median_graph_normalized_mae(gate, selected)
     terminal_groups: dict[tuple[str, str], list[Mapping[str, Any]]] = {}
     for row in gate:
@@ -225,28 +285,42 @@ def build_report(manifest: Mapping[str, Any], rows: list[Mapping[str, Any]]) -> 
     for group in terminal_groups.values():
         scores = [_score(row) for row in group]
         deterministic &= len(group) >= 5 and max(scores) - min(scores) <= 0.02 * max(1.0, abs(statistics.fmean(scores)))
-    means, stds = response_statistics(rows)
+    means, stds, response_counts = response_statistics(rows)
     residuals: dict[str, float] = {}
     residual_coverage = True
     for kind in ("comm", "cut", "shield"):
-        errors = [
-            score_for_row(row, selected) - _score(row)
-            for row in calibration + selection
-            if not is_control_row(row) and action_from_row(row).kind == kind
-        ]
+        errors: list[float] = []
+        expected = 0
+        for row in calibration + selection:
+            if is_control_row(row) or action_from_row(row).kind != kind:
+                continue
+            expected += 1
+            try:
+                errors.append(score_for_row(row, selected) - _score(row))
+            except (CMGPlanningError, ValueError, ZeroDivisionError):
+                continue
         # A failed report must still be serialisable as an explicitly
         # unverified profile; never encode infinity into a frozen payload.
         residuals[kind] = statistics.pstdev(errors) if errors else 0.0
-        residual_coverage &= bool(errors)
+        residual_coverage &= bool(errors) and len(errors) == expected
     manifest_hash, data_hash = canonical_hash(manifest), canonical_hash(rows)
     required_keys = required_response_keys(manifest)
-    response_coverage = bool(required_keys and required_keys.issubset(means) and required_keys.issubset(stds))
+    response_protocol = manifest.get("response_protocol")
+    required_repetitions = response_protocol.get("repetitions") if isinstance(response_protocol, Mapping) else None
+    response_coverage = bool(
+        isinstance(required_repetitions, int)
+        and required_keys
+        and required_keys.issubset(means)
+        and required_keys.issubset(stds)
+        and all(response_counts.get(key, 0) >= required_repetitions for key in required_keys)
+    )
     criteria_passed = bool(
         ordering >= 0.90
         and normalized_mae <= 0.05
         and deterministic
         and response_coverage
         and residual_coverage
+        and complete_settlement
     )
     provisional = CalibrationProfile(
         criteria_passed,
@@ -271,6 +345,8 @@ def build_report(manifest: Mapping[str, Any], rows: list[Mapping[str, Any]]) -> 
             "median_normalized_mae": normalized_mae,
             "terminal_deterministic": deterministic,
             "response_prior_coverage": response_coverage,
+            "response_sample_counts": response_counts,
+            "settlement_complete": complete_settlement,
             "settlement_residual_coverage": residual_coverage,
             "structure_action_residual_coverage": residual_coverage,
             "structure_qualification": {
