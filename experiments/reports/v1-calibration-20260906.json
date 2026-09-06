@@ -1,0 +1,160 @@
+{
+  "candidate_models": {
+    "degree": {
+      "calibration_mae": 8.40392857142857,
+      "parameters": {
+        "a": 0.5,
+        "b": 0.0,
+        "gamma": 0.0,
+        "rho": 0.0
+      },
+      "selection_spearman": 0.9675736553393818
+    },
+    "degroot": {
+      "calibration_mae": 6.6282067442375645,
+      "parameters": {
+        "a": 0.5,
+        "b": 0.0,
+        "gamma": 0.0,
+        "rho": 0.5
+      },
+      "selection_spearman": 0.964987692736168
+    },
+    "friedkin_johnsen": {
+      "calibration_mae": 6.674785925162652,
+      "parameters": {
+        "a": 0.1,
+        "b": 0.0,
+        "gamma": 0.0,
+        "rho": 0.0
+      },
+      "selection_spearman": 0.9614068445351154
+    }
+  },
+  "data_hash": "377d981fd967e1bb0dc74ed887036f337ffbfdfc82e14b021b321295ebb41975",
+  "gate": {
+    "median_normalized_mae": 0.10244047619047619,
+    "missing_response_keys": [],
+    "response_prior_coverage": true,
+    "response_sample_counts": {
+      "中立|1|1": 15,
+      "中立|1|2": 15,
+      "中立|1|3": 15,
+      "中立|2|1": 15,
+      "中立|2|2": 15,
+      "中立|2|3": 15,
+      "中立|3|1": 15,
+      "中立|3|2": 15,
+      "中立|3|3": 15,
+      "和平|1|1": 15,
+      "和平|1|2": 15,
+      "和平|1|3": 15,
+      "和平|2|1": 15,
+      "和平|2|2": 15,
+      "和平|2|3": 15,
+      "和平|3|1": 15,
+      "和平|3|2": 15,
+      "和平|3|3": 15,
+      "暴力|1|1": 15,
+      "暴力|1|2": 15,
+      "暴力|1|3": 15,
+      "暴力|2|1": 15,
+      "暴力|2|2": 15,
+      "暴力|2|3": 15,
+      "暴力|3|1": 15,
+      "暴力|3|2": 15,
+      "暴力|3|3": 15
+    },
+    "settlement_complete": true,
+    "settlement_residual_coverage": true,
+    "spearman": 0.9542952988692307,
+    "structure_action_residual_coverage": true,
+    "structure_qualification": {
+      "eligible": false,
+      "reason": "requires a separately reviewed influence archive and structure holdout",
+      "structure_gate_passed": false
+    },
+    "terminal_deterministic": true
+  },
+  "gate_passed": false,
+  "manifest_hash": "5dca23011f908f59d7307a8b06a1ef5b1660252139b29793c5784ae65825a91e",
+  "selection_model": "degree",
+  "winner": {
+    "a": 0.5,
+    "b": 0.0,
+    "data_hash": "377d981fd967e1bb0dc74ed887036f337ffbfdfc82e14b021b321295ebb41975",
+    "gamma": 0.0,
+    "gate_passed": false,
+    "manifest_hash": "5dca23011f908f59d7307a8b06a1ef5b1660252139b29793c5784ae65825a91e",
+    "model": "degree",
+    "profile_hash": "07b1767a814905a7c65874e089b3552ec4cd54f4493e3343e6ace538c3f96724",
+    "response_mean": {
+      "中立|1|1": 15.0,
+      "中立|1|2": 7.5,
+      "中立|1|3": 3.75,
+      "中立|2|1": 10.0,
+      "中立|2|2": 5.0,
+      "中立|2|3": 2.5,
+      "中立|3|1": -5.0,
+      "中立|3|2": -2.5,
+      "中立|3|3": -1.25,
+      "和平|1|1": 15.0,
+      "和平|1|2": 7.5,
+      "和平|1|3": 3.75,
+      "和平|2|1": 10.0,
+      "和平|2|2": 5.0,
+      "和平|2|3": 2.5,
+      "和平|3|1": -5.0,
+      "和平|3|2": -2.5,
+      "和平|3|3": -1.25,
+      "暴力|1|1": 15.0,
+      "暴力|1|2": 7.5,
+      "暴力|1|3": 3.75,
+      "暴力|2|1": 10.0,
+      "暴力|2|2": 5.0,
+      "暴力|2|3": 2.5,
+      "暴力|3|1": -5.0,
+      "暴力|3|2": -2.5,
+      "暴力|3|3": -1.25
+    },
+    "response_std": {
+      "中立|1|1": 0.0,
+      "中立|1|2": 0.0,
+      "中立|1|3": 0.0,
+      "中立|2|1": 0.0,
+      "中立|2|2": 0.0,
+      "中立|2|3": 0.0,
+      "中立|3|1": 0.0,
+      "中立|3|2": 0.0,
+      "中立|3|3": 0.0,
+      "和平|1|1": 0.0,
+      "和平|1|2": 0.0,
+      "和平|1|3": 0.0,
+      "和平|2|1": 0.0,
+      "和平|2|2": 0.0,
+      "和平|2|3": 0.0,
+      "和平|3|1": 0.0,
+      "和平|3|2": 0.0,
+      "和平|3|3": 0.0,
+      "暴力|1|1": 0.0,
+      "暴力|1|2": 0.0,
+      "暴力|1|3": 0.0,
+      "暴力|2|1": 0.0,
+      "暴力|2|2": 0.0,
+      "暴力|2|3": 0.0,
+      "暴力|3|1": 0.0,
+      "暴力|3|2": 0.0,
+      "暴力|3|3": 0.0
+    },
+    "rho": 0.0,
+    "scenario_gate_passed": false,
+    "settlement_residual_std": {
+      "comm": 23.162712778629928,
+      "cut": 12.912111621675683,
+      "shield": 4.710149700814363
+    },
+    "structure_action_residual_std": {},
+    "structure_gate_passed": false,
+    "target_influence": {}
+  }
+}

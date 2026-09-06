@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "name": "p0-p3-preregistered-paired-matrix-v2",
+  "randomization_seed": 20260906,
+  "server_url_env": "SMP_SERVER_URL",
+  "timeout_seconds": 60,
+  "gate_seed": "four_node_fixture",
+  "seed_factory": "six_topologies_x_50_100_x_2",
+  "main_seeds": [
+    "er_balanced-50-r1", "er_balanced-50-r2", "er_balanced-100-r1", "er_balanced-100-r2",
+    "ba_negative_hubs-50-r1", "ba_negative_hubs-50-r2", "ba_negative_hubs-100-r1", "ba_negative_hubs-100-r2",
+    "ws_peace_majority-50-r1", "ws_peace_majority-50-r2", "ws_peace_majority-100-r1", "ws_peace_majority-100-r2",
+    "sbm_negative_bridges-50-r1", "sbm_negative_bridges-50-r2", "sbm_negative_bridges-100-r1", "sbm_negative_bridges-100-r2",
+    "sbm_violent_cluster-50-r1", "sbm_violent_cluster-50-r2", "sbm_violent_cluster-100-r1", "sbm_violent_cluster-100-r2",
+    "three_sparse_components-50-r1", "three_sparse_components-50-r2", "three_sparse_components-100-r1", "three_sparse_components-100-r2"
+  ],
+  "variants": [
+    "scan_only",
+    "b1_persuasion",
+    "b2_influence",
+    "b3_single_structure",
+    "b4_beam_structure",
+    "b5_adaptive",
+    "b5_step_llm",
+    "b5_event_llm"
+  ],
+  "main_repetitions": 3,
+  "blocking_gates": {
+    "p0": "All 20 fixed-terminal sessions must be comparable; each policy's score spread must be <= 2%.",
+    "p2": "A literal CalibrationProfile must be verified and structure_eligible before interpreting B2/B3/B4 terminal-score rows.",
+    "p3": "The P2 gate and an independently validated scenario profile must pass before interpreting B5 rows; LLM schedules are separate ablations."
+  },
+  "pairing": "For every generated seed id and repetition, compare terminal scores within the same block. Exclude protocol/action failures before paired bootstrap.",
+  "primary_contrasts": {
+    "p2_single_structure": "b3_single_structure - b1_persuasion",
+    "p2_beam_structure": "b4_beam_structure - b1_persuasion",
+    "p3_adaptive": "b5_adaptive - b4_beam_structure",
+    "p3_step_llm": "b5_step_llm - b5_adaptive",
+    "p3_event_llm": "b5_event_llm - b5_adaptive"
+  }
+}

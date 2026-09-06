@@ -100,6 +100,15 @@ def variant_config(name: str) -> PolicyConfig:
         "mixed_raw_roi": PolicyConfig(p0_exclusive=False, mixed_raw_roi=True, **common),
         "communicate_only": PolicyConfig(enable_shield=False, enable_cut=False, **common),
         "risk_only": PolicyConfig(enable_communicate=False, **common),
+        # B1 is the current submission baseline.  Keep it explicit in
+        # experiment manifests instead of using the historical V0 mixed-action
+        # configuration as its proxy.
+        "b1_persuasion": PolicyConfig(
+            policy_mode=PolicyMode.B1_PERSUASION,
+            enable_shield=False,
+            enable_cut=False,
+            **common,
+        ),
         "v1_cmg": PolicyConfig(policy_mode=PolicyMode.V1_CMG, **common),
         "b2_influence": PolicyConfig(policy_mode=PolicyMode.B2_INFLUENCE, **common),
         # P2/P3 are explicit research variants.  They remain fail-closed when

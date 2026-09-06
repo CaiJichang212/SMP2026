@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "experiment": "p0-p3-local-validation-20260906",
+  "executed_on": "2026-09-06",
+  "code_under_test": {
+    "submission_default": "b1_persuasion",
+    "calibration_profile_verified": false,
+    "structure_profile_eligible": false,
+    "scenario_profile_eligible": false
+  },
+  "local_checks": {
+    "p0_runtime_contract": {
+      "command": "uv run python scripts/preflight_runtime.py",
+      "passed": true
+    },
+    "full_regression_suite": {
+      "command": "uv run python -m unittest discover -s tests -v",
+      "tests_run": 103,
+      "failures": 0,
+      "errors": 0,
+      "passed": true
+    },
+    "p1_p2_p3_focused_regression": {
+      "command": "uv run python -m unittest -v tests.unit.test_p1_baseline tests.unit.test_candidates tests.unit.test_structural tests.unit.test_adaptive tests.integration.test_controller",
+      "tests_run": 39,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "coverage": [
+        "P1 full scan, budget/step caps, diminishing response and no retry",
+        "P0/P1 candidate legality and unverified structural fail-closed behavior",
+        "P2 topology counterexamples, structure recomputation and beam plan invariants",
+        "P3 scenario consistency, frontier/blind scouting and scan VOI",
+        "controller fallback, including exact no-LLM B5-to-B1 fallback, and 50/100-node public-API integration"
+      ],
+      "additional_calibration_checks": [
+        "555-session manifest expands to 135 response and 420 settlement sessions",
+        "every pre-registered settlement action has a legal target",
+        "nonconvergent model-grid candidates are rejected without aborting calibration"
+      ]
+    }
+  },
+  "earlier_sandbox_diagnostic": {
+    "fresh_sessions_attempted": 2,
+    "comparable_sessions": 0,
+    "protocol_error_counts": {
+      "RemoteProtocolError": 2
+    },
+    "interpretation": "These runs were executed from a restricted network path and are not part of the successful P0 gate below. They demonstrate an execution-environment connectivity constraint, not an API payload defect.",
+    "raw_result_roots": [
+      "experiments/raw/p2-p3-matrix-20260906/dc7c85fb05958d42",
+      "experiments/raw/p2-p3-matrix-20260906-escalated/dc7c85fb05958d42"
+    ]
+  },
+  "remote_p0_gate": {
+    "manifest": "experiments/manifests/p0-p3-paired-matrix-v2.json",
+    "plan_hash": "143b0886b7ccbb4ed46e125b15b0cf768bb73a8aabfbe99a5b43aedf4f8e70be",
+    "planned_gate_sessions": 20,
+    "fresh_sessions_completed": 20,
+    "comparable_sessions": 20,
+    "finite_terminal_scores": 20,
+    "protocol_error_counts": {},
+    "stable": true,
+    "score_spreads": {
+      "scan_only": 0.0,
+      "shield_2": 0.0,
+      "communicate_1_3_4": 0.0,
+      "historical_v0_terminal": 0.0
+    },
+    "per_terminal_policy": {
+      "scan_only": {
+        "score": -15.0,
+        "remaining_budget": 58.0,
+        "action_counts": {"scan": 4, "comm": 0, "cut": 0, "shield": 0}
+      },
+      "shield_2": {
+        "score": 27.86,
+        "remaining_budget": 53.0,
+        "action_counts": {"scan": 4, "comm": 0, "cut": 0, "shield": 1}
+      },
+      "communicate_1_3_4": {
+        "score": 82.12,
+        "remaining_budget": 40.0,
+        "action_counts": {"scan": 4, "comm": 9, "cut": 0, "shield": 0}
+      },
+      "historical_v0_terminal": {
+        "score": 124.61,
+        "remaining_budget": 35.0,
+        "action_counts": {"scan": 4, "comm": 9, "cut": 0, "shield": 1}
+      }
+    },
+    "raw_result_root": "experiments/raw/p0-p3-matrix-v2-20260906/143b0886b7ccbb4e"
+  },
+  "preregistered_remote_matrix": {
+    "manifest": "experiments/manifests/p0-p3-paired-matrix-v2.json",
+    "gate_sessions": 20,
+    "main_seed_blocks": 24,
+    "variants": 8,
+    "fresh_repetitions_per_block": 3,
+    "main_sessions": 576,
+    "total_sessions": 596,
+    "status": "blocked_by_p1_calibration_and_p2_p3_profile_gates"
+  },
+  "result_scope": "The P0 rows are real remote terminal scores for a fixed four-node fixture and prove reproducibility of the public API path. They are not hidden-seed or P2/P3 performance evidence; P2/P3 must not be ranked against B1 until their calibration and scenario gates pass."
+}
