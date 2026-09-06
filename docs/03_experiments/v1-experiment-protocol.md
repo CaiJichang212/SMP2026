@@ -78,4 +78,8 @@ uv run python scripts/analyze_v1_local_probes.py \
 
 历史首轮小图记录有 10/10 个可比较结果，说明该受控条件下首次游说、重复游说和两节点桥图的局部结算可被测得；详细表见 [`v1-local-mechanism-probes-reference.md`](../../experiments/reports/v1-local-mechanism-probes-reference.md)。
 
-2026-09-05 对同一 manifest 的新 session 复跑为 0/10 可比较、10/10 `RemoteProtocolError`；安全诊断均为在 `/api/start_session` 的 `ConnectionError`。这只能证明当时无法建立本地调试会话，不能区分本机网络与服务端可用性，也不能把历史结果当作本次重跑的替身；详见 [`v1-local-mechanism-probes-rerun-20260905.md`](../../experiments/reports/v1-local-mechanism-probes-rerun-20260905.md)。当前结论是：**保持 `v0_deterministic` 默认路径，不冻结 CMG 档案，不运行/解释 V1 主矩阵，也不增加 LLM 调用。**
+2026-09-05 对同一 manifest 的新 session 复跑为 0/10 可比较、10/10 `RemoteProtocolError`；安全诊断均为在 `/api/start_session` 的 `ConnectionError`。这只能证明当时无法建立本地调试会话，不能区分本机网络与服务端可用性，也不能把历史结果当作本次重跑的替身；详见 [`v1-local-mechanism-probes-rerun-20260905.md`](../../experiments/reports/v1-local-mechanism-probes-rerun-20260905.md)。
+
+更新（2026-09-06）：从可访问官方沙盒的网络路径执行了另一套预注册 P0 固定终态门禁，20/20 可比，四种终态各 5 次的分数相对跨度均为 0；详见 [`P0–P3 实验方案与本地结果`](p0-p3-experiment-plan-and-local-results-20260906.md)。这恢复了后续校准的前置可用性，但不替代本方案的 P1 响应表和 P2 图留出校准。因此当前结论仍是：**保持 B1/无 LLM 默认路径，不冻结 CMG 档案，不运行或解释 V1 主矩阵，直至 P1–P2 门禁通过。**
+
+再次更新（2026-09-06）：已完成 P1/P2 的 555 个新会话（135 响应、420 图留出结算），且均可比。响应覆盖、重复稳定性和 gate Spearman（0.9543）通过；然而最佳模型的 gate 图级归一化 MAE 为 10.24%，超过预注册 5% 上限。因此 P2 门禁失败，结论不变。数据、候选模型和误差拓扑见 [`V1 校准与结构门禁结果`](../../experiments/reports/v1-calibration-20260906.md)。

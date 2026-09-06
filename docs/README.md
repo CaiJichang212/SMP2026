@@ -9,5 +9,7 @@
 - [`03_experiments/`](03_experiments/)：可提交的实验结论与版本说明。
   - [`V1 推荐方案`](03_experiments/v1-recommended-design.md)：本地机制探针、V0 问题分析与结算器驱动的响应感知 Greedy 设计。
   - [`V1.0 实验方案`](03_experiments/v1-experiment-protocol.md)：预注册的校准、门禁、配对主矩阵和当前 fail-closed 决策。
+  - [`P0–P3 实验方案与本地结果（2026-09-06）`](03_experiments/p0-p3-experiment-plan-and-local-results-20260906.md)：三重复配对矩阵、此次本地回归与远端可用性门禁结论。
+  - [`V1 校准与结构门禁结果（2026-09-06）`](../experiments/reports/v1-calibration-20260906.md)：555 个预注册会话的响应/结算数据、留出误差与 fail-closed 决策。
 - [`04_plan/`](04_plan/)：版本实施计划与验收口径。
 - [`runbooks/`](runbooks/)：本地开发、远程沙盒和提交操作手册。
