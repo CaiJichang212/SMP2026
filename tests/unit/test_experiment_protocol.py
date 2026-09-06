@@ -14,7 +14,7 @@ from scripts.run_experiments import (
     stable_plan,
     variant_config,
 )
-from starnet.experiments.seeds import all_seed_payloads
+from starnet.experiments.seeds import all_seed_payloads, seed_payload
 
 
 class ExperimentProtocolTests(unittest.TestCase):
@@ -45,6 +45,18 @@ class ExperimentProtocolTests(unittest.TestCase):
         spec = session_spec(seed_id="seed", variant="v1_cmg", phase="main")
         self.assertIn("calibration_profile_hash", spec["config"])
         self.assertIn("calibration_profile_verified", spec["config"])
+
+    def test_100_node_topology_personas_follow_scaled_boundaries(self) -> None:
+        bridge = seed_payload("sbm_negative_bridges", 100)
+        bridge_personas = {item["id"]: item["persona"] for item in bridge["nodes"]}
+        # The four designated bridge-side IDs remain centred on the 50/51
+        # community boundary instead of the 50-node literals 24--27.
+        self.assertEqual({node_id for node_id in range(49, 53) if bridge_personas[node_id] == "暴力"}, set(range(49, 53)))
+
+        components = seed_payload("three_sparse_components", 100)
+        personas = {item["id"]: item["persona"] for item in components["nodes"]}
+        self.assertTrue(all(personas[node_id] == "暴力" for node_id in range(67, 101)))
+        self.assertLess(sum(personas[node_id] == "暴力" for node_id in range(35, 67)), 32)
 
     def test_gate_requires_matching_hashes_and_two_percent_spread(self) -> None:
         rows = [

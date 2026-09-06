@@ -1,0 +1,23 @@
+{
+  "schema_version": 2,
+  "name": "p2-p3-structure-adaptive-paired-matrix",
+  "randomization_seed": 20260905,
+  "server_url_env": "SMP_SERVER_URL",
+  "timeout_seconds": 60,
+  "gate_seed": "four_node_fixture",
+  "seed_factory": "six_topologies_x_50_100_x_2",
+  "main_seeds": [
+    "er_balanced-50-r1", "er_balanced-50-r2", "er_balanced-100-r1", "er_balanced-100-r2",
+    "ba_negative_hubs-50-r1", "ba_negative_hubs-50-r2", "ba_negative_hubs-100-r1", "ba_negative_hubs-100-r2",
+    "ws_peace_majority-50-r1", "ws_peace_majority-50-r2", "ws_peace_majority-100-r1", "ws_peace_majority-100-r2",
+    "sbm_negative_bridges-50-r1", "sbm_negative_bridges-50-r2", "sbm_negative_bridges-100-r1", "sbm_negative_bridges-100-r2",
+    "sbm_violent_cluster-50-r1", "sbm_violent_cluster-50-r2", "sbm_violent_cluster-100-r1", "sbm_violent_cluster-100-r2",
+    "three_sparse_components-50-r1", "three_sparse_components-50-r2", "three_sparse_components-100-r1", "three_sparse_components-100-r2"
+  ],
+  "variants": [
+    "b2_influence", "b3_single_structure", "b4_beam_structure", "b5_adaptive",
+    "b5_step_llm", "b5_event_llm", "scan_only", "v0_deterministic"
+  ],
+  "main_repetitions": 1,
+  "pairing": "Same generated seed id, variant and repetition; reject protocol/action failures before paired bootstrap."
+}

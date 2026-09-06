@@ -30,10 +30,10 @@ except ModuleNotFoundError as exc:
         raise
     from openai_compat import DEFAULT_BASE_URL, DEFAULT_MODEL, OpenAICompatibleChat
 
-from starnet.experiments.seeds import all_seed_payloads
+from starnet.experiments.seeds import all_seed_payloads, seed_payload
 from starnet.model.blackboard import Blackboard
 from starnet.policy.actions import Action, is_legal_action
-from starnet.policy.config import PolicyConfig, PolicyMode
+from starnet.policy.config import LLMMode, PolicyConfig, PolicyMode
 from starnet.policy.calibration import DEFAULT_CALIBRATION_PROFILE
 from starnet.runtime.controller import RuntimeController
 from starnet.runtime.env_adapter import apply_action_outcome
@@ -101,6 +101,14 @@ def variant_config(name: str) -> PolicyConfig:
         "communicate_only": PolicyConfig(enable_shield=False, enable_cut=False, **common),
         "risk_only": PolicyConfig(enable_communicate=False, **common),
         "v1_cmg": PolicyConfig(policy_mode=PolicyMode.V1_CMG, **common),
+        "b2_influence": PolicyConfig(policy_mode=PolicyMode.B2_INFLUENCE, **common),
+        # P2/P3 are explicit research variants.  They remain fail-closed when
+        # the embedded calibration/scenario profiles have not passed gates.
+        "b3_single_structure": PolicyConfig(policy_mode=PolicyMode.B3_SINGLE_STRUCTURE, **common),
+        "b4_beam_structure": PolicyConfig(policy_mode=PolicyMode.B4_BEAM_STRUCTURE, **common),
+        "b5_adaptive": PolicyConfig(policy_mode=PolicyMode.B5_ADAPTIVE, **common),
+        "b5_step_llm": PolicyConfig(policy_mode=PolicyMode.B5_ADAPTIVE, llm_schedule=LLMMode.STEP, max_llm_calls=5),
+        "b5_event_llm": PolicyConfig(policy_mode=PolicyMode.B5_ADAPTIVE, llm_schedule=LLMMode.EVENT, max_llm_calls=5),
     }
     try:
         return configs[name]
@@ -112,11 +120,12 @@ def session_spec(
     *, seed_id: str, variant: str, phase: str, repetition: int = 1, block: int | None = None
 ) -> dict[str, Any]:
     config = asdict(variant_config(variant)) if phase == "main" else {"gate_policy": variant}
-    if variant == "v1_cmg" and phase == "main":
+    if variant in {"v1_cmg", "b2_influence", "b3_single_structure", "b4_beam_structure", "b5_adaptive", "b5_step_llm", "b5_event_llm"} and phase == "main":
         # Profile content is strategy content.  A changed/fail-closed profile
         # must invalidate resumed sessions even inside the same manifest tree.
         config["calibration_profile_hash"] = DEFAULT_CALIBRATION_PROFILE.profile_hash
         config["calibration_profile_verified"] = DEFAULT_CALIBRATION_PROFILE.verified
+        config["scenario_profile_verified"] = False
     spec = {
         "phase": phase,
         "seed_id": seed_id,
@@ -223,8 +232,9 @@ def llm_ranker(timeout: float) -> Callable[[dict[str, Any]], object]:
 
     def rank(payload: dict[str, Any]) -> object:
         prompt = (
-            "Return JSON only: {\"mode\":\"balanced\",\"candidate_ids\":[...]}. "
-            "You may order only these candidate IDs; do not create actions.\n"
+            "Return exactly one JSON decision with fields state_version, mode, candidate_id, "
+            "reason_code, evidence_ids. Select only one candidate_id from candidate_ids and "
+            "use its evidence_ids (or the candidate_id); do not create actions.\n"
             + json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
         )
         return client.complete_json(prompt)
@@ -262,7 +272,7 @@ def run_main_session(
     env = RemoteStarNetEnv(api_url=server_url, custom_seed_data=seed, timeout=timeout)
     initial_budget = env.get_remaining_budget()
     config = variant_config(str(spec["variant"]))
-    ranker = llm_ranker(timeout) if str(spec["variant"]) == "v0_llm3" else None
+    ranker = llm_ranker(timeout) if str(spec["variant"]) in {"v0_llm3", "b5_step_llm", "b5_event_llm"} else None
     controller = RuntimeController(env, ranker, initial_budget=initial_budget, node_count=len(seed["nodes"]), config=config)
     collector = ActionCollector()
     controller.attach_trace(RuntimeTrace(run_id=str(spec["session_id"]), seed_id=str(spec["seed_id"]), sinks=[collector]))
@@ -304,7 +314,11 @@ def run_main_session(
                 scan_match
                 and protocol_error is None
                 and controller.action_failures == 0
-                and math.isclose(initial_budget, 100.0, abs_tol=1e-9)
+                and math.isclose(
+                    initial_budget,
+                    float(seed.get("global_setting", {}).get("max_budget", initial_budget)),
+                    abs_tol=1e-9,
+                )
             ),
             "elapsed_seconds": round(time.monotonic() - started, 6),
         }
@@ -568,6 +582,15 @@ def main() -> int:
     plan_dir.mkdir(parents=True, exist_ok=True)
     server_url = os.getenv(str(manifest.get("server_url_env", "SMP_SERVER_URL")), DEFAULT_SERVER_URL)
     payloads = all_seed_payloads()
+    # P2/P3 manifests may name generated ``topology-size-repetition`` seeds;
+    # materialise only the requested deterministic payloads.
+    for raw_seed_id in manifest.get("main_seeds", []):
+        seed_id = str(raw_seed_id)
+        if seed_id in payloads:
+            continue
+        parts = seed_id.rsplit("-", 2)
+        if len(parts) == 3 and parts[1].isdigit() and parts[2].startswith("r"):
+            payloads[seed_id] = seed_payload(parts[0], int(parts[1]), int(parts[2][1:]))
     payloads["four_node_fixture"] = four_node_fixture()
     if args.adopt_legacy is not None:
         adopted = adopt_legacy_successes(
