@@ -2894,13 +2894,14 @@ class RuntimeController:
         self.response_estimates: dict[int, float] = {}
         self.cmg_candidate: ScoredCandidate | None = None
         self.cmg_fallback_reason: str | None = None
-        if (
+        self._b5_enabled = (
             config.policy_mode is PolicyMode.B5_ADAPTIVE
             and calibration_profile.scenario_eligible
             and scenario_profile is not None
             and scenario_profile.verified
             and scenario_profile.is_consistent(self.blackboard)
-        ):
+        )
+        if self._b5_enabled:
             initial_count = (
                 config.adaptive_initial_final if self.stage is stage_spec(ContestStage.FINAL)
                 else config.adaptive_initial_preliminary
@@ -2916,7 +2917,13 @@ class RuntimeController:
         self._event_llm_pending = config.llm_schedule is LLMSchedule.EVENT
         # The experiment may forbid LLM use even when the official model has a ranker.
         self.commander = BatchCommander(
-            llm_ranker if config.max_llm_calls else None,
+            # P3 has two separate qualifications: B5's scenario profile and
+            # the LLM ablation.  Until the scenario gate passes, B5 must be
+            # an exact deterministic fallback rather than quietly spending
+            # LLM quota to reorder B1 candidates.
+            llm_ranker if config.max_llm_calls and (
+                config.policy_mode is not PolicyMode.B5_ADAPTIVE or self._b5_enabled
+            ) else None,
             config=config,
             contest_llm_limit=self.stage.llm_limit,
         )

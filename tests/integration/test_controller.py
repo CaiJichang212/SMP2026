@@ -118,6 +118,38 @@ class RuntimeControllerIntegrationTests(unittest.TestCase):
                 v1.step()
         self.assertEqual(left.calls, right.calls)
         self.assertEqual(v1.llm_calls, 0)
+
+    def test_unverified_b5_is_exact_b1_fallback_without_llm_calls(self) -> None:
+        left, right = FakeStarNetEnvironment(4, 60.0), FakeStarNetEnvironment(4, 60.0)
+        b1 = RuntimeController(
+            left,
+            node_count=4,
+            config=PolicyConfig(
+                policy_mode=PolicyMode.B1_PERSUASION,
+                enable_shield=False,
+                enable_cut=False,
+                max_llm_calls=0,
+            ),
+        )
+        llm_payloads: list[dict[str, object]] = []
+        b5 = RuntimeController(
+            right,
+            llm_payloads.append,
+            node_count=4,
+            config=PolicyConfig(
+                policy_mode=PolicyMode.B5_ADAPTIVE,
+                max_llm_calls=5,
+            ),
+        )
+        for _ in range(40):
+            if not b1.stopped:
+                b1.step()
+            if not b5.stopped:
+                b5.step()
+
+        self.assertEqual(left.calls, right.calls)
+        self.assertEqual(b5.llm_calls, 0)
+        self.assertEqual(llm_payloads, [])
     def test_50_node_scan_is_fixed_cost_and_never_calls_llm(self) -> None:
         env = FakeStarNetEnvironment(50, 100.0)
         llm_payloads: list[dict[str, object]] = []
