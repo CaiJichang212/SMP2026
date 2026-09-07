@@ -1,0 +1,75 @@
+{
+  "comparable_failures": 0,
+  "comparisons": {
+    "b3_single_structure-b1_persuasion": {
+      "block_count": 24,
+      "bootstrap_95_ci": [
+        43.43975,
+        165.11513541666665
+      ],
+      "family_mean_deltas": {
+        "ba_negative_hubs": 348.50000000000006,
+        "er_balanced": 0.17000000000015802,
+        "sbm_negative_bridges": 12.36999999999999,
+        "sbm_violent_cluster": 253.08,
+        "three_sparse_components": 5.519999999999989,
+        "ws_peace_majority": -9.25500000000008
+      },
+      "gate_passed": false,
+      "mean_delta": 101.73083333333335,
+      "median_delta": 34.499999999999986,
+      "minimum_block_delta": -55.969999999999914
+    },
+    "b4_beam_structure-b1_persuasion": {
+      "block_count": 24,
+      "bootstrap_95_ci": [
+        44.27354166666671,
+        162.66263541666666
+      ],
+      "family_mean_deltas": {
+        "ba_negative_hubs": 348.50000000000006,
+        "er_balanced": 0.17000000000015802,
+        "sbm_negative_bridges": 12.36999999999999,
+        "sbm_violent_cluster": 239.735,
+        "three_sparse_components": 14.789999999999992,
+        "ws_peace_majority": -9.25500000000008
+      },
+      "gate_passed": false,
+      "mean_delta": 101.05166666666668,
+      "median_delta": 30.665000000000006,
+      "minimum_block_delta": -55.969999999999914
+    },
+    "b4_beam_structure-b3_single_structure": {
+      "block_count": 24,
+      "bootstrap_95_ci": [
+        -6.863750000000003,
+        5.137708333333332
+      ],
+      "family_mean_deltas": {
+        "ba_negative_hubs": 0.0,
+        "er_balanced": 0.0,
+        "sbm_negative_bridges": 0.0,
+        "sbm_violent_cluster": -13.345000000000006,
+        "three_sparse_components": 9.270000000000003,
+        "ws_peace_majority": 0.0
+      },
+      "gate_passed": false,
+      "mean_delta": -0.6791666666666671,
+      "median_delta": 0.0,
+      "minimum_block_delta": -52.660000000000025
+    }
+  },
+  "complete_seed_blocks": 24,
+  "complete_seed_repetition_cells": 72,
+  "decision": "keep B1 default and do not promote structure policy",
+  "expected_blocks": 24,
+  "experiment": "p2-b3-b4-vs-b1-paired-policy-matrix",
+  "gate_passed": false,
+  "main_rows": 216,
+  "schema_version": 1,
+  "structure_action_rows": {
+    "b1_persuasion": 0,
+    "b3_single_structure": 60,
+    "b4_beam_structure": 60
+  }
+}

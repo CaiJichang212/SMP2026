@@ -582,6 +582,10 @@ def parse_args() -> argparse.Namespace:
         type=int,
         help="bounded resumable batch size; useful when the runner is externally time-sliced",
     )
+    parser.add_argument("--main-worker-count", type=int, default=1,
+                        help="partition the main matrix into disjoint deterministic workers")
+    parser.add_argument("--main-worker-index", type=int, default=0,
+                        help="zero-based worker index for --main-worker-count")
     return parser.parse_args()
 
 
@@ -656,6 +660,8 @@ def main() -> int:
         print(f"adopted legacy successes={adopted}; result_dir={plan_dir}")
     if args.max_new_sessions is not None and args.max_new_sessions <= 0:
         raise SystemExit("--max-new-sessions must be positive")
+    if args.main_worker_count <= 0 or not 0 <= args.main_worker_index < args.main_worker_count:
+        raise SystemExit("main worker index/count is invalid")
     new_sessions = 0
 
     def run_specs(specs: list[dict[str, Any]], *, matrix_branch: str) -> list[dict[str, Any]]:
@@ -718,6 +724,11 @@ def main() -> int:
         [spec for spec in plan if spec["phase"] == "main"]
         if stable else unstable_plan(manifest, calibration_profile)
     )
+    if args.main_worker_count > 1:
+        main_specs = [
+            spec for spec in main_specs
+            if int(canonical_hash(spec["session_id"])[:8], 16) % args.main_worker_count == args.main_worker_index
+        ]
     run_specs(main_specs, matrix_branch=matrix_branch)
     print(
         f"completed gate_stable={stable}; main_sessions={len(main_specs)}; "

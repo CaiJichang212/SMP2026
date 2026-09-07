@@ -62,10 +62,12 @@ B2 needs a verified literal calibration profile with held-out per-target
 influence coefficients. The profile is deliberately empty, so selecting B2
 falls back to B1 and must be reported as ineligible rather than scored.
 
-## P2 status: settlement predictor qualified; structure policy pending
+## P2 status: settlement predictor qualified; structure policy gate failed
 
-P2.2 established an independently topology-held-out settlement predictor, but
-it did not validate whether B3 or B4 improves the real final score. P2.3 is the
-separate paired strategy gate; until it passes, B3/B4 remain opt-in experiment
-variants only, B5 remains blocked behind structure and scenario gates, and the
-submission default remains no-LLM B1.
+P2.2 established an independently topology-held-out settlement predictor.
+P2.3 subsequently completed 216/216 comparable paired sessions, but B3/B4
+failed the族级 non-negative gate: both were negative on the WS peace majority
+family, and B4 was not better than B3. B3/B4 remain opt-in experiment variants,
+B5 remains blocked behind structure and scenario gates, and the submission
+default remains no-LLM B1. See
+[`p2-structure-policy-matrix-v4-results-20260907.md`](p2-structure-policy-matrix-v4-results-20260907.md).

@@ -39,9 +39,10 @@ uv run python scripts/run_experiments.py \
 
 P2.2 已使结算器本身通过拓扑留出门禁，但没有改变上述运行时解释规则：默认
 `CalibrationProfile` 仍为空，`target_influence` 和 `structure_gate_passed` 仍未冻结。
-新的 P2.3 清单 [`p2-structure-policy-matrix-v3.json`](../../experiments/manifests/p2-structure-policy-matrix-v3.json)
-仅在实验 runner 中注入 P2.2 报告，计划比较 24 个 50/100 节点 seed block 上的
-`B3-B1`、`B4-B1` 和 `B4-B3`，截至本记录尚未运行。
+随后以低内存 v4 清单完成了 P2.3 的 216 条主会话。B3-B1 和 B4-B1 的总体均值为正，
+但 `WS peace majority` 拓扑族均值为负；B4-B3 的置信区间跨过 0。因此 P2.3
+统计完成但策略门禁失败，默认继续 B1。最终报告见
+[`p2-structure-policy-matrix-v4-results-20260907.md`](p2-structure-policy-matrix-v4-results-20260907.md)。
 
 ## 本次本地与 P0 远端测试数据
 
@@ -55,7 +56,7 @@ P2.2 已使结算器本身通过拓扑留出门禁，但没有改变上述运行
 | P1 响应校准 | 135 / 135 可比 | 405 条响应完整；固定 `r=1.0` 时 persona 无额外差异，prompt 与边际递减完全可复现 |
 | 原始 P2 图留出校准 | 420 / 420 可比 | 旧 `degree`：Spearman 0.9543，但归一化 MAE 10.24% 超过 5%，历史上拒绝档案 |
 | P2.2 拓扑留出结算器 | 540 / 540 可比 | `component_degree_plus_one`：Spearman 1.0000，归一化 MAE 0.00553%，结算器门禁通过 |
-| P2.3 结构策略矩阵 | 216 个主会话已预注册 | 24 个 seed block × 3 变体 × 3 重复；尚未执行，不能作策略收益结论 |
+| P2.3 结构策略矩阵 | 216 个主会话 | 216 / 216 可比；总体均值为正但族级门禁失败，B3/B4 不晋级 |
 
 前四行是本地实现证据；最后三行是远端得分与校准证据。它们不能混为一类：通过 103 个测试、一个四节点 P0 门禁和微图校准，不等于已证明隐藏 seed 上的 P2/P3 策略提升。
 

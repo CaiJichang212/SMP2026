@@ -228,24 +228,49 @@ class StructuralPlanner:
         actions: list[Action] = []
         current = state
         left_budget, left_steps = budget, remaining_steps
+        linear_influence: dict[int, float] | None = None
+        if self.profile.model == "component_degree_plus_one":
+            # For a fixed topology the verified component score is linear in
+            # every w_i.  Compute its exact coefficient once; repeated
+            # persuasion hypotheses then need no graph copy or connectivity
+            # recomputation.  Structure actions still create fresh topologies
+            # and therefore recompute this map per terminal candidate.
+            linear_influence = self.influence_coefficients(current)
         while left_budget >= 2.0 and left_steps > 0:
-            options: list[tuple[float, str, Action, PredictiveState]] = []
             board = current.to_blackboard()
-            current_score = self._score(current)
-            for node_id in sorted(current.nodes):
-                action = Action("comm", node_id, prompt_id=1)
-                if not is_legal_action(action, board, left_budget):
-                    continue
-                delta = self._response_delta(current, action)
-                if delta is None:
-                    continue
-                after_state = current.apply(action, delta)
-                gain = self._score(after_state) - current_score
-                if math.isfinite(gain) and gain > 0:
-                    options.append((gain, _action_id(action), action, after_state))
-            if not options:
-                break
-            _, _, action, current = max(options, key=lambda item: (item[0], "".join(reversed(item[1]))))
+            if linear_influence is not None:
+                options_linear: list[tuple[float, str, Action, float]] = []
+                for node_id in sorted(current.nodes):
+                    action = Action("comm", node_id, prompt_id=1)
+                    if not is_legal_action(action, board, left_budget):
+                        continue
+                    delta = self._response_delta(current, action)
+                    if delta is None:
+                        continue
+                    gain = linear_influence.get(node_id, 0.0) * delta
+                    if math.isfinite(gain) and gain > 0:
+                        options_linear.append((gain, _action_id(action), action, delta))
+                if not options_linear:
+                    break
+                _, _, action, delta = max(options_linear, key=lambda item: (item[0], "".join(reversed(item[1]))))
+                current = current.apply(action, delta)
+            else:
+                options: list[tuple[float, str, Action, PredictiveState]] = []
+                current_score = self._score(current)
+                for node_id in sorted(current.nodes):
+                    action = Action("comm", node_id, prompt_id=1)
+                    if not is_legal_action(action, board, left_budget):
+                        continue
+                    delta = self._response_delta(current, action)
+                    if delta is None:
+                        continue
+                    after_state = current.apply(action, delta)
+                    gain = self._score(after_state) - current_score
+                    if math.isfinite(gain) and gain > 0:
+                        options.append((gain, _action_id(action), action, after_state))
+                if not options:
+                    break
+                _, _, action, current = max(options, key=lambda item: (item[0], "".join(reversed(item[1]))))
             actions.append(action)
             left_budget -= action_cost(action)
             left_steps -= 1
@@ -356,7 +381,17 @@ class StructuralPlanner:
         for _depth in range(min(self.depth, remaining_steps)):
             expanded: list[tuple[float, str, PredictiveState, tuple[Action, ...]]] = []
             for state, sequence in beam:
-                available = self._structure_scores(state, budget - sum(action_cost(a) for a in sequence))
+                available = sorted(
+                    self._structure_scores(state, budget - sum(action_cost(a) for a in sequence)),
+                    key=lambda item: (-item.gain, _action_id(item.action)),
+                )
+                # The root keeps the bounded candidate pool (which is class
+                # balanced); later beam layers need only the top width local
+                # expansions.  Evaluating a complete persuasion tail for all
+                # hundreds of edges is not a beam search and dominates both
+                # runtime and allocator churn on 100-node graphs.
+                limit = self.candidate_limit if not sequence else self.width
+                available = available[:limit]
                 for item in available:
                     if item.action in sequence:
                         continue
