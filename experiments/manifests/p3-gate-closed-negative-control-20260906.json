@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "name": "p3-gate-closed-negative-control",
+  "date": "2026-09-06",
+  "purpose": "Verify unqualified B5 falls back exactly to B1 without LLM calls.",
+  "seed_factory": "six_topologies_x_50_100_x_3",
+  "variants": ["b1_persuasion", "b5_adaptive", "b5_step_llm", "b5_event_llm"],
+  "sessions": 144,
+  "qualification": {
+    "calibration_profile": "DEFAULT_CALIBRATION_PROFILE",
+    "structure_gate_passed": false,
+    "scenario_gate_passed": false,
+    "required_action_trace_equality": true,
+    "maximum_llm_calls": 0,
+    "maximum_action_failures": 0
+  },
+  "interpretation": "Negative-control safety result only; not an adaptive or LLM performance comparison.",
+  "runner": "scripts/run_p3_fail_closed_audit.py"
+}

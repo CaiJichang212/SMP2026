@@ -13,5 +13,8 @@
   - [`V1 校准与结构门禁结果（2026-09-06）`](../experiments/reports/v1-calibration-20260906.md)：555 个预注册会话的响应/结算数据、留出误差与 fail-closed 决策。
   - [`P2.1 结算器扩展与重拟合（2026-09-06）`](03_experiments/p2-settlement-refit-v2-20260906.md)：机制辨识、事后重分析及其验证边界。
   - [`P2.2 拓扑留出验证（2026-09-06）`](03_experiments/p2-topology-holdout-v2-20260906.md)：`component_degree_plus_one` 的独立结算器门禁结果。
+  - [`P3 门禁关闭负对照（2026-09-06）`](03_experiments/p3-gate-closed-negative-control-20260906.md)：未验证 B5 的精确 B1 回退和零 LLM 调用结果。
+  - [`P2/P3 实验协议与低内存执行方案（2026-09-06）`](03_experiments/p2-p3-experiment-protocol-20260906.md)：配对门禁、统计方法和 4G 进程隔离策略。
+  - [`P2.3 结构策略配对实验最终结果（2026-09-07）`](03_experiments/p2-structure-policy-matrix-v4-results-20260907.md)：216 条完整主矩阵、bootstrap 结果和不晋级结论。
 - [`04_plan/`](04_plan/)：版本实施计划与验收口径。
 - [`runbooks/`](runbooks/)：本地开发、远程沙盒和提交操作手册。

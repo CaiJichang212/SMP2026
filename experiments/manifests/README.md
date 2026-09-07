@@ -24,3 +24,12 @@ fresh session。`analyze_p2_topology_holdout.py` 仅复用 P1 的响应表，绝
 实验档案（仅由 runner 注入）比较 B3/B4 与 B1，覆盖六个拓扑族、50/100 节点、两个
 seed 和三次 fresh session，当前仅完成预注册，尚未产生策略收益结论。它不修改提交
 的默认档案。
+
+`p2-structure-policy-matrix-v4-lowmem.json` 是 v3 内存修复后的独立 cohort：同一
+清单和配对门槛，但每次只由一个新子进程执行一个 session，避免 4G 环境中的 Python
+allocator 和反事实图状态累积。v3 的旧记录不得混入 v4；统计由
+`scripts/analyze_p2_policy_matrix.py` 生成。
+
+P3 的正式收益实验在 scenario profile 通过前不应运行。当前已保存的
+`p3-gate-closed-negative-control-20260906.json` 只验证未校准 B5 的失效关闭行为，
+不是自适应或 LLM 的收益证据。

@@ -1,0 +1,21 @@
+{
+  "action_failures": 0,
+  "all_action_traces_equal": true,
+  "effective_modes": [
+    "b1_persuasion"
+  ],
+  "experiment": "p3-gate-closed-negative-control",
+  "gate_passed": true,
+  "interpretation": "This qualifies fail-closed behavior only; it is not evidence of adaptive exploration gain.",
+  "max_llm_calls": 0,
+  "max_ranker_payloads": 0,
+  "schema_version": 1,
+  "seed_blocks": 36,
+  "sessions": 144,
+  "variants": [
+    "b1_persuasion",
+    "b5_adaptive",
+    "b5_event_llm",
+    "b5_step_llm"
+  ]
+}
