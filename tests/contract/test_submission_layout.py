@@ -19,6 +19,18 @@ class SubmissionLayoutTests(unittest.TestCase):
         tree = ast.parse(source)
         class_names = {node.name for node in tree.body if isinstance(node, ast.ClassDef)}
         self.assertIn("ParticipantSquadModel", class_names)
+        self.assertFalse(
+            any(
+                (isinstance(node, ast.ImportFrom) and node.module == "casevo")
+                or (
+                    isinstance(node, ast.Import)
+                    and any(alias.name == "casevo" for alias in node.names)
+                )
+                for node in ast.walk(tree)
+            )
+        )
+        self.assertEqual(source.count("def _cut_candidates("), 1)
+        self.assertIn("def _cmg_cut_candidates(", source)
 
 
 if __name__ == "__main__":

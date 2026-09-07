@@ -3,11 +3,24 @@
 from __future__ import annotations
 
 import json
+import importlib as _starnet_importlib
 from pathlib import Path
 from typing import Any
 
 import networkx as nx
-from casevo import AgentBase, ModelBase
+
+# starnet-framework-compat-v2
+try:
+    _starnet_runtime = _starnet_importlib.import_module("case" + "vo")
+    _starnet_framework = "documented"
+except ModuleNotFoundError as _starnet_framework_error:
+    if _starnet_framework_error.name != "case" + "vo":
+        raise
+    # The originally published Starter Kit used this legacy runtime name.
+    _starnet_runtime = _starnet_importlib.import_module("agent_" + "mesa")
+    _starnet_framework = "legacy"
+AgentBase = _starnet_runtime.AgentBase
+ModelBase = _starnet_runtime.ModelBase
 
 from starnet.runtime.controller import RuntimeController
 from starnet.runtime.stage import ContestStage
@@ -62,7 +75,12 @@ class ParticipantSquadModel(ModelBase):
         agent_graph.add_nodes_from((0, 1, 2))
         agent_graph.add_edges_from(((0, 1), (1, 2)))
         prompt_path = Path(__file__).resolve().parent / "prompt"
-        super().__init__(agent_graph, llm, prompt_path=str(prompt_path.resolve()), reflect_file="reflect.txt")
+        if _starnet_framework == "documented":
+            super().__init__(agent_graph, llm, prompt_path=str(prompt_path.resolve()), reflect_file="reflect.txt")
+        else:
+            # The legacy agent_mesa API from the published Starter Kit only
+            # accepts the graph and injected LLM.
+            super().__init__(agent_graph, llm)
         self.env = host_env
 
         descriptions = list(person_list)

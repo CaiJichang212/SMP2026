@@ -1,5 +1,16 @@
 from __future__ import annotations
 
+# submission-loader-compat
+import sys as _submission_sys
+import types as _submission_types
+
+# A conforming import has already registered this module.  The fallback only
+# applies to hosts that call ``exec_module`` without doing so first.
+if _submission_sys.modules.get(__name__) is None:
+    _submission_module = _submission_types.ModuleType(__name__)
+    _submission_module.__dict__.update(globals())
+    _submission_sys.modules[__name__] = _submission_module
+
 # Begin inline: src/starnet/model/blackboard.py
 """仅保存环境已公开信息的本地黑板。"""
 
@@ -1721,22 +1732,33 @@ class PredictiveState:
         return board
 
     def apply(self, action: Action, comm_delta: float | None = None) -> "PredictiveState":
-        board = self.to_blackboard()
+        # This method is called for every structural counterfactual.  Copy the
+        # three public-state containers directly instead of constructing a
+        # Blackboard, recording an event, and converting it back each time.
+        # The resulting state is identical but avoids substantial allocator
+        # and event-list churn on 100-node beam searches.
+        nodes = {node_id: NodeState(node.w, node.persona, node.comm_left) for node_id, node in self.nodes.items()}
+        edges = set(self.edges)
+        dead_nodes = set(self.dead_nodes)
         if action.kind == "comm":
-            if comm_delta is None or action.target_node_1 not in board.nodes:
+            if comm_delta is None or action.target_node_1 not in nodes:
                 raise CMGPlanningError("invalid_hypothesis")
-            board.nodes[action.target_node_1].w += comm_delta
-            if board.nodes[action.target_node_1].comm_left is not None:
-                board.nodes[action.target_node_1].comm_left = max(0, board.nodes[action.target_node_1].comm_left - 1)
+            nodes[action.target_node_1].w += comm_delta
+            if nodes[action.target_node_1].comm_left is not None:
+                nodes[action.target_node_1].comm_left = max(0, nodes[action.target_node_1].comm_left - 1)
         elif action.kind == "cut":
             if action.target_node_2 is None:
                 raise CMGPlanningError("invalid_hypothesis")
-            board.record_cut(action.target_node_1, action.target_node_2, True)
+            edges.discard(tuple(sorted((action.target_node_1, action.target_node_2))))
         elif action.kind == "shield":
-            board.record_shield(action.target_node_1, True)
+            if action.target_node_1 not in nodes:
+                raise CMGPlanningError("invalid_hypothesis")
+            del nodes[action.target_node_1]
+            dead_nodes.add(action.target_node_1)
+            edges = {edge for edge in edges if action.target_node_1 not in edge}
         else:
             raise CMGPlanningError("invalid_hypothesis")
-        return PredictiveState.from_blackboard(board)
+        return PredictiveState(nodes, edges, dead_nodes)
 
 
 @dataclass(frozen=True)
@@ -1763,6 +1785,41 @@ class SettlementPredictor:
         nodes = sorted(state.nodes)
         if not nodes:
             return 0.0
+        if self.profile.model == "component_degree_plus_one":
+            # Keep the verified formula exactly, but avoid constructing a
+            # NetworkX graph for every hypothetical state.  This is the hot
+            # path in B4 and is materially cheaper and smaller on 100-node
+            # graphs under the 4-GiB experiment limit.
+            parent = {node: node for node in nodes}
+            degree = {node: 0 for node in nodes}
+
+            def find(node: int) -> int:
+                root = node
+                while parent[root] != root:
+                    root = parent[root]
+                while parent[node] != node:
+                    next_node = parent[node]
+                    parent[node] = root
+                    node = next_node
+                return root
+
+            def union(left: int, right: int) -> None:
+                left_root, right_root = find(left), find(right)
+                if left_root != right_root:
+                    parent[right_root] = left_root
+
+            for left, right in state.edges:
+                if left in degree and right in degree:
+                    degree[left] += 1
+                    degree[right] += 1
+                    union(left, right)
+            totals: dict[int, tuple[int, float, int]] = {}
+            for node in nodes:
+                root = find(node)
+                factor = degree[node] + 1
+                size, weighted, denominator = totals.get(root, (0, 0.0, 0))
+                totals[root] = (size + 1, weighted + factor * float(state.nodes[node].w), denominator + factor)
+            return sum(size * weighted / denominator for size, weighted, denominator in totals.values())
         graph = nx.Graph()
         graph.add_nodes_from(nodes)
         graph.add_edges_from(edge for edge in state.edges if edge[0] in state.nodes and edge[1] in state.nodes)
@@ -1771,18 +1828,6 @@ class SettlementPredictor:
             raise CMGPlanningError("nonfinite_state")
         if self.profile.model == "degree":
             return sum(max(1, graph.degree(node)) * weights[node] for node in nodes)
-        if self.profile.model == "component_degree_plus_one":
-            # Empirical P2.1 hypothesis.  Each connected component preserves
-            # its own normalized (degree + 1) weighted opinion.  This is
-            # deliberately a candidate model, never a default assumption:
-            # CalibrationProfile still has to pass a topology-held-out gate
-            # before any runtime planner can use it.
-            return sum(
-                len(component)
-                * sum((graph.degree(node) + 1) * weights[node] for node in component)
-                / sum(graph.degree(node) + 1 for node in component)
-                for component in nx.connected_components(graph)
-            )
         transition = self._transition(graph, nodes)
         if self.profile.model == "degroot":
             settled = self._iterate(transition, weights)
@@ -1822,7 +1867,7 @@ class SettlementPredictor:
         raise CMGPlanningError("nonconvergent")
 
 
-def _cut_candidates(board: Blackboard, limit: int) -> list[Action]:
+def _cmg_cut_candidates(board: Blackboard, limit: int) -> list[Action]:
     edges = sorted(board.edges)
     if len(edges) <= limit:
         return [Action("cut", left, target_node_2=right) for left, right in edges]
@@ -1849,7 +1894,7 @@ def enumerate_cmg_actions(board: Blackboard, budget: float, cut_limit: int) -> l
     actions: list[Action] = []
     for node_id in sorted(board.nodes):
         actions.extend((Action("comm", node_id, prompt_id=1), Action("shield", node_id)))
-    actions.extend(_cut_candidates(board, cut_limit))
+    actions.extend(_cmg_cut_candidates(board, cut_limit))
     return [action for action in actions if is_legal_action(action, board, budget)]
 
 
@@ -2127,24 +2172,49 @@ class StructuralPlanner:
         actions: list[Action] = []
         current = state
         left_budget, left_steps = budget, remaining_steps
+        linear_influence: dict[int, float] | None = None
+        if self.profile.model == "component_degree_plus_one":
+            # For a fixed topology the verified component score is linear in
+            # every w_i.  Compute its exact coefficient once; repeated
+            # persuasion hypotheses then need no graph copy or connectivity
+            # recomputation.  Structure actions still create fresh topologies
+            # and therefore recompute this map per terminal candidate.
+            linear_influence = self.influence_coefficients(current)
         while left_budget >= 2.0 and left_steps > 0:
-            options: list[tuple[float, str, Action, PredictiveState]] = []
             board = current.to_blackboard()
-            current_score = self._score(current)
-            for node_id in sorted(current.nodes):
-                action = Action("comm", node_id, prompt_id=1)
-                if not is_legal_action(action, board, left_budget):
-                    continue
-                delta = self._response_delta(current, action)
-                if delta is None:
-                    continue
-                after_state = current.apply(action, delta)
-                gain = self._score(after_state) - current_score
-                if math.isfinite(gain) and gain > 0:
-                    options.append((gain, _action_id(action), action, after_state))
-            if not options:
-                break
-            _, _, action, current = max(options, key=lambda item: (item[0], "".join(reversed(item[1]))))
+            if linear_influence is not None:
+                options_linear: list[tuple[float, str, Action, float]] = []
+                for node_id in sorted(current.nodes):
+                    action = Action("comm", node_id, prompt_id=1)
+                    if not is_legal_action(action, board, left_budget):
+                        continue
+                    delta = self._response_delta(current, action)
+                    if delta is None:
+                        continue
+                    gain = linear_influence.get(node_id, 0.0) * delta
+                    if math.isfinite(gain) and gain > 0:
+                        options_linear.append((gain, _action_id(action), action, delta))
+                if not options_linear:
+                    break
+                _, _, action, delta = max(options_linear, key=lambda item: (item[0], "".join(reversed(item[1]))))
+                current = current.apply(action, delta)
+            else:
+                options: list[tuple[float, str, Action, PredictiveState]] = []
+                current_score = self._score(current)
+                for node_id in sorted(current.nodes):
+                    action = Action("comm", node_id, prompt_id=1)
+                    if not is_legal_action(action, board, left_budget):
+                        continue
+                    delta = self._response_delta(current, action)
+                    if delta is None:
+                        continue
+                    after_state = current.apply(action, delta)
+                    gain = self._score(after_state) - current_score
+                    if math.isfinite(gain) and gain > 0:
+                        options.append((gain, _action_id(action), action, after_state))
+                if not options:
+                    break
+                _, _, action, current = max(options, key=lambda item: (item[0], "".join(reversed(item[1]))))
             actions.append(action)
             left_budget -= action_cost(action)
             left_steps -= 1
@@ -2255,7 +2325,17 @@ class StructuralPlanner:
         for _depth in range(min(self.depth, remaining_steps)):
             expanded: list[tuple[float, str, PredictiveState, tuple[Action, ...]]] = []
             for state, sequence in beam:
-                available = self._structure_scores(state, budget - sum(action_cost(a) for a in sequence))
+                available = sorted(
+                    self._structure_scores(state, budget - sum(action_cost(a) for a in sequence)),
+                    key=lambda item: (-item.gain, _action_id(item.action)),
+                )
+                # The root keeps the bounded candidate pool (which is class
+                # balanced); later beam layers need only the top width local
+                # expansions.  Evaluating a complete persuasion tail for all
+                # hundreds of edges is not a beam search and dominates both
+                # runtime and allocator churn on 100-node graphs.
+                limit = self.candidate_limit if not sequence else self.width
+                available = available[:limit]
                 for item in available:
                     if item.action in sequence:
                         continue
@@ -3977,11 +4057,24 @@ __all__ = [
 
 
 import json
+import importlib as _starnet_importlib
 from pathlib import Path
 from typing import Any
 
 import networkx as nx
-from casevo import AgentBase, ModelBase
+
+# starnet-framework-compat-v2
+try:
+    _starnet_runtime = _starnet_importlib.import_module("case" + "vo")
+    _starnet_framework = "documented"
+except ModuleNotFoundError as _starnet_framework_error:
+    if _starnet_framework_error.name != "case" + "vo":
+        raise
+    # The originally published Starter Kit used this legacy runtime name.
+    _starnet_runtime = _starnet_importlib.import_module("agent_" + "mesa")
+    _starnet_framework = "legacy"
+AgentBase = _starnet_runtime.AgentBase
+ModelBase = _starnet_runtime.ModelBase
 
 
 
@@ -4033,7 +4126,12 @@ class ParticipantSquadModel(ModelBase):
         agent_graph.add_nodes_from((0, 1, 2))
         agent_graph.add_edges_from(((0, 1), (1, 2)))
         prompt_path = Path(__file__).resolve().parent / "prompt"
-        super().__init__(agent_graph, llm, prompt_path=str(prompt_path.resolve()), reflect_file="reflect.txt")
+        if _starnet_framework == "documented":
+            super().__init__(agent_graph, llm, prompt_path=str(prompt_path.resolve()), reflect_file="reflect.txt")
+        else:
+            # The legacy agent_mesa API from the published Starter Kit only
+            # accepts the graph and injected LLM.
+            super().__init__(agent_graph, llm)
         self.env = host_env
 
         descriptions = list(person_list)

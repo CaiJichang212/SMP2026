@@ -7,6 +7,8 @@ import ast
 import shutil
 from pathlib import Path
 
+from submission_loader_compat import LOADER_COMPAT_PREAMBLE
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SOURCE_DIR = PROJECT_ROOT / "src" / "starnet" / "submission"
@@ -59,7 +61,7 @@ def strip_project_imports(source: str, path: Path) -> str:
 
 def assemble_model() -> str:
     """把经单元测试的纯 Python 策略模块收敛为赛方要求的单文件。"""
-    chunks = ["from __future__ import annotations\n\n"]
+    chunks = ["from __future__ import annotations\n\n", LOADER_COMPAT_PREAMBLE, "\n"]
     for relative_name in INLINE_MODULES:
         path = PROJECT_ROOT / relative_name
         if not path.is_file():
