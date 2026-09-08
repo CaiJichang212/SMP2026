@@ -20,6 +20,7 @@ import networkx as nx
 from starnet.model.blackboard import Blackboard
 from starnet.policy.actions import Action, action_cost, is_legal_action
 from starnet.policy.calibration import CalibrationProfile
+from starnet.policy.candidates import Candidate
 from starnet.policy.cmg import PredictiveState, ResponseLedger, SettlementPredictor
 from starnet.policy.config import PolicyMode
 
@@ -426,4 +427,94 @@ class StructuralPlanner:
         return plans[0] if plans else None
 
 
-__all__ = ["PlanCandidate", "StructuralActionScore", "StructuralPlanner"]
+class ExperimentalPublicGreedyPlanner:
+    """One-step public-state action scorer for an explicit experiment.
+
+    Unlike B3/B4 this planner does not consume a frozen runtime calibration
+    profile.  It is therefore intentionally *not* wired into the default
+    submission.  It uses only the topology and opinions already returned by
+    public scans, plus a caller-supplied response prior for communication.
+    Every action is rescored after execution, and only a strictly positive
+    terminal-score gain is exposed.
+    """
+
+    def __init__(
+        self,
+        response_fn: Callable[[int, Any, int], float],
+        *,
+        candidate_limit: int = 24,
+    ) -> None:
+        if candidate_limit <= 0:
+            raise ValueError("candidate_limit must be positive")
+        self.response_fn = response_fn
+        self.candidate_limit = candidate_limit
+        self.predictor = SettlementPredictor(
+            CalibrationProfile(gate_passed=False, model="component_degree_plus_one")
+        )
+
+    @staticmethod
+    def _candidate_id(action: Action, turn: int | None = None) -> str:
+        if action.kind == "comm":
+            assert turn in (1, 2, 3)
+            return f"comm:{action.target_node_1}:{turn}"
+        if action.kind == "cut":
+            return f"cut:{action.target_node_1}-{action.target_node_2}"
+        return f"shield:{action.target_node_1}"
+
+    def candidates(
+        self,
+        board: Blackboard,
+        budget: float,
+        failed_actions: Iterable[object] = (),
+    ) -> list[Candidate]:
+        state = PredictiveState.from_blackboard(board)
+        baseline = self.predictor.score(state)
+        failed = set(failed_actions)
+        hypotheses: list[tuple[Action, float | None, int | None]] = []
+        for node_id, node in sorted(board.nodes.items()):
+            if node.comm_left is not None and node.comm_left > 0:
+                turn = 4 - node.comm_left
+                if turn in (1, 2, 3):
+                    hypotheses.append(
+                        (Action("comm", node_id, prompt_id=1), self.response_fn(node_id, node, turn), turn)
+                    )
+            hypotheses.append((Action("shield", node_id), None, None))
+        hypotheses.extend(
+            (Action("cut", left, target_node_2=right), None, None)
+            for left, right in sorted(state.edges)
+        )
+
+        result: list[Candidate] = []
+        for action, delta, turn in hypotheses:
+            candidate_id = self._candidate_id(action, turn)
+            if candidate_id in failed or action in failed:
+                continue
+            if not is_legal_action(action, board, budget):
+                continue
+            after = self.predictor.score(state.apply(action, delta))
+            gain = after - baseline
+            if not math.isfinite(gain) or gain <= 0.0:
+                continue
+            result.append(
+                Candidate(
+                    candidate_id=candidate_id,
+                    action=action,
+                    priority=0,
+                    score=gain,
+                    roi=gain / action_cost(action),
+                    reason=f"public terminal gain {gain:.6f}",
+                    evidence_ids=(f"public-score:{candidate_id}",),
+                )
+            )
+        return sorted(
+            result,
+            key=lambda item: (-item.roi, -item.score, item.candidate_id),
+        )[: self.candidate_limit]
+
+
+__all__ = [
+    "ExperimentalPublicGreedyPlanner",
+    "PlanCandidate",
+    "StructuralActionScore",
+    "StructuralPlanner",
+]

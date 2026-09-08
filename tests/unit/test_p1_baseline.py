@@ -68,6 +68,48 @@ class P1BaselineTests(unittest.TestCase):
         second = persuasion_candidates(board, 10.0, {1: 8.0}, DEFAULT_CALIBRATION_PROFILE)
         self.assertEqual(next(item for item in second if item.candidate_id == "comm:1:2").score, 4.0)
 
+    def test_b1_uses_public_component_weight_and_keeps_isolated_nodes_eligible(self) -> None:
+        board = Blackboard(node_count=4)
+        # Node 1 is isolated, while 2--3--4 is a separate path.  Its raw
+        # degree is zero, but under the public component formula a successful
+        # communication still improves the singleton's terminal score by one.
+        board.record_scan(1, {"w": 0.0, "persona": "和平", "comm_left": 3, "neighbors": []})
+        board.record_scan(2, {"w": 0.0, "persona": "和平", "comm_left": 3, "neighbors": [3]})
+        board.record_scan(3, {"w": 0.0, "persona": "和平", "comm_left": 3, "neighbors": [2, 4]})
+        board.record_scan(4, {"w": 0.0, "persona": "和平", "comm_left": 3, "neighbors": [3]})
+
+        candidates = {item.candidate_id: item for item in persuasion_candidates(
+            board, 10.0, {}, DEFAULT_CALIBRATION_PROFILE
+        )}
+
+        self.assertEqual(candidates["comm:1:1"].score, 15.0)
+        self.assertAlmostEqual(candidates["comm:3:1"].score, (9.0 / 7.0) * 15.0)
+        self.assertAlmostEqual(candidates["comm:2:1"].score, (6.0 / 7.0) * 15.0)
+
+    def test_untried_b1_target_uses_pooled_public_first_response(self) -> None:
+        board = Blackboard(node_count=3)
+        board.record_scan(1, {"w": 0.0, "persona": "和平", "comm_left": 3, "neighbors": [2]})
+        board.record_scan(2, {"w": 0.0, "persona": "中立", "comm_left": 3, "neighbors": [1, 3]})
+        board.record_scan(3, {"w": 0.0, "persona": "暴力", "comm_left": 3, "neighbors": [2]})
+
+        candidates = {item.candidate_id: item for item in persuasion_candidates(
+            board, 10.0, {1: 8.0, 2: 12.0}, DEFAULT_CALIBRATION_PROFILE
+        )}
+
+        # Node 3 has not been tried.  Its expected first response uses the
+        # two public observations plus three unit-response (+15) priors, not
+        # the former hard-coded one-unit proxy.
+        self.assertAlmostEqual(candidates["comm:3:1"].score, (6.0 / 7.0) * 13.0)
+
+    def test_untried_later_slot_applies_published_diminishing_multiplier(self) -> None:
+        board = Blackboard(node_count=1)
+        board.record_scan(1, {"w": 0.0, "persona": "和平", "comm_left": 2, "neighbors": []})
+
+        candidate = persuasion_candidates(board, 10.0, {}, DEFAULT_CALIBRATION_PROFILE)[0]
+
+        self.assertEqual(candidate.candidate_id, "comm:1:2")
+        self.assertEqual(candidate.score, 7.5)
+
     def test_failed_b1_slot_is_not_regenerated(self) -> None:
         env = PathEnvironment(2, 20.0)
 

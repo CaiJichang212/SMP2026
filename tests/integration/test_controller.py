@@ -199,6 +199,7 @@ class RuntimeControllerIntegrationTests(unittest.TestCase):
     def test_no_candidates_records_stop_reason_and_action_counts(self) -> None:
         env = FakeStarNetEnvironment(1, 10.0)
         env.nodes[1]["persona"] = "暴力"
+        env.nodes[1]["comm_left"] = 0
         controller = RuntimeController(env, node_count=1)
 
         self.assertEqual(controller.step(), 0)

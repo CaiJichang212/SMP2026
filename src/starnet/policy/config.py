@@ -21,6 +21,10 @@ class PolicyMode(str, Enum):
     B3_SINGLE_STRUCTURE = "b3_single_structure"
     B4_BEAM_STRUCTURE = "b4_beam_structure"
     B5_ADAPTIVE = "b5_adaptive"
+    # Explicitly opt-in experiment mode.  The submission default never
+    # selects this value; it is exposed so a separately packaged experiment
+    # can be evaluated without weakening B1 fail-closed behavior.
+    PUBLIC_GREEDY = "public_greedy"
 
 
 class LLMSchedule(str, Enum):

@@ -33,8 +33,12 @@ from starnet.policy.cmg import (
     SettlementPredictor,
     choose_cmg_action,
 )
-from starnet.policy.baseline import persuasion_candidates
-from starnet.policy.structural import PlanCandidate, StructuralPlanner
+from starnet.policy.baseline import _response, persuasion_candidates
+from starnet.policy.structural import (
+    ExperimentalPublicGreedyPlanner,
+    PlanCandidate,
+    StructuralPlanner,
+)
 from starnet.runtime.stage import ContestStage, StageSpec, stage_spec
 from starnet.runtime.env_adapter import ActionOutcome, StarNetEnvironment, apply_action_outcome
 from starnet.runtime.trace import NullRuntimeTrace, RuntimeTrace, safe_error
@@ -1002,6 +1006,35 @@ class RuntimeController:
             return
         self.analysis = self.analyst.analyze(self.blackboard)
 
+        if self.effective_policy_mode is PolicyMode.PUBLIC_GREEDY:
+            planner = ExperimentalPublicGreedyPlanner(
+                lambda node_id, node, turn: _response(
+                    node_id,
+                    node.persona,
+                    turn,
+                    self.response_estimates,
+                    self.calibration_profile,
+                    self.response_ledger,
+                ),
+                candidate_limit=max(24, self.config.structure_candidate_limit),
+            )
+            candidates = planner.candidates(self.blackboard, budget, self.failed_actions)
+            self.structural_planner = None
+            self.structural_plans = {}
+            self.candidates = {candidate.candidate_id: candidate for candidate in candidates}
+            self._emit(
+                "candidates.generated",
+                budget,
+                budget,
+                {
+                    "phase": phase,
+                    "mode": self.effective_policy_mode.value,
+                    "filtered_count": len(candidates),
+                    "candidates": [self._candidate_trace_data(candidate) for candidate in candidates],
+                },
+            )
+            return
+
         if self.effective_policy_mode in {PolicyMode.B3_SINGLE_STRUCTURE, PolicyMode.B4_BEAM_STRUCTURE}:
             if self.config.llm_schedule is LLMSchedule.EVENT:
                 self._event_llm_pending = True
@@ -1143,7 +1176,11 @@ class RuntimeController:
                 },
             )
         requested_candidate_ids = plan.candidate_ids
-        if self.effective_policy_mode in {PolicyMode.B3_SINGLE_STRUCTURE, PolicyMode.B4_BEAM_STRUCTURE}:
+        if self.effective_policy_mode in {
+            PolicyMode.PUBLIC_GREEDY,
+            PolicyMode.B3_SINGLE_STRUCTURE,
+            PolicyMode.B4_BEAM_STRUCTURE,
+        }:
             # A structural candidate represents a *complete alternative plan*,
             # not an independently composable batch item.  Execute only its
             # first public action, then discard the plan and replan from the

@@ -10,7 +10,7 @@ from starnet.policy.actions import Action
 from starnet.policy.calibration import CalibrationProfile
 from starnet.policy.cmg import PredictiveState
 from starnet.policy.config import PolicyMode
-from starnet.policy.structural import StructuralPlanner
+from starnet.policy.structural import ExperimentalPublicGreedyPlanner, StructuralPlanner
 
 
 def active_profile() -> CalibrationProfile:
@@ -46,6 +46,19 @@ def degree_weighted(state: PredictiveState) -> float:
 
 
 class StructuralPlannerTests(unittest.TestCase):
+    def test_experimental_public_greedy_selects_positive_terminal_gain(self) -> None:
+        graph = board(
+            {1: (-40.0, "暴力", 3), 2: (10.0, "和平", 3), 3: (10.0, "和平", 3)},
+            [(1, 2), (1, 3)],
+        )
+        planner = ExperimentalPublicGreedyPlanner(lambda _node_id, _node, _turn: 15.0)
+        candidates = planner.candidates(graph, 20.0)
+
+        self.assertTrue(candidates)
+        self.assertEqual(candidates[0].action.kind, "shield")
+        self.assertEqual(candidates[0].action.target_node_1, 1)
+        self.assertTrue(all(candidate.score > 0.0 for candidate in candidates))
+
     def test_negative_center_can_damage_positive_neighbors(self) -> None:
         graph = board({1: (-1.0, "暴力", 0), **{node: (10.0, "和平", 0) for node in range(2, 6)}},
                       [(1, 2), (1, 3), (1, 4), (1, 5)])

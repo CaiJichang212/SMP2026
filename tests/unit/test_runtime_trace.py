@@ -92,6 +92,7 @@ class RuntimeTraceTests(unittest.TestCase):
             environment.nodes = {
                 1: {"w": 2.0, "persona": "暴力", "comm_left": 3, "neighbors": []}
             }
+            environment.nodes[1]["comm_left"] = 0
             environment.edges = set()
             controller = RuntimeController(environment, node_count=1)
             trace = RuntimeTrace(

@@ -24,7 +24,7 @@ ModelBase = _starnet_runtime.ModelBase
 
 from starnet.runtime.controller import RuntimeController
 from starnet.runtime.stage import ContestStage
-from starnet.policy.config import DEFAULT_POLICY_CONFIG
+from starnet.policy.config import DEFAULT_POLICY_CONFIG, PolicyConfig, PolicyMode
 
 
 class BaseStarAgent(AgentBase):
@@ -93,11 +93,30 @@ class ParticipantSquadModel(ModelBase):
         self.add_agent(self.executor_agent, 1)
         self.add_agent(self.commander_agent, 2)
 
+        experimental_mode = next(
+            (
+                description.get("experimental_policy_mode")
+                for description in descriptions
+                if isinstance(description, dict) and description.get("experimental_policy_mode")
+            ),
+            None,
+        )
+        runtime_config = DEFAULT_POLICY_CONFIG
+        if experimental_mode == PolicyMode.PUBLIC_GREEDY.value:
+            runtime_config = PolicyConfig(
+                enable_shield=True,
+                enable_cut=True,
+                enable_communicate=True,
+                p0_exclusive=False,
+                max_llm_calls=0,
+                policy_mode=PolicyMode.PUBLIC_GREEDY,
+            )
+
         self.controller = RuntimeController(
             host_env,
             llm_ranker=self.commander_agent.rank_candidates,
             stage=ContestStage.PRELIMINARY,
-            config=DEFAULT_POLICY_CONFIG,
+            config=runtime_config,
         )
 
     def step(self) -> int:
