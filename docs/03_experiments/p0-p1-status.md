@@ -52,9 +52,14 @@ not pass its gate.
 
 The submission explicitly selects the preliminary `StageSpec` (50 nodes, 100
 budget, 120 Step/LLM limits; local stop caps 117/115). It scans every legal ID
-before considering any intervention, then uses B1's observed-degree × response
-estimate to choose one legal `communicate` slot at a time. Public `new_w` and
-`comm_left` update the Blackboard and rebuild the next-slot ordering. Unknown
+before considering any intervention, then uses B1's public connected-component
+influence coefficient × response estimate to choose one legal `communicate`
+slot at a time. The coefficient is derived from the scanned component's
+`degree + 1` weights, so isolated nodes remain eligible rather than being
+mistakenly assigned zero value. Public first-response observations are pooled
+with the P1 unit-response baseline as the online prior for untried nodes,
+while a tried node always uses its own strictly diminishing response. `new_w`
+and `comm_left` update the Blackboard and rebuild the next-slot ordering. Unknown
 `comm_left`, insufficient budget, no positive gain, and safety caps stop
 without calling `end_turn`.
 
