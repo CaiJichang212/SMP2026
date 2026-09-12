@@ -10,7 +10,11 @@ from starnet.policy.actions import Action
 from starnet.policy.calibration import CalibrationProfile
 from starnet.policy.cmg import PredictiveState
 from starnet.policy.config import PolicyMode
-from starnet.policy.structural import ExperimentalPublicGreedyPlanner, StructuralPlanner
+from starnet.policy.structural import (
+    ExperimentalPublicGreedyPlanner,
+    StructuralPlanner,
+    public_structure_risk_allowed,
+)
 
 
 def active_profile() -> CalibrationProfile:
@@ -51,13 +55,54 @@ class StructuralPlannerTests(unittest.TestCase):
             {1: (-40.0, "暴力", 3), 2: (10.0, "和平", 3), 3: (10.0, "和平", 3)},
             [(1, 2), (1, 3)],
         )
-        planner = ExperimentalPublicGreedyPlanner(lambda _node_id, _node, _turn: 15.0)
+        planner = ExperimentalPublicGreedyPlanner(
+            lambda _node_id, _node, _turn: 15.0,
+            min_observed_responses=0,
+            structure_roi_margin=1.0,
+        )
         candidates = planner.candidates(graph, 20.0)
 
         self.assertTrue(candidates)
         self.assertEqual(candidates[0].action.kind, "shield")
         self.assertEqual(candidates[0].action.target_node_1, 1)
         self.assertTrue(all(candidate.score > 0.0 for candidate in candidates))
+
+    def test_public_structure_gate_closes_positive_peace_majority(self) -> None:
+        graph = board(
+            {1: (-8.0, "暴力", 3), **{
+                node: (20.0 - node, "和平", 3) for node in range(2, 10)
+            }},
+            [(node, node + 1) for node in range(1, 9)],
+        )
+        self.assertFalse(public_structure_risk_allowed(graph, Action("shield", 1), 10.0))
+        planner = ExperimentalPublicGreedyPlanner(
+            lambda _node_id, _node, _turn: 15.0,
+            min_observed_responses=0,
+            structure_roi_margin=1.0,
+        )
+        candidates = planner.candidates(graph, 20.0)
+        self.assertFalse(any(item.action.kind in {"cut", "shield"} for item in candidates))
+
+    def test_public_structure_gate_allows_negative_violent_center(self) -> None:
+        graph = board(
+            {1: (-40.0, "暴力", 3), 2: (10.0, "和平", 3), 3: (10.0, "和平", 3)},
+            [(1, 2), (1, 3)],
+        )
+        self.assertTrue(public_structure_risk_allowed(graph, Action("shield", 1), 1.0))
+        planner = ExperimentalPublicGreedyPlanner(
+            lambda _node_id, _node, _turn: 15.0,
+            min_observed_responses=0,
+            structure_roi_margin=1.0,
+        )
+        candidates = planner.candidates(graph, 20.0)
+        self.assertEqual(candidates[0].action, Action("shield", 1))
+
+    def test_public_structure_gate_allows_negative_neutral_node_outside_positive_gate(self) -> None:
+        graph = board(
+            {1: (-12.0, "中立", 3), 2: (8.0, "和平", 3), 3: (7.0, "和平", 3)},
+            [(1, 2), (1, 3)],
+        )
+        self.assertTrue(public_structure_risk_allowed(graph, Action("shield", 1), 1.0))
 
     def test_negative_center_can_damage_positive_neighbors(self) -> None:
         graph = board({1: (-1.0, "暴力", 0), **{node: (10.0, "和平", 0) for node in range(2, 6)}},

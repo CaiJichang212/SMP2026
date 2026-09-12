@@ -20,6 +20,10 @@ from starnet.policy.candidates import Candidate
 
 _PROMPT_ONE_UNIT_RESPONSE = 15.0
 _ONLINE_RESPONSE_PRIOR_WEIGHT = 3.0
+# The local response distribution used for the explicit public-greedy
+# experiment is r ~ Uniform(0.2, 1.5), so its public first-slot mean is
+# 15 * (0.2 + 1.5) / 2 = 12.75.  This is a prior, never an environment field.
+_PUBLIC_UNTRIED_RESPONSE_PRIOR = 12.75
 
 
 def _turn(node_comm_left: int) -> int:
@@ -122,6 +126,30 @@ def _response(
     )
 
 
+def public_response(
+    node_id: int, persona: str, turn: int, responses: Mapping[int, float],
+    profile: CalibrationProfile, ledger: ResponseLedger | None = None,
+) -> float:
+    """Estimate an experimental slot without pooling unrelated targets.
+
+    ``responses`` stores only a node's first successful public response.  A
+    tried node therefore uses its own observed value with the published
+    diminishing multiplier.  An untried node uses a fixed population prior;
+    one unusually high or low observation must not change every other target's
+    expected response.  A verified profile may replace that prior with its
+    own held-out response prior, while the unverified public experiment uses
+    the fixed 12.75 unit prior above.
+    """
+    observed = responses.get(node_id)
+    if observed is not None and math.isfinite(observed):
+        return max(0.0, float(observed)) * _marginal_multiplier(turn)
+    if profile.verified:
+        prior = profile.response_prior(persona, 1, turn)
+        if prior is not None and math.isfinite(prior[0]):
+            return max(0.0, float(prior[0]))
+    return _PUBLIC_UNTRIED_RESPONSE_PRIOR * _marginal_multiplier(turn)
+
+
 def persuasion_candidates(
     blackboard: Blackboard,
     budget: float,
@@ -178,4 +206,4 @@ def persuasion_candidates(
     return sorted(result, key=lambda item: (-item.roi, item.candidate_id))
 
 
-__all__ = ["persuasion_candidates"]
+__all__ = ["persuasion_candidates", "public_response"]

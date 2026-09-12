@@ -3,12 +3,17 @@
 from __future__ import annotations
 
 import unittest
+import ast
+import json
+import re
 from dataclasses import asdict
 
 from starnet.runtime.controller import ControllerState, RuntimeController, StopReason
 from starnet.policy.calibration import CalibrationProfile
 from starnet.policy.config import PolicyConfig, PolicyMode
+from starnet.policy.actions import Action
 from starnet.runtime.stage import ContestStage
+from starnet.submission.starnet_model import ParticipantSquadModel
 
 
 class FakeStarNetEnvironment:
@@ -163,6 +168,101 @@ class RuntimeControllerIntegrationTests(unittest.TestCase):
         self.assertEqual(controller.llm_calls, 0)
         self.assertEqual(llm_payloads, [])
         self.assertEqual(controller.state, ControllerState.ANALYZE)
+
+    def test_public_experiment_uses_model_choice_for_each_scan_and_action(self) -> None:
+        env = FakeStarNetEnvironment(4, 12.0)
+        decisions: list[dict[str, object]] = []
+
+        def choose(payload: dict[str, object]) -> dict[str, object]:
+            decisions.append(payload)
+            candidate = payload["candidates"][0]
+            return {
+                "state_version": payload["state_version"],
+                "mode": "single_action",
+                "candidate_id": candidate["candidate_id"],
+                "reason_code": "public_gain",
+                "evidence_ids": [candidate["evidence_ids"][0]],
+            }
+
+        controller = RuntimeController(
+            env, choose, node_count=4,
+            config=PolicyConfig(
+                policy_mode=PolicyMode.PUBLIC_GREEDY,
+                p0_exclusive=False, max_llm_calls=20,
+            ),
+        )
+        while not controller.stopped:
+            controller.step()
+        self.assertEqual(len([call for call in env.calls if call[0] == "scan"]), 4)
+        self.assertEqual(len([item for item in decisions if item["stage"] == "SCAN_ALL"]), 4)
+        self.assertGreater(len(decisions), 4)
+        self.assertEqual(controller.llm_calls, len(decisions))
+        self.assertEqual(controller.action_failures, 0)
+
+    def test_casevo_agent_chooses_scan_through_injected_llm(self) -> None:
+        class StubLLM:
+            class Embedding:
+                def __call__(self, input: list[str]) -> list[list[float]]:
+                    return [[0.0, 0.0, 0.0] for _ in input]
+
+                def name(self) -> str:
+                    return "test_disabled_embedding"
+
+            def get_lang_embedding(self) -> "StubLLM.Embedding":
+                return self.Embedding()
+
+            def send_message(self, prompt: str, json_flag: bool = False) -> str:
+                ids = ast.literal_eval(re.search(r"候选 ID：(\[[^\n]+\])", prompt).group(1))
+                version = int(re.search(r"状态版本：(\d+)", prompt).group(1))
+                return json.dumps({
+                    "state_version": version, "mode": "single_action",
+                    "candidate_id": ids[-1], "reason_code": "frontier_choice",
+                    "evidence_ids": [ids[-1]],
+                })
+
+        env = FakeStarNetEnvironment(4, 12.0)
+        model = ParticipantSquadModel(
+            env, [{"role": "CommanderAgent", "experimental_policy_mode": "public_greedy"}],
+            StubLLM(),
+        )
+        self.assertEqual(len(model.agent_list), 1)
+        self.assertEqual(model.step(), 0)
+        self.assertEqual(env.calls[-1], ("scan", 4))
+        self.assertEqual(model.controller.llm_calls, 1)
+
+    def test_public_scan_timeout_falls_back_and_counts_quota(self) -> None:
+        env = FakeStarNetEnvironment(3, 10.0)
+
+        def timed_out(_: dict[str, object]) -> object:
+            raise TimeoutError("test timeout")
+
+        controller = RuntimeController(
+            env, timed_out, node_count=3,
+            config=PolicyConfig(policy_mode=PolicyMode.PUBLIC_GREEDY, max_llm_calls=1),
+        )
+        for _ in range(3):
+            self.assertEqual(controller.step(), 0)
+        self.assertEqual(controller.llm_calls, 1)
+        self.assertEqual(controller.llm_accepted, 0)
+        self.assertEqual(controller.llm_fallbacks, 1)
+        self.assertEqual({call[1] for call in env.calls}, {1, 2, 3})
+        self.assertEqual(controller.action_failures, 0)
+
+    def test_failed_cut_refreshes_debited_public_budget(self) -> None:
+        env = FakeStarNetEnvironment(2, 10.0)
+        controller = RuntimeController(env, node_count=2)
+        for node_id in (1, 2):
+            controller.blackboard.record_scan(node_id, env.scan_node(node_id))
+
+        def rejected_cut(left: int, right: int) -> bool:
+            env.budget -= 3.0
+            return False
+
+        env.cut_link = rejected_cut  # type: ignore[method-assign]
+        self.assertFalse(controller._attempt_action(Action("cut", 1, target_node_2=2), "cut:1-2", 9.0))
+        self.assertEqual(env.get_remaining_budget(), 6.0)
+        self.assertEqual(controller.blackboard.budget_units, 12)
+        self.assertIn((1, 2), controller.blackboard.edges)
 
     def test_100_node_scan_uses_200_budget_tier(self) -> None:
         env = FakeStarNetEnvironment(100, 200.0)

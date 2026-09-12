@@ -427,6 +427,120 @@ class StructuralPlanner:
         return plans[0] if plans else None
 
 
+def _public_adjacency(board: Blackboard) -> dict[int, set[int]]:
+    """Build an adjacency view from the already scanned public graph."""
+    adjacency = {node_id: set() for node_id in board.nodes}
+    for left, right in board.edges:
+        if left in adjacency and right in adjacency:
+            adjacency[left].add(right)
+            adjacency[right].add(left)
+    return adjacency
+
+
+def _public_structure_risk_features(board: Blackboard) -> tuple[float, float, float]:
+    """Return public-only peace share, positive mass and violent negative mass.
+
+    The masses use the same public ``degree + 1`` factor as the qualified
+    settlement relation.  They are screening features, not hidden-state
+    predictions: the response coefficient ``r`` is never consulted.
+    """
+    adjacency = _public_adjacency(board)
+    node_count = len(board.nodes)
+    if node_count == 0:
+        return 0.0, 0.0, 0.0
+    peace_share = sum(
+        node.persona == "和平" or node.w >= 0.0 for node in board.nodes.values()
+    ) / node_count
+    positive_mass = sum(
+        (len(adjacency[node_id]) + 1) * max(0.0, node.w)
+        for node_id, node in board.nodes.items()
+    )
+    violent_negative_mass = sum(
+        (len(adjacency[node_id]) + 1) * max(0.0, -node.w)
+        for node_id, node in board.nodes.items()
+        if node.persona == "暴力"
+    )
+    return peace_share, positive_mass, violent_negative_mass
+
+
+def public_positive_graph_gate_closed(board: Blackboard) -> bool:
+    """Return whether public evidence says topology is overwhelmingly positive."""
+    peace_share, positive_mass, violent_negative_mass = _public_structure_risk_features(board)
+    return (
+        peace_share >= 0.85
+        and positive_mass >= 2.0 * max(1.0, violent_negative_mass)
+    )
+
+
+def _public_negative_nonpeace(node: Any) -> bool:
+    """Recognize a publicly negative node without treating neutral as peace."""
+    return node.w < 0.0 and node.persona != "和平"
+
+
+def _component_influence_coefficients(board: Blackboard) -> dict[int, float]:
+    """Return the closed-form communication coefficients for this board."""
+    adjacency = _public_adjacency(board)
+    unseen = set(adjacency)
+    coefficients: dict[int, float] = {}
+    while unseen:
+        start = min(unseen)
+        component: list[int] = []
+        stack = [start]
+        unseen.remove(start)
+        while stack:
+            node_id = stack.pop()
+            component.append(node_id)
+            for neighbor in adjacency[node_id]:
+                if neighbor in unseen:
+                    unseen.remove(neighbor)
+                    stack.append(neighbor)
+        denominator = sum(len(adjacency[node_id]) + 1 for node_id in component)
+        factor = len(component) / denominator
+        coefficients.update(
+            {node_id: factor * (len(adjacency[node_id]) + 1) for node_id in component}
+        )
+    return coefficients
+
+
+def public_structure_risk_allowed(
+    board: Blackboard, action: Action, predicted_gain: float,
+) -> bool:
+    """Conservatively screen structure actions using public facts only.
+
+    A high-positive, peace-majority graph is treated as a fragile positive
+    propagation network: spending budget on topology changes is disabled even
+    if a point estimate gives a small positive gain.  Outside that gate, the
+    allowed action families are deliberately narrow and semantically tied to
+    the observed risk direction.  This avoids selecting a favorable-looking
+    shield/cut merely because it beats an uncertain response prior.
+    """
+    if not math.isfinite(predicted_gain) or predicted_gain <= 0.0:
+        return False
+    # ``peace_share`` includes publicly non-negative nodes.  The strict 0.85
+    # threshold is intentionally reserved for an overwhelmingly positive
+    # graph, so a mixed ER graph is not accidentally treated as WS-like.  A
+    # second mass check prevents a genuinely large violent-negative cluster
+    # from being hidden by the persona majority alone.
+    if public_positive_graph_gate_closed(board):
+        return False
+    if action.kind == "shield":
+        node = board.nodes.get(action.target_node_1)
+        return node is not None and _public_negative_nonpeace(node)
+    if action.kind == "cut" and action.target_node_2 is not None:
+        left = board.nodes.get(action.target_node_1)
+        right = board.nodes.get(action.target_node_2)
+        if left is None or right is None:
+            return False
+        return (
+            _public_negative_nonpeace(left)
+            and not _public_negative_nonpeace(right)
+        ) or (
+            _public_negative_nonpeace(right)
+            and not _public_negative_nonpeace(left)
+        )
+    return False
+
+
 class ExperimentalPublicGreedyPlanner:
     """One-step public-state action scorer for an explicit experiment.
 
@@ -443,11 +557,22 @@ class ExperimentalPublicGreedyPlanner:
         response_fn: Callable[[int, Any, int], float],
         *,
         candidate_limit: int = 24,
+        conservative_structure: bool = True,
+        min_observed_responses: int = 4,
+        structure_roi_margin: float = 1.25,
     ) -> None:
-        if candidate_limit <= 0:
-            raise ValueError("candidate_limit must be positive")
+        if (
+            candidate_limit <= 0
+            or min_observed_responses < 0
+            or not math.isfinite(structure_roi_margin)
+            or structure_roi_margin < 1.0
+        ):
+            raise ValueError("invalid public-greedy candidate or risk limits")
         self.response_fn = response_fn
         self.candidate_limit = candidate_limit
+        self.conservative_structure = conservative_structure
+        self.min_observed_responses = min_observed_responses
+        self.structure_roi_margin = structure_roi_margin
         self.predictor = SettlementPredictor(
             CalibrationProfile(gate_passed=False, model="component_degree_plus_one")
         )
@@ -466,9 +591,26 @@ class ExperimentalPublicGreedyPlanner:
         board: Blackboard,
         budget: float,
         failed_actions: Iterable[object] = (),
+        observed_response_count: int = 0,
     ) -> list[Candidate]:
         state = PredictiveState.from_blackboard(board)
         baseline = self.predictor.score(state)
+        public_influence = _component_influence_coefficients(board)
+        comm_rois: dict[int, float] = {}
+        for node_id, node in sorted(board.nodes.items()):
+            if node.comm_left is None or node.comm_left <= 0:
+                continue
+            turn = 4 - node.comm_left
+            if turn not in (1, 2, 3):
+                continue
+            action = Action("comm", node_id, prompt_id=1)
+            if not is_legal_action(action, board, budget):
+                continue
+            response = self.response_fn(node_id, node, turn)
+            if math.isfinite(float(response)):
+                comm_rois[node_id] = public_influence.get(node_id, 0.0) * max(
+                    0.0, float(response)
+                ) / action_cost(action)
         failed = set(failed_actions)
         hypotheses: list[tuple[Action, float | None, int | None]] = []
         for node_id, node in sorted(board.nodes.items()):
@@ -492,8 +634,48 @@ class ExperimentalPublicGreedyPlanner:
             if not is_legal_action(action, board, budget):
                 continue
             after = self.predictor.score(state.apply(action, delta))
-            gain = after - baseline
+            # Keep communication scores bit-for-bit on the same closed-form
+            # path as B1.  The predictor difference is mathematically equal,
+            # but tiny operation-order differences can otherwise reorder tied
+            # targets when the structure gate is closed.
+            gain = (
+                public_influence.get(action.target_node_1, 0.0) * float(delta)
+                if action.kind == "comm"
+                else after - baseline
+            )
             if not math.isfinite(gain) or gain <= 0.0:
+                continue
+            if (
+                self.conservative_structure
+                and action.kind in {"cut", "shield"}
+                and observed_response_count < self.min_observed_responses
+            ):
+                continue
+            if (
+                self.conservative_structure
+                and action.kind in {"cut", "shield"}
+            ):
+                # A shield and a communication on its target are mutually
+                # exclusive alternatives.  Do not let that soon-to-be-
+                # removed target's ROI hide a deterministic shield gain;
+                # cutting leaves both endpoints alive, so its comparison
+                # keeps the full communication set.
+                excluded = {action.target_node_1} if action.kind == "shield" else set()
+                alternative_comm_roi = max(
+                    (roi for node_id, roi in comm_rois.items() if node_id not in excluded),
+                    default=0.0,
+                )
+                if (
+                    alternative_comm_roi > 0.0
+                    and gain / action_cost(action)
+                    < self.structure_roi_margin * alternative_comm_roi
+                ):
+                    continue
+            if (
+                self.conservative_structure
+                and action.kind in {"cut", "shield"}
+                and not public_structure_risk_allowed(board, action, gain)
+            ):
                 continue
             result.append(
                 Candidate(
@@ -508,7 +690,7 @@ class ExperimentalPublicGreedyPlanner:
             )
         return sorted(
             result,
-            key=lambda item: (-item.roi, -item.score, item.candidate_id),
+            key=lambda item: (-round(item.roi, 10), -round(item.score, 10), item.candidate_id),
         )[: self.candidate_limit]
 
 

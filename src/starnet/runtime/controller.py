@@ -20,7 +20,7 @@ from starnet.policy.candidates import (
     parse_llm_batch_detailed,
     select_deterministic_batch,
 )
-from starnet.policy.graph_analysis import GraphAnalysis, analyze_graph
+from starnet.policy.graph_analysis import GraphAnalysis, analyze_graph, build_graph
 from starnet.policy.config import DEFAULT_POLICY_CONFIG, PolicyConfig
 from starnet.policy.config import LLMSchedule, PolicyMode
 from starnet.policy.adaptive import AdaptiveScout, ScenarioProfile, evaluate_scan_voi
@@ -33,11 +33,12 @@ from starnet.policy.cmg import (
     SettlementPredictor,
     choose_cmg_action,
 )
-from starnet.policy.baseline import _response, persuasion_candidates
+from starnet.policy.baseline import _response, persuasion_candidates, public_response
 from starnet.policy.structural import (
     ExperimentalPublicGreedyPlanner,
     PlanCandidate,
     StructuralPlanner,
+    public_positive_graph_gate_closed,
 )
 from starnet.runtime.stage import ContestStage, StageSpec, stage_spec
 from starnet.runtime.env_adapter import ActionOutcome, StarNetEnvironment, apply_action_outcome
@@ -397,10 +398,16 @@ class RuntimeController:
             config=config,
             contest_llm_limit=self.stage.llm_limit,
         )
+        self._llm_scan_enabled = (
+            config.policy_mode is PolicyMode.PUBLIC_GREEDY
+            and self.commander.can_request_llm
+        )
         self.state = ControllerState.INIT
         self.analysis: GraphAnalysis | None = None
         self.candidates: dict[str, Candidate] = {}
         self.queue: list[str] = []
+        self.llm_accepted = 0
+        self.llm_fallbacks = 0
         # Store both plan IDs and immutable public Action identities.  A B4
         # plan may share a first action with other plans, so a rejected action
         # must suppress every such plan on the next replan.
@@ -663,7 +670,12 @@ class RuntimeController:
             if not any(value > 0.0 for value in voi.values()):
                 self._stop(StopReason.NO_POSITIVE_GAIN, budget)
                 return 1
-        action = self.scout.next_action(self.blackboard, voi=voi) if isinstance(self.scout, AdaptiveScout) else self.scout.next_action(self.blackboard)
+        if self._llm_scan_enabled:
+            action = self._choose_public_scan(budget)
+        elif isinstance(self.scout, AdaptiveScout):
+            action = self.scout.next_action(self.blackboard, voi=voi)
+        else:
+            action = self.scout.next_action(self.blackboard)
         if action is None:
             self._transition(ControllerState.ANALYZE, "scan_exhausted", budget)
             self._emit("scan.completed", budget, budget, {"blackboard": self.blackboard.snapshot()})
@@ -674,7 +686,11 @@ class RuntimeController:
 
         self._attempt_action(action, f"scan:{action.target_node_1}", budget)
         adaptive_checkpoint = isinstance(self.scout, AdaptiveScout) and self.scout.scan_count >= self.scout.initial_count
-        if self.scout.exhausted or adaptive_checkpoint:
+        if (
+            (self._llm_scan_enabled and len(self.blackboard.scanned_ids) >= self.node_count)
+            or (not self._llm_scan_enabled and self.scout.exhausted)
+            or adaptive_checkpoint
+        ):
             completed_budget = (
                 self._last_trace_budget_after
                 if self._last_trace_budget_after is not None
@@ -698,6 +714,52 @@ class RuntimeController:
                 {"blackboard": self.blackboard.snapshot()},
             )
         return 0
+
+    def _choose_public_scan(self, budget: float) -> Action | None:
+        """Ask the injected commander to select a legal public scan target."""
+        unknown = [node_id for node_id in range(1, self.node_count + 1)
+                   if self.blackboard.can_scan(node_id)]
+        if not unknown:
+            return None
+        incident = {node_id: 0 for node_id in unknown}
+        for left, right in self.blackboard.edges:
+            if left in incident:
+                incident[left] += 1
+            if right in incident:
+                incident[right] += 1
+        shortlist = sorted(unknown, key=lambda node_id: (-incident[node_id], node_id))[:4]
+        candidates = [
+            Candidate(
+                f"scan:{node_id}", Action("scan", node_id), 0,
+                float(incident[node_id] + 1), float(incident[node_id] + 1) / 0.5,
+                f"public frontier links {incident[node_id]}",
+                (f"scan:{node_id}",),
+            )
+            for node_id in shortlist
+        ]
+        analysis = GraphAnalysis(build_graph(self.blackboard), {}, {}, 0)
+        payload = self.commander.preview_payload(
+            candidates, budget, analysis, self.blackboard.state_version
+        ) if self.commander.can_request_llm else None
+        if payload is not None:
+            payload["stage"] = ControllerState.SCAN_ALL.value
+        before = self.commander.llm_calls
+        plan = self.commander.plan(
+            candidates=candidates, budget=budget, analysis=analysis,
+            request_payload=payload, state_version=self.blackboard.state_version,
+        )
+        self.blackboard.llm_attempts += self.commander.llm_calls - before
+        if self.commander.llm_calls > before:
+            if plan.source == "llm":
+                self.llm_accepted += 1
+            else:
+                self.llm_fallbacks += 1
+        selected_id = plan.candidate_ids[0] if plan.candidate_ids else candidates[0].candidate_id
+        selected = next(
+            (candidate.action for candidate in candidates if candidate.candidate_id == selected_id),
+            candidates[0].action,
+        )
+        return selected if is_legal_action(selected, self.blackboard, budget) else None
 
     def _execute_next(self, budget: float) -> int:
         if self.cmg_candidate is not None:
@@ -1007,8 +1069,13 @@ class RuntimeController:
         self.analysis = self.analyst.analyze(self.blackboard)
 
         if self.effective_policy_mode is PolicyMode.PUBLIC_GREEDY:
+            # In an overwhelmingly positive public graph, retain B1's
+            # already-tested response pooling.  On mixed/risky graphs, the
+            # experiment keeps a population prior for each untried target so
+            # one noisy observation cannot steer every remaining target.
+            public_response_fn = _response if public_positive_graph_gate_closed(self.blackboard) else public_response
             planner = ExperimentalPublicGreedyPlanner(
-                lambda node_id, node, turn: _response(
+                lambda node_id, node, turn: public_response_fn(
                     node_id,
                     node.persona,
                     turn,
@@ -1017,8 +1084,18 @@ class RuntimeController:
                     self.response_ledger,
                 ),
                 candidate_limit=max(24, self.config.structure_candidate_limit),
+                # Structure gains are directly recomputable from public
+                # scans; do not spend four profitable responses probing a
+                # node before allowing a clearly positive shield.
+                min_observed_responses=0,
+                structure_roi_margin=1.0,
             )
-            candidates = planner.candidates(self.blackboard, budget, self.failed_actions)
+            candidates = planner.candidates(
+                self.blackboard,
+                budget,
+                self.failed_actions,
+                observed_response_count=len(self.response_estimates),
+            )
             self.structural_planner = None
             self.structural_plans = {}
             self.candidates = {candidate.candidate_id: candidate for candidate in candidates}
@@ -1124,6 +1201,14 @@ class RuntimeController:
             self._emit_queue_revalidated("persuasion_heap", validation, budget)
             return
         assert self.analysis is not None
+        if self.effective_policy_mode is PolicyMode.PUBLIC_GREEDY and self.commander.can_request_llm:
+            # Keep the model's choice meaningful while bounding the cost of
+            # selecting a lower-ROI candidate on a noisy generation.
+            best_roi = max(candidate.roi for candidate in candidates)
+            candidates = [
+                candidate for candidate in candidates
+                if candidate.roi >= 0.98 * best_roi
+            ][:4]
         request_payload: Mapping[str, Any] | None = None
         if self.commander.can_request_llm and self.config.llm_schedule is not LLMSchedule.OFF and (
             self.config.llm_schedule is LLMSchedule.STEP or self._event_llm_pending
@@ -1146,6 +1231,11 @@ class RuntimeController:
             state_version=self.blackboard.state_version,
         )
         self.blackboard.llm_attempts += self.commander.llm_calls - llm_before
+        if self.commander.llm_calls > llm_before:
+            if plan.source == "llm":
+                self.llm_accepted += 1
+            else:
+                self.llm_fallbacks += 1
         if request_payload is not None:
             self._event_llm_pending = False
         if plan.request_payload is not None and plan.error is None:

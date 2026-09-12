@@ -5,7 +5,7 @@ from __future__ import annotations
 import unittest
 
 from starnet.policy.config import DEFAULT_POLICY_CONFIG
-from starnet.policy.baseline import persuasion_candidates
+from starnet.policy.baseline import persuasion_candidates, public_response
 from starnet.policy.calibration import DEFAULT_CALIBRATION_PROFILE
 from starnet.model.blackboard import Blackboard
 from starnet.runtime.controller import RuntimeController
@@ -100,6 +100,20 @@ class P1BaselineTests(unittest.TestCase):
         # two public observations plus three unit-response (+15) priors, not
         # the former hard-coded one-unit proxy.
         self.assertAlmostEqual(candidates["comm:3:1"].score, (6.0 / 7.0) * 13.0)
+
+    def test_public_experiment_keeps_untried_targets_on_population_prior(self) -> None:
+        self.assertEqual(
+            public_response(
+                3, "暴力", 1, {1: 30.0}, DEFAULT_CALIBRATION_PROFILE
+            ),
+            12.75,
+        )
+        self.assertEqual(
+            public_response(
+                1, "和平", 2, {1: 30.0}, DEFAULT_CALIBRATION_PROFILE
+            ),
+            15.0,
+        )
 
     def test_untried_later_slot_applies_published_diminishing_multiplier(self) -> None:
         board = Blackboard(node_count=1)

@@ -115,6 +115,16 @@ def variant_config(name: str) -> PolicyConfig:
         # the embedded calibration/scenario profiles have not passed gates.
         "b3_single_structure": PolicyConfig(policy_mode=PolicyMode.B3_SINGLE_STRUCTURE, **common),
         "b4_beam_structure": PolicyConfig(policy_mode=PolicyMode.B4_BEAM_STRUCTURE, **common),
+        # Public-only risk-aware structure is an explicit endpoint experiment;
+        # it never changes the submission's B1 configuration.
+        "public_greedy": PolicyConfig(
+            policy_mode=PolicyMode.PUBLIC_GREEDY,
+            enable_shield=True,
+            enable_cut=True,
+            enable_communicate=True,
+            p0_exclusive=False,
+            **common,
+        ),
         "b5_adaptive": PolicyConfig(policy_mode=PolicyMode.B5_ADAPTIVE, **common),
         "b5_step_llm": PolicyConfig(policy_mode=PolicyMode.B5_ADAPTIVE, llm_schedule=LLMMode.STEP, max_llm_calls=5),
         "b5_event_llm": PolicyConfig(policy_mode=PolicyMode.B5_ADAPTIVE, llm_schedule=LLMMode.EVENT, max_llm_calls=5),

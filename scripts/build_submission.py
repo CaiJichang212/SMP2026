@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 import ast
+import argparse
+import json
 import shutil
 from pathlib import Path
 
@@ -77,12 +79,20 @@ def assemble_model() -> str:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--experimental-policy-mode",
+        choices=("public_greedy",),
+        help="写入显式实验配置；省略时严格使用规范源的 B1 默认配置。",
+    )
+    args = parser.parse_args()
     require_source()
     TARGET_DIR.mkdir(parents=True, exist_ok=True)
-
     # Python 导入后的缓存不属于交付契约；仅删除这一类确定的生成物。
     cache_dir = TARGET_DIR / "__pycache__"
-    if cache_dir.is_dir() and not cache_dir.is_symlink():
+    if cache_dir.is_symlink():
+        cache_dir.unlink()
+    elif cache_dir.is_dir():
         shutil.rmtree(cache_dir)
 
     # 仅替换赛方契约明确的三个项目，避免误删未知的本地文件。
@@ -90,7 +100,21 @@ def main() -> None:
         target = TARGET_DIR / name
         if target.exists() or target.is_symlink():
             target.unlink()
-        shutil.copy2(SOURCE_DIR / name, target)
+        if args.experimental_policy_mode is None:
+            shutil.copy2(SOURCE_DIR / name, target)
+        else:
+            config = json.loads((SOURCE_DIR / name).read_text(encoding="utf-8"))
+            config["policy_mode"] = args.experimental_policy_mode
+            config["llm_schedule"] = "step"
+            people = config.get("person")
+            if not isinstance(people, list) or not people or not isinstance(people[0], dict):
+                raise SystemExit("实验配置需要至少一个 person 对象")
+            commander = next(
+                (person for person in people if isinstance(person, dict) and person.get("role") == "CommanderAgent"),
+                people[0],
+            )
+            config["person"] = [{**commander, "experimental_policy_mode": args.experimental_policy_mode}]
+            target.write_text(json.dumps(config, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     model_target = TARGET_DIR / "starnet_model.py"
     if model_target.exists() or model_target.is_symlink():
@@ -103,7 +127,12 @@ def main() -> None:
             shutil.rmtree(prompt_target)
         else:
             prompt_target.unlink()
-    shutil.copytree(SOURCE_DIR / REQUIRED_DIRECTORY, prompt_target)
+    if args.experimental_policy_mode is None:
+        shutil.copytree(SOURCE_DIR / REQUIRED_DIRECTORY, prompt_target)
+    else:
+        prompt_target.mkdir()
+        for name in ("commander_react.txt", "reflect.txt"):
+            shutil.copy2(SOURCE_DIR / REQUIRED_DIRECTORY / name, prompt_target / name)
 
     print(f"已同步提交目录: {TARGET_DIR.relative_to(PROJECT_ROOT)}")
 

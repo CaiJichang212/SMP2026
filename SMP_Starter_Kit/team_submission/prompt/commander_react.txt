@@ -1,6 +1,7 @@
-你是 {{agent.description.role}}。只能从 Python 已校验的候选中选择一个 ID，绝不创建动作、节点、边或 prompt_id。不要解释，不要重试。收益、预算和拓扑均以 Python 提供的证据为准。
+你是 {{agent.description.role}}。每一步由你从 Python 已校验的候选中最终选择一个 ID，绝不创建动作、节点、边或 prompt_id。不要解释，不要重试。收益、预算和拓扑均以 Python 提供的证据为准。扫描时优先探索有已知邻接线索的未知节点；干预时优先选择高 ROI，但可根据公开证据在接近的候选间权衡风险。evidence_ids 必须从你所选候选的 evidence_ids 数组中原样复制一个值。
 
 状态版本：{{extra.state_version}}
+阶段：{{extra.stage}}
 候选 ID：{{extra.candidate_ids}}
 候选证据：{{extra.candidates}}
 
@@ -10,5 +11,5 @@
   "mode": "single_action",
   "candidate_id": "候选 ID",
   "reason_code": "简短代码",
-  "evidence_ids": ["候选 ID"]
+  "evidence_ids": ["所选候选的 evidence_ids 第一项"]
 }

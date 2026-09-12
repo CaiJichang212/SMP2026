@@ -78,9 +78,12 @@ class OpenAICompatibleLLM(LLM_INTERFACE):
         return self.embedding
 
 
-def build_submission() -> None:
+def build_submission(experimental_policy_mode: str | None = None) -> None:
+    command = [sys.executable, str(PROJECT_ROOT / "scripts" / "build_submission.py")]
+    if experimental_policy_mode:
+        command += ["--experimental-policy-mode", experimental_policy_mode]
     result = subprocess.run(
-        [sys.executable, str(PROJECT_ROOT / "scripts" / "build_submission.py")],
+        command,
         cwd=PROJECT_ROOT,
         check=False,
         capture_output=True,
@@ -198,6 +201,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--no-console-log", action="store_true", help="关闭每步控制台摘要。")
     parser.add_argument("--no-trace", action="store_true", help="完全关闭诊断日志。")
+    parser.add_argument("--experimental-policy-mode", choices=("public_greedy",))
     return parser.parse_args()
 
 
@@ -210,7 +214,7 @@ def main() -> int:
     if args.max_steps is not None and args.max_steps <= 0:
         raise SystemExit("--max-steps 必须为正整数。")
 
-    build_submission()
+    build_submission(args.experimental_policy_mode)
     sys.path.insert(0, str(STARTER_KIT))
     from api_client import RemoteStarNetEnv
     from team_submission.starnet_model import (
@@ -218,6 +222,7 @@ def main() -> int:
         JsonlTraceSink,
         ParticipantSquadModel,
         PolicyConfig,
+        PolicyMode,
         ContestStage,
         RuntimeController,
         RuntimeTrace,
@@ -257,15 +262,24 @@ def main() -> int:
     try:
         person_list = json.loads((STARTER_KIT / "team_submission" / "config.json").read_text(encoding="utf-8"))["person"]
         model = ParticipantSquadModel(host_env=env, person_list=person_list, llm=llm)
-        # The submission default intentionally has no LLM calls.  This local
-        # OpenAI-compatible run is the explicit retained three-call experiment.
+        # The default branch retains the historical three-call test; the
+        # explicit public-greedy branch exercises model decisions each step.
+        runtime_config = (
+            PolicyConfig(
+                policy_mode=PolicyMode.PUBLIC_GREEDY,
+                p0_exclusive=False,
+                max_llm_calls=240,
+            )
+            if args.experimental_policy_mode == "public_greedy"
+            else PolicyConfig(max_llm_calls=3)
+        )
         model.controller = RuntimeController(
             env,
             model.commander_agent.rank_candidates,
             initial_budget=initial_budget,
             node_count=node_count,
             stage=stage,
-            config=PolicyConfig(max_llm_calls=3),
+            config=runtime_config,
         )
         # 仅使小型自定义种子可完成一轮扫描；提交模型仍由公开预算推断正式赛制规模。
         model.controller.scout.node_count = node_count
@@ -314,17 +328,17 @@ def main() -> int:
         snapshot_matches = False
     score_comparable = budget_matches and snapshot_matches
     stop_reason = model.controller.stop_reason.value if model.controller.stop_reason else "max_steps"
-    if console_enabled:
-        print(
-            "baseline complete; "
-            f"score={score}; pre_eval_budget={pre_eval_budget}; model_steps={model_steps}; "
-            f"actions={model.controller.action_attempts}; successes={model.controller.action_successes}; "
-            f"failures={model.controller.action_failures}; known_nodes={len(model.controller.blackboard.nodes)}; "
-            f"dead_nodes={len(model.controller.blackboard.dead_nodes)}; candidates={len(model.controller.candidates)}; "
-            f"llm_calls={model.controller.llm_calls}; stop_reason={stop_reason}; "
-            f"seed_budget_match={budget_matches}; seed_snapshot_match={snapshot_matches}; "
-            f"score_comparable={score_comparable}; debug_node_count={node_count}"
-        )
+    print(
+        "baseline complete; "
+        f"score={score}; pre_eval_budget={pre_eval_budget}; model_steps={model_steps}; "
+        f"actions={model.controller.action_attempts}; successes={model.controller.action_successes}; "
+        f"failures={model.controller.action_failures}; known_nodes={len(model.controller.blackboard.nodes)}; "
+        f"dead_nodes={len(model.controller.blackboard.dead_nodes)}; candidates={len(model.controller.candidates)}; "
+        f"llm_calls={model.controller.llm_calls}; llm_accepted={model.controller.llm_accepted}; "
+        f"llm_fallbacks={model.controller.llm_fallbacks}; stop_reason={stop_reason}; "
+        f"seed_budget_match={budget_matches}; seed_snapshot_match={snapshot_matches}; "
+        f"score_comparable={score_comparable}; debug_node_count={node_count}"
+    )
     if trace is not None:
         trace.close()
     return 0

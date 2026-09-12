@@ -27,18 +27,7 @@ from starnet.runtime.stage import ContestStage
 from starnet.policy.config import DEFAULT_POLICY_CONFIG, PolicyConfig, PolicyMode
 
 
-class BaseStarAgent(AgentBase):
-    """没有自主环境权限的角色基类，所有实际动作都由控制器再次校验。"""
-
-    def step(self) -> None:
-        return None
-
-
-class ScoutAnalystAgent(BaseStarAgent):
-    """Produces only Python-validated scan facts and candidate evidence."""
-
-
-class CommanderAgent(BaseStarAgent):
+class CommanderAgent(AgentBase):
     """One direct CaseVO Prompt call; never uses ThoughtChain retries."""
 
     def __init__(self, unique_id: int, model: ModelBase, description: dict[str, Any]) -> None:
@@ -62,18 +51,18 @@ class CommanderAgent(BaseStarAgent):
             raise ValueError("commander evidence_ids must be a list")
         return decision
 
-
-class ExecutorAgent(BaseStarAgent):
-    """The controller remains the final public-API and action validator."""
+    def step(self) -> None:
+        """The host model drives the role through ``rank_candidates``."""
 
 
 class ParticipantSquadModel(ModelBase):
     """官方固定签名的模型入口。"""
 
     def __init__(self, host_env: object, person_list: list[dict[str, Any]], llm: object) -> None:
+        # One CaseVO agent owns every final scan/intervention choice. Python
+        # supplies analysis and validation without creating inactive agents.
         agent_graph = nx.Graph()
-        agent_graph.add_nodes_from((0, 1, 2))
-        agent_graph.add_edges_from(((0, 1), (1, 2)))
+        agent_graph.add_node(0)
         prompt_path = Path(__file__).resolve().parent / "prompt"
         if _starnet_framework == "documented":
             super().__init__(agent_graph, llm, prompt_path=str(prompt_path.resolve()), reflect_file="reflect.txt")
@@ -83,15 +72,13 @@ class ParticipantSquadModel(ModelBase):
             super().__init__(agent_graph, llm)
         self.env = host_env
 
-        descriptions = list(person_list)
-        while len(descriptions) < 3:
-            descriptions.append({"role": "星网策略角色"})
-        self.scout_agent = ScoutAnalystAgent(0, self, descriptions[0], None)
-        self.commander_agent = CommanderAgent(2, self, descriptions[2])
-        self.executor_agent = ExecutorAgent(1, self, descriptions[1], None)
-        self.add_agent(self.scout_agent, 0)
-        self.add_agent(self.executor_agent, 1)
-        self.add_agent(self.commander_agent, 2)
+        descriptions = [item for item in person_list if isinstance(item, dict)]
+        commander_description = next(
+            (item for item in descriptions if item.get("role") == "CommanderAgent"),
+            descriptions[-1] if descriptions else {"role": "CommanderAgent"},
+        )
+        self.commander_agent = CommanderAgent(0, self, commander_description)
+        self.add_agent(self.commander_agent, 0)
 
         experimental_mode = next(
             (
@@ -108,7 +95,10 @@ class ParticipantSquadModel(ModelBase):
                 enable_cut=True,
                 enable_communicate=True,
                 p0_exclusive=False,
-                max_llm_calls=0,
+                # One bounded model choice for each scan and intervention.
+                # A 50/100-node session needs at most 87/175 ordinary
+                # choices. The controller also enforces the stage cap.
+                max_llm_calls=240,
                 policy_mode=PolicyMode.PUBLIC_GREEDY,
             )
 

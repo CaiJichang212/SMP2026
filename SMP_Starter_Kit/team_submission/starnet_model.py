@@ -554,6 +554,10 @@ import math
 
 _PROMPT_ONE_UNIT_RESPONSE = 15.0
 _ONLINE_RESPONSE_PRIOR_WEIGHT = 3.0
+# The local response distribution used for the explicit public-greedy
+# experiment is r ~ Uniform(0.2, 1.5), so its public first-slot mean is
+# 15 * (0.2 + 1.5) / 2 = 12.75.  This is a prior, never an environment field.
+_PUBLIC_UNTRIED_RESPONSE_PRIOR = 12.75
 
 
 def _turn(node_comm_left: int) -> int:
@@ -656,6 +660,30 @@ def _response(
     )
 
 
+def public_response(
+    node_id: int, persona: str, turn: int, responses: Mapping[int, float],
+    profile: CalibrationProfile, ledger: ResponseLedger | None = None,
+) -> float:
+    """Estimate an experimental slot without pooling unrelated targets.
+
+    ``responses`` stores only a node's first successful public response.  A
+    tried node therefore uses its own observed value with the published
+    diminishing multiplier.  An untried node uses a fixed population prior;
+    one unusually high or low observation must not change every other target's
+    expected response.  A verified profile may replace that prior with its
+    own held-out response prior, while the unverified public experiment uses
+    the fixed 12.75 unit prior above.
+    """
+    observed = responses.get(node_id)
+    if observed is not None and math.isfinite(observed):
+        return max(0.0, float(observed)) * _marginal_multiplier(turn)
+    if profile.verified:
+        prior = profile.response_prior(persona, 1, turn)
+        if prior is not None and math.isfinite(prior[0]):
+            return max(0.0, float(prior[0]))
+    return _PUBLIC_UNTRIED_RESPONSE_PRIOR * _marginal_multiplier(turn)
+
+
 def persuasion_candidates(
     blackboard: Blackboard,
     budget: float,
@@ -712,7 +740,7 @@ def persuasion_candidates(
     return sorted(result, key=lambda item: (-item.roi, item.candidate_id))
 
 
-__all__ = ["persuasion_candidates"]
+__all__ = ["persuasion_candidates", "public_response"]
 
 # End inline: src/starnet/policy/baseline.py
 
@@ -2456,6 +2484,120 @@ class StructuralPlanner:
         return plans[0] if plans else None
 
 
+def _public_adjacency(board: Blackboard) -> dict[int, set[int]]:
+    """Build an adjacency view from the already scanned public graph."""
+    adjacency = {node_id: set() for node_id in board.nodes}
+    for left, right in board.edges:
+        if left in adjacency and right in adjacency:
+            adjacency[left].add(right)
+            adjacency[right].add(left)
+    return adjacency
+
+
+def _public_structure_risk_features(board: Blackboard) -> tuple[float, float, float]:
+    """Return public-only peace share, positive mass and violent negative mass.
+
+    The masses use the same public ``degree + 1`` factor as the qualified
+    settlement relation.  They are screening features, not hidden-state
+    predictions: the response coefficient ``r`` is never consulted.
+    """
+    adjacency = _public_adjacency(board)
+    node_count = len(board.nodes)
+    if node_count == 0:
+        return 0.0, 0.0, 0.0
+    peace_share = sum(
+        node.persona == "和平" or node.w >= 0.0 for node in board.nodes.values()
+    ) / node_count
+    positive_mass = sum(
+        (len(adjacency[node_id]) + 1) * max(0.0, node.w)
+        for node_id, node in board.nodes.items()
+    )
+    violent_negative_mass = sum(
+        (len(adjacency[node_id]) + 1) * max(0.0, -node.w)
+        for node_id, node in board.nodes.items()
+        if node.persona == "暴力"
+    )
+    return peace_share, positive_mass, violent_negative_mass
+
+
+def public_positive_graph_gate_closed(board: Blackboard) -> bool:
+    """Return whether public evidence says topology is overwhelmingly positive."""
+    peace_share, positive_mass, violent_negative_mass = _public_structure_risk_features(board)
+    return (
+        peace_share >= 0.85
+        and positive_mass >= 2.0 * max(1.0, violent_negative_mass)
+    )
+
+
+def _public_negative_nonpeace(node: Any) -> bool:
+    """Recognize a publicly negative node without treating neutral as peace."""
+    return node.w < 0.0 and node.persona != "和平"
+
+
+def _component_influence_coefficients(board: Blackboard) -> dict[int, float]:
+    """Return the closed-form communication coefficients for this board."""
+    adjacency = _public_adjacency(board)
+    unseen = set(adjacency)
+    coefficients: dict[int, float] = {}
+    while unseen:
+        start = min(unseen)
+        component: list[int] = []
+        stack = [start]
+        unseen.remove(start)
+        while stack:
+            node_id = stack.pop()
+            component.append(node_id)
+            for neighbor in adjacency[node_id]:
+                if neighbor in unseen:
+                    unseen.remove(neighbor)
+                    stack.append(neighbor)
+        denominator = sum(len(adjacency[node_id]) + 1 for node_id in component)
+        factor = len(component) / denominator
+        coefficients.update(
+            {node_id: factor * (len(adjacency[node_id]) + 1) for node_id in component}
+        )
+    return coefficients
+
+
+def public_structure_risk_allowed(
+    board: Blackboard, action: Action, predicted_gain: float,
+) -> bool:
+    """Conservatively screen structure actions using public facts only.
+
+    A high-positive, peace-majority graph is treated as a fragile positive
+    propagation network: spending budget on topology changes is disabled even
+    if a point estimate gives a small positive gain.  Outside that gate, the
+    allowed action families are deliberately narrow and semantically tied to
+    the observed risk direction.  This avoids selecting a favorable-looking
+    shield/cut merely because it beats an uncertain response prior.
+    """
+    if not math.isfinite(predicted_gain) or predicted_gain <= 0.0:
+        return False
+    # ``peace_share`` includes publicly non-negative nodes.  The strict 0.85
+    # threshold is intentionally reserved for an overwhelmingly positive
+    # graph, so a mixed ER graph is not accidentally treated as WS-like.  A
+    # second mass check prevents a genuinely large violent-negative cluster
+    # from being hidden by the persona majority alone.
+    if public_positive_graph_gate_closed(board):
+        return False
+    if action.kind == "shield":
+        node = board.nodes.get(action.target_node_1)
+        return node is not None and _public_negative_nonpeace(node)
+    if action.kind == "cut" and action.target_node_2 is not None:
+        left = board.nodes.get(action.target_node_1)
+        right = board.nodes.get(action.target_node_2)
+        if left is None or right is None:
+            return False
+        return (
+            _public_negative_nonpeace(left)
+            and not _public_negative_nonpeace(right)
+        ) or (
+            _public_negative_nonpeace(right)
+            and not _public_negative_nonpeace(left)
+        )
+    return False
+
+
 class ExperimentalPublicGreedyPlanner:
     """One-step public-state action scorer for an explicit experiment.
 
@@ -2472,11 +2614,22 @@ class ExperimentalPublicGreedyPlanner:
         response_fn: Callable[[int, Any, int], float],
         *,
         candidate_limit: int = 24,
+        conservative_structure: bool = True,
+        min_observed_responses: int = 4,
+        structure_roi_margin: float = 1.25,
     ) -> None:
-        if candidate_limit <= 0:
-            raise ValueError("candidate_limit must be positive")
+        if (
+            candidate_limit <= 0
+            or min_observed_responses < 0
+            or not math.isfinite(structure_roi_margin)
+            or structure_roi_margin < 1.0
+        ):
+            raise ValueError("invalid public-greedy candidate or risk limits")
         self.response_fn = response_fn
         self.candidate_limit = candidate_limit
+        self.conservative_structure = conservative_structure
+        self.min_observed_responses = min_observed_responses
+        self.structure_roi_margin = structure_roi_margin
         self.predictor = SettlementPredictor(
             CalibrationProfile(gate_passed=False, model="component_degree_plus_one")
         )
@@ -2495,9 +2648,26 @@ class ExperimentalPublicGreedyPlanner:
         board: Blackboard,
         budget: float,
         failed_actions: Iterable[object] = (),
+        observed_response_count: int = 0,
     ) -> list[Candidate]:
         state = PredictiveState.from_blackboard(board)
         baseline = self.predictor.score(state)
+        public_influence = _component_influence_coefficients(board)
+        comm_rois: dict[int, float] = {}
+        for node_id, node in sorted(board.nodes.items()):
+            if node.comm_left is None or node.comm_left <= 0:
+                continue
+            turn = 4 - node.comm_left
+            if turn not in (1, 2, 3):
+                continue
+            action = Action("comm", node_id, prompt_id=1)
+            if not is_legal_action(action, board, budget):
+                continue
+            response = self.response_fn(node_id, node, turn)
+            if math.isfinite(float(response)):
+                comm_rois[node_id] = public_influence.get(node_id, 0.0) * max(
+                    0.0, float(response)
+                ) / action_cost(action)
         failed = set(failed_actions)
         hypotheses: list[tuple[Action, float | None, int | None]] = []
         for node_id, node in sorted(board.nodes.items()):
@@ -2521,8 +2691,48 @@ class ExperimentalPublicGreedyPlanner:
             if not is_legal_action(action, board, budget):
                 continue
             after = self.predictor.score(state.apply(action, delta))
-            gain = after - baseline
+            # Keep communication scores bit-for-bit on the same closed-form
+            # path as B1.  The predictor difference is mathematically equal,
+            # but tiny operation-order differences can otherwise reorder tied
+            # targets when the structure gate is closed.
+            gain = (
+                public_influence.get(action.target_node_1, 0.0) * float(delta)
+                if action.kind == "comm"
+                else after - baseline
+            )
             if not math.isfinite(gain) or gain <= 0.0:
+                continue
+            if (
+                self.conservative_structure
+                and action.kind in {"cut", "shield"}
+                and observed_response_count < self.min_observed_responses
+            ):
+                continue
+            if (
+                self.conservative_structure
+                and action.kind in {"cut", "shield"}
+            ):
+                # A shield and a communication on its target are mutually
+                # exclusive alternatives.  Do not let that soon-to-be-
+                # removed target's ROI hide a deterministic shield gain;
+                # cutting leaves both endpoints alive, so its comparison
+                # keeps the full communication set.
+                excluded = {action.target_node_1} if action.kind == "shield" else set()
+                alternative_comm_roi = max(
+                    (roi for node_id, roi in comm_rois.items() if node_id not in excluded),
+                    default=0.0,
+                )
+                if (
+                    alternative_comm_roi > 0.0
+                    and gain / action_cost(action)
+                    < self.structure_roi_margin * alternative_comm_roi
+                ):
+                    continue
+            if (
+                self.conservative_structure
+                and action.kind in {"cut", "shield"}
+                and not public_structure_risk_allowed(board, action, gain)
+            ):
                 continue
             result.append(
                 Candidate(
@@ -2537,7 +2747,7 @@ class ExperimentalPublicGreedyPlanner:
             )
         return sorted(
             result,
-            key=lambda item: (-item.roi, -item.score, item.candidate_id),
+            key=lambda item: (-round(item.roi, 10), -round(item.score, 10), item.candidate_id),
         )[: self.candidate_limit]
 
 
@@ -3226,10 +3436,16 @@ class RuntimeController:
             config=config,
             contest_llm_limit=self.stage.llm_limit,
         )
+        self._llm_scan_enabled = (
+            config.policy_mode is PolicyMode.PUBLIC_GREEDY
+            and self.commander.can_request_llm
+        )
         self.state = ControllerState.INIT
         self.analysis: GraphAnalysis | None = None
         self.candidates: dict[str, Candidate] = {}
         self.queue: list[str] = []
+        self.llm_accepted = 0
+        self.llm_fallbacks = 0
         # Store both plan IDs and immutable public Action identities.  A B4
         # plan may share a first action with other plans, so a rejected action
         # must suppress every such plan on the next replan.
@@ -3492,7 +3708,12 @@ class RuntimeController:
             if not any(value > 0.0 for value in voi.values()):
                 self._stop(StopReason.NO_POSITIVE_GAIN, budget)
                 return 1
-        action = self.scout.next_action(self.blackboard, voi=voi) if isinstance(self.scout, AdaptiveScout) else self.scout.next_action(self.blackboard)
+        if self._llm_scan_enabled:
+            action = self._choose_public_scan(budget)
+        elif isinstance(self.scout, AdaptiveScout):
+            action = self.scout.next_action(self.blackboard, voi=voi)
+        else:
+            action = self.scout.next_action(self.blackboard)
         if action is None:
             self._transition(ControllerState.ANALYZE, "scan_exhausted", budget)
             self._emit("scan.completed", budget, budget, {"blackboard": self.blackboard.snapshot()})
@@ -3503,7 +3724,11 @@ class RuntimeController:
 
         self._attempt_action(action, f"scan:{action.target_node_1}", budget)
         adaptive_checkpoint = isinstance(self.scout, AdaptiveScout) and self.scout.scan_count >= self.scout.initial_count
-        if self.scout.exhausted or adaptive_checkpoint:
+        if (
+            (self._llm_scan_enabled and len(self.blackboard.scanned_ids) >= self.node_count)
+            or (not self._llm_scan_enabled and self.scout.exhausted)
+            or adaptive_checkpoint
+        ):
             completed_budget = (
                 self._last_trace_budget_after
                 if self._last_trace_budget_after is not None
@@ -3527,6 +3752,52 @@ class RuntimeController:
                 {"blackboard": self.blackboard.snapshot()},
             )
         return 0
+
+    def _choose_public_scan(self, budget: float) -> Action | None:
+        """Ask the injected commander to select a legal public scan target."""
+        unknown = [node_id for node_id in range(1, self.node_count + 1)
+                   if self.blackboard.can_scan(node_id)]
+        if not unknown:
+            return None
+        incident = {node_id: 0 for node_id in unknown}
+        for left, right in self.blackboard.edges:
+            if left in incident:
+                incident[left] += 1
+            if right in incident:
+                incident[right] += 1
+        shortlist = sorted(unknown, key=lambda node_id: (-incident[node_id], node_id))[:4]
+        candidates = [
+            Candidate(
+                f"scan:{node_id}", Action("scan", node_id), 0,
+                float(incident[node_id] + 1), float(incident[node_id] + 1) / 0.5,
+                f"public frontier links {incident[node_id]}",
+                (f"scan:{node_id}",),
+            )
+            for node_id in shortlist
+        ]
+        analysis = GraphAnalysis(build_graph(self.blackboard), {}, {}, 0)
+        payload = self.commander.preview_payload(
+            candidates, budget, analysis, self.blackboard.state_version
+        ) if self.commander.can_request_llm else None
+        if payload is not None:
+            payload["stage"] = ControllerState.SCAN_ALL.value
+        before = self.commander.llm_calls
+        plan = self.commander.plan(
+            candidates=candidates, budget=budget, analysis=analysis,
+            request_payload=payload, state_version=self.blackboard.state_version,
+        )
+        self.blackboard.llm_attempts += self.commander.llm_calls - before
+        if self.commander.llm_calls > before:
+            if plan.source == "llm":
+                self.llm_accepted += 1
+            else:
+                self.llm_fallbacks += 1
+        selected_id = plan.candidate_ids[0] if plan.candidate_ids else candidates[0].candidate_id
+        selected = next(
+            (candidate.action for candidate in candidates if candidate.candidate_id == selected_id),
+            candidates[0].action,
+        )
+        return selected if is_legal_action(selected, self.blackboard, budget) else None
 
     def _execute_next(self, budget: float) -> int:
         if self.cmg_candidate is not None:
@@ -3836,8 +4107,13 @@ class RuntimeController:
         self.analysis = self.analyst.analyze(self.blackboard)
 
         if self.effective_policy_mode is PolicyMode.PUBLIC_GREEDY:
+            # In an overwhelmingly positive public graph, retain B1's
+            # already-tested response pooling.  On mixed/risky graphs, the
+            # experiment keeps a population prior for each untried target so
+            # one noisy observation cannot steer every remaining target.
+            public_response_fn = _response if public_positive_graph_gate_closed(self.blackboard) else public_response
             planner = ExperimentalPublicGreedyPlanner(
-                lambda node_id, node, turn: _response(
+                lambda node_id, node, turn: public_response_fn(
                     node_id,
                     node.persona,
                     turn,
@@ -3846,8 +4122,18 @@ class RuntimeController:
                     self.response_ledger,
                 ),
                 candidate_limit=max(24, self.config.structure_candidate_limit),
+                # Structure gains are directly recomputable from public
+                # scans; do not spend four profitable responses probing a
+                # node before allowing a clearly positive shield.
+                min_observed_responses=0,
+                structure_roi_margin=1.0,
             )
-            candidates = planner.candidates(self.blackboard, budget, self.failed_actions)
+            candidates = planner.candidates(
+                self.blackboard,
+                budget,
+                self.failed_actions,
+                observed_response_count=len(self.response_estimates),
+            )
             self.structural_planner = None
             self.structural_plans = {}
             self.candidates = {candidate.candidate_id: candidate for candidate in candidates}
@@ -3953,6 +4239,14 @@ class RuntimeController:
             self._emit_queue_revalidated("persuasion_heap", validation, budget)
             return
         assert self.analysis is not None
+        if self.effective_policy_mode is PolicyMode.PUBLIC_GREEDY and self.commander.can_request_llm:
+            # Keep the model's choice meaningful while bounding the cost of
+            # selecting a lower-ROI candidate on a noisy generation.
+            best_roi = max(candidate.roi for candidate in candidates)
+            candidates = [
+                candidate for candidate in candidates
+                if candidate.roi >= 0.98 * best_roi
+            ][:4]
         request_payload: Mapping[str, Any] | None = None
         if self.commander.can_request_llm and self.config.llm_schedule is not LLMSchedule.OFF and (
             self.config.llm_schedule is LLMSchedule.STEP or self._event_llm_pending
@@ -3975,6 +4269,11 @@ class RuntimeController:
             state_version=self.blackboard.state_version,
         )
         self.blackboard.llm_attempts += self.commander.llm_calls - llm_before
+        if self.commander.llm_calls > llm_before:
+            if plan.source == "llm":
+                self.llm_accepted += 1
+            else:
+                self.llm_fallbacks += 1
         if request_payload is not None:
             self._event_llm_pending = False
         if plan.request_payload is not None and plan.error is None:
@@ -4287,18 +4586,7 @@ ModelBase = _starnet_runtime.ModelBase
 
 
 
-class BaseStarAgent(AgentBase):
-    """没有自主环境权限的角色基类，所有实际动作都由控制器再次校验。"""
-
-    def step(self) -> None:
-        return None
-
-
-class ScoutAnalystAgent(BaseStarAgent):
-    """Produces only Python-validated scan facts and candidate evidence."""
-
-
-class CommanderAgent(BaseStarAgent):
+class CommanderAgent(AgentBase):
     """One direct CaseVO Prompt call; never uses ThoughtChain retries."""
 
     def __init__(self, unique_id: int, model: ModelBase, description: dict[str, Any]) -> None:
@@ -4322,18 +4610,18 @@ class CommanderAgent(BaseStarAgent):
             raise ValueError("commander evidence_ids must be a list")
         return decision
 
-
-class ExecutorAgent(BaseStarAgent):
-    """The controller remains the final public-API and action validator."""
+    def step(self) -> None:
+        """The host model drives the role through ``rank_candidates``."""
 
 
 class ParticipantSquadModel(ModelBase):
     """官方固定签名的模型入口。"""
 
     def __init__(self, host_env: object, person_list: list[dict[str, Any]], llm: object) -> None:
+        # One CaseVO agent owns every final scan/intervention choice. Python
+        # supplies analysis and validation without creating inactive agents.
         agent_graph = nx.Graph()
-        agent_graph.add_nodes_from((0, 1, 2))
-        agent_graph.add_edges_from(((0, 1), (1, 2)))
+        agent_graph.add_node(0)
         prompt_path = Path(__file__).resolve().parent / "prompt"
         if _starnet_framework == "documented":
             super().__init__(agent_graph, llm, prompt_path=str(prompt_path.resolve()), reflect_file="reflect.txt")
@@ -4343,15 +4631,13 @@ class ParticipantSquadModel(ModelBase):
             super().__init__(agent_graph, llm)
         self.env = host_env
 
-        descriptions = list(person_list)
-        while len(descriptions) < 3:
-            descriptions.append({"role": "星网策略角色"})
-        self.scout_agent = ScoutAnalystAgent(0, self, descriptions[0], None)
-        self.commander_agent = CommanderAgent(2, self, descriptions[2])
-        self.executor_agent = ExecutorAgent(1, self, descriptions[1], None)
-        self.add_agent(self.scout_agent, 0)
-        self.add_agent(self.executor_agent, 1)
-        self.add_agent(self.commander_agent, 2)
+        descriptions = [item for item in person_list if isinstance(item, dict)]
+        commander_description = next(
+            (item for item in descriptions if item.get("role") == "CommanderAgent"),
+            descriptions[-1] if descriptions else {"role": "CommanderAgent"},
+        )
+        self.commander_agent = CommanderAgent(0, self, commander_description)
+        self.add_agent(self.commander_agent, 0)
 
         experimental_mode = next(
             (
@@ -4368,7 +4654,10 @@ class ParticipantSquadModel(ModelBase):
                 enable_cut=True,
                 enable_communicate=True,
                 p0_exclusive=False,
-                max_llm_calls=0,
+                # One bounded model choice for each scan and intervention.
+                # A 50/100-node session needs at most 87/175 ordinary
+                # choices. The controller also enforces the stage cap.
+                max_llm_calls=240,
                 policy_mode=PolicyMode.PUBLIC_GREEDY,
             )
 
