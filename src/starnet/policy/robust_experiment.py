@@ -13,7 +13,7 @@ from starnet.policy.cmg import PredictiveState
 
 
 SCENARIO_FIRST_RESPONSES = (3.0, 12.75, 22.5)
-GATE_MODES = frozenset({"strict", "bounded"})
+GATE_MODES = frozenset({"strict", "bounded", "strict_anchor", "bounded_anchor"})
 
 
 @dataclass(frozen=True)
@@ -40,6 +40,7 @@ def assess_structure(
     proposal: BudgetPlan,
     *,
     mode: str,
+    fallback_action: Action | None = None,
 ) -> StructureAssessment:
     """Compare one P6 structure prefix with equal-resource persuasion tails.
 
@@ -81,13 +82,30 @@ def assess_structure(
         control = communication_tail(
             initial, budget, response_fn, remaining_steps, include_actions=False,
         ).score
+        if (
+            mode.endswith("_anchor")
+            and
+            fallback_action is not None
+            and fallback_action.kind in {"cut", "shield"}
+            and is_legal_action(fallback_action, board, budget)
+            and remaining_steps > 0
+        ):
+            fallback_state = initial.apply(fallback_action)
+            fallback_score = communication_tail(
+                fallback_state,
+                budget - action_cost(fallback_action),
+                response_fn,
+                remaining_steps - 1,
+                include_actions=False,
+            ).score
+            control = max(control, fallback_score)
         candidate = communication_tail(
             changed, available, response_fn, remaining_steps - len(prefix),
             include_actions=False,
         ).score
         deltas.append(candidate - control)
     accepted = (
-        min(deltas) >= -1e-9 if mode == "strict"
+        min(deltas) >= -1e-9 if mode in {"strict", "strict_anchor"}
         else sum(deltas) / len(deltas) > 1e-9 and min(deltas) >= -5.0 - 1e-9
     )
     return StructureAssessment(accepted, tuple(deltas), prefix)

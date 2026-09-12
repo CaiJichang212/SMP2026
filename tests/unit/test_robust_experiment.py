@@ -50,6 +50,27 @@ class RobustExperimentTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             assess_structure(board, 5.0, 2, {2: float("nan")}, BudgetPlan(0.0, (Action("shield", 1),)), mode="strict")
 
+    def test_public_structure_fallback_is_part_of_control(self) -> None:
+        board = Blackboard(node_count=3)
+        board.record_scan(1, {"w": -60.0, "persona": "暴力", "comm_left": 3, "neighbors": [2]})
+        board.record_scan(2, {"w": -20.0, "persona": "暴力", "comm_left": 3, "neighbors": [1, 3]})
+        board.record_scan(3, {"w": 20.0, "persona": "和平", "comm_left": 3, "neighbors": [2]})
+        weaker = BudgetPlan(0.0, (Action("shield", 2),))
+        known_zero = {1: 0.0, 2: 0.0, 3: 0.0}
+        without_fallback = assess_structure(board, 5.0, 1, known_zero, weaker, mode="strict")
+        with_fallback = assess_structure(
+            board, 5.0, 1, known_zero, weaker, mode="strict_anchor",
+            fallback_action=Action("shield", 1),
+        )
+        legacy_with_ignored_fallback = assess_structure(
+            board, 5.0, 1, known_zero, weaker, mode="strict",
+            fallback_action=Action("shield", 1),
+        )
+        self.assertTrue(without_fallback.accepted)
+        self.assertEqual(legacy_with_ignored_fallback, without_fallback)
+        self.assertFalse(with_fallback.accepted)
+        self.assertTrue(all(delta < 0 for delta in with_fallback.deltas))
+
 
 if __name__ == "__main__":
     unittest.main()

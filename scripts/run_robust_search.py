@@ -111,7 +111,9 @@ def run_robust(
             if proposal.actions and proposal.actions[0].kind in {"cut", "shield"}:
                 proposed += 1
                 assessment = assess_structure(
-                    board, budget, limit - steps, first_responses, proposal, mode=mode,
+                    board, budget, limit - steps, first_responses, proposal,
+                    mode=mode,
+                    fallback_action=action if mode.endswith("_anchor") else None,
                 )
                 if assessment.accepted:
                     action = proposal.actions[0]
@@ -146,6 +148,11 @@ def main() -> int:
     parser.add_argument("--start", type=int, default=301)
     parser.add_argument("--repetitions", type=int, default=3)
     parser.add_argument("--confirm", action="store_true")
+    parser.add_argument(
+        "--variants", nargs="+",
+        choices=("p6_depth2", "strict", "bounded", "strict_anchor", "bounded_anchor"),
+        default=("p6_depth2", "strict", "bounded"),
+    )
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     allowed = range(401, 406) if args.confirm else range(301, 304)
@@ -157,13 +164,14 @@ def main() -> int:
         for repetition in range(args.start, args.start + args.repetitions):
             seed = generator(family, 50, repetition)
             plan_cache: dict[tuple, object] = {}
-            results = {
-                "public_greedy": run_variant(seed, "public_greedy"),
-                "p6_depth2": run_search(seed, depth=2, width=4),
-                "strict": run_robust(seed, mode="strict", plan_cache=plan_cache),
-                "bounded": run_robust(seed, mode="bounded", plan_cache=plan_cache),
-            }
-            for arm in ("p6_depth2", "strict", "bounded"):
+            results = {"public_greedy": run_variant(seed, "public_greedy")}
+            for arm in args.variants:
+                results[arm] = (
+                    run_search(seed, depth=2, width=4)
+                    if arm == "p6_depth2"
+                    else run_robust(seed, mode=arm, plan_cache=plan_cache)
+                )
+            for arm in args.variants:
                 row = {
                     "family": family, "repetition": repetition, "variant": arm,
                     "baseline": results["public_greedy"], "candidate": results[arm],
@@ -173,7 +181,7 @@ def main() -> int:
                 print(json.dumps(row, ensure_ascii=False), flush=True)
 
     summary = {}
-    for arm in ("p6_depth2", "strict", "bounded"):
+    for arm in args.variants:
         arm_rows = [row for row in rows if row["variant"] == arm]
         deltas = [row["delta"] for row in arm_rows]
         family_means = {
@@ -196,8 +204,10 @@ def main() -> int:
     report = {
         "config": {"block": args.block, "start": args.start, "repetitions": args.repetitions,
                    "confirm": args.confirm, "node_count": 50, "depth": 2, "width": 4,
+                   "variants": list(args.variants),
                    "scenario_first_responses": [3.0, 12.75, 22.5],
-                   "strict_min_delta": 0.0, "bounded_min_delta": -5.0},
+                   "strict_anchor_min_delta": 0.0,
+                   "bounded_anchor_min_delta": -5.0},
         "rows": rows, "summary": summary, "platform_score": None,
         "production_enabled": False,
     }
