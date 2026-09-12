@@ -39,5 +39,14 @@
   "failure_policy": "reject production promotion; retain isolated experiment evidence",
   "skills": ["github/awesome-copilot/skills/autoresearch", "K-Dense-AI/scientific-agent-skills/skills/experimental-design"],
   "scope": ["src/starnet/policy/*_experiment.py", "src/starnet/experiments", "scripts", "tests", "experiments/manifests", "experiments/reports"],
-  "constraints": ["public environment API only", "no hidden seed fields in policy", "no predictive writes to factual Blackboard", "no manual generated submission edits", "no credentials or raw assets committed"]
+  "constraints": ["public environment API only", "no hidden seed fields in policy", "no predictive writes to factual Blackboard", "no manual generated submission edits", "no credentials or raw assets committed"],
+  "development_amendment_1": {
+    "reason": "Initial strict/bounded stress tests compared only against no-structure tails and regressed on two bridge families; current fallback can itself select a superior structural action.",
+    "new_variants": ["strict_anchor", "bounded_anchor"],
+    "comparison": "max(no-structure tail, current public_greedy structural first action plus equal-resource communication tail) in each scenario",
+    "thresholds": "unchanged strict/bounded thresholds",
+    "cohort": "reuse development 301-303 for exploratory iteration; do not call it independent confirmation",
+    "confirmation_401_405": "unread and reserved",
+    "prior_results": "retain original reports without overwriting"
+  }
 }
