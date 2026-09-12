@@ -150,6 +150,38 @@ class StructuralPlannerTests(unittest.TestCase):
         single = planner.plan_candidates(graph, 6.0, 2, PolicyMode.B3_SINGLE_STRUCTURE)
         self.assertFalse(any(plan.structure_actions and plan.gain > 0 for plan in single))
 
+    def test_opt_in_pair_cut_experiment_keeps_jointly_useful_cuts_pruned_by_beam(self) -> None:
+        # The two useful edges lie beyond B4's class-balanced root cut set.
+        # Neither singleton changes the score.  This models a negative cluster
+        # that is only separated once both boundary links are removed.
+        edges = [(node, node + 1) for node in range(1, 15)]
+        graph = board({node: (0.0, "中立", 0) for node in range(1, 16)}, edges)
+        target = {(13, 14), (14, 15)}
+
+        def only_joint_pair(state: PredictiveState) -> float:
+            return 10.0 if target.isdisjoint(state.edges) and not state.dead_nodes else 0.0
+
+        ordinary = StructuralPlanner(
+            active_profile(), depth=2, width=1, candidate_limit=12, score_fn=only_joint_pair,
+        ).plan_candidates(graph, 6.0, 2, PolicyMode.B4_BEAM_STRUCTURE)
+        self.assertFalse(any(plan.gain > 0.0 for plan in ordinary))
+
+        experimental = StructuralPlanner(
+            active_profile(), depth=2, width=1, candidate_limit=12,
+            enable_pair_cut_experiment=True, pair_cut_edge_limit=16, pair_cut_plan_limit=6,
+            score_fn=only_joint_pair,
+        ).plan_candidates(graph, 6.0, 2, PolicyMode.B4_BEAM_STRUCTURE)
+        pair = next(plan for plan in experimental if plan.gain > 0.0)
+        self.assertEqual(set(pair.structure_actions), {
+            Action("cut", 13, 14), Action("cut", 14, 15),
+        })
+        self.assertEqual(pair.cost, 6.0)
+        self.assertTrue(all(action.kind == "cut" for action in pair.actions))
+
+    def test_pair_cut_experiment_limits_are_bounded(self) -> None:
+        with self.assertRaises(ValueError):
+            StructuralPlanner(active_profile(), enable_pair_cut_experiment=True, pair_cut_edge_limit=17)
+
     def test_persuasion_is_only_scheduled_after_structure_and_never_on_shielded_node(self) -> None:
         graph = board({1: (-2.0, "暴力", 0), 2: (3.0, "和平", 3), 3: (3.0, "和平", 3)},
                       [(1, 2), (2, 3)])

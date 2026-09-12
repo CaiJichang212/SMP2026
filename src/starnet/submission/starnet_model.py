@@ -27,6 +27,38 @@ from starnet.runtime.stage import ContestStage
 from starnet.policy.config import DEFAULT_POLICY_CONFIG, PolicyConfig, PolicyMode
 
 
+def _runtime_config_for_descriptions(
+    descriptions: list[dict[str, Any]], commander_description: dict[str, Any],
+) -> PolicyConfig:
+    """Build the sole runtime policy configuration from public persona data."""
+    experimental_mode = next(
+        (
+            description.get("experimental_policy_mode")
+            for description in descriptions
+            if isinstance(description, dict) and description.get("experimental_policy_mode")
+        ),
+        None,
+    )
+    if experimental_mode != PolicyMode.PUBLIC_GREEDY.value:
+        return DEFAULT_POLICY_CONFIG
+    return PolicyConfig(
+        enable_shield=True,
+        enable_cut=True,
+        enable_communicate=True,
+        p0_exclusive=False,
+        # One bounded model choice for each scan and intervention.  A 50/100-
+        # node session needs at most 87/175 ordinary choices; the controller
+        # also enforces the stage cap.
+        max_llm_calls=240,
+        policy_mode=PolicyMode.PUBLIC_GREEDY,
+        # A platform trial must opt in from the one agent that owns the final
+        # decision.  Flags on unrelated descriptions cannot alter the policy.
+        enable_public_comm_shield_guard=(
+            commander_description.get("experimental_public_comm_shield_guard") is True
+        ),
+    )
+
+
 class CommanderAgent(AgentBase):
     """One direct CaseVO Prompt call; never uses ThoughtChain retries."""
 
@@ -80,27 +112,7 @@ class ParticipantSquadModel(ModelBase):
         self.commander_agent = CommanderAgent(0, self, commander_description)
         self.add_agent(self.commander_agent, 0)
 
-        experimental_mode = next(
-            (
-                description.get("experimental_policy_mode")
-                for description in descriptions
-                if isinstance(description, dict) and description.get("experimental_policy_mode")
-            ),
-            None,
-        )
-        runtime_config = DEFAULT_POLICY_CONFIG
-        if experimental_mode == PolicyMode.PUBLIC_GREEDY.value:
-            runtime_config = PolicyConfig(
-                enable_shield=True,
-                enable_cut=True,
-                enable_communicate=True,
-                p0_exclusive=False,
-                # One bounded model choice for each scan and intervention.
-                # A 50/100-node session needs at most 87/175 ordinary
-                # choices. The controller also enforces the stage cap.
-                max_llm_calls=240,
-                policy_mode=PolicyMode.PUBLIC_GREEDY,
-            )
+        runtime_config = _runtime_config_for_descriptions(descriptions, commander_description)
 
         self.controller = RuntimeController(
             host_env,

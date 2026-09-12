@@ -40,9 +40,9 @@ class TraceEnvironment:
         self.calls.append(("comm", node_id, prompt_id))
         if self.budget < 2.0:
             return {"status": "budget_exhausted"}
-        self.budget -= 2.0
         if self.reject_communication:
             return {"status": "max_comm_reached"}
+        self.budget -= 2.0
         self.nodes[node_id]["w"] = float(self.nodes[node_id]["w"]) + 1.0
         self.nodes[node_id]["comm_left"] = int(self.nodes[node_id]["comm_left"]) - 1
         return {"status": "success", "new_w": self.nodes[node_id]["w"]}

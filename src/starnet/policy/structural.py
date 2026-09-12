@@ -101,14 +101,25 @@ class StructuralPlanner:
         depth: int = 2,
         width: int = 4,
         candidate_limit: int = 12,
+        enable_pair_cut_experiment: bool = False,
+        pair_cut_edge_limit: int = 16,
+        pair_cut_plan_limit: int = 6,
         predictor: SettlementPredictor | None = None,
         score_fn: Callable[[PredictiveState], float] | None = None,
     ) -> None:
         if depth <= 0 or width <= 0 or candidate_limit <= 0:
             raise ValueError("beam and candidate limits must be positive")
+        if pair_cut_edge_limit < 2 or pair_cut_edge_limit > 16 or pair_cut_plan_limit <= 0:
+            raise ValueError("invalid pair-cut experiment limits")
         self.profile = profile
         self.ledger = ledger or ResponseLedger()
         self.depth, self.width, self.candidate_limit = depth, width, candidate_limit
+        # This is deliberately a constructor-only experiment flag.  No
+        # runtime/default configuration enables it, so B1 and ordinary B4
+        # keep their established candidate set and cost profile.
+        self.enable_pair_cut_experiment = enable_pair_cut_experiment
+        self.pair_cut_edge_limit = pair_cut_edge_limit
+        self.pair_cut_plan_limit = pair_cut_plan_limit
         self.predictor = predictor or SettlementPredictor(profile)
         self._score_fn = score_fn
         self._score_cache: dict[tuple[object, ...], float] = {}
@@ -209,6 +220,57 @@ class StructuralPlanner:
 
     # Names kept deliberately small for experiment drivers and notebooks.
     score_actions = structure_candidates
+
+    def _pair_cut_sequences(
+        self, initial: PredictiveState, budget: float,
+    ) -> tuple[tuple[Action, Action], ...]:
+        """Return bounded legal cut pairs ranked by their joint topology gain.
+
+        Pair scoring is exact for the configured settlement model.  It is an
+        opt-in experiment for interactions which a singleton screen cannot
+        observe (for example, two cuts needed to isolate a harmful cluster).
+        At most 16 edges and C(16, 2)=120 pair states are evaluated.
+        """
+        scored_edges = [
+            item for item in self._structure_scores(initial, budget)
+            if item.action.kind == "cut"
+        ]
+        # Give endpoints with publicly negative opinion a deterministic
+        # priority, then retain the existing calibrated singleton order.  The
+        # later joint score, rather than this screen, decides which pairs run.
+        def edge_key(item: StructuralActionScore) -> tuple[float, float, str]:
+            left = initial.nodes[item.action.target_node_1]
+            assert item.action.target_node_2 is not None
+            right = initial.nodes[item.action.target_node_2]
+            negative_mass = max(0.0, -left.w) + max(0.0, -right.w)
+            return (-negative_mass, -item.gain, _action_id(item.action))
+
+        edges = sorted(scored_edges, key=edge_key)[: self.pair_cut_edge_limit]
+        baseline = self._score(initial)
+        pairs: list[tuple[float, str, tuple[Action, Action]]] = []
+        for first_index, first_item in enumerate(edges):
+            first = first_item.action
+            first_state = initial.apply(first)
+            first_board = first_state.to_blackboard()
+            first_budget = budget - action_cost(first)
+            for second_item in edges[first_index + 1:]:
+                # This experiment is specifically for complementarities that
+                # a greedy singleton screen rejects.  Ordinary profitable
+                # cuts remain the responsibility of the regular beam.
+                if first_item.gain > 0.0 or second_item.gain > 0.0:
+                    continue
+                second = second_item.action
+                # The second action is checked against the state after the
+                # first cut.  This prevents stale-edge attempts, which spend
+                # budget in the environment even when they return None.
+                if not is_legal_action(second, first_board, first_budget):
+                    continue
+                joint_gain = self._score(first_state.apply(second)) - baseline
+                if math.isfinite(joint_gain):
+                    sequence = (first, second)
+                    pairs.append((joint_gain, "|".join(_action_id(a) for a in sequence), sequence))
+        pairs.sort(key=lambda item: (-item[0], item[1]))
+        return tuple(item[2] for item in pairs[: self.pair_cut_plan_limit])
 
     def _response_delta(self, state: PredictiveState, action: Action) -> float | None:
         node = state.nodes.get(action.target_node_1)
@@ -379,6 +441,14 @@ class StructuralPlanner:
         pool = list(self.structure_candidates(board, budget))
         beam: list[tuple[PredictiveState, tuple[Action, ...]]] = [(initial, ())]
         terminals: list[PlanCandidate] = [baseline]
+        if self.enable_pair_cut_experiment and self.depth >= 2 and remaining_steps >= 2:
+            # Evaluate this small set before the beam.  A normal beam ranks
+            # partial paths by singleton value and can prune an intentionally
+            # loss-making first cut even when its two-cut terminal is useful.
+            for sequence in self._pair_cut_sequences(initial, budget):
+                plan = self._make_plan(initial, sequence, budget, remaining_steps, baseline_score)
+                if plan is not None and plan.conservative_gain > 0.0:
+                    terminals.append(plan)
         for _depth in range(min(self.depth, remaining_steps)):
             expanded: list[tuple[float, str, PredictiveState, tuple[Action, ...]]] = []
             for state, sequence in beam:
@@ -560,12 +630,14 @@ class ExperimentalPublicGreedyPlanner:
         conservative_structure: bool = True,
         min_observed_responses: int = 4,
         structure_roi_margin: float = 1.25,
+        defer_comm_if_shieldable: bool = False,
     ) -> None:
         if (
             candidate_limit <= 0
             or min_observed_responses < 0
             or not math.isfinite(structure_roi_margin)
             or structure_roi_margin < 1.0
+            or not isinstance(defer_comm_if_shieldable, bool)
         ):
             raise ValueError("invalid public-greedy candidate or risk limits")
         self.response_fn = response_fn
@@ -573,6 +645,7 @@ class ExperimentalPublicGreedyPlanner:
         self.conservative_structure = conservative_structure
         self.min_observed_responses = min_observed_responses
         self.structure_roi_margin = structure_roi_margin
+        self.defer_comm_if_shieldable = defer_comm_if_shieldable
         self.predictor = SettlementPredictor(
             CalibrationProfile(gate_passed=False, model="component_degree_plus_one")
         )
@@ -688,6 +761,19 @@ class ExperimentalPublicGreedyPlanner:
                     evidence_ids=(f"public-score:{candidate_id}",),
                 )
             )
+        if self.defer_comm_if_shieldable:
+            shieldable_targets = {
+                candidate.action.target_node_1
+                for candidate in result
+                if candidate.action.kind == "shield" and candidate.score > 0.0
+            }
+            result = [
+                candidate for candidate in result
+                if not (
+                    candidate.action.kind == "comm"
+                    and candidate.action.target_node_1 in shieldable_targets
+                )
+            ]
         return sorted(
             result,
             key=lambda item: (-round(item.roi, 10), -round(item.score, 10), item.candidate_id),

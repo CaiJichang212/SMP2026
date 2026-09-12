@@ -67,11 +67,11 @@ class FakeStarNetEnvironment:
         node = self.nodes[node_id]
         if self.budget < 2.0:
             return {"status": "budget_exhausted"}
-        self.budget -= 2.0
         if self.reject_communication:
             return {"status": "max_comm_reached"}
         if int(node["comm_left"]) <= 0:
             return {"status": "max_comm_reached"}
+        self.budget -= 2.0
         node["comm_left"] = int(node["comm_left"]) - 1
         node["w"] = float(node["w"]) + 1.0
         return {"status": "success", "new_w": node["w"]}

@@ -1089,6 +1089,7 @@ class RuntimeController:
                 # node before allowing a clearly positive shield.
                 min_observed_responses=0,
                 structure_roi_margin=1.0,
+                defer_comm_if_shieldable=self.config.enable_public_comm_shield_guard,
             )
             candidates = planner.candidates(
                 self.blackboard,

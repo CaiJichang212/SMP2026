@@ -359,6 +359,10 @@ class PolicyConfig:
     structure_depth: int = 2
     structure_width: int = 4
     structure_candidate_limit: int = 12
+    # P4 experiment: suppress a communication when the exact same public
+    # state already exposes a positive, legal shield alternative.  This is
+    # opt-in so prior PUBLIC_GREEDY arms remain reproducible.
+    enable_public_comm_shield_guard: bool = False
     adaptive_initial_preliminary: int = 4
     adaptive_initial_final: int = 8
 
@@ -382,6 +386,8 @@ class PolicyConfig:
             )
         if not isinstance(self.llm_schedule, LLMSchedule):
             raise ValueError("llm_schedule must be an LLMSchedule")
+        if not isinstance(self.enable_public_comm_shield_guard, bool):
+            raise ValueError("enable_public_comm_shield_guard must be a bool")
         for name in ("structure_depth", "structure_width", "structure_candidate_limit",
                      "adaptive_initial_preliminary", "adaptive_initial_final"):
             value = getattr(self, name)
@@ -755,9 +761,9 @@ from typing import Any, Protocol
 
 class StarNetEnvironment(Protocol):
     def scan_node(self, node_id: int) -> dict[str, Any] | None: ...
-    def communicate(self, node_id: int, prompt_id: int) -> dict[str, Any]: ...
-    def cut_link(self, left: int, right: int) -> bool: ...
-    def shield_node(self, node_id: int) -> bool: ...
+    def communicate(self, node_id: int, prompt_id: int) -> dict[str, Any] | None: ...
+    def cut_link(self, left: int, right: int) -> bool | None: ...
+    def shield_node(self, node_id: int) -> bool | None: ...
 
 
 @dataclass(frozen=True)
@@ -792,6 +798,8 @@ def apply_action_outcome(
     if action.kind == "comm":
         assert action.prompt_id is not None
         response = env.communicate(action.target_node_1, action.prompt_id)
+        if not isinstance(response, dict):
+            return ActionOutcome(action=action, succeeded=False, raw_response=response)
         return ActionOutcome(
             action=action,
             succeeded=blackboard.record_communication(action.target_node_1, response),
@@ -2158,14 +2166,25 @@ class StructuralPlanner:
         depth: int = 2,
         width: int = 4,
         candidate_limit: int = 12,
+        enable_pair_cut_experiment: bool = False,
+        pair_cut_edge_limit: int = 16,
+        pair_cut_plan_limit: int = 6,
         predictor: SettlementPredictor | None = None,
         score_fn: Callable[[PredictiveState], float] | None = None,
     ) -> None:
         if depth <= 0 or width <= 0 or candidate_limit <= 0:
             raise ValueError("beam and candidate limits must be positive")
+        if pair_cut_edge_limit < 2 or pair_cut_edge_limit > 16 or pair_cut_plan_limit <= 0:
+            raise ValueError("invalid pair-cut experiment limits")
         self.profile = profile
         self.ledger = ledger or ResponseLedger()
         self.depth, self.width, self.candidate_limit = depth, width, candidate_limit
+        # This is deliberately a constructor-only experiment flag.  No
+        # runtime/default configuration enables it, so B1 and ordinary B4
+        # keep their established candidate set and cost profile.
+        self.enable_pair_cut_experiment = enable_pair_cut_experiment
+        self.pair_cut_edge_limit = pair_cut_edge_limit
+        self.pair_cut_plan_limit = pair_cut_plan_limit
         self.predictor = predictor or SettlementPredictor(profile)
         self._score_fn = score_fn
         self._score_cache: dict[tuple[object, ...], float] = {}
@@ -2266,6 +2285,57 @@ class StructuralPlanner:
 
     # Names kept deliberately small for experiment drivers and notebooks.
     score_actions = structure_candidates
+
+    def _pair_cut_sequences(
+        self, initial: PredictiveState, budget: float,
+    ) -> tuple[tuple[Action, Action], ...]:
+        """Return bounded legal cut pairs ranked by their joint topology gain.
+
+        Pair scoring is exact for the configured settlement model.  It is an
+        opt-in experiment for interactions which a singleton screen cannot
+        observe (for example, two cuts needed to isolate a harmful cluster).
+        At most 16 edges and C(16, 2)=120 pair states are evaluated.
+        """
+        scored_edges = [
+            item for item in self._structure_scores(initial, budget)
+            if item.action.kind == "cut"
+        ]
+        # Give endpoints with publicly negative opinion a deterministic
+        # priority, then retain the existing calibrated singleton order.  The
+        # later joint score, rather than this screen, decides which pairs run.
+        def edge_key(item: StructuralActionScore) -> tuple[float, float, str]:
+            left = initial.nodes[item.action.target_node_1]
+            assert item.action.target_node_2 is not None
+            right = initial.nodes[item.action.target_node_2]
+            negative_mass = max(0.0, -left.w) + max(0.0, -right.w)
+            return (-negative_mass, -item.gain, _action_id(item.action))
+
+        edges = sorted(scored_edges, key=edge_key)[: self.pair_cut_edge_limit]
+        baseline = self._score(initial)
+        pairs: list[tuple[float, str, tuple[Action, Action]]] = []
+        for first_index, first_item in enumerate(edges):
+            first = first_item.action
+            first_state = initial.apply(first)
+            first_board = first_state.to_blackboard()
+            first_budget = budget - action_cost(first)
+            for second_item in edges[first_index + 1:]:
+                # This experiment is specifically for complementarities that
+                # a greedy singleton screen rejects.  Ordinary profitable
+                # cuts remain the responsibility of the regular beam.
+                if first_item.gain > 0.0 or second_item.gain > 0.0:
+                    continue
+                second = second_item.action
+                # The second action is checked against the state after the
+                # first cut.  This prevents stale-edge attempts, which spend
+                # budget in the environment even when they return None.
+                if not is_legal_action(second, first_board, first_budget):
+                    continue
+                joint_gain = self._score(first_state.apply(second)) - baseline
+                if math.isfinite(joint_gain):
+                    sequence = (first, second)
+                    pairs.append((joint_gain, "|".join(_action_id(a) for a in sequence), sequence))
+        pairs.sort(key=lambda item: (-item[0], item[1]))
+        return tuple(item[2] for item in pairs[: self.pair_cut_plan_limit])
 
     def _response_delta(self, state: PredictiveState, action: Action) -> float | None:
         node = state.nodes.get(action.target_node_1)
@@ -2436,6 +2506,14 @@ class StructuralPlanner:
         pool = list(self.structure_candidates(board, budget))
         beam: list[tuple[PredictiveState, tuple[Action, ...]]] = [(initial, ())]
         terminals: list[PlanCandidate] = [baseline]
+        if self.enable_pair_cut_experiment and self.depth >= 2 and remaining_steps >= 2:
+            # Evaluate this small set before the beam.  A normal beam ranks
+            # partial paths by singleton value and can prune an intentionally
+            # loss-making first cut even when its two-cut terminal is useful.
+            for sequence in self._pair_cut_sequences(initial, budget):
+                plan = self._make_plan(initial, sequence, budget, remaining_steps, baseline_score)
+                if plan is not None and plan.conservative_gain > 0.0:
+                    terminals.append(plan)
         for _depth in range(min(self.depth, remaining_steps)):
             expanded: list[tuple[float, str, PredictiveState, tuple[Action, ...]]] = []
             for state, sequence in beam:
@@ -2617,12 +2695,14 @@ class ExperimentalPublicGreedyPlanner:
         conservative_structure: bool = True,
         min_observed_responses: int = 4,
         structure_roi_margin: float = 1.25,
+        defer_comm_if_shieldable: bool = False,
     ) -> None:
         if (
             candidate_limit <= 0
             or min_observed_responses < 0
             or not math.isfinite(structure_roi_margin)
             or structure_roi_margin < 1.0
+            or not isinstance(defer_comm_if_shieldable, bool)
         ):
             raise ValueError("invalid public-greedy candidate or risk limits")
         self.response_fn = response_fn
@@ -2630,6 +2710,7 @@ class ExperimentalPublicGreedyPlanner:
         self.conservative_structure = conservative_structure
         self.min_observed_responses = min_observed_responses
         self.structure_roi_margin = structure_roi_margin
+        self.defer_comm_if_shieldable = defer_comm_if_shieldable
         self.predictor = SettlementPredictor(
             CalibrationProfile(gate_passed=False, model="component_degree_plus_one")
         )
@@ -2745,6 +2826,19 @@ class ExperimentalPublicGreedyPlanner:
                     evidence_ids=(f"public-score:{candidate_id}",),
                 )
             )
+        if self.defer_comm_if_shieldable:
+            shieldable_targets = {
+                candidate.action.target_node_1
+                for candidate in result
+                if candidate.action.kind == "shield" and candidate.score > 0.0
+            }
+            result = [
+                candidate for candidate in result
+                if not (
+                    candidate.action.kind == "comm"
+                    and candidate.action.target_node_1 in shieldable_targets
+                )
+            ]
         return sorted(
             result,
             key=lambda item: (-round(item.roi, 10), -round(item.score, 10), item.candidate_id),
@@ -4127,6 +4221,7 @@ class RuntimeController:
                 # node before allowing a clearly positive shield.
                 min_observed_responses=0,
                 structure_roi_margin=1.0,
+                defer_comm_if_shieldable=self.config.enable_public_comm_shield_guard,
             )
             candidates = planner.candidates(
                 self.blackboard,
@@ -4586,6 +4681,38 @@ ModelBase = _starnet_runtime.ModelBase
 
 
 
+def _runtime_config_for_descriptions(
+    descriptions: list[dict[str, Any]], commander_description: dict[str, Any],
+) -> PolicyConfig:
+    """Build the sole runtime policy configuration from public persona data."""
+    experimental_mode = next(
+        (
+            description.get("experimental_policy_mode")
+            for description in descriptions
+            if isinstance(description, dict) and description.get("experimental_policy_mode")
+        ),
+        None,
+    )
+    if experimental_mode != PolicyMode.PUBLIC_GREEDY.value:
+        return DEFAULT_POLICY_CONFIG
+    return PolicyConfig(
+        enable_shield=True,
+        enable_cut=True,
+        enable_communicate=True,
+        p0_exclusive=False,
+        # One bounded model choice for each scan and intervention.  A 50/100-
+        # node session needs at most 87/175 ordinary choices; the controller
+        # also enforces the stage cap.
+        max_llm_calls=240,
+        policy_mode=PolicyMode.PUBLIC_GREEDY,
+        # A platform trial must opt in from the one agent that owns the final
+        # decision.  Flags on unrelated descriptions cannot alter the policy.
+        enable_public_comm_shield_guard=(
+            commander_description.get("experimental_public_comm_shield_guard") is True
+        ),
+    )
+
+
 class CommanderAgent(AgentBase):
     """One direct CaseVO Prompt call; never uses ThoughtChain retries."""
 
@@ -4639,27 +4766,7 @@ class ParticipantSquadModel(ModelBase):
         self.commander_agent = CommanderAgent(0, self, commander_description)
         self.add_agent(self.commander_agent, 0)
 
-        experimental_mode = next(
-            (
-                description.get("experimental_policy_mode")
-                for description in descriptions
-                if isinstance(description, dict) and description.get("experimental_policy_mode")
-            ),
-            None,
-        )
-        runtime_config = DEFAULT_POLICY_CONFIG
-        if experimental_mode == PolicyMode.PUBLIC_GREEDY.value:
-            runtime_config = PolicyConfig(
-                enable_shield=True,
-                enable_cut=True,
-                enable_communicate=True,
-                p0_exclusive=False,
-                # One bounded model choice for each scan and intervention.
-                # A 50/100-node session needs at most 87/175 ordinary
-                # choices. The controller also enforces the stage cap.
-                max_llm_calls=240,
-                policy_mode=PolicyMode.PUBLIC_GREEDY,
-            )
+        runtime_config = _runtime_config_for_descriptions(descriptions, commander_description)
 
         self.controller = RuntimeController(
             host_env,

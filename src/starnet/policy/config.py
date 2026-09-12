@@ -78,6 +78,10 @@ class PolicyConfig:
     structure_depth: int = 2
     structure_width: int = 4
     structure_candidate_limit: int = 12
+    # P4 experiment: suppress a communication when the exact same public
+    # state already exposes a positive, legal shield alternative.  This is
+    # opt-in so prior PUBLIC_GREEDY arms remain reproducible.
+    enable_public_comm_shield_guard: bool = False
     adaptive_initial_preliminary: int = 4
     adaptive_initial_final: int = 8
 
@@ -101,6 +105,8 @@ class PolicyConfig:
             )
         if not isinstance(self.llm_schedule, LLMSchedule):
             raise ValueError("llm_schedule must be an LLMSchedule")
+        if not isinstance(self.enable_public_comm_shield_guard, bool):
+            raise ValueError("enable_public_comm_shield_guard must be a bool")
         for name in ("structure_depth", "structure_width", "structure_candidate_limit",
                      "adaptive_initial_preliminary", "adaptive_initial_final"):
             value = getattr(self, name)

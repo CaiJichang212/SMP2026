@@ -1,22 +1,14 @@
 {
   "stage": "preliminary",
-  "policy_mode": "b1_persuasion",
-  "llm_schedule": "off",
+  "policy_mode": "public_greedy",
+  "llm_schedule": "step",
   "person": [
-    {
-      "role": "ScoutAnalystAgent",
-      "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
-      "focus": "固定扫描与情报完整性。"
-    },
-    {
-      "role": "ExecutorAgent",
-      "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
-      "focus": "动作校验与反馈。"
-    },
     {
       "role": "CommanderAgent",
       "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
-      "focus": "受限决策。"
+      "focus": "基于公开事实完成每次扫描与干预的最终选择。",
+      "experimental_policy_mode": "public_greedy",
+      "experimental_public_comm_shield_guard": false
     }
   ]
 }
