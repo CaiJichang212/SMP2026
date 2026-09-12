@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "name": "p2-public-structure-risk-screen-v5-local",
+  "status": "local-screen-only",
+  "purpose": "Screen a public-only structural risk gate on a topology-disjoint seed block before any remote experiment.",
+  "seed_block": {
+    "families": ["grid_lattice", "cycle_chords", "two_block_bridge", "tree_broom"],
+    "node_counts": [50, 100],
+    "repetitions": 3,
+    "generator": "scripts/run_local_policy_matrix.py:independent_seed_payload",
+    "randomization": "deterministic family seed + node count + repetition"
+  },
+  "variants": ["b1", "public_greedy_risk_aware"],
+  "policy": {
+    "settlement_model": "component_degree_plus_one",
+    "structure_gate": {
+      "min_observed_responses": 4,
+      "structure_roi_margin": 1.25,
+      "peace_share": 0.85,
+      "positive_to_violent_negative_mass": 2.0,
+      "allowed_shield": "negative violent node only",
+      "allowed_cut": "negative violent endpoint to non-violent or non-negative endpoint"
+    },
+    "response_prior": "unchanged P1 online prior"
+  },
+  "local_environment": {
+    "public_api_surface": ["get_remaining_budget", "scan_node", "communicate", "cut_link", "shield_node"],
+    "hidden_environment_only_fields": ["r"],
+    "evaluation": "local component_degree_plus_one scorer",
+    "trigger_eval_in_submission": false
+  },
+  "gate": {
+    "paired_by": ["family", "node_count", "repetition"],
+    "minimum_family_mean_delta": 0.0,
+    "minimum_bootstrap_lower_bound": 0.0,
+    "maximum_failures": 0,
+    "report_structure_action_rate": true,
+    "remote_promotion": "not authorized by this local screen"
+  }
+}

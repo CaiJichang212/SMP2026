@@ -1,0 +1,890 @@
+{
+  "block": "independent",
+  "families": [
+    "grid_lattice",
+    "cycle_chords",
+    "two_block_bridge",
+    "tree_broom"
+  ],
+  "rows": [
+    {
+      "family": "grid_lattice",
+      "node_count": 50,
+      "repetition": 1,
+      "variant": "b1",
+      "score": 1158.7878065909088,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "grid_lattice",
+      "node_count": 50,
+      "repetition": 1,
+      "variant": "public_greedy",
+      "score": 1158.7878065909088,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "grid_lattice",
+      "node_count": 50,
+      "repetition": 2,
+      "variant": "b1",
+      "score": 1091.198098977273,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "grid_lattice",
+      "node_count": 50,
+      "repetition": 2,
+      "variant": "public_greedy",
+      "score": 1091.198098977273,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "grid_lattice",
+      "node_count": 50,
+      "repetition": 3,
+      "variant": "b1",
+      "score": 1134.6573204545455,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "grid_lattice",
+      "node_count": 50,
+      "repetition": 3,
+      "variant": "public_greedy",
+      "score": 1134.6573204545455,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "grid_lattice",
+      "node_count": 100,
+      "repetition": 1,
+      "variant": "b1",
+      "score": 2145.392636521739,
+      "actions": {
+        "scan": 100,
+        "comm": 75,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "grid_lattice",
+      "node_count": 100,
+      "repetition": 1,
+      "variant": "public_greedy",
+      "score": 2145.392636521739,
+      "actions": {
+        "scan": 100,
+        "comm": 75,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "grid_lattice",
+      "node_count": 100,
+      "repetition": 2,
+      "variant": "b1",
+      "score": 2245.7756045652177,
+      "actions": {
+        "scan": 100,
+        "comm": 75,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "grid_lattice",
+      "node_count": 100,
+      "repetition": 2,
+      "variant": "public_greedy",
+      "score": 2245.7756045652177,
+      "actions": {
+        "scan": 100,
+        "comm": 75,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "grid_lattice",
+      "node_count": 100,
+      "repetition": 3,
+      "variant": "b1",
+      "score": 2166.4953086956534,
+      "actions": {
+        "scan": 100,
+        "comm": 75,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "grid_lattice",
+      "node_count": 100,
+      "repetition": 3,
+      "variant": "public_greedy",
+      "score": 2166.4953086956534,
+      "actions": {
+        "scan": 100,
+        "comm": 75,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "cycle_chords",
+      "node_count": 50,
+      "repetition": 1,
+      "variant": "b1",
+      "score": 646.9109619999998,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "cycle_chords",
+      "node_count": 50,
+      "repetition": 1,
+      "variant": "public_greedy",
+      "score": 646.9109619999998,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "cycle_chords",
+      "node_count": 50,
+      "repetition": 2,
+      "variant": "b1",
+      "score": 464.0389660000001,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "cycle_chords",
+      "node_count": 50,
+      "repetition": 2,
+      "variant": "public_greedy",
+      "score": 464.0389660000001,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "cycle_chords",
+      "node_count": 50,
+      "repetition": 3,
+      "variant": "b1",
+      "score": 542.8618200000001,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "cycle_chords",
+      "node_count": 50,
+      "repetition": 3,
+      "variant": "public_greedy",
+      "score": 542.8618200000001,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "cycle_chords",
+      "node_count": 100,
+      "repetition": 1,
+      "variant": "b1",
+      "score": 1386.8404599999997,
+      "actions": {
+        "scan": 100,
+        "comm": 75,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "cycle_chords",
+      "node_count": 100,
+      "repetition": 1,
+      "variant": "public_greedy",
+      "score": 1386.8404599999997,
+      "actions": {
+        "scan": 100,
+        "comm": 75,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "cycle_chords",
+      "node_count": 100,
+      "repetition": 2,
+      "variant": "b1",
+      "score": 1256.6882950000004,
+      "actions": {
+        "scan": 100,
+        "comm": 75,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "cycle_chords",
+      "node_count": 100,
+      "repetition": 2,
+      "variant": "public_greedy",
+      "score": 1256.6882950000004,
+      "actions": {
+        "scan": 100,
+        "comm": 75,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "cycle_chords",
+      "node_count": 100,
+      "repetition": 3,
+      "variant": "b1",
+      "score": 1046.1917009999997,
+      "actions": {
+        "scan": 100,
+        "comm": 75,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "cycle_chords",
+      "node_count": 100,
+      "repetition": 3,
+      "variant": "public_greedy",
+      "score": 1064.7253117026478,
+      "actions": {
+        "scan": 100,
+        "comm": 72,
+        "cut": 0,
+        "shield": 1
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "two_block_bridge",
+      "node_count": 50,
+      "repetition": 1,
+      "variant": "b1",
+      "score": 257.9428230158732,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "two_block_bridge",
+      "node_count": 50,
+      "repetition": 1,
+      "variant": "public_greedy",
+      "score": 504.73840714285706,
+      "actions": {
+        "scan": 50,
+        "comm": 15,
+        "cut": 0,
+        "shield": 9
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "two_block_bridge",
+      "node_count": 50,
+      "repetition": 2,
+      "variant": "b1",
+      "score": 135.298871031746,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "two_block_bridge",
+      "node_count": 50,
+      "repetition": 2,
+      "variant": "public_greedy",
+      "score": 302.39039104188475,
+      "actions": {
+        "scan": 50,
+        "comm": 20,
+        "cut": 0,
+        "shield": 7
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "two_block_bridge",
+      "node_count": 50,
+      "repetition": 3,
+      "variant": "b1",
+      "score": 151.17806607142856,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "two_block_bridge",
+      "node_count": 50,
+      "repetition": 3,
+      "variant": "public_greedy",
+      "score": 422.2975969314286,
+      "actions": {
+        "scan": 50,
+        "comm": 15,
+        "cut": 0,
+        "shield": 9
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "two_block_bridge",
+      "node_count": 100,
+      "repetition": 1,
+      "variant": "b1",
+      "score": 479.38625278884456,
+      "actions": {
+        "scan": 100,
+        "comm": 75,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "two_block_bridge",
+      "node_count": 100,
+      "repetition": 1,
+      "variant": "public_greedy",
+      "score": 963.753224810298,
+      "actions": {
+        "scan": 100,
+        "comm": 37,
+        "cut": 0,
+        "shield": 15
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "two_block_bridge",
+      "node_count": 100,
+      "repetition": 2,
+      "variant": "b1",
+      "score": 361.167417729084,
+      "actions": {
+        "scan": 100,
+        "comm": 75,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "two_block_bridge",
+      "node_count": 100,
+      "repetition": 2,
+      "variant": "public_greedy",
+      "score": 852.4569798704224,
+      "actions": {
+        "scan": 100,
+        "comm": 32,
+        "cut": 0,
+        "shield": 17
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "two_block_bridge",
+      "node_count": 100,
+      "repetition": 3,
+      "variant": "b1",
+      "score": 487.53817948207177,
+      "actions": {
+        "scan": 100,
+        "comm": 75,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "two_block_bridge",
+      "node_count": 100,
+      "repetition": 3,
+      "variant": "public_greedy",
+      "score": 961.4176297931035,
+      "actions": {
+        "scan": 100,
+        "comm": 30,
+        "cut": 0,
+        "shield": 18
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "tree_broom",
+      "node_count": 50,
+      "repetition": 1,
+      "variant": "b1",
+      "score": 335.4191826219512,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "tree_broom",
+      "node_count": 50,
+      "repetition": 1,
+      "variant": "public_greedy",
+      "score": 393.10080199999993,
+      "actions": {
+        "scan": 50,
+        "comm": 32,
+        "cut": 0,
+        "shield": 2
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "tree_broom",
+      "node_count": 50,
+      "repetition": 2,
+      "variant": "b1",
+      "score": 350.1332736280488,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "tree_broom",
+      "node_count": 50,
+      "repetition": 2,
+      "variant": "public_greedy",
+      "score": 350.1332736280488,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "tree_broom",
+      "node_count": 50,
+      "repetition": 3,
+      "variant": "b1",
+      "score": 475.33942012195126,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "tree_broom",
+      "node_count": 50,
+      "repetition": 3,
+      "variant": "public_greedy",
+      "score": 475.33942012195126,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "tree_broom",
+      "node_count": 100,
+      "repetition": 1,
+      "variant": "b1",
+      "score": 662.5735284431141,
+      "actions": {
+        "scan": 100,
+        "comm": 75,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "tree_broom",
+      "node_count": 100,
+      "repetition": 1,
+      "variant": "public_greedy",
+      "score": 694.7556172770702,
+      "actions": {
+        "scan": 100,
+        "comm": 70,
+        "cut": 0,
+        "shield": 2
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "tree_broom",
+      "node_count": 100,
+      "repetition": 2,
+      "variant": "b1",
+      "score": 712.9296754491018,
+      "actions": {
+        "scan": 100,
+        "comm": 75,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "tree_broom",
+      "node_count": 100,
+      "repetition": 2,
+      "variant": "public_greedy",
+      "score": 750.6794589497337,
+      "actions": {
+        "scan": 100,
+        "comm": 67,
+        "cut": 0,
+        "shield": 3
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "tree_broom",
+      "node_count": 100,
+      "repetition": 3,
+      "variant": "b1",
+      "score": 560.0421790419159,
+      "actions": {
+        "scan": 100,
+        "comm": 75,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "tree_broom",
+      "node_count": 100,
+      "repetition": 3,
+      "variant": "public_greedy",
+      "score": 598.0696205119586,
+      "actions": {
+        "scan": 100,
+        "comm": 70,
+        "cut": 0,
+        "shield": 2
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions"
+    }
+  ],
+  "summary": [
+    {
+      "family": "cycle_chords",
+      "node_count": 50,
+      "repetitions": 3,
+      "b1_mean": 551.2705826666667,
+      "public_greedy_mean": 551.2705826666667,
+      "delta": 0.0,
+      "minimum_paired_delta": 0.0,
+      "structure_action_rate": 0.0,
+      "failures": 0
+    },
+    {
+      "family": "cycle_chords",
+      "node_count": 100,
+      "repetitions": 3,
+      "b1_mean": 1229.9068186666666,
+      "public_greedy_mean": 1236.0846889008826,
+      "delta": 6.177870234216016,
+      "minimum_paired_delta": 0.0,
+      "structure_action_rate": 0.3333333333333333,
+      "failures": 0
+    },
+    {
+      "family": "grid_lattice",
+      "node_count": 50,
+      "repetitions": 3,
+      "b1_mean": 1128.2144086742426,
+      "public_greedy_mean": 1128.2144086742426,
+      "delta": 0.0,
+      "minimum_paired_delta": 0.0,
+      "structure_action_rate": 0.0,
+      "failures": 0
+    },
+    {
+      "family": "grid_lattice",
+      "node_count": 100,
+      "repetitions": 3,
+      "b1_mean": 2185.8878499275365,
+      "public_greedy_mean": 2185.8878499275365,
+      "delta": 0.0,
+      "minimum_paired_delta": 0.0,
+      "structure_action_rate": 0.0,
+      "failures": 0
+    },
+    {
+      "family": "tree_broom",
+      "node_count": 50,
+      "repetitions": 3,
+      "b1_mean": 386.9639587906504,
+      "public_greedy_mean": 406.19116525,
+      "delta": 19.22720645934959,
+      "minimum_paired_delta": 0.0,
+      "structure_action_rate": 0.6666666666666666,
+      "failures": 0
+    },
+    {
+      "family": "tree_broom",
+      "node_count": 100,
+      "repetitions": 3,
+      "b1_mean": 645.1817943113773,
+      "public_greedy_mean": 681.1682322462542,
+      "delta": 35.9864379348769,
+      "minimum_paired_delta": 32.18208883395607,
+      "structure_action_rate": 2.3333333333333335,
+      "failures": 0
+    },
+    {
+      "family": "two_block_bridge",
+      "node_count": 50,
+      "repetitions": 3,
+      "b1_mean": 181.47325337301592,
+      "public_greedy_mean": 409.8087983720568,
+      "delta": 228.33554499904088,
+      "minimum_paired_delta": 167.09152001013877,
+      "structure_action_rate": 8.333333333333334,
+      "failures": 0
+    },
+    {
+      "family": "two_block_bridge",
+      "node_count": 100,
+      "repetitions": 3,
+      "b1_mean": 442.6972833333334,
+      "public_greedy_mean": 925.8759448246079,
+      "delta": 483.1786614912745,
+      "minimum_paired_delta": 473.87945031103175,
+      "structure_action_rate": 16.666666666666668,
+      "failures": 0
+    }
+  ],
+  "bootstrap": {
+    "unit": "family mean across node counts",
+    "samples": 10000,
+    "family_mean_deltas": {
+      "cycle_chords": 3.088935117108008,
+      "grid_lattice": 0.0,
+      "tree_broom": 27.606822197113246,
+      "two_block_bridge": 355.7571032451577
+    },
+    "mean_delta": 96.61321513984473,
+    "ci95": [
+      1.544467558554004,
+      267.59006121314525
+    ]
+  },
+  "gate": {
+    "family_mean_nonnegative": true,
+    "bootstrap_lower_nonnegative": true,
+    "zero_failures": true,
+    "structure_action_observed": true
+  }
+}

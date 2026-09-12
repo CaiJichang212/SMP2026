@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "name": "p2-public-llm-adaptive-20260912",
+  "objective": "Improve the public-greedy submission while complying with the CaseVO LLM decision requirement.",
+  "primary_comparison": {
+    "control": "B1 full scan, public API only",
+    "candidate": "public greedy full scan, public terminal structure screen",
+    "paired_unit": ["topology_family", "node_count", "repetition"],
+    "node_counts": [50, 100],
+    "repetitions": 3,
+    "independent_families": ["grid_lattice", "cycle_chords", "two_block_bridge", "tree_broom"],
+    "metrics": ["terminal_score", "paired_delta", "action_failures", "structure_actions", "remaining_budget"]
+  },
+  "llm_contract_arm": {
+    "name": "public_greedy_llm_mock",
+    "purpose": "Check complete CaseVO-compatible decision protocol and call budget; mock ranking is not an LLM quality estimate.",
+    "model_choices": "one schema-valid candidate per scan and intervention",
+    "maximum_calls": {"preliminary": 120, "final": 240},
+    "fail_closed": "timeout, malformed output and exhausted quota select a validated candidate"
+  },
+  "adaptive_scan_screen": {
+    "name": "public_adaptive_scan_80pct",
+    "decision_point": "after 80 percent of node IDs have been scanned",
+    "early_stop_condition": "observed violent-negative share below 0.30 and public positive-graph gate open",
+    "early_stop_policy": "B1 persuasion on observed graph",
+    "full_scan_policy": "public greedy",
+    "promotion_rule": "require nonnegative family-level paired deltas and zero action failures on both independent and existing topology blocks"
+  },
+  "interpretation_limit": "Local terminal scores and public custom-seed sandbox scores cannot establish the hidden leaderboard score above 900."
+}

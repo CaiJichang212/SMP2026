@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "name": "p2-public-structure-risk-screen-v8-local",
+  "status": "local-screen-only",
+  "purpose": "Validate the v8 public-only structural policy on existing and topology-disjoint local seeds.",
+  "policy": {
+    "settlement_model": "component_degree_plus_one",
+    "structure_gate": {
+      "min_observed_responses": 0,
+      "structure_roi_margin": 1.0,
+      "positive_graph_gate": {
+        "peace_share": 0.85,
+        "positive_to_violent_negative_mass": 2.0
+      },
+      "allowed_shield": "publicly negative non-peace node",
+      "allowed_cut": "one publicly negative non-peace endpoint and one endpoint not publicly negative non-peace"
+    },
+    "response_policy": {
+      "positive_graph": "retain B1 pooled response path",
+      "other_graphs": "12.75 population prior for untried nodes; own observed first response thereafter",
+      "marginal_multipliers": {"first": 1.0, "second": 0.5, "third": 0.25}
+    }
+  },
+  "local_environment": {
+    "public_api_surface": ["get_remaining_budget", "scan_node", "communicate", "cut_link", "shield_node"],
+    "hidden_environment_only_fields": ["r"],
+    "evaluation": "local component_degree_plus_one scorer",
+    "trigger_eval_in_submission": false
+  },
+  "gate": {
+    "paired_by": ["family", "node_count", "repetition"],
+    "minimum_family_mean_delta": 0.0,
+    "minimum_bootstrap_lower_bound": 0.0,
+    "maximum_failures": 0,
+    "remote_promotion": "requires fresh official sandbox or leaderboard evidence"
+  }
+}

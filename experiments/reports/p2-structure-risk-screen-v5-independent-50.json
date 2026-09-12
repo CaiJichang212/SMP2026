@@ -1,0 +1,441 @@
+{
+  "block": "independent",
+  "families": [
+    "grid_lattice",
+    "cycle_chords",
+    "two_block_bridge",
+    "tree_broom"
+  ],
+  "rows": [
+    {
+      "family": "grid_lattice",
+      "node_count": 50,
+      "repetition": 1,
+      "variant": "b1",
+      "score": 1158.7878065909088,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "grid_lattice",
+      "node_count": 50,
+      "repetition": 1,
+      "variant": "public_greedy",
+      "score": 1158.7878065909088,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "grid_lattice",
+      "node_count": 50,
+      "repetition": 2,
+      "variant": "b1",
+      "score": 1091.198098977273,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "grid_lattice",
+      "node_count": 50,
+      "repetition": 2,
+      "variant": "public_greedy",
+      "score": 1091.198098977273,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "grid_lattice",
+      "node_count": 50,
+      "repetition": 3,
+      "variant": "b1",
+      "score": 1134.6573204545455,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "grid_lattice",
+      "node_count": 50,
+      "repetition": 3,
+      "variant": "public_greedy",
+      "score": 1134.6573204545455,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "cycle_chords",
+      "node_count": 50,
+      "repetition": 1,
+      "variant": "b1",
+      "score": 646.9109619999998,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "cycle_chords",
+      "node_count": 50,
+      "repetition": 1,
+      "variant": "public_greedy",
+      "score": 646.9109619999998,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "cycle_chords",
+      "node_count": 50,
+      "repetition": 2,
+      "variant": "b1",
+      "score": 464.0389660000001,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "cycle_chords",
+      "node_count": 50,
+      "repetition": 2,
+      "variant": "public_greedy",
+      "score": 464.0389660000001,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "cycle_chords",
+      "node_count": 50,
+      "repetition": 3,
+      "variant": "b1",
+      "score": 542.8618200000001,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "cycle_chords",
+      "node_count": 50,
+      "repetition": 3,
+      "variant": "public_greedy",
+      "score": 542.8618200000001,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "two_block_bridge",
+      "node_count": 50,
+      "repetition": 1,
+      "variant": "b1",
+      "score": 257.9428230158732,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "two_block_bridge",
+      "node_count": 50,
+      "repetition": 1,
+      "variant": "public_greedy",
+      "score": 504.73840714285706,
+      "actions": {
+        "scan": 50,
+        "comm": 15,
+        "cut": 0,
+        "shield": 9
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "two_block_bridge",
+      "node_count": 50,
+      "repetition": 2,
+      "variant": "b1",
+      "score": 135.298871031746,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "two_block_bridge",
+      "node_count": 50,
+      "repetition": 2,
+      "variant": "public_greedy",
+      "score": 302.39039104188475,
+      "actions": {
+        "scan": 50,
+        "comm": 20,
+        "cut": 0,
+        "shield": 7
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "two_block_bridge",
+      "node_count": 50,
+      "repetition": 3,
+      "variant": "b1",
+      "score": 151.17806607142856,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "two_block_bridge",
+      "node_count": 50,
+      "repetition": 3,
+      "variant": "public_greedy",
+      "score": 422.2975969314286,
+      "actions": {
+        "scan": 50,
+        "comm": 15,
+        "cut": 0,
+        "shield": 9
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "tree_broom",
+      "node_count": 50,
+      "repetition": 1,
+      "variant": "b1",
+      "score": 335.4191826219512,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "tree_broom",
+      "node_count": 50,
+      "repetition": 1,
+      "variant": "public_greedy",
+      "score": 393.10080199999993,
+      "actions": {
+        "scan": 50,
+        "comm": 32,
+        "cut": 0,
+        "shield": 2
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "tree_broom",
+      "node_count": 50,
+      "repetition": 2,
+      "variant": "b1",
+      "score": 350.1332736280488,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "tree_broom",
+      "node_count": 50,
+      "repetition": 2,
+      "variant": "public_greedy",
+      "score": 350.1332736280488,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions"
+    },
+    {
+      "family": "tree_broom",
+      "node_count": 50,
+      "repetition": 3,
+      "variant": "b1",
+      "score": 475.33942012195126,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_positive_gain"
+    },
+    {
+      "family": "tree_broom",
+      "node_count": 50,
+      "repetition": 3,
+      "variant": "public_greedy",
+      "score": 475.33942012195126,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions"
+    }
+  ],
+  "summary": [
+    {
+      "family": "cycle_chords",
+      "node_count": 50,
+      "repetitions": 3,
+      "b1_mean": 551.2705826666667,
+      "public_greedy_mean": 551.2705826666667,
+      "delta": 0.0,
+      "minimum_paired_delta": 0.0,
+      "structure_action_rate": 0.0,
+      "failures": 0
+    },
+    {
+      "family": "grid_lattice",
+      "node_count": 50,
+      "repetitions": 3,
+      "b1_mean": 1128.2144086742426,
+      "public_greedy_mean": 1128.2144086742426,
+      "delta": 0.0,
+      "minimum_paired_delta": 0.0,
+      "structure_action_rate": 0.0,
+      "failures": 0
+    },
+    {
+      "family": "tree_broom",
+      "node_count": 50,
+      "repetitions": 3,
+      "b1_mean": 386.9639587906504,
+      "public_greedy_mean": 406.19116525,
+      "delta": 19.22720645934959,
+      "minimum_paired_delta": 0.0,
+      "structure_action_rate": 0.6666666666666666,
+      "failures": 0
+    },
+    {
+      "family": "two_block_bridge",
+      "node_count": 50,
+      "repetitions": 3,
+      "b1_mean": 181.47325337301592,
+      "public_greedy_mean": 409.8087983720568,
+      "delta": 228.33554499904088,
+      "minimum_paired_delta": 167.09152001013877,
+      "structure_action_rate": 8.333333333333334,
+      "failures": 0
+    }
+  ]
+}
