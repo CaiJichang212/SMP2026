@@ -1,0 +1,211 @@
+{
+  "config": {
+    "block": "existing",
+    "start": 31,
+    "repetitions": 1,
+    "nodes": 50,
+    "depth": 1,
+    "width": 4,
+    "output": "experiments/reports/p6-budget-depth1-screen.json"
+  },
+  "rows": [
+    {
+      "family": "er_balanced",
+      "repetition": 31,
+      "baseline": {
+        "score": 563.5331305617979,
+        "actions": {
+          "scan": 50,
+          "comm": 32,
+          "cut": 0,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 584.1537292153392,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "seconds": 1.1041513060918078
+      },
+      "delta": 20.62059865354138
+    },
+    {
+      "family": "ba_negative_hubs",
+      "repetition": 31,
+      "baseline": {
+        "score": 509.91132895811495,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 559.3036675367648,
+        "actions": {
+          "scan": 50,
+          "comm": 17,
+          "cut": 0,
+          "shield": 8
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 75,
+        "seconds": 0.362313472898677
+      },
+      "delta": 49.392338578649856
+    },
+    {
+      "family": "ws_peace_majority",
+      "repetition": 31,
+      "baseline": {
+        "score": 1066.4873767142858,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 1066.4873767142858,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "seconds": 0.5169917760649696
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "repetition": 31,
+      "baseline": {
+        "score": 737.1976956877323,
+        "actions": {
+          "scan": 50,
+          "comm": 32,
+          "cut": 0,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 764.8547863464565,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "seconds": 0.756255244021304
+      },
+      "delta": 27.6570906587242
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "repetition": 31,
+      "baseline": {
+        "score": -58.70000126130651,
+        "actions": {
+          "scan": 50,
+          "comm": 17,
+          "cut": 0,
+          "shield": 8
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": -30.294606404255312,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "seconds": 0.4709158190526068
+      },
+      "delta": 28.4053948570512
+    },
+    {
+      "family": "three_sparse_components",
+      "repetition": 31,
+      "baseline": {
+        "score": 198.57157357049593,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 210.62521387661837,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "seconds": 0.447528556920588
+      },
+      "delta": 12.053640306122446
+    }
+  ],
+  "family_mean_delta": {
+    "er_balanced": 20.62059865354138,
+    "ba_negative_hubs": 49.392338578649856,
+    "ws_peace_majority": 0.0,
+    "sbm_negative_bridges": 27.6570906587242,
+    "sbm_violent_cluster": 28.4053948570512,
+    "three_sparse_components": 12.053640306122446
+  },
+  "mean_delta": 23.021510509014846,
+  "all_family_means_nonnegative": true,
+  "platform_score": null,
+  "promotion_allowed": false
+}
