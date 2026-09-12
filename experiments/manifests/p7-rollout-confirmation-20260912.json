@@ -1,0 +1,23 @@
+{
+  "selected_variant": "mean",
+  "policy_commit": "2592d1a",
+  "selection_state_commit": "43f41b9",
+  "selection_evidence": "experiments/reports/p7-rollout-mean-dev-r301-r303-summary-20260912.json",
+  "development_cases": 39,
+  "development_mean_delta": 9.3664806404,
+  "development_all_13_family_means_nonnegative": true,
+  "scenario_count": 1,
+  "scenario_first_response": 12.75,
+  "proposal_depth": 1,
+  "proposal_width": 2,
+  "max_first_actions": 3,
+  "selection_rule": "positive paired rollout mean; nonnegative worst paired scenario",
+  "confirmation_nodes": 50,
+  "confirmation_repetitions": [401, 402, 403, 404, 405],
+  "confirmation_families": "all 13 historical families; no exclusions",
+  "new_family_validation": "five new families, standard response stratum; development 301-303 currently running; independently report new-family 401-405 if eligible",
+  "confirmation_rule": "complete paired matrix; every family mean nonnegative; family bootstrap lower bound positive; zero action failures; budget and steps valid",
+  "failure_rule": "do not promote; do not tune on confirmation and re-label it independent",
+  "platform_goal": ">900 requires an official hidden-seed result",
+  "production_enabled": false
+}
