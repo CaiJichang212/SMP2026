@@ -1,0 +1,12 @@
+{
+  "algorithm": {"depth": 2, "width": 4, "observation_slots": 0, "gate": "negative_mass"},
+  "gate_rule": "After complete public scans, enable budget search iff sum((public_degree+1)*public_w) < 0; freeze activation for the episode",
+  "rationale": "Protect net-positive propagation networks from excessive preemptive shielding",
+  "development": {"repetitions": [31, 32, 33], "blocks": ["existing", "independent", "holdout"]},
+  "confirmation": {"repetitions": [201, 202, 203, 204, 205], "node_counts": [50, 100], "blocks": ["existing", "independent", "holdout"]},
+  "requirements": ["disabled runner must reproduce production baseline", "zero failures", "legal budgets and steps", "all family means nonnegative", "family bootstrap lower bound >0"],
+  "production_enabled": false,
+  "development_gate_passed": false,
+  "confirmation_status": "not_started_because_development_gate_failed",
+  "note": "Repetitions 101-105 informed this gate and are development evidence for this revised variant, never its confirmation set. Topology families are already known."
+}

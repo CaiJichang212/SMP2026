@@ -1,0 +1,20 @@
+{
+  "objective": "Improve local paired raw scores; primary 50-node multi-family mean target >900",
+  "platform_evaluation_available": false,
+  "algorithm": "Public-fact structure gate, budget-complete communication tail, bounded structural beam, replan after public feedback",
+  "variants": [{"depth": 1, "width": 4}, {"depth": 2, "width": 4}, {"depth": 12, "width": 1}, {"depth": 2, "width": 4, "observation_slots": 4}],
+  "development_repetitions": [31, 32, 33],
+  "confirmation_repetitions": [101, 102, 103, 104, 105],
+  "confirmation_node_counts": [50, 100],
+  "known_topology_blocks": ["existing", "independent", "holdout"],
+  "note": "All existing topology families were used by prior work; only repetition draws are fresh. Local deterministic screening does not measure LLM quality.",
+  "promotion_requirements": ["zero failed or illegal actions", "within stage budget and step limits", "every family mean delta nonnegative", "paired family-bootstrap 95% lower bound >0", "official settlement calibration and real LLM validation before submission integration"],
+  "production_enabled": false,
+  "selected_confirmation_variant": {"depth": 2, "width": 4, "observation_slots": 0},
+  "confirmation_status": "complete",
+  "confirmation_pairs": 130,
+  "local_gate_passed_50": false,
+  "local_gate_passed_100": false,
+  "primary_50_node_target_achieved": false,
+  "summary": "experiments/reports/p6-confirm-summary.json"
+}

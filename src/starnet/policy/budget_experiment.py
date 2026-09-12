@@ -7,6 +7,8 @@ import heapq
 import math
 from typing import Any, Callable
 
+import networkx as nx
+
 from starnet.model.blackboard import Blackboard
 from starnet.policy.actions import Action, action_cost, is_legal_action
 from starnet.policy.cmg import PredictiveState
@@ -21,8 +23,31 @@ class BudgetPlan:
     actions: tuple[Action, ...]
 
 
+def _connected_structure_score(
+    state: PredictiveState, action: Action, graph: nx.Graph,
+    responses: dict[tuple[int, int], float], budget: float, steps: int,
+) -> float:
+    """Fast linear score when a certified non-bridge/non-articulation changes."""
+    removed = action.target_node_1 if action.kind == "shield" else None
+    affected = set(graph[removed]) if removed is not None else {action.target_node_1, action.target_node_2}
+    degrees = {node_id: graph.degree[node_id] + 1 - int(node_id in affected)
+               for node_id in state.nodes if node_id != removed}
+    if not degrees:
+        return 0.0
+    factor = len(degrees) / sum(degrees.values())
+    score = sum(factor * degree * state.nodes[node_id].w for node_id, degree in degrees.items())
+    gains = [factor * degree * responses[node_id, turn]
+             for node_id, degree in degrees.items() if state.nodes[node_id].comm_left
+             for turn in range(4 - state.nodes[node_id].comm_left, 4)]
+    for gain in heapq.nlargest(min(int(budget // 2), steps), gains):
+        if gain > 0:
+            score += gain
+    return score
+
+
 def communication_tail(
     state: PredictiveState, budget: float, response_fn: ResponseFn, remaining_steps: int,
+    *, include_actions: bool = True,
 ) -> BudgetPlan:
     """Exact equal-cost allocation for nonnegative diminishing responses.
 
@@ -62,8 +87,14 @@ def communication_tail(
             gains[node_id, turn] = coefficients[node_id] * delta
         turn = 4 - node.comm_left
         heapq.heappush(heap, (-gains[node_id, turn], f"comm:{node_id}:{turn}", node_id, turn))
+    slots = min(max(0, int(budget // 2)), max(0, remaining_steps))
+    if not include_actions:
+        for gain in heapq.nlargest(slots, gains.values()):
+            if gain > 0:
+                score += gain
+        return BudgetPlan(score, ())
     actions: list[Action] = []
-    for _ in range(min(max(0, int(budget // 2)), max(0, remaining_steps))):
+    for _ in range(slots):
         if not heap or heap[0][0] >= 0:
             break
         negative_gain, _, node_id, turn = heapq.heappop(heap)
@@ -86,7 +117,12 @@ def budget_plan(
     if depth < 0 or width <= 0 or remaining_steps < 0 or not math.isfinite(budget) or budget < 0:
         raise ValueError("invalid planning limits")
     initial = PredictiveState.from_blackboard(board)
-    best = communication_tail(initial, budget, response_fn, remaining_steps)
+    # Structure changes neither a survivor's opinion nor its response slots.
+    responses = {(node_id, turn): response_fn(node_id, node, turn)
+                 for node_id, node in initial.nodes.items() if node.comm_left
+                 for turn in range(4 - node.comm_left, 4)}
+    fixed_response = lambda node_id, _node, turn: responses[node_id, turn]
+    best = communication_tail(initial, budget, fixed_response, remaining_steps)
     hypotheses = [Action("shield", node_id) for node_id in sorted(initial.nodes)]
     hypotheses += [Action("cut", left, target_node_2=right) for left, right in sorted(initial.edges)]
     # The gate sees only returned facts, never a Blackboard with predictions.
@@ -97,27 +133,48 @@ def budget_plan(
         ranked = []
         visited = set()
         for state, prefix, available in beam:
+            graph = nx.Graph()
+            graph.add_nodes_from(state.nodes)
+            graph.add_edges_from(state.edges)
+            connected = bool(state.nodes) and nx.is_connected(graph)
+            articulations = set(nx.articulation_points(graph)) if connected else set()
+            bridges = {tuple(sorted(edge)) for edge in nx.bridges(graph)} if connected else set()
             for action in hypotheses:
                 cost = action_cost(action)
                 if cost > available or action.target_node_1 not in state.nodes:
                     continue
                 if action.kind == "cut" and tuple(sorted((action.target_node_1, action.target_node_2))) not in state.edges:
                     continue
-                changed = state.apply(action)
-                key = (frozenset(changed.nodes), frozenset(changed.edges))
+                # Canonical topology changes also collapse cuts subsequently
+                # erased by a shield, just like a full copied-state key.
+                sequence = prefix + (action,)
+                removed = frozenset(item.target_node_1 for item in sequence if item.kind == "shield")
+                cuts = frozenset(tuple(sorted((item.target_node_1, item.target_node_2)))
+                                 for item in sequence if item.kind == "cut"
+                                 and item.target_node_1 not in removed and item.target_node_2 not in removed)
+                key = (removed, cuts)
                 # Equal topology with different costs must remain distinct.
                 visit_key = (key, available - cost)
                 if visit_key in visited:
                     continue
                 visited.add(visit_key)
-                sequence = prefix + (action,)
-                tail = communication_tail(changed, available - cost, response_fn, remaining_steps - len(sequence))
-                plan = BudgetPlan(tail.score, sequence + tail.actions)
-                if plan.score > best.score + 1e-9:
-                    best = plan
-                ranked.append((plan.score, len(ranked), changed, sequence, available - cost))
+                fast = connected and (
+                    action.kind == "shield" and action.target_node_1 not in articulations
+                    or action.kind == "cut" and tuple(sorted((action.target_node_1, action.target_node_2))) not in bridges
+                )
+                changed = None
+                if fast:
+                    score = _connected_structure_score(state, action, graph, responses, available - cost, remaining_steps - len(sequence))
+                else:
+                    changed = state.apply(action)
+                    score = communication_tail(changed, available - cost, fixed_response, remaining_steps - len(sequence), include_actions=False).score
+                if score > best.score + 1e-9:
+                    changed = changed or state.apply(action)
+                    selected = communication_tail(changed, available - cost, fixed_response, remaining_steps - len(sequence))
+                    best = BudgetPlan(selected.score, sequence + selected.actions)
+                ranked.append((score, len(ranked), state, sequence, available - cost))
         ranked.sort(key=lambda row: (-row[0], row[1]))
-        beam = [(row[2], row[3], row[4]) for row in ranked[:width]]
+        beam = [(row[2].apply(row[3][-1]), row[3], row[4]) for row in ranked[:width]]
         if not beam:
             break
     return best
