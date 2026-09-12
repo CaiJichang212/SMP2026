@@ -27,9 +27,9 @@ FAMILIES = (
 )
 
 
-def run_search(seed, *, scenario_count: int = 1):
+def run_search(seed, *, scenario_count: int = 1, env_factory=LocalPublicEnvironment):
     started = time.perf_counter()
-    env = LocalPublicEnvironment(seed)
+    env = env_factory(seed)
     count = len(seed["nodes"])
     board = Blackboard(node_count=count)
     actions = dict.fromkeys(("scan", "comm", "cut", "shield"), 0)

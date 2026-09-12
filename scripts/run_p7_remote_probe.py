@@ -16,6 +16,7 @@ sys.path.insert(0, str(ROOT))
 from SMP_Starter_Kit.api_client import RemoteStarNetEnv
 from scripts.run_local_policy_matrix import LocalPublicEnvironment
 from scripts.run_robust_search import BLOCKS, run_robust
+from scripts.run_rollout_search import run_search as run_rollout
 from starnet.policy.config import PolicyConfig, PolicyMode
 from starnet.runtime.controller import RuntimeController
 
@@ -100,7 +101,7 @@ def main() -> int:
     parser.add_argument("--block", choices=tuple(BLOCKS), default="existing")
     parser.add_argument("--family", default="er_balanced")
     parser.add_argument("--repetition", type=int, default=301)
-    parser.add_argument("--variants", nargs="+", choices=("baseline", "strict", "bounded", "strict_anchor", "bounded_anchor"), default=["baseline"])
+    parser.add_argument("--variants", nargs="+", choices=("baseline", "strict", "bounded", "strict_anchor", "bounded_anchor", "mean"), default=["baseline"])
     parser.add_argument("--server-url", default="http://8.222.218.162:5000")
     parser.add_argument("--timeout", type=float, default=20)
     parser.add_argument("--output", type=Path, required=True)
@@ -116,8 +117,12 @@ def main() -> int:
     for variant in args.variants:
         started = time.perf_counter()
         env = PairedEnvironment(seed, args.server_url, args.timeout)
-        result = (run_baseline(seed, env) if variant == "baseline" else
-                  run_robust(seed, mode=variant, env_factory=lambda _: env))
+        if variant == "baseline":
+            result = run_baseline(seed, env)
+        elif variant == "mean":
+            result = run_rollout(seed, scenario_count=1, env_factory=lambda _: env)
+        else:
+            result = run_robust(seed, mode=variant, env_factory=lambda _: env)
         result.update({"variant": variant, "local_replay_score": env.local_score,
                        "settlement_residual": env.remote_score - env.local_score,
                        "maximum_response_error": env.response_error,
