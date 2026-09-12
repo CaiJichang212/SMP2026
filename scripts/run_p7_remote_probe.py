@@ -46,6 +46,8 @@ class PairedEnvironment:
             raise RuntimeError("scan failed during paired probe")
         if set(actual["neighbors"]) != set(expected["neighbors"]):
             raise RuntimeError("remote/local topology mismatch")
+        if actual.get("persona") != expected.get("persona") or actual.get("comm_left") != expected.get("comm_left"):
+            raise RuntimeError("remote/local public node attributes mismatch")
         self.response_error = max(self.response_error, abs(actual["w"] - expected["w"]))
         return actual
 
