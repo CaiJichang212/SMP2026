@@ -49,12 +49,14 @@ def summarize(paths: list[Path], repetitions: list[int]) -> dict:
                             (("scan", .5), ("comm", 2), ("cut", 3), ("shield", 5)))
                 steps = sum(result["actions"].values())
                 if (result["remaining_budget"] < 0 or steps > 117
+                        or result["actions"]["scan"] != 50
+                        or result.get("steps", steps) != steps
                         or not math.isclose(spent + result["remaining_budget"], 100.0)):
                     raise ValueError("resource audit failed")
             if not math.isclose(row["delta"], row["candidate"]["score"] - row["baseline"]["score"], abs_tol=1e-8):
                 raise ValueError("paired delta mismatch")
         means = {family: statistics.mean(row["delta"] for row in selected if row["family"] == family)
-                 for family, _ in sorted(expected)}
+                 for family in sorted({family for family, _ in expected})}
         deltas = [row["delta"] for row in selected]
         interval = bootstrap_ci(list(means.values()))
         summary[variant] = {

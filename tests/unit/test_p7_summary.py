@@ -11,8 +11,8 @@ from scripts.summarize_p7_search import summarize
 
 class SummaryTests(unittest.TestCase):
     def report(self):
-        baseline = {"score": 1.0, "failures": 0, "remaining_budget": 99.5,
-                    "actions": {"scan": 1, "comm": 0, "cut": 0, "shield": 0}}
+        baseline = {"score": 1.0, "failures": 0, "remaining_budget": 75.0,
+                    "actions": {"scan": 50, "comm": 0, "cut": 0, "shield": 0}}
         return {"config": {"nodes": 50}, "rows": [
             {"family": family, "repetition": 301, "variant": "test",
              "baseline": baseline.copy(), "candidate": {**baseline, "score": 2.0}, "delta": 1.0}
@@ -41,7 +41,7 @@ class SummaryTests(unittest.TestCase):
             self.evaluate(report)
 
     def test_score_and_budget_tampering_rejected(self):
-        for field, value in (("remaining_budget", 100), ("score", float("nan")), ("failures", 1)):
+        for field, value in (("remaining_budget", 100), ("score", float("nan")), ("failures", 1), ("steps", 1)):
             report = self.report()
             report["rows"][0]["candidate"][field] = value
             with self.assertRaises(ValueError):
