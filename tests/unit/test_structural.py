@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import asdict
 import unittest
+from unittest.mock import patch
 
 from starnet.model.blackboard import Blackboard
 from starnet.policy.actions import Action
@@ -50,6 +51,16 @@ def degree_weighted(state: PredictiveState) -> float:
 
 
 class StructuralPlannerTests(unittest.TestCase):
+    def test_closed_public_gate_skips_structural_counterfactuals(self) -> None:
+        graph = board({node: (20.0, "和平", 3) for node in range(1, 4)},
+                      [(1, 2), (2, 3), (1, 3)])
+        planner = ExperimentalPublicGreedyPlanner(lambda *_: 15.0, min_observed_responses=0)
+        with patch.object(planner.predictor, "score", wraps=planner.predictor.score) as score:
+            candidates = planner.candidates(graph, 20.0)
+        self.assertEqual(score.call_count, 4)
+        self.assertEqual(len(candidates), 3)
+        self.assertTrue(all(candidate.action.kind == "comm" for candidate in candidates))
+
     def test_experimental_public_greedy_selects_positive_terminal_gain(self) -> None:
         graph = board(
             {1: (-40.0, "暴力", 3), 2: (10.0, "和平", 3), 3: (10.0, "和平", 3)},

@@ -2658,6 +2658,11 @@ def public_structure_risk_allowed(
     # from being hidden by the persona majority alone.
     if public_positive_graph_gate_closed(board):
         return False
+    return _public_structure_direction_allowed(board, action)
+
+
+def _public_structure_direction_allowed(board: Blackboard, action: Action) -> bool:
+    """Check target signs after the episode's public graph gate is known."""
     if action.kind == "shield":
         node = board.nodes.get(action.target_node_1)
         return node is not None and _public_negative_nonpeace(node)
@@ -2733,6 +2738,10 @@ class ExperimentalPublicGreedyPlanner:
     ) -> list[Candidate]:
         state = PredictiveState.from_blackboard(board)
         baseline = self.predictor.score(state)
+        structure_enabled = not self.conservative_structure or (
+            observed_response_count >= self.min_observed_responses
+            and not public_positive_graph_gate_closed(board)
+        )
         public_influence = _component_influence_coefficients(board)
         comm_rois: dict[int, float] = {}
         for node_id, node in sorted(board.nodes.items()):
@@ -2771,6 +2780,11 @@ class ExperimentalPublicGreedyPlanner:
                 continue
             if not is_legal_action(action, board, budget):
                 continue
+            if action.kind in {"cut", "shield"} and (
+                not structure_enabled
+                or (self.conservative_structure and not _public_structure_direction_allowed(board, action))
+            ):
+                continue
             after = self.predictor.score(state.apply(action, delta))
             # Keep communication scores bit-for-bit on the same closed-form
             # path as B1.  The predictor difference is mathematically equal,
@@ -2782,12 +2796,6 @@ class ExperimentalPublicGreedyPlanner:
                 else after - baseline
             )
             if not math.isfinite(gain) or gain <= 0.0:
-                continue
-            if (
-                self.conservative_structure
-                and action.kind in {"cut", "shield"}
-                and observed_response_count < self.min_observed_responses
-            ):
                 continue
             if (
                 self.conservative_structure
@@ -2809,12 +2817,6 @@ class ExperimentalPublicGreedyPlanner:
                     < self.structure_roi_margin * alternative_comm_roi
                 ):
                     continue
-            if (
-                self.conservative_structure
-                and action.kind in {"cut", "shield"}
-                and not public_structure_risk_allowed(board, action, gain)
-            ):
-                continue
             result.append(
                 Candidate(
                     candidate_id=candidate_id,
