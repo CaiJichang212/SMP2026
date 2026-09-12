@@ -98,7 +98,7 @@ def main() -> int:
     parser.add_argument("--block", choices=tuple(BLOCKS), default="existing")
     parser.add_argument("--family", default="er_balanced")
     parser.add_argument("--repetition", type=int, default=301)
-    parser.add_argument("--variants", nargs="+", choices=("baseline", "strict", "bounded"), default=["baseline"])
+    parser.add_argument("--variants", nargs="+", choices=("baseline", "strict", "bounded", "strict_anchor", "bounded_anchor"), default=["baseline"])
     parser.add_argument("--server-url", default="http://8.222.218.162:5000")
     parser.add_argument("--timeout", type=float, default=20)
     parser.add_argument("--output", type=Path, required=True)
