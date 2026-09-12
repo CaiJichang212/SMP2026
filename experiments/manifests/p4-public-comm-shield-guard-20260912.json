@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "name": "p4-public-comm-shield-guard-20260912",
+  "status": "local-screen-only",
+  "purpose": "Test whether current PUBLIC_GREEDY wastes a public communication before later shielding the same target.",
+  "cohorts": ["existing 50-node r1", "holdout 50-node r1"],
+  "guard": "A comm is excluded only if a same-target shield is currently legal and has strictly positive public terminal gain.",
+  "public_inputs": ["scan results", "remaining budget", "action returns"],
+  "metrics": ["terminal score", "paired delta", "failures", "comm_then_shield", "suppressed candidates"]
+}

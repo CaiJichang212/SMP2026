@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "name": "p4-public-structure-gate-ablation-20260912",
+  "objective": "Test whether the PUBLIC_GREEDY semantic structure screen hides positive terminal actions.",
+  "paired_unit": ["block", "family", "node_count", "repetition"],
+  "blocks": ["existing", "holdout"],
+  "node_count": 50,
+  "repetitions": 3,
+  "variants": {
+    "current": "Current semantic and positive-graph risk gates",
+    "positive_gate_only": "Positive-graph gate retained; any positive terminal-gain cut or shield may enter",
+    "all_positive_gain": "Any positive terminal-gain cut or shield may enter"
+  },
+  "shared_policy": "Full scan, current candidate ROI margin, public response estimate, same synthetic seed per variant",
+  "metrics": ["terminal_score", "paired_delta", "action_failures", "remaining_budget"],
+  "promotion_rule": "Zero failures and nonnegative family mean delta on both blocks; local results do not establish leaderboard score."
+}

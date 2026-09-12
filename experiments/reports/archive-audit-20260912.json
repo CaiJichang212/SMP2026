@@ -1,0 +1,148 @@
+{
+  "generated_date": "2026-09-12",
+  "scope": "Read-only audit of the nine leaderboard archives plus the latest audited archive",
+  "load_test": {
+    "result": "all_imported",
+    "runtime": "casevo (documented compatibility path)",
+    "archive_integrity": "all_passed",
+    "method": "Each archive was extracted to its own temporary directory, registered under a unique sys.modules name, and loaded with spec_from_file_location."
+  },
+  "faithful_runner_requirements": [
+    "Run each archive in a separate process.",
+    "Extract the complete archive so prompt paths remain relative to the archived starnet_model.py.",
+    "Read person_list from that archive's config.json without translating roles or experimental fields.",
+    "Change cwd to the extracted archive root before model construction.",
+    "Register a unique module name in sys.modules before exec_module.",
+    "Construct the archived ParticipantSquadModel directly and do not rebuild or replace its RuntimeController with the current source implementation."
+  ],
+  "exact_source_groups": [
+    {
+      "starnet_model_sha256": "cdbb9a412ef73d14cca6141b1fac1a63fae46cff2086c690397504ea235a2cef",
+      "archives": [
+        "starnet-b1-risk-aware-source-20260908.zip",
+        "starnet-public-greedy-risk-aware-20260908.zip"
+      ],
+      "difference": "config.json selects B1 versus public_greedy"
+    },
+    {
+      "starnet_model_sha256": "bfaa87a67bc5f862756022a316fc826ebd23f7cea57f0c19175f40e76aa716e7",
+      "archives": [
+        "starnet-public-greedy-experimental-20260908.zip",
+        "starnet-b1-v4-default-20260908.zip"
+      ],
+      "difference": "config.json selects public_greedy versus B1"
+    }
+  ],
+  "archives": [
+    {
+      "name": "starnet-public-greedy-llm-candidate-20260912.zip",
+      "official_score": 761.9467,
+      "zip_sha256": "b3b5495af15c832fe0c0cd57a4f2800cd287036c83ca37f4dfed3f3cfde3ec19",
+      "starnet_model_sha256": "5fcae7d2603044b2ac17d98898b1921a9423c1e1ecae7c285b7bd6155cf3f981",
+      "config_sha256": "d5c789f16931441563fcfa0ef4ad864612ed411a8a605f7776aa7301b3abed9a",
+      "policy": "public_greedy",
+      "llm": "step schedule, runtime maximum 240 before contest cap",
+      "agents": 1,
+      "load_risk": "low; commander-only prompt layout is intentional"
+    },
+    {
+      "name": "starnet-public-greedy-v9-optimized-20260908.zip",
+      "official_score": 761.9467,
+      "zip_sha256": "0b1ea60f7f5e52f3485328efbc7ec5fb592d657c94762c55ea3015a12c2de214",
+      "starnet_model_sha256": "27cc32569a0954779d9a7375b01bb42264a631f716790a1cddd45f0e8a5db661",
+      "config_sha256": "295611bc44726873b6463110236d55f9ffe8d1ad2688dccb3ce888d0e5966f52",
+      "policy": "public_greedy",
+      "llm": "disabled (max_llm_calls=0)",
+      "agents": 3,
+      "load_risk": "low"
+    },
+    {
+      "name": "starnet-b1-risk-aware-source-20260908.zip",
+      "official_score": 550.94,
+      "zip_sha256": "a7543cd69e2b082621ff772034b07f4150113382be37e861b02463ed0823d950",
+      "starnet_model_sha256": "cdbb9a412ef73d14cca6141b1fac1a63fae46cff2086c690397504ea235a2cef",
+      "config_sha256": "808b060ce48135e9eeb36b1a7bd748ff3cbb4472fd98351889b6f2b365e23e80",
+      "policy": "b1_persuasion",
+      "llm": "disabled",
+      "agents": 3,
+      "load_risk": "low"
+    },
+    {
+      "name": "starnet-public-greedy-risk-aware-20260908.zip",
+      "official_score": 731.4633,
+      "zip_sha256": "5939075545f04476ed08be67241a53a98023a838fd31808d2078fc2f8bf4815d",
+      "starnet_model_sha256": "cdbb9a412ef73d14cca6141b1fac1a63fae46cff2086c690397504ea235a2cef",
+      "config_sha256": "295611bc44726873b6463110236d55f9ffe8d1ad2688dccb3ce888d0e5966f52",
+      "policy": "public_greedy",
+      "llm": "disabled",
+      "agents": 3,
+      "load_risk": "low"
+    },
+    {
+      "name": "starnet-public-greedy-experimental-20260908.zip",
+      "official_score": 765.84,
+      "zip_sha256": "8f981950058919555be2991e28c6cf5794654be96bee1d76788d8eafd9d8d6c5",
+      "starnet_model_sha256": "bfaa87a67bc5f862756022a316fc826ebd23f7cea57f0c19175f40e76aa716e7",
+      "config_sha256": "70ed53df08e455228280be428b05f0318da90e0374dc60947ba9be5df750c2cb",
+      "policy": "public_greedy",
+      "llm": "disabled",
+      "agents": 3,
+      "load_risk": "low"
+    },
+    {
+      "name": "starnet-b1-v4-default-20260908.zip",
+      "official_score": 550.94,
+      "zip_sha256": "cbe43ccbe9c0c501709a38498101f0d20e5d6fdcd328e9587279c332f423d34d",
+      "starnet_model_sha256": "bfaa87a67bc5f862756022a316fc826ebd23f7cea57f0c19175f40e76aa716e7",
+      "config_sha256": "808b060ce48135e9eeb36b1a7bd748ff3cbb4472fd98351889b6f2b365e23e80",
+      "policy": "b1_persuasion",
+      "llm": "disabled",
+      "agents": 3,
+      "load_risk": "low"
+    },
+    {
+      "name": "v1-cmg.zip",
+      "official_score": 655.3267,
+      "zip_sha256": "22fc82cfe61fbaba1b9cb3068b029728ee87a23c63c69fcc890c5121239048a7",
+      "starnet_model_sha256": "a85bd14cfd438b8839f89b792f3983b28fe25eaa289019750f9e4a1352b82aec",
+      "config_sha256": "f457f5b1ba4e31c139d5f73854320172c32c2af5caeda4efa802ed507914fd50",
+      "policy": "v0_deterministic; CMG calibration gate is false",
+      "llm": "disabled",
+      "agents": 3,
+      "load_risk": "low"
+    },
+    {
+      "name": "v1-experiment-tools.zip",
+      "official_score": 655.3267,
+      "zip_sha256": "ae5e922a7f812dee50cee0a5418f9010701be904e0648d5ce7237ad426caeb51",
+      "starnet_model_sha256": "851ca8f67a7136dac218f68315986cd4d30c494f80380fd905b3e785eaa0580d",
+      "config_sha256": "f457f5b1ba4e31c139d5f73854320172c32c2af5caeda4efa802ed507914fd50",
+      "policy": "v0 deterministic candidate policy",
+      "llm": "up to 3 ranking calls",
+      "agents": 3,
+      "load_risk": "low"
+    },
+    {
+      "name": "v0-baseline-0904-1.zip",
+      "official_score": 655.3267,
+      "zip_sha256": "6b0f743ed76bae0a1273120aab959595b988f9e41fcc00f2aef519fa20875f1c",
+      "starnet_model_sha256": "98947a809951321d60be4209285e95ea783f8da56b7a0c97353a6695b5fd8d0f",
+      "config_sha256": "f457f5b1ba4e31c139d5f73854320172c32c2af5caeda4efa802ed507914fd50",
+      "policy": "v0 deterministic candidate policy",
+      "llm": "up to 3 ranking calls",
+      "agents": 3,
+      "load_risk": "low"
+    },
+    {
+      "name": "starnet-public-greedy-llm-audited-20260912.zip",
+      "official_score": null,
+      "zip_sha256": "16c9737974b6567af074d5154b687eb06e72de50f0a1f6c72a717b776e4ab797",
+      "starnet_model_sha256": "23157f5150142dc7a31010d4740d0935d7d235baabbcceb7ad82651388bef099",
+      "config_sha256": "442be7423ae50491ea3bea1189444453c038d883f082b611dd0add42ca3685ac",
+      "policy": "public_greedy with public communication shield guard disabled",
+      "llm": "step schedule, runtime maximum 240 before contest cap",
+      "agents": 1,
+      "load_risk": "low; score has not been established by official evaluation"
+    }
+  ]
+}

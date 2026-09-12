@@ -1,0 +1,3041 @@
+{
+  "scope": "scan-all, communication-only public-response ablation",
+  "block": "independent",
+  "node_count": 50,
+  "repetitions": 25,
+  "families": [
+    "grid_lattice",
+    "cycle_chords",
+    "two_block_bridge",
+    "tree_broom"
+  ],
+  "rows": [
+    {
+      "family": "grid_lattice",
+      "repetition": 1,
+      "mode": "fixed",
+      "score": 1131.4070997727272,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 1,
+      "mode": "pooled",
+      "score": 1131.4070997727272,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 1,
+      "mode": "persona_shrunk",
+      "score": 1131.4070997727272,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 2,
+      "mode": "fixed",
+      "score": 1088.236117159091,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 2,
+      "mode": "pooled",
+      "score": 1095.88302,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 2,
+      "mode": "persona_shrunk",
+      "score": 1095.88302,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 3,
+      "mode": "fixed",
+      "score": 1142.9677977272727,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 3,
+      "mode": "pooled",
+      "score": 1150.6455732954546,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 3,
+      "mode": "persona_shrunk",
+      "score": 1142.9677977272727,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 4,
+      "mode": "fixed",
+      "score": 1110.041112954545,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 4,
+      "mode": "pooled",
+      "score": 1106.797088522727,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 4,
+      "mode": "persona_shrunk",
+      "score": 1108.8317021590908,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 5,
+      "mode": "fixed",
+      "score": 1133.4561425000004,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 5,
+      "mode": "pooled",
+      "score": 1125.2056328409094,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 5,
+      "mode": "persona_shrunk",
+      "score": 1148.8334197727274,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 6,
+      "mode": "fixed",
+      "score": 997.9934015909091,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 6,
+      "mode": "pooled",
+      "score": 1005.9784828409091,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 6,
+      "mode": "persona_shrunk",
+      "score": 1017.3060055681818,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 7,
+      "mode": "fixed",
+      "score": 1111.4643669318177,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 7,
+      "mode": "pooled",
+      "score": 1111.4643669318177,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 7,
+      "mode": "persona_shrunk",
+      "score": 1083.1130544318178,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 8,
+      "mode": "fixed",
+      "score": 1039.4334614772724,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 8,
+      "mode": "pooled",
+      "score": 1035.4114518181818,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 8,
+      "mode": "persona_shrunk",
+      "score": 1040.397492727273,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 9,
+      "mode": "fixed",
+      "score": 1147.997563863636,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 9,
+      "mode": "pooled",
+      "score": 1151.667659886363,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 9,
+      "mode": "persona_shrunk",
+      "score": 1167.4195144318178,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 10,
+      "mode": "fixed",
+      "score": 1064.624749318182,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 10,
+      "mode": "pooled",
+      "score": 1060.0008714772728,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 10,
+      "mode": "persona_shrunk",
+      "score": 1062.7596032954546,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 11,
+      "mode": "fixed",
+      "score": 1066.4770826136366,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 11,
+      "mode": "pooled",
+      "score": 1057.0001917045454,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 11,
+      "mode": "persona_shrunk",
+      "score": 1073.8675007954546,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 12,
+      "mode": "fixed",
+      "score": 1181.9178173863634,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 12,
+      "mode": "pooled",
+      "score": 1179.3944918181815,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 12,
+      "mode": "persona_shrunk",
+      "score": 1176.0599236363635,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 13,
+      "mode": "fixed",
+      "score": 1086.2564534090911,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 13,
+      "mode": "pooled",
+      "score": 1086.2564534090911,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 13,
+      "mode": "persona_shrunk",
+      "score": 1086.2564534090911,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 14,
+      "mode": "fixed",
+      "score": 984.4239170454545,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 14,
+      "mode": "pooled",
+      "score": 980.7054340909091,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 14,
+      "mode": "persona_shrunk",
+      "score": 980.7054340909091,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 15,
+      "mode": "fixed",
+      "score": 988.0294673863632,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 15,
+      "mode": "pooled",
+      "score": 982.6905565909088,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 15,
+      "mode": "persona_shrunk",
+      "score": 972.4294264772728,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 16,
+      "mode": "fixed",
+      "score": 1132.2954787499998,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 16,
+      "mode": "pooled",
+      "score": 1129.3686310227272,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 16,
+      "mode": "persona_shrunk",
+      "score": 1146.2986332954545,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 17,
+      "mode": "fixed",
+      "score": 973.9976643181816,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 17,
+      "mode": "pooled",
+      "score": 956.6938893181817,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 17,
+      "mode": "persona_shrunk",
+      "score": 981.9179711363637,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 18,
+      "mode": "fixed",
+      "score": 1031.2661756818184,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 18,
+      "mode": "pooled",
+      "score": 1033.2571717045453,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 18,
+      "mode": "persona_shrunk",
+      "score": 1031.9054126136364,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 19,
+      "mode": "fixed",
+      "score": 1035.853432954546,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 19,
+      "mode": "pooled",
+      "score": 1034.6243551136367,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 19,
+      "mode": "persona_shrunk",
+      "score": 1041.5922744318184,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 20,
+      "mode": "fixed",
+      "score": 1068.7021450000004,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 20,
+      "mode": "pooled",
+      "score": 1068.7021450000004,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 20,
+      "mode": "persona_shrunk",
+      "score": 1065.5790222727278,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 21,
+      "mode": "fixed",
+      "score": 1037.2430739772728,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 21,
+      "mode": "pooled",
+      "score": 1034.0449921590912,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 21,
+      "mode": "persona_shrunk",
+      "score": 1040.130608068182,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 22,
+      "mode": "fixed",
+      "score": 1130.287264659091,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 22,
+      "mode": "pooled",
+      "score": 1151.425196477273,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 22,
+      "mode": "persona_shrunk",
+      "score": 1156.0130351136365,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 23,
+      "mode": "fixed",
+      "score": 1137.9225721590908,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 23,
+      "mode": "pooled",
+      "score": 1137.9225721590908,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 23,
+      "mode": "persona_shrunk",
+      "score": 1138.9414130681816,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 24,
+      "mode": "fixed",
+      "score": 1187.797146022727,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 24,
+      "mode": "pooled",
+      "score": 1188.8146079545456,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 24,
+      "mode": "persona_shrunk",
+      "score": 1182.2154943181822,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 25,
+      "mode": "fixed",
+      "score": 1051.9214528409095,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 25,
+      "mode": "pooled",
+      "score": 1046.7200545454548,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 25,
+      "mode": "persona_shrunk",
+      "score": 1034.129313636364,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 1,
+      "mode": "fixed",
+      "score": 618.182842,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 1,
+      "mode": "pooled",
+      "score": 618.182842,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 1,
+      "mode": "persona_shrunk",
+      "score": 614.823952,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 2,
+      "mode": "fixed",
+      "score": 459.77554600000013,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 2,
+      "mode": "pooled",
+      "score": 459.77554600000013,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 2,
+      "mode": "persona_shrunk",
+      "score": 469.057711,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 3,
+      "mode": "fixed",
+      "score": 564.2504100000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 3,
+      "mode": "pooled",
+      "score": 564.2504100000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 3,
+      "mode": "persona_shrunk",
+      "score": 559.1546550000003,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 4,
+      "mode": "fixed",
+      "score": 729.3566400000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 4,
+      "mode": "pooled",
+      "score": 729.3566400000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 4,
+      "mode": "persona_shrunk",
+      "score": 701.0839050000002,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 5,
+      "mode": "fixed",
+      "score": 665.9070489999999,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 5,
+      "mode": "pooled",
+      "score": 665.9070489999999,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 5,
+      "mode": "persona_shrunk",
+      "score": 675.5215989999999,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 6,
+      "mode": "fixed",
+      "score": 702.1427119999998,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 6,
+      "mode": "pooled",
+      "score": 702.1427119999998,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 6,
+      "mode": "persona_shrunk",
+      "score": 689.9655620000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 7,
+      "mode": "fixed",
+      "score": 779.60402,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 7,
+      "mode": "pooled",
+      "score": 779.3140999999999,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 7,
+      "mode": "persona_shrunk",
+      "score": 759.8623550000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 8,
+      "mode": "fixed",
+      "score": 799.5589349999999,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 8,
+      "mode": "pooled",
+      "score": 799.5589349999999,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 8,
+      "mode": "persona_shrunk",
+      "score": 802.5957524999999,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 9,
+      "mode": "fixed",
+      "score": 626.2009380000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 9,
+      "mode": "pooled",
+      "score": 626.2009380000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 9,
+      "mode": "persona_shrunk",
+      "score": 633.955728,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 10,
+      "mode": "fixed",
+      "score": 732.7480270000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 10,
+      "mode": "pooled",
+      "score": 732.7480270000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 10,
+      "mode": "persona_shrunk",
+      "score": 705.3909520000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 11,
+      "mode": "fixed",
+      "score": 614.5783790000002,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 11,
+      "mode": "pooled",
+      "score": 614.5783790000002,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 11,
+      "mode": "persona_shrunk",
+      "score": 621.6890240000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 12,
+      "mode": "fixed",
+      "score": 535.4211150000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 12,
+      "mode": "pooled",
+      "score": 535.4211150000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 12,
+      "mode": "persona_shrunk",
+      "score": 491.2694549999999,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 13,
+      "mode": "fixed",
+      "score": 802.9317950000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 13,
+      "mode": "pooled",
+      "score": 802.9317950000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 13,
+      "mode": "persona_shrunk",
+      "score": 794.0005175000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 14,
+      "mode": "fixed",
+      "score": 585.3429409999999,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 14,
+      "mode": "pooled",
+      "score": 585.3429409999999,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 14,
+      "mode": "persona_shrunk",
+      "score": 608.2536109999998,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 15,
+      "mode": "fixed",
+      "score": 588.350453,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 15,
+      "mode": "pooled",
+      "score": 588.350453,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 15,
+      "mode": "persona_shrunk",
+      "score": 603.5695279999998,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 16,
+      "mode": "fixed",
+      "score": 571.7639600000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 16,
+      "mode": "pooled",
+      "score": 571.7639600000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 16,
+      "mode": "persona_shrunk",
+      "score": 543.5594750000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 17,
+      "mode": "fixed",
+      "score": 726.8881090000002,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 17,
+      "mode": "pooled",
+      "score": 726.8881090000002,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 17,
+      "mode": "persona_shrunk",
+      "score": 723.3631540000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 18,
+      "mode": "fixed",
+      "score": 645.939322,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 18,
+      "mode": "pooled",
+      "score": 645.939322,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 18,
+      "mode": "persona_shrunk",
+      "score": 609.3920845000002,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 19,
+      "mode": "fixed",
+      "score": 519.396562,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 19,
+      "mode": "pooled",
+      "score": 519.396562,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 19,
+      "mode": "persona_shrunk",
+      "score": 529.307587,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 20,
+      "mode": "fixed",
+      "score": 717.873956,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 20,
+      "mode": "pooled",
+      "score": 717.873956,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 20,
+      "mode": "persona_shrunk",
+      "score": 698.9857009999998,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 21,
+      "mode": "fixed",
+      "score": 753.8973599999999,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 21,
+      "mode": "pooled",
+      "score": 753.8973599999999,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 21,
+      "mode": "persona_shrunk",
+      "score": 729.0416700000004,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 22,
+      "mode": "fixed",
+      "score": 586.9761560000002,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 22,
+      "mode": "pooled",
+      "score": 586.9761560000002,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 22,
+      "mode": "persona_shrunk",
+      "score": 604.535306,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 23,
+      "mode": "fixed",
+      "score": 686.552904,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 23,
+      "mode": "pooled",
+      "score": 686.552904,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 23,
+      "mode": "persona_shrunk",
+      "score": 673.282824,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 24,
+      "mode": "fixed",
+      "score": 603.5941440000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 24,
+      "mode": "pooled",
+      "score": 603.5941440000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 24,
+      "mode": "persona_shrunk",
+      "score": 604.8692415,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 25,
+      "mode": "fixed",
+      "score": 527.6862590000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 25,
+      "mode": "pooled",
+      "score": 527.6862590000001,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 25,
+      "mode": "persona_shrunk",
+      "score": 539.3684915,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 1,
+      "mode": "fixed",
+      "score": 242.70377539682548,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 1,
+      "mode": "pooled",
+      "score": 242.70377539682548,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 1,
+      "mode": "persona_shrunk",
+      "score": 220.08516676587308,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 2,
+      "mode": "fixed",
+      "score": 126.78705555555555,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 2,
+      "mode": "pooled",
+      "score": 132.46593948412698,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 2,
+      "mode": "persona_shrunk",
+      "score": 115.36136359126975,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 3,
+      "mode": "fixed",
+      "score": 122.68958392857148,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 3,
+      "mode": "pooled",
+      "score": 130.09142916666667,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 3,
+      "mode": "persona_shrunk",
+      "score": 130.09142916666667,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 4,
+      "mode": "fixed",
+      "score": 151.27109523809534,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 4,
+      "mode": "pooled",
+      "score": 151.27109523809534,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 4,
+      "mode": "persona_shrunk",
+      "score": 181.45038095238118,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 5,
+      "mode": "fixed",
+      "score": 227.28417876984133,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 5,
+      "mode": "pooled",
+      "score": 233.6233275793652,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 5,
+      "mode": "persona_shrunk",
+      "score": 183.43582757936514,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 6,
+      "mode": "fixed",
+      "score": 259.65928928571424,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 6,
+      "mode": "pooled",
+      "score": 259.65928928571424,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 6,
+      "mode": "persona_shrunk",
+      "score": 259.65928928571424,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 7,
+      "mode": "fixed",
+      "score": 207.17348035714286,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 7,
+      "mode": "pooled",
+      "score": 207.17348035714286,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 7,
+      "mode": "persona_shrunk",
+      "score": 164.76937321428565,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 8,
+      "mode": "fixed",
+      "score": 126.04676746031738,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 8,
+      "mode": "pooled",
+      "score": 116.43386567460313,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 8,
+      "mode": "persona_shrunk",
+      "score": 122.97956507936503,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 9,
+      "mode": "fixed",
+      "score": 87.99003492063497,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 9,
+      "mode": "pooled",
+      "score": 87.99003492063497,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 9,
+      "mode": "persona_shrunk",
+      "score": 93.85884444444457,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 10,
+      "mode": "fixed",
+      "score": 181.3011049603175,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 10,
+      "mode": "pooled",
+      "score": 181.3011049603175,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 10,
+      "mode": "persona_shrunk",
+      "score": 178.38864960317466,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 11,
+      "mode": "fixed",
+      "score": 302.30381884920627,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 11,
+      "mode": "pooled",
+      "score": 302.30381884920627,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 11,
+      "mode": "persona_shrunk",
+      "score": 274.3536551587303,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 12,
+      "mode": "fixed",
+      "score": 121.43564682539686,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 12,
+      "mode": "pooled",
+      "score": 129.3010128968254,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 12,
+      "mode": "persona_shrunk",
+      "score": 184.36699503968234,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 13,
+      "mode": "fixed",
+      "score": 167.60236051587313,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 13,
+      "mode": "pooled",
+      "score": 167.60236051587313,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 13,
+      "mode": "persona_shrunk",
+      "score": 167.60236051587313,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 14,
+      "mode": "fixed",
+      "score": 185.0841950396825,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 14,
+      "mode": "pooled",
+      "score": 185.0841950396825,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 14,
+      "mode": "persona_shrunk",
+      "score": 200.87016230158724,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 15,
+      "mode": "fixed",
+      "score": 174.79826706349212,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 15,
+      "mode": "pooled",
+      "score": 174.79826706349212,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 15,
+      "mode": "persona_shrunk",
+      "score": 174.79826706349212,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 16,
+      "mode": "fixed",
+      "score": 166.13787222222211,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 16,
+      "mode": "pooled",
+      "score": 166.13787222222211,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 16,
+      "mode": "persona_shrunk",
+      "score": 155.87817728174593,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 17,
+      "mode": "fixed",
+      "score": 90.72601726190484,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 17,
+      "mode": "pooled",
+      "score": 89.4184339285715,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 17,
+      "mode": "persona_shrunk",
+      "score": 65.04625386904743,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 18,
+      "mode": "fixed",
+      "score": 235.35583769841276,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 18,
+      "mode": "pooled",
+      "score": 235.35583769841276,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 18,
+      "mode": "persona_shrunk",
+      "score": 227.9469091269842,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 19,
+      "mode": "fixed",
+      "score": 127.57766805555558,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 19,
+      "mode": "pooled",
+      "score": 135.0167097222223,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 19,
+      "mode": "persona_shrunk",
+      "score": 133.38280347222232,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 20,
+      "mode": "fixed",
+      "score": 168.98456170634913,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 20,
+      "mode": "pooled",
+      "score": 158.95325218253961,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 20,
+      "mode": "persona_shrunk",
+      "score": 155.79020902777768,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 21,
+      "mode": "fixed",
+      "score": 310.97951547619056,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 21,
+      "mode": "pooled",
+      "score": 310.97951547619056,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 21,
+      "mode": "persona_shrunk",
+      "score": 310.97951547619056,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 22,
+      "mode": "fixed",
+      "score": 275.25997956349204,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 22,
+      "mode": "pooled",
+      "score": 275.25997956349204,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 22,
+      "mode": "persona_shrunk",
+      "score": 272.8206194444443,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 23,
+      "mode": "fixed",
+      "score": 161.53694503968245,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 23,
+      "mode": "pooled",
+      "score": 161.02239146825391,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 23,
+      "mode": "persona_shrunk",
+      "score": 155.52812807539678,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 24,
+      "mode": "fixed",
+      "score": 286.0770337301587,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 24,
+      "mode": "pooled",
+      "score": 286.0770337301587,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 24,
+      "mode": "persona_shrunk",
+      "score": 289.1286408730158,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 25,
+      "mode": "fixed",
+      "score": 166.34873571428588,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 25,
+      "mode": "pooled",
+      "score": 166.9869589285716,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 25,
+      "mode": "persona_shrunk",
+      "score": 137.5612595238095,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 1,
+      "mode": "fixed",
+      "score": 366.92047225609747,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 1,
+      "mode": "pooled",
+      "score": 362.99886402439023,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 1,
+      "mode": "persona_shrunk",
+      "score": 368.777481402439,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 2,
+      "mode": "fixed",
+      "score": 337.5087842987807,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 2,
+      "mode": "pooled",
+      "score": 337.5087842987807,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 2,
+      "mode": "persona_shrunk",
+      "score": 349.16523856707323,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 3,
+      "mode": "fixed",
+      "score": 503.47583475609775,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 3,
+      "mode": "pooled",
+      "score": 508.56551768292695,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 3,
+      "mode": "persona_shrunk",
+      "score": 494.3355527439023,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 4,
+      "mode": "fixed",
+      "score": 236.64415975609754,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 4,
+      "mode": "pooled",
+      "score": 236.64415975609754,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 4,
+      "mode": "persona_shrunk",
+      "score": 234.91168719512183,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 5,
+      "mode": "fixed",
+      "score": 266.2385676829269,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 5,
+      "mode": "pooled",
+      "score": 269.66005167682926,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 5,
+      "mode": "persona_shrunk",
+      "score": 293.38191829268294,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 6,
+      "mode": "fixed",
+      "score": 316.94084222560974,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 6,
+      "mode": "pooled",
+      "score": 316.94084222560974,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 6,
+      "mode": "persona_shrunk",
+      "score": 327.18380259146346,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 7,
+      "mode": "fixed",
+      "score": 462.40712469512204,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 7,
+      "mode": "pooled",
+      "score": 462.40712469512204,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 7,
+      "mode": "persona_shrunk",
+      "score": 486.8611536585366,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 8,
+      "mode": "fixed",
+      "score": 429.7778350609754,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 8,
+      "mode": "pooled",
+      "score": 429.7778350609754,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 8,
+      "mode": "persona_shrunk",
+      "score": 458.1448060975609,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 9,
+      "mode": "fixed",
+      "score": 365.74356310975605,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 9,
+      "mode": "pooled",
+      "score": 365.74356310975605,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 9,
+      "mode": "persona_shrunk",
+      "score": 352.2773954268293,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 10,
+      "mode": "fixed",
+      "score": 281.90505762195113,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 10,
+      "mode": "pooled",
+      "score": 292.04490899390237,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 10,
+      "mode": "persona_shrunk",
+      "score": 284.0159737804878,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 11,
+      "mode": "fixed",
+      "score": 332.1185951219512,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 11,
+      "mode": "pooled",
+      "score": 344.46738856707304,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 11,
+      "mode": "persona_shrunk",
+      "score": 329.3583778963415,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 12,
+      "mode": "fixed",
+      "score": 315.5973923780488,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 12,
+      "mode": "pooled",
+      "score": 303.9905798780487,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 12,
+      "mode": "persona_shrunk",
+      "score": 305.84179481707315,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 13,
+      "mode": "fixed",
+      "score": 445.72561585365855,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 13,
+      "mode": "pooled",
+      "score": 445.72561585365855,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 13,
+      "mode": "persona_shrunk",
+      "score": 468.8630198170731,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 14,
+      "mode": "fixed",
+      "score": 402.98394634146337,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 14,
+      "mode": "pooled",
+      "score": 394.3674844512195,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 14,
+      "mode": "persona_shrunk",
+      "score": 405.4713853658536,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 15,
+      "mode": "fixed",
+      "score": 272.1610295731709,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 15,
+      "mode": "pooled",
+      "score": 272.1610295731709,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 15,
+      "mode": "persona_shrunk",
+      "score": 284.5863253048781,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 16,
+      "mode": "fixed",
+      "score": 427.0080204268294,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 16,
+      "mode": "pooled",
+      "score": 419.52404939024393,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 16,
+      "mode": "persona_shrunk",
+      "score": 389.3510829268293,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 17,
+      "mode": "fixed",
+      "score": 336.4150649390244,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 17,
+      "mode": "pooled",
+      "score": 336.4150649390244,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 17,
+      "mode": "persona_shrunk",
+      "score": 353.9765298780487,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 18,
+      "mode": "fixed",
+      "score": 234.0200010670733,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 18,
+      "mode": "pooled",
+      "score": 234.0200010670733,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 18,
+      "mode": "persona_shrunk",
+      "score": 228.05936692073186,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 19,
+      "mode": "fixed",
+      "score": 436.3441782012196,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 19,
+      "mode": "pooled",
+      "score": 436.3441782012196,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 19,
+      "mode": "persona_shrunk",
+      "score": 433.5221980182927,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 20,
+      "mode": "fixed",
+      "score": 416.57836463414634,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 20,
+      "mode": "pooled",
+      "score": 414.90220152439025,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 20,
+      "mode": "persona_shrunk",
+      "score": 406.06748048780486,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 21,
+      "mode": "fixed",
+      "score": 293.2762609756097,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 21,
+      "mode": "pooled",
+      "score": 295.57327545731704,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 21,
+      "mode": "persona_shrunk",
+      "score": 319.1166855182927,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 22,
+      "mode": "fixed",
+      "score": 431.75899314024383,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 22,
+      "mode": "pooled",
+      "score": 440.8079855182925,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 22,
+      "mode": "persona_shrunk",
+      "score": 464.0929062499998,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 23,
+      "mode": "fixed",
+      "score": 431.8592143292682,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 23,
+      "mode": "pooled",
+      "score": 439.32802530487794,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 23,
+      "mode": "persona_shrunk",
+      "score": 465.15212820121945,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 24,
+      "mode": "fixed",
+      "score": 238.75410823170736,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 24,
+      "mode": "pooled",
+      "score": 225.86878810975617,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 24,
+      "mode": "persona_shrunk",
+      "score": 256.2910106707316,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 25,
+      "mode": "fixed",
+      "score": 388.9882423780488,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 25,
+      "mode": "pooled",
+      "score": 381.1569824695123,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 25,
+      "mode": "persona_shrunk",
+      "score": 378.5185144817073,
+      "scans": 50,
+      "communications": 37,
+      "failures": 0,
+      "remaining_budget": 1.0
+    }
+  ],
+  "comparisons": {
+    "pooled": {
+      "mean_delta_vs_fixed": -0.10531693556778805,
+      "minimum_paired_delta": -17.30377499999986,
+      "family_mean_deltas": {
+        "grid_lattice": -0.7972386818181804,
+        "cycle_chords": -0.011596800000002077,
+        "two_block_bridge": 0.555846428571432,
+        "tree_broom": -0.16827868902440174
+      },
+      "all_family_means_positive": false,
+      "zero_failures": true
+    },
+    "persona_shrunk": {
+      "mean_delta_vs_fixed": -0.6488145119628353,
+      "minimum_paired_delta": -44.15166000000022,
+      "family_mean_deltas": {
+        "grid_lattice": 1.7979067500000565,
+        "cycle_chords": -6.360827700000004,
+        "two_block_bridge": -4.679238988095259,
+        "tree_broom": 6.646901890243865
+      },
+      "all_family_means_positive": false,
+      "zero_failures": true
+    }
+  },
+  "promotion_rule": "promote only if both calibrated modes have positive mean delta in every family and zero failures"
+}

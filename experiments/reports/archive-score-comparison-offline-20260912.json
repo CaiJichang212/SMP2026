@@ -1,0 +1,2750 @@
+{
+  "schema_version": 1,
+  "families": [
+    "er_balanced",
+    "ba_negative_hubs",
+    "ws_peace_majority",
+    "sbm_negative_bridges",
+    "sbm_violent_cluster",
+    "three_sparse_components"
+  ],
+  "node_count": 50,
+  "budget": 100,
+  "repetition": 1,
+  "llm_mode": "offline_original_no_llm",
+  "metadata_note": "Corrected the initial runner's generic mode label after verifying all 36 rows have offline_only=true and llm_calls=0; score data are unchanged.",
+  "rows": [
+    {
+      "archive": "starnet-public-greedy-v9-optimized-20260908.zip",
+      "archive_sha256": "0b1ea60f7f5e52f3485328efbc7ec5fb592d657c94762c55ea3015a12c2de214",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "ba_negative_hubs",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "616a1972473a1e1e24b0a9b73c9c270c0a47e5d39df5419310344a6b973a3067",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。",
+            "experimental_policy_mode": "public_greedy"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "27cc32569a0954779d9a7375b01bb42264a631f716790a1cddd45f0e8a5db661",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 522.7820028444444,
+      "steps": 79,
+      "actions": {
+        "scan": 50,
+        "comm": 22,
+        "cut": 0,
+        "shield": 6
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "db404f19b7b1742e0ea49f86769a9e9b87ecc0232b6f4622cdd12181147d7548",
+      "elapsed_seconds": 2.206527439004276
+    },
+    {
+      "archive": "starnet-public-greedy-v9-optimized-20260908.zip",
+      "archive_sha256": "0b1ea60f7f5e52f3485328efbc7ec5fb592d657c94762c55ea3015a12c2de214",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "er_balanced",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "e274154be9f610faca235730fb68ded23d1af233daca5a0efd6db1c9ada66518",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。",
+            "experimental_policy_mode": "public_greedy"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "27cc32569a0954779d9a7375b01bb42264a631f716790a1cddd45f0e8a5db661",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 802.8062920839894,
+      "steps": 86,
+      "actions": {
+        "scan": 50,
+        "comm": 35,
+        "cut": 0,
+        "shield": 1
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 0.0,
+      "stop_reason": "None",
+      "actions_sha256": "dcf82111862b5fc36c28ac8a09219696ee6ea1d744475aaeac65a61335e3b8f2",
+      "elapsed_seconds": 4.24014949699631
+    },
+    {
+      "archive": "starnet-public-greedy-v9-optimized-20260908.zip",
+      "archive_sha256": "0b1ea60f7f5e52f3485328efbc7ec5fb592d657c94762c55ea3015a12c2de214",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "ws_peace_majority",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "b780e56957304189c394c22f43c709f9c9b5d13c90746b7b5d3666a7508ad972",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。",
+            "experimental_policy_mode": "public_greedy"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "27cc32569a0954779d9a7375b01bb42264a631f716790a1cddd45f0e8a5db661",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 907.9251816428571,
+      "steps": 88,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "928898bd5efb3a39af75844be4374c595a4bd39c9f7fd8ca2d894150726dbb03",
+      "elapsed_seconds": 4.155491327983327
+    },
+    {
+      "archive": "starnet-public-greedy-v9-optimized-20260908.zip",
+      "archive_sha256": "0b1ea60f7f5e52f3485328efbc7ec5fb592d657c94762c55ea3015a12c2de214",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "sbm_negative_bridges",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "b87ad119087c8343fe82a77f7594e9e2b5ceb055f5f868b9aeb1be9aba43288f",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。",
+            "experimental_policy_mode": "public_greedy"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "27cc32569a0954779d9a7375b01bb42264a631f716790a1cddd45f0e8a5db661",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 563.7690441320756,
+      "steps": 85,
+      "actions": {
+        "scan": 50,
+        "comm": 32,
+        "cut": 0,
+        "shield": 2
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "869abfc30d79be621fed4580a5997b9f8e9417a198816f1d39eb481844308b77",
+      "elapsed_seconds": 3.1656742159975693
+    },
+    {
+      "archive": "starnet-public-greedy-v9-optimized-20260908.zip",
+      "archive_sha256": "0b1ea60f7f5e52f3485328efbc7ec5fb592d657c94762c55ea3015a12c2de214",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "sbm_violent_cluster",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "c47914b819abf4774c3ea7ee832a8f3e4c6d87ea033dc6eb6aef1ab93ea3c7b8",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。",
+            "experimental_policy_mode": "public_greedy"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "27cc32569a0954779d9a7375b01bb42264a631f716790a1cddd45f0e8a5db661",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 312.5215108695652,
+      "steps": 73,
+      "actions": {
+        "scan": 50,
+        "comm": 12,
+        "cut": 0,
+        "shield": 10
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "8270578b66c8879c35cbfb83d14adbeab7e31787f5ba49da06493165e90e481a",
+      "elapsed_seconds": 1.6590312310145237
+    },
+    {
+      "archive": "starnet-public-greedy-v9-optimized-20260908.zip",
+      "archive_sha256": "0b1ea60f7f5e52f3485328efbc7ec5fb592d657c94762c55ea3015a12c2de214",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "three_sparse_components",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "259912adcb9cbaffbf69227a41638d124498017fe864a60ed3fcdc7b0b9f2cbb",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。",
+            "experimental_policy_mode": "public_greedy"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "27cc32569a0954779d9a7375b01bb42264a631f716790a1cddd45f0e8a5db661",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 177.9299667087125,
+      "steps": 85,
+      "actions": {
+        "scan": 50,
+        "comm": 32,
+        "cut": 0,
+        "shield": 2
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "744dc6606bf5103fc2e6431ae5cdecb6c5ef039c5c3b2253811281562edb27de",
+      "elapsed_seconds": 2.290952863986604
+    },
+    {
+      "archive": "starnet-b1-risk-aware-source-20260908.zip",
+      "archive_sha256": "a7543cd69e2b082621ff772034b07f4150113382be37e861b02463ed0823d950",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "er_balanced",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "e274154be9f610faca235730fb68ded23d1af233daca5a0efd6db1c9ada66518",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "b1_persuasion",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": false,
+        "enable_cut": false,
+        "enable_communicate": true,
+        "p0_exclusive": true,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "b1_persuasion",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "cdbb9a412ef73d14cca6141b1fac1a63fae46cff2086c690397504ea235a2cef",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 757.3076647167487,
+      "steps": 88,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_POSITIVE_GAIN",
+      "actions_sha256": "75a28d8c15d5816584f1c2e28bafc693eb68f9d663d22d027b4ffe44fc36a8fd",
+      "elapsed_seconds": 0.27381449297536165
+    },
+    {
+      "archive": "starnet-b1-risk-aware-source-20260908.zip",
+      "archive_sha256": "a7543cd69e2b082621ff772034b07f4150113382be37e861b02463ed0823d950",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "ba_negative_hubs",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "616a1972473a1e1e24b0a9b73c9c270c0a47e5d39df5419310344a6b973a3067",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "b1_persuasion",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": false,
+        "enable_cut": false,
+        "enable_communicate": true,
+        "p0_exclusive": true,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "b1_persuasion",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "cdbb9a412ef73d14cca6141b1fac1a63fae46cff2086c690397504ea235a2cef",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 356.75759638554223,
+      "steps": 88,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_POSITIVE_GAIN",
+      "actions_sha256": "4c8272f9209f6d0281b6a7798ace4751a810f283051e662f019b556e1c197c7c",
+      "elapsed_seconds": 0.23010799899930134
+    },
+    {
+      "archive": "starnet-b1-risk-aware-source-20260908.zip",
+      "archive_sha256": "a7543cd69e2b082621ff772034b07f4150113382be37e861b02463ed0823d950",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "ws_peace_majority",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "b780e56957304189c394c22f43c709f9c9b5d13c90746b7b5d3666a7508ad972",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "b1_persuasion",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": false,
+        "enable_cut": false,
+        "enable_communicate": true,
+        "p0_exclusive": true,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "b1_persuasion",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "cdbb9a412ef73d14cca6141b1fac1a63fae46cff2086c690397504ea235a2cef",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 907.9251816428571,
+      "steps": 88,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_POSITIVE_GAIN",
+      "actions_sha256": "928898bd5efb3a39af75844be4374c595a4bd39c9f7fd8ca2d894150726dbb03",
+      "elapsed_seconds": 0.23636467097094283
+    },
+    {
+      "archive": "starnet-b1-risk-aware-source-20260908.zip",
+      "archive_sha256": "a7543cd69e2b082621ff772034b07f4150113382be37e861b02463ed0823d950",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "sbm_negative_bridges",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "b87ad119087c8343fe82a77f7594e9e2b5ceb055f5f868b9aeb1be9aba43288f",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "b1_persuasion",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": false,
+        "enable_cut": false,
+        "enable_communicate": true,
+        "p0_exclusive": true,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "b1_persuasion",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "cdbb9a412ef73d14cca6141b1fac1a63fae46cff2086c690397504ea235a2cef",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 545.5207564338984,
+      "steps": 88,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_POSITIVE_GAIN",
+      "actions_sha256": "0a2b75f6e00327deea74da7e3a60ed81f57a5c212da1ea89330623fe51efd1c8",
+      "elapsed_seconds": 0.2653351220069453
+    },
+    {
+      "archive": "starnet-b1-risk-aware-source-20260908.zip",
+      "archive_sha256": "a7543cd69e2b082621ff772034b07f4150113382be37e861b02463ed0823d950",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "sbm_violent_cluster",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "c47914b819abf4774c3ea7ee832a8f3e4c6d87ea033dc6eb6aef1ab93ea3c7b8",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "b1_persuasion",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": false,
+        "enable_cut": false,
+        "enable_communicate": true,
+        "p0_exclusive": true,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "b1_persuasion",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "cdbb9a412ef73d14cca6141b1fac1a63fae46cff2086c690397504ea235a2cef",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 181.44878389261743,
+      "steps": 88,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_POSITIVE_GAIN",
+      "actions_sha256": "a1214d9e0fa54c6e604a8ae74bbfce50398a424b4b00a706b136479c79f8e11a",
+      "elapsed_seconds": 0.23530523903900757
+    },
+    {
+      "archive": "starnet-b1-risk-aware-source-20260908.zip",
+      "archive_sha256": "a7543cd69e2b082621ff772034b07f4150113382be37e861b02463ed0823d950",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "three_sparse_components",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "259912adcb9cbaffbf69227a41638d124498017fe864a60ed3fcdc7b0b9f2cbb",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "b1_persuasion",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": false,
+        "enable_cut": false,
+        "enable_communicate": true,
+        "p0_exclusive": true,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "b1_persuasion",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "cdbb9a412ef73d14cca6141b1fac1a63fae46cff2086c690397504ea235a2cef",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 170.83297719392618,
+      "steps": 88,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_POSITIVE_GAIN",
+      "actions_sha256": "2ffa95e2e7cb0fb0f1f852c1e324e635132918bfd0f15a1e252c8e9d000e1fd9",
+      "elapsed_seconds": 0.21909996698377654
+    },
+    {
+      "archive": "starnet-public-greedy-risk-aware-20260908.zip",
+      "archive_sha256": "5939075545f04476ed08be67241a53a98023a838fd31808d2078fc2f8bf4815d",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "ba_negative_hubs",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "616a1972473a1e1e24b0a9b73c9c270c0a47e5d39df5419310344a6b973a3067",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。",
+            "experimental_policy_mode": "public_greedy"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "cdbb9a412ef73d14cca6141b1fac1a63fae46cff2086c690397504ea235a2cef",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 503.03824915803096,
+      "steps": 80,
+      "actions": {
+        "scan": 50,
+        "comm": 25,
+        "cut": 0,
+        "shield": 5
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 0.0,
+      "stop_reason": "None",
+      "actions_sha256": "c814b0b5ea2a7d79dfb34934e13d349d7c3cf466f6779067001e4e3b7bd5befa",
+      "elapsed_seconds": 2.680832609999925
+    },
+    {
+      "archive": "starnet-public-greedy-risk-aware-20260908.zip",
+      "archive_sha256": "5939075545f04476ed08be67241a53a98023a838fd31808d2078fc2f8bf4815d",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "er_balanced",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "e274154be9f610faca235730fb68ded23d1af233daca5a0efd6db1c9ada66518",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。",
+            "experimental_policy_mode": "public_greedy"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "cdbb9a412ef73d14cca6141b1fac1a63fae46cff2086c690397504ea235a2cef",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 783.9845249383202,
+      "steps": 86,
+      "actions": {
+        "scan": 50,
+        "comm": 35,
+        "cut": 0,
+        "shield": 1
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 0.0,
+      "stop_reason": "None",
+      "actions_sha256": "481fd19d74bca4f1f9518e85b0b9bbb3cfeeffb35676e695d3199f407a31130b",
+      "elapsed_seconds": 4.7240936679882
+    },
+    {
+      "archive": "starnet-public-greedy-risk-aware-20260908.zip",
+      "archive_sha256": "5939075545f04476ed08be67241a53a98023a838fd31808d2078fc2f8bf4815d",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "sbm_negative_bridges",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "b87ad119087c8343fe82a77f7594e9e2b5ceb055f5f868b9aeb1be9aba43288f",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。",
+            "experimental_policy_mode": "public_greedy"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "cdbb9a412ef73d14cca6141b1fac1a63fae46cff2086c690397504ea235a2cef",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 544.7544571999999,
+      "steps": 86,
+      "actions": {
+        "scan": 50,
+        "comm": 35,
+        "cut": 0,
+        "shield": 1
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 0.0,
+      "stop_reason": "None",
+      "actions_sha256": "d42c3b3b184d90e7a120af89e657632a2e36d87688b0b0d5daa29d2baed1d1c1",
+      "elapsed_seconds": 3.4094136499916203
+    },
+    {
+      "archive": "starnet-public-greedy-risk-aware-20260908.zip",
+      "archive_sha256": "5939075545f04476ed08be67241a53a98023a838fd31808d2078fc2f8bf4815d",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "ws_peace_majority",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "b780e56957304189c394c22f43c709f9c9b5d13c90746b7b5d3666a7508ad972",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。",
+            "experimental_policy_mode": "public_greedy"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "cdbb9a412ef73d14cca6141b1fac1a63fae46cff2086c690397504ea235a2cef",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 907.9251816428571,
+      "steps": 88,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "928898bd5efb3a39af75844be4374c595a4bd39c9f7fd8ca2d894150726dbb03",
+      "elapsed_seconds": 4.104192789993249
+    },
+    {
+      "archive": "starnet-public-greedy-risk-aware-20260908.zip",
+      "archive_sha256": "5939075545f04476ed08be67241a53a98023a838fd31808d2078fc2f8bf4815d",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "three_sparse_components",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "259912adcb9cbaffbf69227a41638d124498017fe864a60ed3fcdc7b0b9f2cbb",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。",
+            "experimental_policy_mode": "public_greedy"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "cdbb9a412ef73d14cca6141b1fac1a63fae46cff2086c690397504ea235a2cef",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 170.83297719392618,
+      "steps": 88,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "2ffa95e2e7cb0fb0f1f852c1e324e635132918bfd0f15a1e252c8e9d000e1fd9",
+      "elapsed_seconds": 2.883944617002271
+    },
+    {
+      "archive": "starnet-public-greedy-risk-aware-20260908.zip",
+      "archive_sha256": "5939075545f04476ed08be67241a53a98023a838fd31808d2078fc2f8bf4815d",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "sbm_violent_cluster",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "c47914b819abf4774c3ea7ee832a8f3e4c6d87ea033dc6eb6aef1ab93ea3c7b8",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。",
+            "experimental_policy_mode": "public_greedy"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "cdbb9a412ef73d14cca6141b1fac1a63fae46cff2086c690397504ea235a2cef",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 250.57428757894738,
+      "steps": 85,
+      "actions": {
+        "scan": 50,
+        "comm": 32,
+        "cut": 0,
+        "shield": 2
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "44d52683f8d22e02608ad0e7c29857ab62f3ef6739cdc9080df7766d99096a6a",
+      "elapsed_seconds": 3.5498725840006955
+    },
+    {
+      "archive": "starnet-public-greedy-experimental-20260908.zip",
+      "archive_sha256": "8f981950058919555be2991e28c6cf5794654be96bee1d76788d8eafd9d8d6c5",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "ba_negative_hubs",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "616a1972473a1e1e24b0a9b73c9c270c0a47e5d39df5419310344a6b973a3067",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "experimental_policy_mode": "public_greedy",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "bfaa87a67bc5f862756022a316fc826ebd23f7cea57f0c19175f40e76aa716e7",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 524.6628048444445,
+      "steps": 79,
+      "actions": {
+        "scan": 50,
+        "comm": 22,
+        "cut": 0,
+        "shield": 6
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "a74b8c9b4469376161be0752b9217d6772f9695c1506e0eb067a5ae53882b1a2",
+      "elapsed_seconds": 2.31841206504032
+    },
+    {
+      "archive": "starnet-public-greedy-experimental-20260908.zip",
+      "archive_sha256": "8f981950058919555be2991e28c6cf5794654be96bee1d76788d8eafd9d8d6c5",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "er_balanced",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "e274154be9f610faca235730fb68ded23d1af233daca5a0efd6db1c9ada66518",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "experimental_policy_mode": "public_greedy",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "bfaa87a67bc5f862756022a316fc826ebd23f7cea57f0c19175f40e76aa716e7",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 772.8890440328084,
+      "steps": 86,
+      "actions": {
+        "scan": 50,
+        "comm": 35,
+        "cut": 0,
+        "shield": 1
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 0.0,
+      "stop_reason": "None",
+      "actions_sha256": "ab06fdb89b80c51c0d5d52952f8ee279346ae7957d726fac6d70ad97e7567b36",
+      "elapsed_seconds": 5.4467175580211915
+    },
+    {
+      "archive": "starnet-public-greedy-experimental-20260908.zip",
+      "archive_sha256": "8f981950058919555be2991e28c6cf5794654be96bee1d76788d8eafd9d8d6c5",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "ws_peace_majority",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "b780e56957304189c394c22f43c709f9c9b5d13c90746b7b5d3666a7508ad972",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "experimental_policy_mode": "public_greedy",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "bfaa87a67bc5f862756022a316fc826ebd23f7cea57f0c19175f40e76aa716e7",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 907.9251816428571,
+      "steps": 88,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "1a9bc9a41181152b879d138dc5703b71e369b40e0170e2228ad12877d37cf5c5",
+      "elapsed_seconds": 7.067123721004464
+    },
+    {
+      "archive": "starnet-public-greedy-experimental-20260908.zip",
+      "archive_sha256": "8f981950058919555be2991e28c6cf5794654be96bee1d76788d8eafd9d8d6c5",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "sbm_negative_bridges",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "b87ad119087c8343fe82a77f7594e9e2b5ceb055f5f868b9aeb1be9aba43288f",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "experimental_policy_mode": "public_greedy",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "bfaa87a67bc5f862756022a316fc826ebd23f7cea57f0c19175f40e76aa716e7",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 560.5882091698113,
+      "steps": 85,
+      "actions": {
+        "scan": 50,
+        "comm": 32,
+        "cut": 0,
+        "shield": 2
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "ef90822ecc3bb385ab1a5ee80efbe7c9625dfdcb3a5c6caa78ba53b7ee627e0d",
+      "elapsed_seconds": 4.514185146021191
+    },
+    {
+      "archive": "starnet-public-greedy-experimental-20260908.zip",
+      "archive_sha256": "8f981950058919555be2991e28c6cf5794654be96bee1d76788d8eafd9d8d6c5",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "sbm_violent_cluster",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "c47914b819abf4774c3ea7ee832a8f3e4c6d87ea033dc6eb6aef1ab93ea3c7b8",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "experimental_policy_mode": "public_greedy",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "bfaa87a67bc5f862756022a316fc826ebd23f7cea57f0c19175f40e76aa716e7",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 288.9794570820513,
+      "steps": 74,
+      "actions": {
+        "scan": 50,
+        "comm": 15,
+        "cut": 0,
+        "shield": 9
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 0.0,
+      "stop_reason": "None",
+      "actions_sha256": "d2b6c7c5a5959c7c2dee873adb80d6d978fd68e5c2bf3ede48bbaab10e8e48a7",
+      "elapsed_seconds": 1.8773479430237785
+    },
+    {
+      "archive": "starnet-public-greedy-experimental-20260908.zip",
+      "archive_sha256": "8f981950058919555be2991e28c6cf5794654be96bee1d76788d8eafd9d8d6c5",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "three_sparse_components",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "259912adcb9cbaffbf69227a41638d124498017fe864a60ed3fcdc7b0b9f2cbb",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "experimental_policy_mode": "public_greedy",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "bfaa87a67bc5f862756022a316fc826ebd23f7cea57f0c19175f40e76aa716e7",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 177.9299667087125,
+      "steps": 85,
+      "actions": {
+        "scan": 50,
+        "comm": 32,
+        "cut": 0,
+        "shield": 2
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "69eaf698d44cf4f7b681bdea75aa17b7aed9f5efbebe68dc9ab7816b787f6100",
+      "elapsed_seconds": 2.245311151025817
+    },
+    {
+      "archive": "starnet-b1-v4-default-20260908.zip",
+      "archive_sha256": "cbe43ccbe9c0c501709a38498101f0d20e5d6fdcd328e9587279c332f423d34d",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "er_balanced",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "e274154be9f610faca235730fb68ded23d1af233daca5a0efd6db1c9ada66518",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "b1_persuasion",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": false,
+        "enable_cut": false,
+        "enable_communicate": true,
+        "p0_exclusive": true,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "b1_persuasion",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "bfaa87a67bc5f862756022a316fc826ebd23f7cea57f0c19175f40e76aa716e7",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 757.3076647167487,
+      "steps": 88,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_POSITIVE_GAIN",
+      "actions_sha256": "75a28d8c15d5816584f1c2e28bafc693eb68f9d663d22d027b4ffe44fc36a8fd",
+      "elapsed_seconds": 0.22145598503993824
+    },
+    {
+      "archive": "starnet-b1-v4-default-20260908.zip",
+      "archive_sha256": "cbe43ccbe9c0c501709a38498101f0d20e5d6fdcd328e9587279c332f423d34d",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "ba_negative_hubs",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "616a1972473a1e1e24b0a9b73c9c270c0a47e5d39df5419310344a6b973a3067",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "b1_persuasion",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": false,
+        "enable_cut": false,
+        "enable_communicate": true,
+        "p0_exclusive": true,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "b1_persuasion",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "bfaa87a67bc5f862756022a316fc826ebd23f7cea57f0c19175f40e76aa716e7",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 356.75759638554223,
+      "steps": 88,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_POSITIVE_GAIN",
+      "actions_sha256": "4c8272f9209f6d0281b6a7798ace4751a810f283051e662f019b556e1c197c7c",
+      "elapsed_seconds": 0.24835097102914006
+    },
+    {
+      "archive": "starnet-b1-v4-default-20260908.zip",
+      "archive_sha256": "cbe43ccbe9c0c501709a38498101f0d20e5d6fdcd328e9587279c332f423d34d",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "ws_peace_majority",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "b780e56957304189c394c22f43c709f9c9b5d13c90746b7b5d3666a7508ad972",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "b1_persuasion",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": false,
+        "enable_cut": false,
+        "enable_communicate": true,
+        "p0_exclusive": true,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "b1_persuasion",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "bfaa87a67bc5f862756022a316fc826ebd23f7cea57f0c19175f40e76aa716e7",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 907.9251816428571,
+      "steps": 88,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_POSITIVE_GAIN",
+      "actions_sha256": "928898bd5efb3a39af75844be4374c595a4bd39c9f7fd8ca2d894150726dbb03",
+      "elapsed_seconds": 0.24226931104203686
+    },
+    {
+      "archive": "starnet-b1-v4-default-20260908.zip",
+      "archive_sha256": "cbe43ccbe9c0c501709a38498101f0d20e5d6fdcd328e9587279c332f423d34d",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "sbm_negative_bridges",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "b87ad119087c8343fe82a77f7594e9e2b5ceb055f5f868b9aeb1be9aba43288f",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "b1_persuasion",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": false,
+        "enable_cut": false,
+        "enable_communicate": true,
+        "p0_exclusive": true,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "b1_persuasion",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "bfaa87a67bc5f862756022a316fc826ebd23f7cea57f0c19175f40e76aa716e7",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 545.5207564338984,
+      "steps": 88,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_POSITIVE_GAIN",
+      "actions_sha256": "0a2b75f6e00327deea74da7e3a60ed81f57a5c212da1ea89330623fe51efd1c8",
+      "elapsed_seconds": 0.24191694997716695
+    },
+    {
+      "archive": "starnet-b1-v4-default-20260908.zip",
+      "archive_sha256": "cbe43ccbe9c0c501709a38498101f0d20e5d6fdcd328e9587279c332f423d34d",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "sbm_violent_cluster",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "c47914b819abf4774c3ea7ee832a8f3e4c6d87ea033dc6eb6aef1ab93ea3c7b8",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "b1_persuasion",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": false,
+        "enable_cut": false,
+        "enable_communicate": true,
+        "p0_exclusive": true,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "b1_persuasion",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "bfaa87a67bc5f862756022a316fc826ebd23f7cea57f0c19175f40e76aa716e7",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 181.44878389261743,
+      "steps": 88,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_POSITIVE_GAIN",
+      "actions_sha256": "a1214d9e0fa54c6e604a8ae74bbfce50398a424b4b00a706b136479c79f8e11a",
+      "elapsed_seconds": 0.24024919397197664
+    },
+    {
+      "archive": "starnet-b1-v4-default-20260908.zip",
+      "archive_sha256": "cbe43ccbe9c0c501709a38498101f0d20e5d6fdcd328e9587279c332f423d34d",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "three_sparse_components",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "259912adcb9cbaffbf69227a41638d124498017fe864a60ed3fcdc7b0b9f2cbb",
+      "offline_only": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "b1_persuasion",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": false,
+        "enable_cut": false,
+        "enable_communicate": true,
+        "p0_exclusive": true,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "b1_persuasion",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "model_sha256": "bfaa87a67bc5f862756022a316fc826ebd23f7cea57f0c19175f40e76aa716e7",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 170.83297719392618,
+      "steps": 88,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_POSITIVE_GAIN",
+      "actions_sha256": "2ffa95e2e7cb0fb0f1f852c1e324e635132918bfd0f15a1e252c8e9d000e1fd9",
+      "elapsed_seconds": 0.22686970402719453
+    },
+    {
+      "archive": "v1-cmg.zip",
+      "archive_sha256": "22fc82cfe61fbaba1b9cb3068b029728ee87a23c63c69fcc890c5121239048a7",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "er_balanced",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "e274154be9f610faca235730fb68ded23d1af233daca5a0efd6db1c9ada66518",
+      "offline_only": true,
+      "archive_config": {
+        "person": [
+          {
+            "role": "确定性侦察官",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "图谱分析官",
+            "character": "使用确定性图算法分析已扫描子图，生成已经过合法性检查的干预候选。",
+            "focus": "网络结构、风险和候选评分。"
+          },
+          {
+            "role": "批次指挥官",
+            "character": "只在 Python 给出的合法候选 ID 中排序，不创造动作、节点、边或话术编号。",
+            "focus": "风险优先、增长优先或平衡的批次仲裁。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": true,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "v0_deterministic",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0
+      },
+      "model_sha256": "a85bd14cfd438b8839f89b792f3983b28fe25eaa289019750f9e4a1352b82aec",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 681.0132962711865,
+      "steps": 83,
+      "actions": {
+        "scan": 50,
+        "comm": 26,
+        "cut": 4,
+        "shield": 2
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "fbffee4a8188f18faf7648bbf1c69f1a139ff26bc6a7c491a94eae2d7422306a",
+      "elapsed_seconds": 1.7081579329678789
+    },
+    {
+      "archive": "v1-cmg.zip",
+      "archive_sha256": "22fc82cfe61fbaba1b9cb3068b029728ee87a23c63c69fcc890c5121239048a7",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "ba_negative_hubs",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "616a1972473a1e1e24b0a9b73c9c270c0a47e5d39df5419310344a6b973a3067",
+      "offline_only": true,
+      "archive_config": {
+        "person": [
+          {
+            "role": "确定性侦察官",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "图谱分析官",
+            "character": "使用确定性图算法分析已扫描子图，生成已经过合法性检查的干预候选。",
+            "focus": "网络结构、风险和候选评分。"
+          },
+          {
+            "role": "批次指挥官",
+            "character": "只在 Python 给出的合法候选 ID 中排序，不创造动作、节点、边或话术编号。",
+            "focus": "风险优先、增长优先或平衡的批次仲裁。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": true,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "v0_deterministic",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0
+      },
+      "model_sha256": "a85bd14cfd438b8839f89b792f3983b28fe25eaa289019750f9e4a1352b82aec",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 603.3663683235294,
+      "steps": 76,
+      "actions": {
+        "scan": 50,
+        "comm": 17,
+        "cut": 0,
+        "shield": 8
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "5a0a3be169538cd74a46eefa16ddd5162c5df61338a574b9520b57038330c5fd",
+      "elapsed_seconds": 0.8884775190381333
+    },
+    {
+      "archive": "v1-cmg.zip",
+      "archive_sha256": "22fc82cfe61fbaba1b9cb3068b029728ee87a23c63c69fcc890c5121239048a7",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "ws_peace_majority",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "b780e56957304189c394c22f43c709f9c9b5d13c90746b7b5d3666a7508ad972",
+      "offline_only": true,
+      "archive_config": {
+        "person": [
+          {
+            "role": "确定性侦察官",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "图谱分析官",
+            "character": "使用确定性图算法分析已扫描子图，生成已经过合法性检查的干预候选。",
+            "focus": "网络结构、风险和候选评分。"
+          },
+          {
+            "role": "批次指挥官",
+            "character": "只在 Python 给出的合法候选 ID 中排序，不创造动作、节点、边或话术编号。",
+            "focus": "风险优先、增长优先或平衡的批次仲裁。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": true,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "v0_deterministic",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0
+      },
+      "model_sha256": "a85bd14cfd438b8839f89b792f3983b28fe25eaa289019750f9e4a1352b82aec",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 930.4257816428573,
+      "steps": 88,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "c71712e47a1fb61b8fe78dc0a2783194fdf40730ba82963313ff3cb55bc2df77",
+      "elapsed_seconds": 2.2827146239578724
+    },
+    {
+      "archive": "v1-cmg.zip",
+      "archive_sha256": "22fc82cfe61fbaba1b9cb3068b029728ee87a23c63c69fcc890c5121239048a7",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "sbm_negative_bridges",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "b87ad119087c8343fe82a77f7594e9e2b5ceb055f5f868b9aeb1be9aba43288f",
+      "offline_only": true,
+      "archive_config": {
+        "person": [
+          {
+            "role": "确定性侦察官",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "图谱分析官",
+            "character": "使用确定性图算法分析已扫描子图，生成已经过合法性检查的干预候选。",
+            "focus": "网络结构、风险和候选评分。"
+          },
+          {
+            "role": "批次指挥官",
+            "character": "只在 Python 给出的合法候选 ID 中排序，不创造动作、节点、边或话术编号。",
+            "focus": "风险优先、增长优先或平衡的批次仲裁。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": true,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "v0_deterministic",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0
+      },
+      "model_sha256": "a85bd14cfd438b8839f89b792f3983b28fe25eaa289019750f9e4a1352b82aec",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 431.1195813830509,
+      "steps": 88,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "db566fb2642d23818514816f0ce28ac08a28d8fd7d4407d6e2fe380f6bea4b53",
+      "elapsed_seconds": 2.1430368029978126
+    },
+    {
+      "archive": "v1-cmg.zip",
+      "archive_sha256": "22fc82cfe61fbaba1b9cb3068b029728ee87a23c63c69fcc890c5121239048a7",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "three_sparse_components",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "259912adcb9cbaffbf69227a41638d124498017fe864a60ed3fcdc7b0b9f2cbb",
+      "offline_only": true,
+      "archive_config": {
+        "person": [
+          {
+            "role": "确定性侦察官",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "图谱分析官",
+            "character": "使用确定性图算法分析已扫描子图，生成已经过合法性检查的干预候选。",
+            "focus": "网络结构、风险和候选评分。"
+          },
+          {
+            "role": "批次指挥官",
+            "character": "只在 Python 给出的合法候选 ID 中排序，不创造动作、节点、边或话术编号。",
+            "focus": "风险优先、增长优先或平衡的批次仲裁。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": true,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "v0_deterministic",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0
+      },
+      "model_sha256": "a85bd14cfd438b8839f89b792f3983b28fe25eaa289019750f9e4a1352b82aec",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 105.79582080999288,
+      "steps": 78,
+      "actions": {
+        "scan": 50,
+        "comm": 19,
+        "cut": 2,
+        "shield": 6
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "f6a12903bba77c91152481a06cfcf974d207e42812c6a263ca845996011d8295",
+      "elapsed_seconds": 1.0305440769880079
+    },
+    {
+      "archive": "v1-cmg.zip",
+      "archive_sha256": "22fc82cfe61fbaba1b9cb3068b029728ee87a23c63c69fcc890c5121239048a7",
+      "runner_sha256": "c9276893a5cdb071423dbc5250fbc7b8c93070e2e82746683bd9daf150a12a6e",
+      "family": "sbm_violent_cluster",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "c47914b819abf4774c3ea7ee832a8f3e4c6d87ea033dc6eb6aef1ab93ea3c7b8",
+      "offline_only": true,
+      "archive_config": {
+        "person": [
+          {
+            "role": "确定性侦察官",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "图谱分析官",
+            "character": "使用确定性图算法分析已扫描子图，生成已经过合法性检查的干预候选。",
+            "focus": "网络结构、风险和候选评分。"
+          },
+          {
+            "role": "批次指挥官",
+            "character": "只在 Python 给出的合法候选 ID 中排序，不创造动作、节点、边或话术编号。",
+            "focus": "风险优先、增长优先或平衡的批次仲裁。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": true,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "v0_deterministic",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0
+      },
+      "model_sha256": "a85bd14cfd438b8839f89b792f3983b28fe25eaa289019750f9e4a1352b82aec",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 166.50146972950836,
+      "steps": 81,
+      "actions": {
+        "scan": 50,
+        "comm": 26,
+        "cut": 1,
+        "shield": 4
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 0.0,
+      "stop_reason": "None",
+      "actions_sha256": "fe6271a0a156d18fdf28c7955460ad95da5e4b12cc76a5b330d53d7a52720923",
+      "elapsed_seconds": 1.587005780020263
+    }
+  ],
+  "summary": [
+    {
+      "archive": "starnet-public-greedy-v9-optimized-20260908.zip",
+      "official_score": 761.9467,
+      "complete": true,
+      "local_mean": 547.955666380274,
+      "local_min": 177.9299667087125,
+      "local_max": 907.9251816428571,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "action_failures": 0
+    },
+    {
+      "archive": "starnet-b1-risk-aware-source-20260908.zip",
+      "official_score": 550.94,
+      "complete": true,
+      "local_mean": 486.632160044265,
+      "local_min": 170.83297719392618,
+      "local_max": 907.9251816428571,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "action_failures": 0
+    },
+    {
+      "archive": "starnet-public-greedy-risk-aware-20260908.zip",
+      "official_score": 731.4633,
+      "complete": true,
+      "local_mean": 526.8516129520136,
+      "local_min": 170.83297719392618,
+      "local_max": 907.9251816428571,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "action_failures": 0
+    },
+    {
+      "archive": "starnet-public-greedy-experimental-20260908.zip",
+      "official_score": 765.84,
+      "complete": true,
+      "local_mean": 538.8291105801142,
+      "local_min": 177.9299667087125,
+      "local_max": 907.9251816428571,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "action_failures": 0
+    },
+    {
+      "archive": "starnet-b1-v4-default-20260908.zip",
+      "official_score": 550.94,
+      "complete": true,
+      "local_mean": 486.632160044265,
+      "local_min": 170.83297719392618,
+      "local_max": 907.9251816428571,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "action_failures": 0
+    },
+    {
+      "archive": "v1-cmg.zip",
+      "official_score": 655.3267,
+      "complete": true,
+      "local_mean": 486.37038636002086,
+      "local_min": 105.79582080999288,
+      "local_max": 930.4257816428573,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "action_failures": 0
+    }
+  ]
+}

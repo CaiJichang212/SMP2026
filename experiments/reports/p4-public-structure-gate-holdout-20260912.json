@@ -1,0 +1,489 @@
+{
+  "block": "holdout",
+  "node_count": 50,
+  "repetitions": 3,
+  "comparison": "same generated seed and public-API controller; only structure risk screen differs",
+  "rows": [
+    {
+      "family": "double_bridge_communities",
+      "repetition": 1,
+      "variant": "current",
+      "elapsed_seconds": 2.13,
+      "score": 434.74724613057333,
+      "actions": {
+        "scan": 50,
+        "comm": 25,
+        "cut": 0,
+        "shield": 5
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 1,
+      "variant": "positive_gate_only",
+      "elapsed_seconds": 2.016,
+      "score": 434.74724613057333,
+      "actions": {
+        "scan": 50,
+        "comm": 25,
+        "cut": 0,
+        "shield": 5
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 1,
+      "variant": "all_positive_gain",
+      "elapsed_seconds": 1.941,
+      "score": 434.74724613057333,
+      "actions": {
+        "scan": 50,
+        "comm": 25,
+        "cut": 0,
+        "shield": 5
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 2,
+      "variant": "current",
+      "elapsed_seconds": 1.764,
+      "score": 571.7858595302014,
+      "actions": {
+        "scan": 50,
+        "comm": 20,
+        "cut": 0,
+        "shield": 7
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 2,
+      "variant": "positive_gate_only",
+      "elapsed_seconds": 1.816,
+      "score": 571.6350417105263,
+      "actions": {
+        "scan": 50,
+        "comm": 21,
+        "cut": 1,
+        "shield": 6
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 2,
+      "variant": "all_positive_gain",
+      "elapsed_seconds": 1.811,
+      "score": 571.6350417105263,
+      "actions": {
+        "scan": 50,
+        "comm": 21,
+        "cut": 1,
+        "shield": 6
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 3,
+      "variant": "current",
+      "elapsed_seconds": 2.074,
+      "score": 564.4870058490566,
+      "actions": {
+        "scan": 50,
+        "comm": 25,
+        "cut": 0,
+        "shield": 5
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 3,
+      "variant": "positive_gate_only",
+      "elapsed_seconds": 1.926,
+      "score": 560.2528527707007,
+      "actions": {
+        "scan": 50,
+        "comm": 23,
+        "cut": 1,
+        "shield": 5
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 3,
+      "variant": "all_positive_gain",
+      "elapsed_seconds": 1.864,
+      "score": 560.2528527707007,
+      "actions": {
+        "scan": 50,
+        "comm": 23,
+        "cut": 1,
+        "shield": 5
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 1,
+      "variant": "current",
+      "elapsed_seconds": 2.258,
+      "score": 557.7498823004667,
+      "actions": {
+        "scan": 50,
+        "comm": 20,
+        "cut": 0,
+        "shield": 7
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 1,
+      "variant": "positive_gate_only",
+      "elapsed_seconds": 2.037,
+      "score": 557.7498823004667,
+      "actions": {
+        "scan": 50,
+        "comm": 20,
+        "cut": 0,
+        "shield": 7
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 1,
+      "variant": "all_positive_gain",
+      "elapsed_seconds": 2.039,
+      "score": 557.7498823004667,
+      "actions": {
+        "scan": 50,
+        "comm": 20,
+        "cut": 0,
+        "shield": 7
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 2,
+      "variant": "current",
+      "elapsed_seconds": 2.479,
+      "score": 575.5147004858444,
+      "actions": {
+        "scan": 50,
+        "comm": 27,
+        "cut": 0,
+        "shield": 4
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 2,
+      "variant": "positive_gate_only",
+      "elapsed_seconds": 2.634,
+      "score": 575.5147004858444,
+      "actions": {
+        "scan": 50,
+        "comm": 27,
+        "cut": 0,
+        "shield": 4
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 2,
+      "variant": "all_positive_gain",
+      "elapsed_seconds": 2.667,
+      "score": 575.5147004858444,
+      "actions": {
+        "scan": 50,
+        "comm": 27,
+        "cut": 0,
+        "shield": 4
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 3,
+      "variant": "current",
+      "elapsed_seconds": 2.209,
+      "score": 544.4982729663091,
+      "actions": {
+        "scan": 50,
+        "comm": 22,
+        "cut": 0,
+        "shield": 6
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 3,
+      "variant": "positive_gate_only",
+      "elapsed_seconds": 2.304,
+      "score": 544.4982729663091,
+      "actions": {
+        "scan": 50,
+        "comm": 22,
+        "cut": 0,
+        "shield": 6
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 3,
+      "variant": "all_positive_gain",
+      "elapsed_seconds": 2.109,
+      "score": 544.4982729663091,
+      "actions": {
+        "scan": 50,
+        "comm": 22,
+        "cut": 0,
+        "shield": 6
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "negative_hub_spokes",
+      "repetition": 1,
+      "variant": "current",
+      "elapsed_seconds": 1.203,
+      "score": 767.4115320000002,
+      "actions": {
+        "scan": 50,
+        "comm": 30,
+        "cut": 0,
+        "shield": 3
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "negative_hub_spokes",
+      "repetition": 1,
+      "variant": "positive_gate_only",
+      "elapsed_seconds": 1.303,
+      "score": 767.4115320000002,
+      "actions": {
+        "scan": 50,
+        "comm": 30,
+        "cut": 0,
+        "shield": 3
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "negative_hub_spokes",
+      "repetition": 1,
+      "variant": "all_positive_gain",
+      "elapsed_seconds": 1.33,
+      "score": 767.4115320000002,
+      "actions": {
+        "scan": 50,
+        "comm": 30,
+        "cut": 0,
+        "shield": 3
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "negative_hub_spokes",
+      "repetition": 2,
+      "variant": "current",
+      "elapsed_seconds": 1.186,
+      "score": 733.637729,
+      "actions": {
+        "scan": 50,
+        "comm": 30,
+        "cut": 0,
+        "shield": 3
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "negative_hub_spokes",
+      "repetition": 2,
+      "variant": "positive_gate_only",
+      "elapsed_seconds": 1.263,
+      "score": 733.637729,
+      "actions": {
+        "scan": 50,
+        "comm": 30,
+        "cut": 0,
+        "shield": 3
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "negative_hub_spokes",
+      "repetition": 2,
+      "variant": "all_positive_gain",
+      "elapsed_seconds": 1.219,
+      "score": 733.637729,
+      "actions": {
+        "scan": 50,
+        "comm": 30,
+        "cut": 0,
+        "shield": 3
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "negative_hub_spokes",
+      "repetition": 3,
+      "variant": "current",
+      "elapsed_seconds": 1.237,
+      "score": 876.5376200000002,
+      "actions": {
+        "scan": 50,
+        "comm": 30,
+        "cut": 0,
+        "shield": 3
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "negative_hub_spokes",
+      "repetition": 3,
+      "variant": "positive_gate_only",
+      "elapsed_seconds": 1.262,
+      "score": 876.5376200000002,
+      "actions": {
+        "scan": 50,
+        "comm": 30,
+        "cut": 0,
+        "shield": 3
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    },
+    {
+      "family": "negative_hub_spokes",
+      "repetition": 3,
+      "variant": "all_positive_gain",
+      "elapsed_seconds": 1.322,
+      "score": 876.5376200000002,
+      "actions": {
+        "scan": 50,
+        "comm": 30,
+        "cut": 0,
+        "shield": 3
+      },
+      "failures": 0,
+      "remaining_budget": 0.0,
+      "stop_reason": "no_valid_actions",
+      "llm_calls": 0
+    }
+  ],
+  "summary": {
+    "positive_gate_only": {
+      "mean_paired_delta": -0.48721898867011587,
+      "family_mean_deltas": {
+        "double_bridge_communities": -1.4616569660103476,
+        "ring_of_cliques": 0.0,
+        "negative_hub_spokes": 0.0
+      },
+      "all_family_means_nonnegative": false,
+      "failures": 0
+    },
+    "all_positive_gain": {
+      "mean_paired_delta": -0.48721898867011587,
+      "family_mean_deltas": {
+        "double_bridge_communities": -1.4616569660103476,
+        "ring_of_cliques": 0.0,
+        "negative_hub_spokes": 0.0
+      },
+      "all_family_means_nonnegative": false,
+      "failures": 0
+    }
+  }
+}

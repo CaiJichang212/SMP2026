@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "name": "p4-public-joint-structure-screen-20260912",
+  "status": "local-screen-only",
+  "purpose": "Pair current PUBLIC_GREEDY with a public-only B4 joint structural candidate on 50-node existing, independent, and holdout families.",
+  "pairs": ["block", "family", "node_count", "repetition"],
+  "candidate": {
+    "planner": "StructuralPlanner B4 depth 2, width 4, candidate limit 12",
+    "pair_cut_experiment": {"enabled": true, "edge_limit": 16, "plan_limit": 6},
+    "response_prior": "12.75 first slot; own public action return for later slots",
+    "hidden_environment_fields": "forbidden"
+  },
+  "metrics": ["terminal_score", "paired_delta", "action_failures", "wall_seconds", "planning_seconds"],
+  "promotion": "No submission or remote promotion. A nonzero-failure result or material holdout loss closes this candidate."
+}

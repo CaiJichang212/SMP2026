@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "name": "p4-900-promotion-matrix-20260912",
+  "status": "planned; local screen is not leaderboard evidence",
+  "objective": "Promote only a CaseVO-LLM public-API policy with reliable evidence beyond the current 761.9467 leaderboard submission.",
+  "unit_of_randomization": ["topology_family", "node_count", "repetition"],
+  "controls": {
+    "submission_zip": "artifacts/submission/starnet-public-greedy-llm-candidate-20260912.zip",
+    "policy": "public_greedy with step LLM candidate selection",
+    "leaderboard_reference": 761.9467
+  },
+  "screens": [
+    {
+      "id": "S0_reproducibility",
+      "comparison": ["B1", "current_public_greedy", "current_public_greedy_llm"],
+      "blocks": ["existing", "independent", "holdout"],
+      "node_counts": [50, 100],
+      "repetitions": 3,
+      "metrics": ["terminal_score", "paired_delta", "action_failures", "LLM_calls", "budget_remaining"],
+      "command": "uv run python scripts/run_local_policy_matrix.py --block <block> --node-counts 50 100 --repetitions 3 --include-llm-mock --output experiments/reports/<run>.json"
+    },
+    {
+      "id": "S1_action_portfolio",
+      "comparison": ["current_control", "one_extra_cut_after_shield", "cut_only_negative_bridge", "shield_threshold_sweep"],
+      "blocks": ["independent", "holdout"],
+      "node_counts": [50, 100],
+      "repetitions": 5,
+      "rule": "Candidate generation and legality checks remain Python-side; each selected action is chosen by an AgentBase LLM call with deterministic validated-candidate fallback."
+    },
+    {
+      "id": "S2_response_allocation",
+      "comparison": ["fixed_15", "pooled_first_response", "persona_shrunk"],
+      "blocks": ["existing", "independent"],
+      "node_counts": [50],
+      "repetitions": 25,
+      "command": "uv run python scripts/run_response_ablation.py --block <block> --node-count 50 --repetitions 25 --output experiments/reports/<run>.json"
+    },
+    {
+      "id": "S3_real_LLM_remote",
+      "comparison": ["current_step_LLM", "event_LLM_candidate", "S1_winner"],
+      "seed_policy": "fresh server sessions; generated seed payload hash and variant order fixed before the run",
+      "repetitions": 3,
+      "metrics": ["official_terminal_score", "paired_delta", "LLM_calls", "steps", "P95_latency", "protocol_failures", "action_failures"],
+      "constraint": "Use only official public APIs; the runner, never submission code, calls trigger_eval."
+    }
+  ],
+  "promotion_gate": {
+    "local": "For each non-control candidate: zero failures; no negative topology-family mean on independent or holdout blocks; 10,000-resample seed-block paired bootstrap 95% lower bound > 0.",
+    "remote": "Same gate on official terminal scores, then submit exactly one promoted ZIP. A leaderboard score >900 is the final objective evidence; local scores are never converted to leaderboard points.",
+    "LLM": "Every submitted AgentBase role must make the configured final-selection LLM call. Count timeout, exception and malformed-output attempts against quota; fallback selects only a prevalidated candidate."
+  }
+}

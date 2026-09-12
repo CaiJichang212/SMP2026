@@ -128,6 +128,8 @@ HTTP 错误或格式错误不会重试，以确保一次控制器 LLM 计数只�
 
 ## 📡 沙盒环境 (Environment API) 指南
 
+2026-09-12 赛方答疑：每个智能体须继承 `casevo.AgentBase`，最终动作由 LLM 从 Python 校验的候选中决定；不要求调用 `prompt/` 中的所有文件。失败的切边和屏蔽仍扣费，失败的扫描和游说不扣费。完整约束见 `docs/00_rules/task-spec.md`。
+
 您的智能体需要通过调用 `self.env` 提供的 API 来感知世界并实施打击。
 
 - `self.env.get_remaining_budget()`：获取当前剩余精神力预算。

@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "objective": "Run the actual historical ZIP entry points on common local seeds and compare their means and ordering with user-supplied official scores.",
+  "frozen_before_run": true,
+  "node_count": 50,
+  "initial_budget": 100,
+  "step_limit": 120,
+  "llm_call_limit": 120,
+  "families": ["er_balanced", "ba_negative_hubs", "ws_peace_majority", "sbm_negative_bridges", "sbm_violent_cluster", "three_sparse_components"],
+  "repetition": 1,
+  "archive_selection": "All nine user-listed historical ZIPs, plus the audited ZIP as an unscored reference",
+  "execution": "Unmodified ZIP code and config loaded into the real installed CaseVO runtime in a fresh subprocess per seed; no controller replacement",
+  "llm": "Real configured local LLM only when requested by the archived policy; preserve historical LLM-off configurations; record calls and fallback errors",
+  "execution_amendment": "Bulk real-LLM run was rejected by automatic approval review before it started. While user approval is pending, run six LLM-off archives unchanged and four LLM-using archives with explicitly forced offline failures to measure their native fallback paths. Label these strata separately; zero network requests in both offline strata.",
+  "authorized_real_followup": {
+    "authorization": "User explicitly authorized the configured LLM service for the batch comparison after the offline phase.",
+    "status": "completed",
+    "sessions": 24,
+    "real_llm_calls": 1018,
+    "llm_transport_errors": 0,
+    "action_failures": 0,
+    "maximum_absolute_score_difference_vs_offline_fallback": 0.0,
+    "output": "experiments/reports/archive-score-comparison-real-20260912.json",
+    "command": "UV_CACHE_DIR=/tmp/smp2026-uv-cache uv run python scripts/compare_submission_archives.py --workers 3 --archives starnet-public-greedy-llm-candidate-20260912.zip v1-experiment-tools.zip v0-baseline-0904-1.zip starnet-public-greedy-llm-audited-20260912.zip --result-dir experiments/raw/archive-comparison-real-20260912 --output experiments/reports/archive-score-comparison-real-20260912.json"
+  },
+  "environment": "LocalPublicEnvironment with clarified failure charges for cut and shield",
+  "settlement": "component_degree_plus_one local proxy; no claim of identical official hidden seed distribution",
+  "metrics": ["per-seed score", "six-family mean", "range", "action failures", "LLM calls", "transport errors", "archive SHA256", "effective policy config"],
+  "limitations": ["Six synthetic seed families are a descriptive comparison, not the official hidden set", "Local model is not the official glm-4-plus", "Only one stochastic LLM run per seed", "Do not fit a numerical conversion from local to official scores"],
+  "command": "UV_CACHE_DIR=/tmp/smp2026-uv-cache uv run python scripts/compare_submission_archives.py --workers 3"
+}

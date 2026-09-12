@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "name": "p5-public-guard-100node-validation-20260912",
+  "status": "frozen-size-transfer-local-screen",
+  "frozen_before_run": true,
+  "candidate": "public_greedy with same-target positive-shield communication guard",
+  "baseline": "current public_greedy controller",
+  "blocks": [
+    {
+      "name": "independent",
+      "families": ["grid_lattice", "cycle_chords", "two_block_bridge", "tree_broom"]
+    },
+    {
+      "name": "holdout",
+      "families": ["double_bridge_communities", "ring_of_cliques", "negative_hub_spokes"]
+    }
+  ],
+  "node_count": 100,
+  "repetitions": [1, 2, 3],
+  "pairing_unit": ["block", "family", "repetition"],
+  "analysis_rule": "Analyze independent and holdout blocks separately; do not pool with 50-node results.",
+  "promotion_gate_per_block": {
+    "guard_disabled_matches_controller": true,
+    "candidate_action_failures": 0,
+    "every_family_mean_delta_nonnegative": true,
+    "family_bootstrap_ci95_lower_strictly_positive": true
+  },
+  "novelty_limit": "Node count 100 is a new transfer condition, but topology families have appeared in prior 50-node reports.",
+  "interpretation": "This local transfer screen cannot establish hidden-topology generalization or the official raw-score >900 objective."
+}

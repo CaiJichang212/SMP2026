@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "name": "p4-public-tail-structure-lookahead-20260912",
+  "status": "local-screen-only; fail-closed",
+  "hypothesis": "A bounded terminal-budget comparison can outperform one-step ROI when a communication would consume budget needed for a higher-value structure action.",
+  "comparison": ["public_greedy", "one_public_structure_action_then_greedy_communication"],
+  "blocks": ["existing", "independent"],
+  "node_count": 50,
+  "repetitions": 1,
+  "budget_interval": [5.0, 25.0],
+  "candidate_limit": 64,
+  "implementation_control": "Disable the lookahead interval in the independent runner and require exact score, action-count, and failure-count equivalence with RuntimeController PUBLIC_GREEDY on every pair.",
+  "public_inputs": ["scan_node", "get_remaining_budget", "action return values"],
+  "hidden_fields_read": [],
+  "command": "UV_CACHE_DIR=/tmp/smp2026-uv-cache uv run python scripts/run_public_tail_structure_lookahead.py --blocks existing independent --repetitions 1 --budget-low 5 --budget-high 25 --candidate-limit 64 --output experiments/reports/p4-public-tail-structure-lookahead-20260912.json",
+  "promotion": "Do not wire into runtime unless it changes terminal action portfolios, has zero failures, and shows no topology-family loss in expanded independent validation."
+}
