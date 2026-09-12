@@ -1,0 +1,54 @@
+{
+  "repetitions": [
+    401,
+    402,
+    403,
+    404,
+    405
+  ],
+  "sources": [
+    {
+      "path": "experiments/reports/p7-rollout-mean-confirm-20260912.json",
+      "sha256": "b83890bc74b9b293b2eb27d3823394173fa0a65421db5f9f769eeea9f65289b5"
+    }
+  ],
+  "summary": {
+    "mean": {
+      "cases": 65,
+      "baseline_mean": 571.1518718081842,
+      "candidate_mean": 577.348076667047,
+      "mean_delta": 6.196204858862912,
+      "family_mean_delta": {
+        "ba_negative_hubs": 43.45662356022323,
+        "cycle_chords": 6.95018883630446,
+        "double_bridge_communities": 1.8784882942612853,
+        "er_balanced": -6.145341930346308,
+        "grid_lattice": 0.0,
+        "negative_hub_spokes": 1.7134110000000191,
+        "ring_of_cliques": 10.744674324423908,
+        "sbm_negative_bridges": -1.1783019477671814,
+        "sbm_violent_cluster": 2.494972999999999,
+        "three_sparse_components": 8.504130853717907,
+        "tree_broom": 13.337750316686243,
+        "two_block_bridge": -1.2059331422856985,
+        "ws_peace_majority": 0.0
+      },
+      "family_bootstrap_95_interval": [
+        0.9797349688675326,
+        13.601544225932772
+      ],
+      "win_tie_loss": [
+        23,
+        32,
+        10
+      ],
+      "minimum_delta": -27.17658856031727,
+      "maximum_delta": 111.17458008792727,
+      "all_family_means_nonnegative": false,
+      "statistical_gate_passed": false,
+      "resource_audit_passed": true
+    }
+  },
+  "platform_score": null,
+  "production_promotion_allowed": false
+}

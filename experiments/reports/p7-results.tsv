@@ -1,0 +1,9 @@
+experiment	commit	metric	status	description
+0	373103f	576.6532374990383	baseline	public_greedy old13 development301-303 mean
+1	b7fe36f	581.208113404248	discard	strict old13 development39; two negative family means
+2	b7fe36f	582.2215662729935	discard	bounded old13 development39; two negative family means
+3	a1ade69	581.5899167443816	discard	strict_anchor old13 development39; double_bridge regression
+4	a1ade69	582.6033696131271	discard	bounded_anchor old13 development39; double_bridge regression
+5	2592d1a	586.0197181394327	selected	mean rollout old13 development39; frozen by36a7098
+6	2592d1a	578.3923711427628	discard	sampled rollout screening13 only; paired control568.1756928023132; weaker than mean screening
+7	2592d1a	577.348077	discard	mean rollout confirmation65; control571.151872; three negative family means

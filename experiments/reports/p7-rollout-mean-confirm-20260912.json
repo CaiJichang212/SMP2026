@@ -1,0 +1,2242 @@
+{
+  "config": {
+    "start": 401,
+    "repetitions": 5,
+    "nodes": 50,
+    "scenarios": 1,
+    "family": null,
+    "output": "experiments/reports/p7-rollout-mean-confirm-20260912.json",
+    "block": "old_13_families"
+  },
+  "rows": [
+    {
+      "family": "er_balanced",
+      "repetition": 401,
+      "variant": "mean",
+      "baseline": {
+        "score": 667.7715410098521,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 683.0796795142118,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 2,
+        "seconds": 4.757566748070531
+      },
+      "delta": 15.308138504359704
+    },
+    {
+      "family": "er_balanced",
+      "repetition": 402,
+      "variant": "mean",
+      "baseline": {
+        "score": 651.28664864532,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 637.3036040633071,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 2,
+        "seconds": 5.720560642075725
+      },
+      "delta": -13.983044582012894
+    },
+    {
+      "family": "er_balanced",
+      "repetition": 403,
+      "variant": "mean",
+      "baseline": {
+        "score": 757.016021982759,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 742.6404606135773,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 2,
+        "seconds": 5.126623712014407
+      },
+      "delta": -14.375561369181696
+    },
+    {
+      "family": "er_balanced",
+      "repetition": 404,
+      "variant": "mean",
+      "baseline": {
+        "score": 804.1083834359606,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 797.7176116018277,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 2,
+        "seconds": 5.031331420992501
+      },
+      "delta": -6.39077183413292
+    },
+    {
+      "family": "er_balanced",
+      "repetition": 405,
+      "variant": "mean",
+      "baseline": {
+        "score": 632.8698896719163,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 621.5844193011526,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 4,
+        "seconds": 5.5516295220004395
+      },
+      "delta": -11.285470370763733
+    },
+    {
+      "family": "ba_negative_hubs",
+      "repetition": 401,
+      "variant": "mean",
+      "baseline": {
+        "score": 274.47384321172245,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 350.46937666891904,
+        "actions": {
+          "scan": 50,
+          "comm": 17,
+          "cut": 0,
+          "shield": 8
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 75,
+        "planning_calls": 26,
+        "rollouts": 14,
+        "seconds": 6.600828142953105
+      },
+      "delta": 75.99553345719659
+    },
+    {
+      "family": "ba_negative_hubs",
+      "repetition": 402,
+      "variant": "mean",
+      "baseline": {
+        "score": 324.7799951428572,
+        "actions": {
+          "scan": 50,
+          "comm": 20,
+          "cut": 0,
+          "shield": 7
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 324.7799951428572,
+        "actions": {
+          "scan": 50,
+          "comm": 20,
+          "cut": 0,
+          "shield": 7
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 77,
+        "planning_calls": 28,
+        "rollouts": 24,
+        "seconds": 8.44272865401581
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "ba_negative_hubs",
+      "repetition": 403,
+      "variant": "mean",
+      "baseline": {
+        "score": 347.57846311111103,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 347.57846311111103,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 36,
+        "seconds": 17.549655056907795
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "ba_negative_hubs",
+      "repetition": 404,
+      "variant": "mean",
+      "baseline": {
+        "score": 257.9473993154363,
+        "actions": {
+          "scan": 50,
+          "comm": 20,
+          "cut": 0,
+          "shield": 7
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 288.0604035714286,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "planning_calls": 25,
+        "rollouts": 34,
+        "seconds": 10.80587324197404
+      },
+      "delta": 30.11300425599228
+    },
+    {
+      "family": "ba_negative_hubs",
+      "repetition": 405,
+      "variant": "mean",
+      "baseline": {
+        "score": 353.8298507356021,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 465.0044308235294,
+        "actions": {
+          "scan": 50,
+          "comm": 17,
+          "cut": 0,
+          "shield": 8
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 75,
+        "planning_calls": 26,
+        "rollouts": 17,
+        "seconds": 5.569163488922641
+      },
+      "delta": 111.17458008792727
+    },
+    {
+      "family": "ws_peace_majority",
+      "repetition": 401,
+      "variant": "mean",
+      "baseline": {
+        "score": 952.7296138571427,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 952.7296138571427,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 0,
+        "seconds": 0.6062150460202247
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "ws_peace_majority",
+      "repetition": 402,
+      "variant": "mean",
+      "baseline": {
+        "score": 856.216821,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 856.216821,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 0,
+        "seconds": 0.5185548609588295
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "ws_peace_majority",
+      "repetition": 403,
+      "variant": "mean",
+      "baseline": {
+        "score": 1011.8296344285712,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 1011.8296344285712,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 0,
+        "seconds": 0.5099724109750241
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "ws_peace_majority",
+      "repetition": 404,
+      "variant": "mean",
+      "baseline": {
+        "score": 960.8807487142856,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 960.8807487142856,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 0,
+        "seconds": 0.7540802659932524
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "ws_peace_majority",
+      "repetition": 405,
+      "variant": "mean",
+      "baseline": {
+        "score": 972.816838714286,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 972.816838714286,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 0,
+        "seconds": 0.47864009893964976
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "repetition": 401,
+      "variant": "mean",
+      "baseline": {
+        "score": 706.9444425915492,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 701.0529328527133,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 44,
+        "seconds": 20.358879614970647
+      },
+      "delta": -5.891509738835907
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "repetition": 402,
+      "variant": "mean",
+      "baseline": {
+        "score": 651.6847505428572,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 651.6847505428572,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 10,
+        "seconds": 6.558100829017349
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "repetition": 403,
+      "variant": "mean",
+      "baseline": {
+        "score": 584.1166754320001,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 584.1166754320001,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 20,
+        "seconds": 7.061255314969458
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "repetition": 404,
+      "variant": "mean",
+      "baseline": {
+        "score": 771.8343509714284,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 771.8343509714284,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 2,
+        "seconds": 2.1906316350214183
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "repetition": 405,
+      "variant": "mean",
+      "baseline": {
+        "score": 618.0312051970261,
+        "actions": {
+          "scan": 50,
+          "comm": 32,
+          "cut": 0,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 618.0312051970261,
+        "actions": {
+          "scan": 50,
+          "comm": 32,
+          "cut": 0,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 84,
+        "planning_calls": 35,
+        "rollouts": 12,
+        "seconds": 7.254766367957927
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "repetition": 401,
+      "variant": "mean",
+      "baseline": {
+        "score": 63.18791111111112,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 63.18791111111112,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "planning_calls": 25,
+        "rollouts": 10,
+        "seconds": 2.6329025890445337
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "repetition": 402,
+      "variant": "mean",
+      "baseline": {
+        "score": 26.178838301507618,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 26.178838301507618,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "planning_calls": 25,
+        "rollouts": 28,
+        "seconds": 4.7921891619917005
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "repetition": 403,
+      "variant": "mean",
+      "baseline": {
+        "score": 278.35386725274725,
+        "actions": {
+          "scan": 50,
+          "comm": 12,
+          "cut": 0,
+          "shield": 10
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 278.35386725274725,
+        "actions": {
+          "scan": 50,
+          "comm": 12,
+          "cut": 0,
+          "shield": 10
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 72,
+        "planning_calls": 23,
+        "rollouts": 26,
+        "seconds": 2.769130611908622
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "repetition": 404,
+      "variant": "mean",
+      "baseline": {
+        "score": 170.16833288717953,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 182.64319788717953,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "planning_calls": 25,
+        "rollouts": 17,
+        "seconds": 3.4678515170235187
+      },
+      "delta": 12.474864999999994
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "repetition": 405,
+      "variant": "mean",
+      "baseline": {
+        "score": 78.55029290322582,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 78.55029290322582,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "planning_calls": 25,
+        "rollouts": 21,
+        "seconds": 3.5098583200015128
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "three_sparse_components",
+      "repetition": 401,
+      "variant": "mean",
+      "baseline": {
+        "score": 452.67627690899565,
+        "actions": {
+          "scan": 50,
+          "comm": 32,
+          "cut": 0,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 452.67627690899565,
+        "actions": {
+          "scan": 50,
+          "comm": 32,
+          "cut": 0,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 84,
+        "planning_calls": 35,
+        "rollouts": 20,
+        "seconds": 6.822764687938616
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "three_sparse_components",
+      "repetition": 402,
+      "variant": "mean",
+      "baseline": {
+        "score": 431.7057009133563,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 447.2369800047483,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 2,
+        "seconds": 1.5016706180758774
+      },
+      "delta": 15.531279091392037
+    },
+    {
+      "family": "three_sparse_components",
+      "repetition": 403,
+      "variant": "mean",
+      "baseline": {
+        "score": 95.1498757029745,
+        "actions": {
+          "scan": 50,
+          "comm": 32,
+          "cut": 0,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 110.46339347245501,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 22,
+        "seconds": 7.492060238029808
+      },
+      "delta": 15.313517769480512
+    },
+    {
+      "family": "three_sparse_components",
+      "repetition": 404,
+      "variant": "mean",
+      "baseline": {
+        "score": 275.69128503874083,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 276.33663810030396,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 6,
+        "seconds": 5.363423593924381
+      },
+      "delta": 0.645353061563128
+    },
+    {
+      "family": "three_sparse_components",
+      "repetition": 405,
+      "variant": "mean",
+      "baseline": {
+        "score": 321.3740277969194,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 332.40453214307325,
+        "actions": {
+          "scan": 50,
+          "comm": 32,
+          "cut": 0,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 84,
+        "planning_calls": 35,
+        "rollouts": 2,
+        "seconds": 2.3429749431088567
+      },
+      "delta": 11.030504346153862
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 401,
+      "variant": "mean",
+      "baseline": {
+        "score": 1147.39731125,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 1147.39731125,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 0,
+        "seconds": 0.262812947970815
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 402,
+      "variant": "mean",
+      "baseline": {
+        "score": 927.8557587500001,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 927.8557587500001,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 0,
+        "seconds": 0.22043546510394663
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 403,
+      "variant": "mean",
+      "baseline": {
+        "score": 1123.9798011363632,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 1123.9798011363632,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 0,
+        "seconds": 0.216237258980982
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 404,
+      "variant": "mean",
+      "baseline": {
+        "score": 1124.488885,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 1124.488885,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 0,
+        "seconds": 0.2558662169612944
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 405,
+      "variant": "mean",
+      "baseline": {
+        "score": 1043.7479627272726,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 1043.7479627272726,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 0,
+        "seconds": 0.21647780295461416
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 401,
+      "variant": "mean",
+      "baseline": {
+        "score": 700.2486167757851,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 700.2486167757851,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 36,
+        "seconds": 8.994653811096214
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 402,
+      "variant": "mean",
+      "baseline": {
+        "score": 704.520499,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 714.1681879834024,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 2,
+        "seconds": 1.6771198400529101
+      },
+      "delta": 9.647688983402418
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 403,
+      "variant": "mean",
+      "baseline": {
+        "score": 546.0621249999999,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 556.741383439834,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 2,
+        "seconds": 2.1158150599803776
+      },
+      "delta": 10.67925843983403
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 404,
+      "variant": "mean",
+      "baseline": {
+        "score": 755.8755732413795,
+        "actions": {
+          "scan": 50,
+          "comm": 32,
+          "cut": 0,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 755.8251849955159,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 6,
+        "seconds": 2.6348751940531656
+      },
+      "delta": -0.050388245863587144
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 405,
+      "variant": "mean",
+      "baseline": {
+        "score": 526.6234890000001,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 541.0978740041495,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 2,
+        "seconds": 1.9687379089882597
+      },
+      "delta": 14.47438500414944
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 401,
+      "variant": "mean",
+      "baseline": {
+        "score": 459.2468230588235,
+        "actions": {
+          "scan": 50,
+          "comm": 12,
+          "cut": 0,
+          "shield": 10
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 459.2468230588235,
+        "actions": {
+          "scan": 50,
+          "comm": 12,
+          "cut": 0,
+          "shield": 10
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 72,
+        "planning_calls": 23,
+        "rollouts": 0,
+        "seconds": 0.3045155090512708
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 402,
+      "variant": "mean",
+      "baseline": {
+        "score": 407.66440513872834,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 407.66440513872834,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "planning_calls": 25,
+        "rollouts": 2,
+        "seconds": 0.634593317983672
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 403,
+      "variant": "mean",
+      "baseline": {
+        "score": 470.70492017919076,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 470.70492017919076,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "planning_calls": 25,
+        "rollouts": 4,
+        "seconds": 0.70583515195176
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 404,
+      "variant": "mean",
+      "baseline": {
+        "score": 499.26933697109826,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 499.26933697109826,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "planning_calls": 25,
+        "rollouts": 2,
+        "seconds": 0.5232500120764598
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 405,
+      "variant": "mean",
+      "baseline": {
+        "score": 384.17963289999994,
+        "actions": {
+          "scan": 50,
+          "comm": 17,
+          "cut": 0,
+          "shield": 8
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 378.14996718857145,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "planning_calls": 25,
+        "rollouts": 2,
+        "seconds": 0.5349948930088431
+      },
+      "delta": -6.029665711428493
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 401,
+      "variant": "mean",
+      "baseline": {
+        "score": 220.10475767924524,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 246.20501506666668,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 4,
+        "seconds": 1.3273921139771119
+      },
+      "delta": 26.100257387421436
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 402,
+      "variant": "mean",
+      "baseline": {
+        "score": 468.45134448657717,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 479.02818193624154,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 2,
+        "seconds": 1.263091632979922
+      },
+      "delta": 10.576837449664367
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 403,
+      "variant": "mean",
+      "baseline": {
+        "score": 419.9577525700637,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 468.20831829073916,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 16,
+        "seconds": 4.134547816938721
+      },
+      "delta": 48.25056572067547
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 404,
+      "variant": "mean",
+      "baseline": {
+        "score": 493.6467196646339,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 466.47013110431664,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 4,
+        "seconds": 1.1812374469591305
+      },
+      "delta": -27.17658856031727
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 405,
+      "variant": "mean",
+      "baseline": {
+        "score": 471.8383725286625,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 480.7760521146497,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 2,
+        "seconds": 1.423401235952042
+      },
+      "delta": 8.937679585987212
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 401,
+      "variant": "mean",
+      "baseline": {
+        "score": 472.652233118421,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 456.22544310683764,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 78,
+        "planning_calls": 29,
+        "rollouts": 32,
+        "seconds": 4.6428344829473644
+      },
+      "delta": -16.426790011583364
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 402,
+      "variant": "mean",
+      "baseline": {
+        "score": 454.78883046774183,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 454.78883046774183,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 36,
+        "seconds": 4.876507482025772
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 403,
+      "variant": "mean",
+      "baseline": {
+        "score": 530.2922875714286,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 554.3335303600508,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 40,
+        "seconds": 5.523832043982111
+      },
+      "delta": 24.041242788622185
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 404,
+      "variant": "mean",
+      "baseline": {
+        "score": 515.1451714081634,
+        "actions": {
+          "scan": 50,
+          "comm": 20,
+          "cut": 0,
+          "shield": 7
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 515.1451714081634,
+        "actions": {
+          "scan": 50,
+          "comm": 20,
+          "cut": 0,
+          "shield": 7
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 77,
+        "planning_calls": 28,
+        "rollouts": 38,
+        "seconds": 4.364561081980355
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 405,
+      "variant": "mean",
+      "baseline": {
+        "score": 589.0992850318472,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 590.8772737261148,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 38,
+        "seconds": 4.935607401072048
+      },
+      "delta": 1.7779886942676058
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 401,
+      "variant": "mean",
+      "baseline": {
+        "score": 453.68582628282985,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 486.4587473639109,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 26,
+        "seconds": 5.820940495003015
+      },
+      "delta": 32.77292108108105
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 402,
+      "variant": "mean",
+      "baseline": {
+        "score": 504.96790311156684,
+        "actions": {
+          "scan": 50,
+          "comm": 20,
+          "cut": 0,
+          "shield": 7
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 518.5828766653099,
+        "actions": {
+          "scan": 50,
+          "comm": 20,
+          "cut": 0,
+          "shield": 7
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 77,
+        "planning_calls": 28,
+        "rollouts": 4,
+        "seconds": 1.2253057649359107
+      },
+      "delta": 13.614973553743027
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 403,
+      "variant": "mean",
+      "baseline": {
+        "score": 462.5162213999999,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 472.5309874485437,
+        "actions": {
+          "scan": 50,
+          "comm": 20,
+          "cut": 0,
+          "shield": 7
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 77,
+        "planning_calls": 28,
+        "rollouts": 44,
+        "seconds": 5.281346146948636
+      },
+      "delta": 10.014766048543834
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 404,
+      "variant": "mean",
+      "baseline": {
+        "score": 473.4916345427895,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 468.9391984952217,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 6,
+        "seconds": 2.3309934970457107
+      },
+      "delta": -4.552436047567767
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 405,
+      "variant": "mean",
+      "baseline": {
+        "score": 512.7789410109167,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 514.6520879972361,
+        "actions": {
+          "scan": 50,
+          "comm": 20,
+          "cut": 0,
+          "shield": 7
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 77,
+        "planning_calls": 28,
+        "rollouts": 18,
+        "seconds": 3.9125175550580025
+      },
+      "delta": 1.873146986319398
+    },
+    {
+      "family": "negative_hub_spokes",
+      "repetition": 401,
+      "variant": "mean",
+      "baseline": {
+        "score": 864.3204179999998,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 864.3204179999998,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 0,
+        "seconds": 0.2787212679395452
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "negative_hub_spokes",
+      "repetition": 402,
+      "variant": "mean",
+      "baseline": {
+        "score": 868.3326179999998,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 868.3326179999998,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 0,
+        "seconds": 0.19611241505481303
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "negative_hub_spokes",
+      "repetition": 403,
+      "variant": "mean",
+      "baseline": {
+        "score": 681.9141220000001,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 681.9141220000001,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 0,
+        "seconds": 0.4042342830216512
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "negative_hub_spokes",
+      "repetition": 404,
+      "variant": "mean",
+      "baseline": {
+        "score": 756.5780509999998,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 756.5780509999998,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 0,
+        "seconds": 0.3727414250606671
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "negative_hub_spokes",
+      "repetition": 405,
+      "variant": "mean",
+      "baseline": {
+        "score": 736.660511,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 745.2275660000001,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 4,
+        "seconds": 1.314025546074845
+      },
+      "delta": 8.567055000000096
+    }
+  ],
+  "family_mean_delta": {
+    "er_balanced": -6.145341930346308,
+    "ba_negative_hubs": 43.45662356022323,
+    "ws_peace_majority": 0.0,
+    "sbm_negative_bridges": -1.1783019477671814,
+    "sbm_violent_cluster": 2.494972999999999,
+    "three_sparse_components": 8.504130853717907,
+    "grid_lattice": 0.0,
+    "cycle_chords": 6.95018883630446,
+    "two_block_bridge": -1.2059331422856985,
+    "tree_broom": 13.337750316686243,
+    "double_bridge_communities": 1.8784882942612853,
+    "ring_of_cliques": 10.744674324423908,
+    "negative_hub_spokes": 1.7134110000000191
+  },
+  "mean_delta": 6.196204858862912,
+  "all_family_means_nonnegative": false,
+  "platform_score": null,
+  "promotion_allowed": false
+}
