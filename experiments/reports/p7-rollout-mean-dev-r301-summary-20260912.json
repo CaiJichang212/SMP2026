@@ -1,0 +1,50 @@
+{
+  "repetitions": [
+    301
+  ],
+  "sources": [
+    {
+      "path": "experiments/raw/p7_rollout_mean_dev_r301.json",
+      "sha256": "a92e06f4df15caa51365e73a5d8c7815aa3a880240ef505dad3514e37982be53"
+    }
+  ],
+  "summary": {
+    "mean": {
+      "cases": 13,
+      "baseline_mean": 568.1756928023132,
+      "candidate_mean": 579.3301437290658,
+      "mean_delta": 11.154450926752576,
+      "family_mean_delta": {
+        "ba_negative_hubs": 73.6735941407187,
+        "cycle_chords": -0.2978756016597117,
+        "double_bridge_communities": 0.0,
+        "er_balanced": 0.0,
+        "grid_lattice": 0.0,
+        "negative_hub_spokes": 0.0,
+        "ring_of_cliques": 35.23522425132364,
+        "sbm_negative_bridges": 0.0,
+        "sbm_violent_cluster": 5.833108239431461,
+        "three_sparse_components": 5.205110357592105,
+        "tree_broom": 25.35870066037728,
+        "two_block_bridge": 0.0,
+        "ws_peace_majority": 0.0
+      },
+      "family_bootstrap_95_interval": [
+        1.675273968645186,
+        24.144815959206724
+      ],
+      "win_tie_loss": [
+        5,
+        7,
+        1
+      ],
+      "minimum_delta": -0.2978756016597117,
+      "maximum_delta": 73.6735941407187,
+      "all_family_means_nonnegative": false,
+      "statistical_gate_passed": false,
+      "resource_audit_passed": true
+    }
+  },
+  "platform_score": null,
+  "production_promotion_allowed": false
+}

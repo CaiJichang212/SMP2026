@@ -1,0 +1,22 @@
+{
+  "family": "er_balanced",
+  "repetition": 301,
+  "node_count": 50,
+  "seed_sha256": "d07f589d0e8bb13c50351944087d313197d3b34b8060bdc99cb67ee4e95bbeef",
+  "evaluation": "official custom-seed sandbox; deterministic research arms without LLM",
+  "platform_score": null,
+  "production_promotion_allowed": false,
+  "rows": [
+    {
+      "score": 845.97,
+      "failures": 0,
+      "steps": 86,
+      "remaining_budget": 0.0,
+      "variant": "baseline",
+      "local_replay_score": 845.971454069054,
+      "settlement_residual": -0.001454069053920648,
+      "maximum_response_error": 0.0,
+      "seconds": 86.48741753899958
+    }
+  ]
+}

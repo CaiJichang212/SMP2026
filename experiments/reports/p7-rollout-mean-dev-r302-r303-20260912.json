@@ -1,0 +1,916 @@
+{
+  "config": {
+    "start": 302,
+    "repetitions": 2,
+    "nodes": 50,
+    "scenarios": 1,
+    "family": null,
+    "output": "experiments/raw/p7_rollout_mean_dev_r302_303.json",
+    "block": "old_13_families"
+  },
+  "rows": [
+    {
+      "family": "er_balanced",
+      "repetition": 302,
+      "variant": "mean",
+      "baseline": {
+        "score": 752.3760099545453,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 752.3760099545453,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 8,
+        "seconds": 12.531110786949284
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "er_balanced",
+      "repetition": 303,
+      "variant": "mean",
+      "baseline": {
+        "score": 787.5322678113695,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 787.5322678113695,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 20,
+        "seconds": 56.72677794797346
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "ba_negative_hubs",
+      "repetition": 302,
+      "variant": "mean",
+      "baseline": {
+        "score": 220.8478358628572,
+        "actions": {
+          "scan": 50,
+          "comm": 20,
+          "cut": 0,
+          "shield": 7
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 233.76253756097557,
+        "actions": {
+          "scan": 50,
+          "comm": 20,
+          "cut": 0,
+          "shield": 7
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 77,
+        "planning_calls": 28,
+        "rollouts": 14,
+        "seconds": 12.890005629975349
+      },
+      "delta": 12.914701698118364
+    },
+    {
+      "family": "ba_negative_hubs",
+      "repetition": 303,
+      "variant": "mean",
+      "baseline": {
+        "score": 461.839429035294,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 488.69335168382344,
+        "actions": {
+          "scan": 50,
+          "comm": 17,
+          "cut": 0,
+          "shield": 8
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 75,
+        "planning_calls": 26,
+        "rollouts": 10,
+        "seconds": 5.189819700084627
+      },
+      "delta": 26.85392264852942
+    },
+    {
+      "family": "ws_peace_majority",
+      "repetition": 302,
+      "variant": "mean",
+      "baseline": {
+        "score": 975.0066318571428,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 975.0066318571428,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 0,
+        "seconds": 0.9747664630413055
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "ws_peace_majority",
+      "repetition": 303,
+      "variant": "mean",
+      "baseline": {
+        "score": 1100.3635028571427,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 1100.3635028571427,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 0,
+        "seconds": 0.9260399229824543
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "repetition": 302,
+      "variant": "mean",
+      "baseline": {
+        "score": 688.1823674571428,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 691.9564403142858,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 2,
+        "seconds": 3.7974369740113616
+      },
+      "delta": 3.7740728571429827
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "repetition": 303,
+      "variant": "mean",
+      "baseline": {
+        "score": 717.0598786245134,
+        "actions": {
+          "scan": 50,
+          "comm": 32,
+          "cut": 0,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 727.8547483902438,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 6,
+        "seconds": 5.482582389959134
+      },
+      "delta": 10.794869765730368
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "repetition": 302,
+      "variant": "mean",
+      "baseline": {
+        "score": 53.87481883919604,
+        "actions": {
+          "scan": 50,
+          "comm": 17,
+          "cut": 0,
+          "shield": 8
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 59.234956645161404,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "planning_calls": 25,
+        "rollouts": 28,
+        "seconds": 6.698502365034074
+      },
+      "delta": 5.3601378059653655
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "repetition": 303,
+      "variant": "mean",
+      "baseline": {
+        "score": 172.40111271739133,
+        "actions": {
+          "scan": 50,
+          "comm": 12,
+          "cut": 0,
+          "shield": 10
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 172.40111271739133,
+        "actions": {
+          "scan": 50,
+          "comm": 12,
+          "cut": 0,
+          "shield": 10
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 72,
+        "planning_calls": 23,
+        "rollouts": 12,
+        "seconds": 3.272876320988871
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "three_sparse_components",
+      "repetition": 302,
+      "variant": "mean",
+      "baseline": {
+        "score": 244.82885529224063,
+        "actions": {
+          "scan": 50,
+          "comm": 32,
+          "cut": 0,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 269.3959446062674,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 24,
+        "seconds": 9.683436061954126
+      },
+      "delta": 24.56708931402676
+    },
+    {
+      "family": "three_sparse_components",
+      "repetition": 303,
+      "variant": "mean",
+      "baseline": {
+        "score": 356.0900941278335,
+        "actions": {
+          "scan": 50,
+          "comm": 32,
+          "cut": 0,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 346.76555212054006,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 20,
+        "seconds": 8.485553191043437
+      },
+      "delta": -9.324542007293417
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 302,
+      "variant": "mean",
+      "baseline": {
+        "score": 1047.29767125,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 1047.29767125,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 0,
+        "seconds": 0.3803875680314377
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 303,
+      "variant": "mean",
+      "baseline": {
+        "score": 988.0697836363639,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 988.0697836363639,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 0,
+        "seconds": 0.3361471339594573
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 302,
+      "variant": "mean",
+      "baseline": {
+        "score": 669.2615559999999,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 675.9196297261409,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 2,
+        "seconds": 2.536447456921451
+      },
+      "delta": 6.6580737261409695
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 303,
+      "variant": "mean",
+      "baseline": {
+        "score": 616.3979441379311,
+        "actions": {
+          "scan": 50,
+          "comm": 32,
+          "cut": 0,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 621.5957765291481,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 50,
+        "seconds": 11.98062371602282
+      },
+      "delta": 5.197832391217048
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 302,
+      "variant": "mean",
+      "baseline": {
+        "score": 593.8902918439306,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 593.8902918439306,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "planning_calls": 25,
+        "rollouts": 2,
+        "seconds": 0.5167466480052099
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 303,
+      "variant": "mean",
+      "baseline": {
+        "score": 539.7933923828572,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 539.7933923828572,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "planning_calls": 25,
+        "rollouts": 0,
+        "seconds": 0.3590487650362775
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 302,
+      "variant": "mean",
+      "baseline": {
+        "score": 442.4036552727273,
+        "actions": {
+          "scan": 50,
+          "comm": 32,
+          "cut": 0,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 464.5084033333335,
+        "actions": {
+          "scan": 50,
+          "comm": 26,
+          "cut": 1,
+          "shield": 4
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 81,
+        "planning_calls": 32,
+        "rollouts": 20,
+        "seconds": 4.36625920701772
+      },
+      "delta": 22.104748060606198
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 303,
+      "variant": "mean",
+      "baseline": {
+        "score": 204.8598146849315,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 268.3907928791506,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 6,
+        "seconds": 1.9496636369731277
+      },
+      "delta": 63.530978194219074
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 302,
+      "variant": "mean",
+      "baseline": {
+        "score": 439.6539579473683,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 446.0196181156462,
+        "actions": {
+          "scan": 50,
+          "comm": 20,
+          "cut": 0,
+          "shield": 7
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 77,
+        "planning_calls": 28,
+        "rollouts": 28,
+        "seconds": 3.9182474280241877
+      },
+      "delta": 6.365660168277884
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 303,
+      "variant": "mean",
+      "baseline": {
+        "score": 496.4985066973684,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 498.2233324115646,
+        "actions": {
+          "scan": 50,
+          "comm": 20,
+          "cut": 0,
+          "shield": 7
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 77,
+        "planning_calls": 28,
+        "rollouts": 44,
+        "seconds": 5.460383191006258
+      },
+      "delta": 1.7248257141962426
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 302,
+      "variant": "mean",
+      "baseline": {
+        "score": 445.7792112272354,
+        "actions": {
+          "scan": 50,
+          "comm": 20,
+          "cut": 0,
+          "shield": 7
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 445.7792112272354,
+        "actions": {
+          "scan": 50,
+          "comm": 20,
+          "cut": 0,
+          "shield": 7
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 77,
+        "planning_calls": 28,
+        "rollouts": 12,
+        "seconds": 3.1584804069716483
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 303,
+      "variant": "mean",
+      "baseline": {
+        "score": 544.8751800150376,
+        "actions": {
+          "scan": 50,
+          "comm": 27,
+          "cut": 0,
+          "shield": 4
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 576.2136776057616,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 4,
+        "seconds": 1.6150841480121017
+      },
+      "delta": 31.338497590724046
+    },
+    {
+      "family": "negative_hub_spokes",
+      "repetition": 302,
+      "variant": "mean",
+      "baseline": {
+        "score": 892.5843449999998,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 892.5843449999998,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 0,
+        "seconds": 0.38393933209590614
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "negative_hub_spokes",
+      "repetition": 303,
+      "variant": "mean",
+      "baseline": {
+        "score": 651.4241415000002,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 659.8481565000003,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 4,
+        "seconds": 1.1188332659658045
+      },
+      "delta": 8.424015000000054
+    }
+  ],
+  "family_mean_delta": {
+    "er_balanced": 0.0,
+    "ba_negative_hubs": 19.88431217332389,
+    "ws_peace_majority": 0.0,
+    "sbm_negative_bridges": 7.2844713114366755,
+    "sbm_violent_cluster": 2.6800689029826827,
+    "three_sparse_components": 7.621273653366671,
+    "grid_lattice": 0.0,
+    "cycle_chords": 5.927953058679009,
+    "two_block_bridge": 0.0,
+    "tree_broom": 42.817863127412636,
+    "double_bridge_communities": 4.045242941237063,
+    "ring_of_cliques": 15.669248795362023,
+    "negative_hub_spokes": 4.212007500000027
+  },
+  "mean_delta": 8.472495497215437,
+  "all_family_means_nonnegative": true,
+  "platform_score": null,
+  "promotion_allowed": false
+}

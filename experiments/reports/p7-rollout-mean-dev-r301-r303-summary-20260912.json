@@ -1,0 +1,56 @@
+{
+  "repetitions": [
+    301,
+    302,
+    303
+  ],
+  "sources": [
+    {
+      "path": "experiments/reports/p7-rollout-mean-dev-r301-20260912.json",
+      "sha256": "a92e06f4df15caa51365e73a5d8c7815aa3a880240ef505dad3514e37982be53"
+    },
+    {
+      "path": "experiments/reports/p7-rollout-mean-dev-r302-r303-20260912.json",
+      "sha256": "35fb3b988759b8160b8940b1785e6c4efba4acfa550966f1061e6e0903c672ae"
+    }
+  ],
+  "summary": {
+    "mean": {
+      "cases": 39,
+      "baseline_mean": 576.6532374990383,
+      "candidate_mean": 586.0197181394327,
+      "mean_delta": 9.366480640394483,
+      "family_mean_delta": {
+        "ba_negative_hubs": 37.81407282912216,
+        "cycle_chords": 3.852676838566102,
+        "double_bridge_communities": 2.6968286274913758,
+        "er_balanced": 0.0,
+        "grid_lattice": 0.0,
+        "negative_hub_spokes": 2.808005000000018,
+        "ring_of_cliques": 22.191240614015896,
+        "sbm_negative_bridges": 4.85631420762445,
+        "sbm_violent_cluster": 3.731082015132275,
+        "three_sparse_components": 6.8158858881084825,
+        "tree_broom": 36.99814230506752,
+        "two_block_bridge": 0.0,
+        "ws_peace_majority": 0.0
+      },
+      "family_bootstrap_95_interval": [
+        2.974336155276144,
+        17.25588331285511
+      ],
+      "win_tie_loss": [
+        19,
+        18,
+        2
+      ],
+      "minimum_delta": -9.324542007293417,
+      "maximum_delta": 73.6735941407187,
+      "all_family_means_nonnegative": true,
+      "statistical_gate_passed": true,
+      "resource_audit_passed": true
+    }
+  },
+  "platform_score": null,
+  "production_promotion_allowed": false
+}

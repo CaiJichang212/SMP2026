@@ -1,0 +1,130 @@
+{
+  "repetitions": [
+    301,
+    302,
+    303
+  ],
+  "sources": [
+    {
+      "path": "experiments/reports/p7-robust-existing-dev-20260912.json",
+      "sha256": "d9b27243cdca0c7c313d31074baac7098898857392d0c78183c85262854469d1"
+    },
+    {
+      "path": "experiments/reports/p7-robust-independent-dev-20260912.json",
+      "sha256": "17d311046d05d4c39821be8e98e498b2c09fd9a78f088cb816d0750a9715a971"
+    },
+    {
+      "path": "experiments/reports/p7-robust-holdout-dev-20260912.json",
+      "sha256": "eee3864e73e61e6b53d19526d0b7b416c8262dc7784efffe8094b90196842b4c"
+    }
+  ],
+  "summary": {
+    "bounded": {
+      "cases": 39,
+      "baseline_mean": 576.6532374990383,
+      "candidate_mean": 582.2215662729935,
+      "mean_delta": 5.568328773955287,
+      "family_mean_delta": {
+        "ba_negative_hubs": 47.84166907350286,
+        "cycle_chords": 2.2193579087136563,
+        "double_bridge_communities": -7.018888973612699,
+        "er_balanced": 0.0,
+        "grid_lattice": 0.0,
+        "negative_hub_spokes": 9.162843494505486,
+        "ring_of_cliques": 3.766266748637122,
+        "sbm_negative_bridges": 4.85631420762445,
+        "sbm_violent_cluster": 1.7867126019884552,
+        "three_sparse_components": 0.26588689448884867,
+        "tree_broom": 14.47155552730725,
+        "two_block_bridge": -4.963443421736694,
+        "ws_peace_majority": 0.0
+      },
+      "family_bootstrap_95_interval": [
+        -0.05962510997044151,
+        13.809687383104805
+      ],
+      "win_tie_loss": [
+        14,
+        21,
+        4
+      ],
+      "minimum_delta": -19.64847885361837,
+      "maximum_delta": 104.33941030983635,
+      "all_family_means_nonnegative": false,
+      "statistical_gate_passed": false,
+      "resource_audit_passed": true
+    },
+    "p6_depth2": {
+      "cases": 39,
+      "baseline_mean": 576.6532374990383,
+      "candidate_mean": 585.3749572919111,
+      "mean_delta": 8.721719792872786,
+      "family_mean_delta": {
+        "ba_negative_hubs": 49.47719023767485,
+        "cycle_chords": 0.0722916833644831,
+        "double_bridge_communities": -4.325141731188523,
+        "er_balanced": 5.5623387822605155,
+        "grid_lattice": 0.0,
+        "negative_hub_spokes": 9.162843494505486,
+        "ring_of_cliques": 10.73719381717774,
+        "sbm_negative_bridges": 4.85631420762445,
+        "sbm_violent_cluster": 1.3207868809401024,
+        "three_sparse_components": 14.763471988272178,
+        "tree_broom": 20.425776411476875,
+        "two_block_bridge": 1.3292915352380608,
+        "ws_peace_majority": 0.0
+      },
+      "family_bootstrap_95_interval": [
+        2.656090677910166,
+        17.103979412389688
+      ],
+      "win_tie_loss": [
+        21,
+        12,
+        6
+      ],
+      "minimum_delta": -24.972427326400634,
+      "maximum_delta": 98.49334902443968,
+      "all_family_means_nonnegative": false,
+      "statistical_gate_passed": false,
+      "resource_audit_passed": true
+    },
+    "strict": {
+      "cases": 39,
+      "baseline_mean": 576.6532374990383,
+      "candidate_mean": 581.208113404248,
+      "mean_delta": 4.554875905209844,
+      "family_mean_delta": {
+        "ba_negative_hubs": 51.43398570692981,
+        "cycle_chords": 0.0,
+        "double_bridge_communities": -7.018888973612699,
+        "er_balanced": 0.0,
+        "grid_lattice": 0.0,
+        "negative_hub_spokes": 0.0,
+        "ring_of_cliques": 3.766266748637122,
+        "sbm_negative_bridges": 1.2580242857143276,
+        "sbm_violent_cluster": 0.0,
+        "three_sparse_components": 0.26588689448884867,
+        "tree_broom": 14.47155552730725,
+        "two_block_bridge": -4.963443421736694,
+        "ws_peace_majority": 0.0
+      },
+      "family_bootstrap_95_interval": [
+        -1.2292480344635799,
+        13.463769425283973
+      ],
+      "win_tie_loss": [
+        9,
+        26,
+        4
+      ],
+      "minimum_delta": -19.64847885361837,
+      "maximum_delta": 104.33941030983635,
+      "all_family_means_nonnegative": false,
+      "statistical_gate_passed": false,
+      "resource_audit_passed": true
+    }
+  },
+  "platform_score": null,
+  "production_promotion_allowed": false
+}

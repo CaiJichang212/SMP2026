@@ -1,0 +1,95 @@
+{
+  "repetitions": [
+    301,
+    302,
+    303
+  ],
+  "sources": [
+    {
+      "path": "experiments/reports/p7-robust-anchor-existing-dev-20260912.json",
+      "sha256": "ae79aa5102469fccfcae6b7e59ec6fad1edc82e3bf3dc477b823b6c8c584ef30"
+    },
+    {
+      "path": "experiments/reports/p7-robust-anchor-independent-dev-20260912.json",
+      "sha256": "442ab9a8f37ef6dbcfe77ba6c49c713b7de723c12b99a68b3bc2ab8ccde3d03b"
+    },
+    {
+      "path": "experiments/reports/p7-robust-anchor-holdout-dev-20260912.json",
+      "sha256": "1517852dc4f0d9885f7d3d4f1bdb8bc8c1d9e0b03cf91989a4316d156dc01a40"
+    }
+  ],
+  "summary": {
+    "bounded_anchor": {
+      "cases": 39,
+      "baseline_mean": 576.6532374990383,
+      "candidate_mean": 582.6033696131271,
+      "mean_delta": 5.950132114088879,
+      "family_mean_delta": {
+        "ba_negative_hubs": 47.84166907350286,
+        "cycle_chords": 2.2193579087136563,
+        "double_bridge_communities": -7.018888973612699,
+        "er_balanced": 0.0,
+        "grid_lattice": 0.0,
+        "negative_hub_spokes": 9.162843494505486,
+        "ring_of_cliques": 3.766266748637122,
+        "sbm_negative_bridges": 4.85631420762445,
+        "sbm_violent_cluster": 1.7867126019884552,
+        "three_sparse_components": 0.26588689448884867,
+        "tree_broom": 14.47155552730725,
+        "two_block_bridge": 0.0,
+        "ws_peace_majority": 0.0
+      },
+      "family_bootstrap_95_interval": [
+        0.47050657102011334,
+        14.016742434086057
+      ],
+      "win_tie_loss": [
+        14,
+        22,
+        3
+      ],
+      "minimum_delta": -19.64847885361837,
+      "maximum_delta": 104.33941030983635,
+      "all_family_means_nonnegative": false,
+      "statistical_gate_passed": false,
+      "resource_audit_passed": true
+    },
+    "strict_anchor": {
+      "cases": 39,
+      "baseline_mean": 576.6532374990383,
+      "candidate_mean": 581.5899167443816,
+      "mean_delta": 4.936679245343435,
+      "family_mean_delta": {
+        "ba_negative_hubs": 51.43398570692981,
+        "cycle_chords": 0.0,
+        "double_bridge_communities": -7.018888973612699,
+        "er_balanced": 0.0,
+        "grid_lattice": 0.0,
+        "negative_hub_spokes": 0.0,
+        "ring_of_cliques": 3.766266748637122,
+        "sbm_negative_bridges": 1.2580242857143276,
+        "sbm_violent_cluster": 0.0,
+        "three_sparse_components": 0.26588689448884867,
+        "tree_broom": 14.47155552730725,
+        "two_block_bridge": 0.0,
+        "ws_peace_majority": 0.0
+      },
+      "family_bootstrap_95_interval": [
+        -0.7287577319324409,
+        13.67308387553803
+      ],
+      "win_tie_loss": [
+        9,
+        27,
+        3
+      ],
+      "minimum_delta": -19.64847885361837,
+      "maximum_delta": 104.33941030983635,
+      "all_family_means_nonnegative": false,
+      "statistical_gate_passed": false,
+      "resource_audit_passed": true
+    }
+  },
+  "platform_score": null,
+  "production_promotion_allowed": false
+}

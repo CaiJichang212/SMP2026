@@ -1,0 +1,43 @@
+{
+  "family": "ba_negative_hubs",
+  "repetition": 301,
+  "node_count": 50,
+  "seed_sha256": "297276e0cd6da2a3fa0040ed52818353d8bc83189df3a7e421be6570e29d5dbd",
+  "evaluation": "official custom-seed sandbox; deterministic research arms without LLM",
+  "platform_score": null,
+  "production_promotion_allowed": false,
+  "rows": [
+    {
+      "score": 297.01,
+      "failures": 0,
+      "steps": 78,
+      "remaining_budget": 1.0,
+      "variant": "baseline",
+      "local_replay_score": 297.0349728592814,
+      "settlement_residual": -0.024972859281433557,
+      "maximum_response_error": 0.0,
+      "seconds": 75.1035918520065
+    },
+    {
+      "score": 401.34,
+      "actions": {
+        "scan": 50,
+        "comm": 17,
+        "cut": 0,
+        "shield": 8
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "steps": 75,
+      "structure_proposed": 24,
+      "structure_accepted": 6,
+      "planning_seconds": 3.824689788161777,
+      "plan_cache_entries": 25,
+      "seconds": 33.23245261202101,
+      "variant": "strict_anchor",
+      "local_replay_score": 401.3743831691178,
+      "settlement_residual": -0.03438316911780248,
+      "maximum_response_error": 0.0
+    }
+  ]
+}

@@ -1,0 +1,1002 @@
+{
+  "schema_version": 1,
+  "purpose": "local diagnostics only; not a platform score or full-action-space upper bound",
+  "cohort": "development",
+  "repetitions": [
+    301,
+    302,
+    303
+  ],
+  "r_strata": {
+    "low": [
+      0.2,
+      0.55
+    ],
+    "standard": [
+      0.2,
+      1.5
+    ],
+    "high": [
+      1.1,
+      1.5
+    ]
+  },
+  "oracle_assumptions": "fixed topology, prompt 1, known seed r; full-scan costs 25, free-scan costs 0",
+  "rows": [
+    {
+      "family": "random_geometric",
+      "repetition": 301,
+      "r_stratum": "low",
+      "seed_sha256": "b219d98df9e0fe06c30f541aa23753bd7f15ab60a0d5f2d66667d92116f17b9c",
+      "natural_score": 318.7875217741936,
+      "full_scan_fixed_topology_persuasion_oracle": 600.850355875576,
+      "free_scan_fixed_topology_persuasion_oracle": 651.0890021889401,
+      "public_greedy_score": 575.4799883640553,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "random_geometric",
+      "repetition": 301,
+      "r_stratum": "standard",
+      "seed_sha256": "3fe017974e2fd1d46460444617ee2503a2eef0faaac610474504b2ba2cbf138c",
+      "natural_score": 318.7875217741936,
+      "full_scan_fixed_topology_persuasion_oracle": 949.2835836981567,
+      "free_scan_fixed_topology_persuasion_oracle": 1066.129130357143,
+      "public_greedy_score": 910.9314238479258,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "random_geometric",
+      "repetition": 301,
+      "r_stratum": "high",
+      "seed_sha256": "e8771a9951de47513e53543cc29c63a7ff61cd5098f288fe512bacfed2783516",
+      "natural_score": 318.7875217741936,
+      "full_scan_fixed_topology_persuasion_oracle": 1235.0330237903224,
+      "free_scan_fixed_topology_persuasion_oracle": 1422.919232315668,
+      "public_greedy_score": 1233.5148008640551,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "random_geometric",
+      "repetition": 302,
+      "r_stratum": "low",
+      "seed_sha256": "2305ea37d535d521877eed08d04346ef59ae412961d90f1d3683d739c6962e69",
+      "natural_score": 76.50769752535075,
+      "full_scan_fixed_topology_persuasion_oracle": 317.0355204382553,
+      "free_scan_fixed_topology_persuasion_oracle": 367.50145274135286,
+      "public_greedy_score": 303.52268683289344,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "random_geometric",
+      "repetition": 302,
+      "r_stratum": "standard",
+      "seed_sha256": "67d34e8f832f6773a14dfd4ce3da54b6a17297db9cf0ce8773aaae8d506306a8",
+      "natural_score": 76.50769752535075,
+      "full_scan_fixed_topology_persuasion_oracle": 661.965849256494,
+      "free_scan_fixed_topology_persuasion_oracle": 776.0323441168913,
+      "public_greedy_score": 594.0865217283651,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "random_geometric",
+      "repetition": 302,
+      "r_stratum": "high",
+      "seed_sha256": "f66138b7d1022d3e5fb5a27db8ecf72b2d3673cad7ad626bc5c2bd4c5a03d1e3",
+      "natural_score": 76.50769752535075,
+      "full_scan_fixed_topology_persuasion_oracle": 898.6257204382555,
+      "free_scan_fixed_topology_persuasion_oracle": 1074.5340814206836,
+      "public_greedy_score": 882.305419511043,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "random_geometric",
+      "repetition": 303,
+      "r_stratum": "low",
+      "seed_sha256": "376abeec5e27ff55cc7e93aa96b218967432fd1c25fcc8db17747966ddbf7748",
+      "natural_score": 126.42369758883247,
+      "full_scan_fixed_topology_persuasion_oracle": 362.1160335659899,
+      "free_scan_fixed_topology_persuasion_oracle": 415.42809416243654,
+      "public_greedy_score": 369.14566643733343,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 35,
+        "cut": 0,
+        "shield": 1
+      },
+      "public_greedy_remaining_budget": 0.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "random_geometric",
+      "repetition": 303,
+      "r_stratum": "standard",
+      "seed_sha256": "93df6514f9e0bc1eeaddea12533945f13e389e95610ccc2e13f86b91d182a01e",
+      "natural_score": 126.42369758883247,
+      "full_scan_fixed_topology_persuasion_oracle": 648.5708565355332,
+      "free_scan_fixed_topology_persuasion_oracle": 747.0498159263963,
+      "public_greedy_score": 587.4852477157359,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "random_geometric",
+      "repetition": 303,
+      "r_stratum": "high",
+      "seed_sha256": "3bd15a1a9fc6a98b6bb1be151e4386fedc0cd4e2183a1a72209b02d308d50ded",
+      "natural_score": 126.42369758883247,
+      "full_scan_fixed_topology_persuasion_oracle": 952.6858562182741,
+      "free_scan_fixed_topology_persuasion_oracle": 1137.9202822969542,
+      "public_greedy_score": 931.1510995558373,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "barbell",
+      "repetition": 301,
+      "r_stratum": "low",
+      "seed_sha256": "9f663b71c010970931e4d6ea705279e830844b608f4200fe5ad2f5c6b54f1b9b",
+      "natural_score": -138.28241114130438,
+      "full_scan_fixed_topology_persuasion_oracle": 130.00899001358695,
+      "free_scan_fixed_topology_persuasion_oracle": 174.1822316915761,
+      "public_greedy_score": 554.2716747207206,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 21,
+        "cut": 1,
+        "shield": 6
+      },
+      "public_greedy_remaining_budget": 0.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "barbell",
+      "repetition": 301,
+      "r_stratum": "standard",
+      "seed_sha256": "d3b43199df8d6496c93dd5d2523cb02aa909135898547dd958e80f9c35074b1c",
+      "natural_score": -138.28241114130438,
+      "full_scan_fixed_topology_persuasion_oracle": 503.7619000000001,
+      "free_scan_fixed_topology_persuasion_oracle": 608.2083592391305,
+      "public_greedy_score": 801.8150922882885,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 23,
+        "cut": 1,
+        "shield": 5
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "barbell",
+      "repetition": 301,
+      "r_stratum": "high",
+      "seed_sha256": "a258f006ce4ef005e6b22a615b3c261e6ea371937a19777b570e277a8f0ccc91",
+      "natural_score": -138.28241114130438,
+      "full_scan_fixed_topology_persuasion_oracle": 847.6422763586957,
+      "free_scan_fixed_topology_persuasion_oracle": 1025.8016826086953,
+      "public_greedy_score": 1074.4021266396398,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 26,
+        "cut": 1,
+        "shield": 4
+      },
+      "public_greedy_remaining_budget": 0.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "barbell",
+      "repetition": 302,
+      "r_stratum": "low",
+      "seed_sha256": "d3fc9aa1722aa4ee7e39c12a7a0c1b0662dce6adb11fe9330d043ca6ef1b5a68",
+      "natural_score": 64.63443736413045,
+      "full_scan_fixed_topology_persuasion_oracle": 367.59353179347835,
+      "free_scan_fixed_topology_persuasion_oracle": 413.23334497282616,
+      "public_greedy_score": 665.5677342818102,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 26,
+        "cut": 1,
+        "shield": 4
+      },
+      "public_greedy_remaining_budget": 0.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "barbell",
+      "repetition": 302,
+      "r_stratum": "standard",
+      "seed_sha256": "4fdad67ab712dec8b211c5e4014d299d7b95db49c845749923103f505d1d1236",
+      "natural_score": 64.63443736413045,
+      "full_scan_fixed_topology_persuasion_oracle": 700.4555542119566,
+      "free_scan_fixed_topology_persuasion_oracle": 800.6915256793479,
+      "public_greedy_score": 952.8260367818534,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 33,
+        "cut": 1,
+        "shield": 1
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "barbell",
+      "repetition": 302,
+      "r_stratum": "high",
+      "seed_sha256": "9a3e24aa3a79978bca3fd69e576e53764e3e199cc5f1ab4816ed0c75e4277f1e",
+      "natural_score": 64.63443736413045,
+      "full_scan_fixed_topology_persuasion_oracle": 1073.5793548233696,
+      "free_scan_fixed_topology_persuasion_oracle": 1255.9088487092395,
+      "public_greedy_score": 1278.5784748209603,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 33,
+        "cut": 1,
+        "shield": 1
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "barbell",
+      "repetition": 303,
+      "r_stratum": "low",
+      "seed_sha256": "cc3d3076d4a08650d7a6bc5226ef20f4c3706619b26c01e808e79e89cc96c923",
+      "natural_score": -71.57476927816903,
+      "full_scan_fixed_topology_persuasion_oracle": 216.0397320422536,
+      "free_scan_fixed_topology_persuasion_oracle": 274.0993235915495,
+      "public_greedy_score": 442.8807610774195,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 28,
+        "cut": 1,
+        "shield": 3
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "barbell",
+      "repetition": 303,
+      "r_stratum": "standard",
+      "seed_sha256": "835fbe05c94e2cc40ceb545f918fc06056cb568e6cb5632158e039621bcca7fa",
+      "natural_score": -71.57476927816903,
+      "full_scan_fixed_topology_persuasion_oracle": 667.8821928697183,
+      "free_scan_fixed_topology_persuasion_oracle": 794.1817584507043,
+      "public_greedy_score": 783.3054972709679,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 28,
+        "cut": 1,
+        "shield": 3
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "barbell",
+      "repetition": 303,
+      "r_stratum": "high",
+      "seed_sha256": "841f9f409d3a93e08d419403f0af219a7090b6ab82064a5a709f03436787375f",
+      "natural_score": -71.57476927816903,
+      "full_scan_fixed_topology_persuasion_oracle": 908.084509991197,
+      "free_scan_fixed_topology_persuasion_oracle": 1098.140890272887,
+      "public_greedy_score": 1013.9765522225811,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 31,
+        "cut": 1,
+        "shield": 2
+      },
+      "public_greedy_remaining_budget": 0.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "lollipop",
+      "repetition": 301,
+      "r_stratum": "low",
+      "seed_sha256": "8d8f1e605fcd58cc3deefe5113f867cd6f6a7cda551fdb7092ff41aa8d8988b1",
+      "natural_score": -898.372834404762,
+      "full_scan_fixed_topology_persuasion_oracle": -509.58605583333343,
+      "free_scan_fixed_topology_persuasion_oracle": -461.1097634226191,
+      "public_greedy_score": 4.9270168238634255,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 26,
+        "cut": 1,
+        "shield": 4
+      },
+      "public_greedy_remaining_budget": 0.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "lollipop",
+      "repetition": 301,
+      "r_stratum": "standard",
+      "seed_sha256": "cce6bbf47a398ab0554bd11db7dcccde8f65d26328caf5b23e07bf64481d3602",
+      "natural_score": -898.372834404762,
+      "full_scan_fixed_topology_persuasion_oracle": -41.19823619047622,
+      "free_scan_fixed_topology_persuasion_oracle": 60.36407005952401,
+      "public_greedy_score": 222.32750651173382,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 23,
+        "cut": 1,
+        "shield": 5
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "lollipop",
+      "repetition": 301,
+      "r_stratum": "high",
+      "seed_sha256": "d65abe766bdeebac280333cc2c17d00075547c80eef9a270b88fd94915a8f444",
+      "natural_score": -898.372834404762,
+      "full_scan_fixed_topology_persuasion_oracle": 227.72821380952394,
+      "free_scan_fixed_topology_persuasion_oracle": 365.44158568452383,
+      "public_greedy_score": 337.2970445527455,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 23,
+        "cut": 1,
+        "shield": 5
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "lollipop",
+      "repetition": 302,
+      "r_stratum": "low",
+      "seed_sha256": "46a9514f5cafb24d8744850fbfedaf666928a7317bcdaa54945f6919ee45f669",
+      "natural_score": -471.1045626428571,
+      "full_scan_fixed_topology_persuasion_oracle": -144.87693675000008,
+      "free_scan_fixed_topology_persuasion_oracle": -92.32018585714292,
+      "public_greedy_score": 127.67458851428569,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 31,
+        "cut": 1,
+        "shield": 2
+      },
+      "public_greedy_remaining_budget": 0.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "lollipop",
+      "repetition": 302,
+      "r_stratum": "standard",
+      "seed_sha256": "5385e05ec77455e9a72b635f91c4942dd0e1e3d568ba42164cff1f3c2bb81ddf",
+      "natural_score": -471.1045626428571,
+      "full_scan_fixed_topology_persuasion_oracle": 196.00070833928572,
+      "free_scan_fixed_topology_persuasion_oracle": 291.69260833928564,
+      "public_greedy_score": 319.06155944661657,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 31,
+        "cut": 1,
+        "shield": 2
+      },
+      "public_greedy_remaining_budget": 0.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "lollipop",
+      "repetition": 302,
+      "r_stratum": "high",
+      "seed_sha256": "57e73d6ae89e41007da8f6a19389459db7f9c03868cbd7f560b5c9e73a1bdf7b",
+      "natural_score": -471.1045626428571,
+      "full_scan_fixed_topology_persuasion_oracle": 627.8826939642859,
+      "free_scan_fixed_topology_persuasion_oracle": 839.1813591428574,
+      "public_greedy_score": 546.4766200346728,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 28,
+        "cut": 1,
+        "shield": 3
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "lollipop",
+      "repetition": 303,
+      "r_stratum": "low",
+      "seed_sha256": "02f0f81bd486549358374456d00290ebb81583e2e22fd78966301f8d90233e7e",
+      "natural_score": -617.9069718367347,
+      "full_scan_fixed_topology_persuasion_oracle": -293.39644875,
+      "free_scan_fixed_topology_persuasion_oracle": -249.99799721938768,
+      "public_greedy_score": 108.54692547727285,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 26,
+        "cut": 1,
+        "shield": 4
+      },
+      "public_greedy_remaining_budget": 0.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "lollipop",
+      "repetition": 303,
+      "r_stratum": "standard",
+      "seed_sha256": "157525636e413403c69fd08d04e5fc51216f7d09601dcd90cb6137fba28a5b5a",
+      "natural_score": -617.9069718367347,
+      "full_scan_fixed_topology_persuasion_oracle": 210.96562178571412,
+      "free_scan_fixed_topology_persuasion_oracle": 313.72199181122414,
+      "public_greedy_score": 303.7184658181818,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 26,
+        "cut": 1,
+        "shield": 4
+      },
+      "public_greedy_remaining_budget": 0.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "lollipop",
+      "repetition": 303,
+      "r_stratum": "high",
+      "seed_sha256": "805cdaf8826e9b93e17bfa259cfcea8a6df5d9773aea5955e626f497ec733986",
+      "natural_score": -617.9069718367347,
+      "full_scan_fixed_topology_persuasion_oracle": 530.5000437244897,
+      "free_scan_fixed_topology_persuasion_oracle": 690.102928928571,
+      "public_greedy_score": 477.0878129772727,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 26,
+        "cut": 1,
+        "shield": 4
+      },
+      "public_greedy_remaining_budget": 0.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "random_tree",
+      "repetition": 301,
+      "r_stratum": "low",
+      "seed_sha256": "3237e5861cf9d00b7a61ecdef0429ba6e906a7cd0aabfa7230f5602c9751a53c",
+      "natural_score": 236.86900033783786,
+      "full_scan_fixed_topology_persuasion_oracle": 501.9828086148649,
+      "free_scan_fixed_topology_persuasion_oracle": 553.5843770270271,
+      "public_greedy_score": 492.13890678620686,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 36,
+        "cut": 1,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 0.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "random_tree",
+      "repetition": 301,
+      "r_stratum": "standard",
+      "seed_sha256": "8198c9be6dd88751c48e556e22fa908d78f00780f7d5edb29a24527faa934ba4",
+      "natural_score": 236.86900033783786,
+      "full_scan_fixed_topology_persuasion_oracle": 820.9309783783783,
+      "free_scan_fixed_topology_persuasion_oracle": 938.1916996621619,
+      "public_greedy_score": 766.6341456081082,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "random_tree",
+      "repetition": 301,
+      "r_stratum": "high",
+      "seed_sha256": "cd5390764c0777c925f8e07795b9678f06b084514e7a40d74de54fc3045e991f",
+      "natural_score": 236.86900033783786,
+      "full_scan_fixed_topology_persuasion_oracle": 1074.7298761824327,
+      "free_scan_fixed_topology_persuasion_oracle": 1254.421646452703,
+      "public_greedy_score": 1048.6890907094598,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "random_tree",
+      "repetition": 302,
+      "r_stratum": "low",
+      "seed_sha256": "12314aaa171bbfd1fd95cb38bc620815186d67b2a62f97b5c59105a686f8ffca",
+      "natural_score": 53.66126182432433,
+      "full_scan_fixed_topology_persuasion_oracle": 289.6287322635135,
+      "free_scan_fixed_topology_persuasion_oracle": 341.3019966216216,
+      "public_greedy_score": 296.64848413846147,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 35,
+        "cut": 0,
+        "shield": 1
+      },
+      "public_greedy_remaining_budget": 0.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "random_tree",
+      "repetition": 302,
+      "r_stratum": "standard",
+      "seed_sha256": "f59ead2f0d7554cb403c097268e60e23e72d314f5a3e6a36a264a7a40ed71f8a",
+      "natural_score": 53.66126182432433,
+      "full_scan_fixed_topology_persuasion_oracle": 696.8917888513514,
+      "free_scan_fixed_topology_persuasion_oracle": 822.7374408783785,
+      "public_greedy_score": 649.7647356418919,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "random_tree",
+      "repetition": 302,
+      "r_stratum": "high",
+      "seed_sha256": "b66ff1d4f25096a2c1fabd1d5e04130570da3ebfdd6b82a137bb11eafdca31ab",
+      "natural_score": 53.66126182432433,
+      "full_scan_fixed_topology_persuasion_oracle": 873.1850050675677,
+      "free_scan_fixed_topology_persuasion_oracle": 1056.2371706081078,
+      "public_greedy_score": 851.8672381756758,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "random_tree",
+      "repetition": 303,
+      "r_stratum": "low",
+      "seed_sha256": "7a63cd78295a44e492acff49bcf67e07a153a87df0457dafe6f9d9c40a85906d",
+      "natural_score": 102.73494391891893,
+      "full_scan_fixed_topology_persuasion_oracle": 352.45242533783784,
+      "free_scan_fixed_topology_persuasion_oracle": 402.60812804054063,
+      "public_greedy_score": 359.0711577371134,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 35,
+        "cut": 0,
+        "shield": 1
+      },
+      "public_greedy_remaining_budget": 0.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "random_tree",
+      "repetition": 303,
+      "r_stratum": "standard",
+      "seed_sha256": "b7a0a4e504010f36607aa163275274e9463113969d3e49e53994b8074b490e63",
+      "natural_score": 102.73494391891893,
+      "full_scan_fixed_topology_persuasion_oracle": 727.4266896959459,
+      "free_scan_fixed_topology_persuasion_oracle": 846.5496635135133,
+      "public_greedy_score": 696.9616947635133,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "random_tree",
+      "repetition": 303,
+      "r_stratum": "high",
+      "seed_sha256": "57650803d3246373abe1322aedb2f4a351600db0de870bb657ebcdf4d0452d59",
+      "natural_score": 102.73494391891893,
+      "full_scan_fixed_topology_persuasion_oracle": 918.5001559121621,
+      "free_scan_fixed_topology_persuasion_oracle": 1093.8720148648647,
+      "public_greedy_score": 916.6082783783784,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "bipartite",
+      "repetition": 301,
+      "r_stratum": "low",
+      "seed_sha256": "8dbd0728866e6205fde938ef942fb4a7e7ab2d84fdead3b6bf7a04e1fab42eb2",
+      "natural_score": -119.44178821138215,
+      "full_scan_fixed_topology_persuasion_oracle": 136.8902026422765,
+      "free_scan_fixed_topology_persuasion_oracle": 189.87007002032533,
+      "public_greedy_score": 122.0866599593496,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "bipartite",
+      "repetition": 301,
+      "r_stratum": "standard",
+      "seed_sha256": "e7232bcaad6e0039d0b4441b50953c94fefca24f38711cc8ba45bf494636cef7",
+      "natural_score": -119.44178821138215,
+      "full_scan_fixed_topology_persuasion_oracle": 433.1792163617886,
+      "free_scan_fixed_topology_persuasion_oracle": 534.3374373983742,
+      "public_greedy_score": 387.732487703252,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "bipartite",
+      "repetition": 301,
+      "r_stratum": "high",
+      "seed_sha256": "22dc3f26d2352437c227dfd6f0e2328c946edd6ffb684caf7490f800a538e306",
+      "natural_score": -119.44178821138215,
+      "full_scan_fixed_topology_persuasion_oracle": 679.4302178861792,
+      "free_scan_fixed_topology_persuasion_oracle": 853.037066971545,
+      "public_greedy_score": 662.8524648373983,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "bipartite",
+      "repetition": 302,
+      "r_stratum": "low",
+      "seed_sha256": "5d4375997eb88abc699f6b633784c27bc45c88a667a10ab60d8dfa7212193c17",
+      "natural_score": 10.122871085020225,
+      "full_scan_fixed_topology_persuasion_oracle": 260.16096181376514,
+      "free_scan_fixed_topology_persuasion_oracle": 308.6143416417003,
+      "public_greedy_score": 263.47277831578947,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 35,
+        "cut": 0,
+        "shield": 1
+      },
+      "public_greedy_remaining_budget": 0.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "bipartite",
+      "repetition": 302,
+      "r_stratum": "standard",
+      "seed_sha256": "a1bcad1f8de9a0d71631ada1ed3cdd1ac27cf04482ae12431a578bc7172c560b",
+      "natural_score": 10.122871085020225,
+      "full_scan_fixed_topology_persuasion_oracle": 637.1706462368422,
+      "free_scan_fixed_topology_persuasion_oracle": 749.5599716062754,
+      "public_greedy_score": 567.0680966214575,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "bipartite",
+      "repetition": 302,
+      "r_stratum": "high",
+      "seed_sha256": "0a8b99f17a84a3e5f0900c142d1674d9222ec96b8aa532255b81dc1e6411909b",
+      "natural_score": 10.122871085020225,
+      "full_scan_fixed_topology_persuasion_oracle": 843.6103954777328,
+      "free_scan_fixed_topology_persuasion_oracle": 1026.47067351417,
+      "public_greedy_score": 833.5356195465588,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "bipartite",
+      "repetition": 303,
+      "r_stratum": "low",
+      "seed_sha256": "20c6fa175518f12eb33ab9dcb7a8325edfdd8a51e7bb03fb2a4d7c263eec859b",
+      "natural_score": -2.5022305242291,
+      "full_scan_fixed_topology_persuasion_oracle": 252.01923253744496,
+      "free_scan_fixed_topology_persuasion_oracle": 305.76318375991195,
+      "public_greedy_score": 238.7214004889868,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "bipartite",
+      "repetition": 303,
+      "r_stratum": "standard",
+      "seed_sha256": "a30859053e79c4eb2143dfa3adc01595c5bf0ba5823e1772169ab9ba447fb10a",
+      "natural_score": -2.5022305242291,
+      "full_scan_fixed_topology_persuasion_oracle": 606.1220362268723,
+      "free_scan_fixed_topology_persuasion_oracle": 726.4810311442731,
+      "public_greedy_score": 579.8815706431716,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    },
+    {
+      "family": "bipartite",
+      "repetition": 303,
+      "r_stratum": "high",
+      "seed_sha256": "ad4b36398fe54125d93f9949cfe6d17b0f61357f957b300d656f17546096c230",
+      "natural_score": -2.5022305242291,
+      "full_scan_fixed_topology_persuasion_oracle": 834.99768861674,
+      "free_scan_fixed_topology_persuasion_oracle": 1014.2749691563876,
+      "public_greedy_score": 817.5508462929515,
+      "full_scan_oracle_communications": 37,
+      "free_scan_oracle_communications": 50,
+      "public_greedy_actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "public_greedy_remaining_budget": 1.0,
+      "public_greedy_failures": 0
+    }
+  ],
+  "family_summary": [
+    {
+      "family": "random_geometric",
+      "cases": 9,
+      "natural_score": 173.90630562945893,
+      "full_scan_fixed_topology_persuasion_oracle": 736.2407555352063,
+      "free_scan_fixed_topology_persuasion_oracle": 850.9559372807184,
+      "public_greedy_score": 709.7358727619161
+    },
+    {
+      "family": "barbell",
+      "cases": 9,
+      "natural_score": -48.40758101844765,
+      "full_scan_fixed_topology_persuasion_oracle": 601.6720046782507,
+      "free_scan_fixed_topology_persuasion_oracle": 716.049773912884,
+      "public_greedy_score": 840.8471055671379
+    },
+    {
+      "family": "lollipop",
+      "cases": 9,
+      "natural_score": -662.4614562947846,
+      "full_scan_fixed_topology_persuasion_oracle": 89.33551156660997,
+      "free_scan_fixed_topology_persuasion_oracle": 195.23073305187071,
+      "public_greedy_score": 271.9019489062939
+    },
+    {
+      "family": "random_tree",
+      "cases": 9,
+      "natural_score": 131.08840202702703,
+      "full_scan_fixed_topology_persuasion_oracle": 695.0809400337838,
+      "free_scan_fixed_topology_persuasion_oracle": 812.1671264076576,
+      "public_greedy_score": 675.3759702154233
+    },
+    {
+      "family": "bipartite",
+      "cases": 9,
+      "natural_score": -37.27371588353034,
+      "full_scan_fixed_topology_persuasion_oracle": 520.3978441999602,
+      "free_scan_fixed_topology_persuasion_oracle": 634.2676383569958,
+      "public_greedy_score": 496.9891027121018
+    }
+  ],
+  "strata_summary": [
+    {
+      "r_stratum": "low",
+      "cases": 15,
+      "natural_score": -88.62960910805532,
+      "full_scan_fixed_topology_persuasion_oracle": 189.26127237370062,
+      "free_scan_fixed_topology_persuasion_oracle": 239.58983999737723,
+      "public_greedy_score": 328.2770953303708
+    },
+    {
+      "r_stratum": "standard",
+      "cases": 15,
+      "natural_score": -88.62960910805532,
+      "full_scan_fixed_topology_persuasion_oracle": 561.2939590838374,
+      "free_scan_fixed_topology_persuasion_oracle": 671.7285898788415,
+      "public_greedy_score": 608.2400054927376
+    },
+    {
+      "r_stratum": "high",
+      "cases": 15,
+      "natural_score": -88.62960910805532,
+      "full_scan_fixed_topology_persuasion_oracle": 835.0810021507485,
+      "free_scan_fixed_topology_persuasion_oracle": 1013.8842955298571,
+      "public_greedy_score": 860.3928992746153
+    }
+  ],
+  "overall": {
+    "cases": 45,
+    "natural_score": -88.62960910805532,
+    "full_scan_fixed_topology_persuasion_oracle": 528.5454112027622,
+    "free_scan_fixed_topology_persuasion_oracle": 641.7342418020253,
+    "public_greedy_score": 598.9700000325746
+  }
+}
