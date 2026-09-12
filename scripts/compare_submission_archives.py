@@ -33,6 +33,13 @@ from starnet.experiments.seeds import SEED_SPECS, seed_payload
 
 ROOT = Path(__file__).resolve().parents[1]
 OFFICIAL = {
+    # These locally built 2026-09-12 archives have no separate platform score
+    # attached. Keeping them here permits the same paired local runner used
+    # for the historical submission comparison.
+    "starnet-control-after-p6-20260912.zip": None,
+    "starnet-prefilter-equivalent-20260912.zip": None,
+    "starnet-public-greedy-llm-20260912.zip": None,
+    "starnet-public-greedy-llm-control-20260912.zip": None,
     "starnet-public-greedy-llm-candidate-20260912.zip": 761.9467,
     "starnet-public-greedy-v9-optimized-20260908.zip": 761.9467,
     "starnet-b1-risk-aware-source-20260908.zip": 550.9400,

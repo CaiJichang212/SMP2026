@@ -1,0 +1,194 @@
+{
+  "inputs_sha256": {
+    "experiments/reports/p6-confirm-50-existing.json": "9262d9a4414236bffab34f945b1ea7e6d549d07a51fae18d80c032a53690e5c5",
+    "experiments/reports/p6-confirm-50-independent.json": "ff46fc119d878586445d785b1e995ab4225160b13cb11a63930d92633b4a68a8",
+    "experiments/reports/p6-confirm-50-holdout.json": "fb359a5bf824a3ddd277b28f827f0e6e519117fc9f9e263884e81657fdd864e7",
+    "experiments/reports/p6-confirm-100-existing.json": "d325c4946367b8ea7adb2da1ef53c89a7cec70043eb531be469738b2e67d66ea",
+    "experiments/reports/p6-confirm-100-independent.json": "8000f0951ea1cb857b1f8d6735334ef90366530a834246d98c5ebadf26b93f91",
+    "experiments/reports/p6-confirm-100-holdout.json": "2b307fcabbc1682c63ee5a1750df4adb07b2d181fa6a112a58f34043f76e5ca4"
+  },
+  "strata": {
+    "50": {
+      "pairs": 65,
+      "baseline_mean": 571.8376401654938,
+      "candidate_mean": 578.290063164792,
+      "mean_delta": 6.452422999298109,
+      "relative_gain_percent": 1.1283662609951295,
+      "win_tie_loss": [
+        31,
+        25,
+        9
+      ],
+      "min_delta": -34.34337926527667,
+      "max_delta": 93.29346248122908,
+      "family_bootstrap_95_ci": [
+        0.960679054259413,
+        13.467703550952342
+      ],
+      "failures": 0,
+      "budget_and_steps_valid": true,
+      "local_mean_above_900": false,
+      "local_gate_passed": false,
+      "families": {
+        "ba_negative_hubs": {
+          "baseline": 393.4908980124794,
+          "candidate": 431.48953024052906,
+          "delta": 37.99863222804966
+        },
+        "cycle_chords": {
+          "baseline": 639.7545954639004,
+          "candidate": 640.0438054297266,
+          "delta": 0.2892099658262509
+        },
+        "double_bridge_communities": {
+          "baseline": 471.1660295344794,
+          "candidate": 480.16417864433794,
+          "delta": 8.998149109858526
+        },
+        "er_balanced": {
+          "baseline": 753.6317386659463,
+          "candidate": 753.2492075798522,
+          "delta": -0.38253108609401354
+        },
+        "grid_lattice": {
+          "baseline": 1049.8895148636366,
+          "candidate": 1049.8895148636366,
+          "delta": 0.0
+        },
+        "negative_hub_spokes": {
+          "baseline": 786.0610072,
+          "candidate": 789.1488532,
+          "delta": 3.087846000000013
+        },
+        "ring_of_cliques": {
+          "baseline": 492.03745619935177,
+          "candidate": 509.6167568952555,
+          "delta": 17.579300695903715
+        },
+        "sbm_negative_bridges": {
+          "baseline": 633.7576484200736,
+          "candidate": 630.4005317868293,
+          "delta": -3.357116633244209
+        },
+        "sbm_violent_cluster": {
+          "baseline": 106.49976914493412,
+          "candidate": 116.59455422170446,
+          "delta": 10.094785076770327
+        },
+        "three_sparse_components": {
+          "baseline": 274.34262103112155,
+          "candidate": 268.83931873350673,
+          "delta": -5.503302297614835
+        },
+        "tree_broom": {
+          "baseline": 406.1423838685096,
+          "candidate": 423.88244348808274,
+          "delta": 17.740059619573138
+        },
+        "two_block_bridge": {
+          "baseline": 447.5028110041301,
+          "candidate": 444.8392773159769,
+          "delta": -2.663533688153154
+        },
+        "ws_peace_majority": {
+          "baseline": 979.6128487428572,
+          "candidate": 979.6128487428572,
+          "delta": 0.0
+        }
+      }
+    },
+    "100": {
+      "pairs": 65,
+      "baseline_mean": 1191.0408536870693,
+      "candidate_mean": 1200.8513143828238,
+      "mean_delta": 9.81046069575469,
+      "relative_gain_percent": 0.8236880091379362,
+      "win_tie_loss": [
+        33,
+        16,
+        16
+      ],
+      "min_delta": -36.96408087242526,
+      "max_delta": 128.58486184224512,
+      "family_bootstrap_95_ci": [
+        3.4381372305782762,
+        17.745352213245138
+      ],
+      "failures": 0,
+      "budget_and_steps_valid": true,
+      "local_mean_above_900": true,
+      "local_gate_passed": false,
+      "families": {
+        "ba_negative_hubs": {
+          "baseline": 1174.188794739858,
+          "candidate": 1219.4197059294308,
+          "delta": 45.230911189572886
+        },
+        "cycle_chords": {
+          "baseline": 1238.985505307481,
+          "candidate": 1243.0649757372507,
+          "delta": 4.079470429769708
+        },
+        "double_bridge_communities": {
+          "baseline": 899.3629634183202,
+          "candidate": 907.0958726455219,
+          "delta": 7.732909227201731
+        },
+        "er_balanced": {
+          "baseline": 1417.0001246643192,
+          "candidate": 1420.013853640633,
+          "delta": 3.0137289763139052
+        },
+        "grid_lattice": {
+          "baseline": 2177.6883176304345,
+          "candidate": 2177.6883176304345,
+          "delta": 0.0
+        },
+        "negative_hub_spokes": {
+          "baseline": 1645.4501427844923,
+          "candidate": 1670.6358823681662,
+          "delta": 25.18573958367392
+        },
+        "ring_of_cliques": {
+          "baseline": 912.8038792302588,
+          "candidate": 922.4653590779188,
+          "delta": 9.661479847660052
+        },
+        "sbm_negative_bridges": {
+          "baseline": 1288.0630683100471,
+          "candidate": 1286.2237334260092,
+          "delta": -1.839334884037953
+        },
+        "sbm_violent_cluster": {
+          "baseline": 320.9219386453674,
+          "candidate": 337.0199573923833,
+          "delta": 16.098018747015896
+        },
+        "three_sparse_components": {
+          "baseline": 627.2295334645846,
+          "candidate": 648.4646615249791,
+          "delta": 21.235128060394413
+        },
+        "tree_broom": {
+          "baseline": 876.0796981435774,
+          "candidate": 875.0922201761048,
+          "delta": -0.9874779674726597
+        },
+        "two_block_bridge": {
+          "baseline": 986.156619164588,
+          "candidate": 984.2820349993071,
+          "delta": -1.8745841652809303
+        },
+        "ws_peace_majority": {
+          "baseline": 1919.6005124285716,
+          "candidate": 1919.6005124285716,
+          "delta": 0.0
+        }
+      }
+    }
+  },
+  "production_enabled": false,
+  "platform_score": null,
+  "llm_quality_evaluated": false,
+  "gate": "off"
+}

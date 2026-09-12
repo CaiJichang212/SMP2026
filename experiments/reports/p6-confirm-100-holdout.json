@@ -1,0 +1,504 @@
+{
+  "config": {
+    "block": "holdout",
+    "start": 101,
+    "repetitions": 5,
+    "nodes": 100,
+    "depth": 2,
+    "width": 4,
+    "observation_slots": 0,
+    "gate": "off",
+    "output": "experiments/reports/p6-confirm-100-holdout.json"
+  },
+  "rows": [
+    {
+      "family": "double_bridge_communities",
+      "repetition": 101,
+      "baseline": {
+        "score": 778.2261822986426,
+        "actions": {
+          "scan": 100,
+          "comm": 52,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 767.31255078882,
+        "actions": {
+          "scan": 100,
+          "comm": 55,
+          "cut": 0,
+          "shield": 8
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 163,
+        "seconds": 36.908247790066525,
+        "search_enabled": true
+      },
+      "delta": -10.913631509822608
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 102,
+      "baseline": {
+        "score": 984.4269128157895,
+        "actions": {
+          "scan": 100,
+          "comm": 45,
+          "cut": 0,
+          "shield": 12
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 1014.6266629019852,
+        "actions": {
+          "scan": 100,
+          "comm": 45,
+          "cut": 0,
+          "shield": 12
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 157,
+        "seconds": 24.405577415949665,
+        "search_enabled": true
+      },
+      "delta": 30.199750086195763
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 103,
+      "baseline": {
+        "score": 838.9734053257329,
+        "actions": {
+          "scan": 100,
+          "comm": 47,
+          "cut": 0,
+          "shield": 11
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 838.2473353113552,
+        "actions": {
+          "scan": 100,
+          "comm": 45,
+          "cut": 0,
+          "shield": 12
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 157,
+        "seconds": 13.437372789951041,
+        "search_enabled": true
+      },
+      "delta": -0.726070014377683
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 104,
+      "baseline": {
+        "score": 965.3965910126346,
+        "actions": {
+          "scan": 100,
+          "comm": 47,
+          "cut": 0,
+          "shield": 11
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 985.0483190493931,
+        "actions": {
+          "scan": 100,
+          "comm": 45,
+          "cut": 0,
+          "shield": 12
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 157,
+        "seconds": 10.589580307947472,
+        "search_enabled": true
+      },
+      "delta": 19.651728036758414
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 105,
+      "baseline": {
+        "score": 929.7917256388013,
+        "actions": {
+          "scan": 100,
+          "comm": 52,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 930.244495176056,
+        "actions": {
+          "scan": 100,
+          "comm": 50,
+          "cut": 0,
+          "shield": 10
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 160,
+        "seconds": 13.986408893950284,
+        "search_enabled": true
+      },
+      "delta": 0.4527695372547669
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 101,
+      "baseline": {
+        "score": 952.6789174967532,
+        "actions": {
+          "scan": 100,
+          "comm": 50,
+          "cut": 0,
+          "shield": 10
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 971.9257757398307,
+        "actions": {
+          "scan": 100,
+          "comm": 45,
+          "cut": 0,
+          "shield": 12
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 157,
+        "seconds": 20.834098036051728,
+        "search_enabled": true
+      },
+      "delta": 19.24685824307744
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 102,
+      "baseline": {
+        "score": 976.6806622748051,
+        "actions": {
+          "scan": 100,
+          "comm": 50,
+          "cut": 0,
+          "shield": 10
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 960.3840842082042,
+        "actions": {
+          "scan": 100,
+          "comm": 45,
+          "cut": 0,
+          "shield": 12
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 157,
+        "seconds": 22.261906482977793,
+        "search_enabled": true
+      },
+      "delta": -16.296578066600887
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 103,
+      "baseline": {
+        "score": 916.4115296230252,
+        "actions": {
+          "scan": 100,
+          "comm": 47,
+          "cut": 0,
+          "shield": 11
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 919.6747764980736,
+        "actions": {
+          "scan": 100,
+          "comm": 45,
+          "cut": 0,
+          "shield": 12
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 157,
+        "seconds": 26.057781359064393,
+        "search_enabled": true
+      },
+      "delta": 3.2632468750483667
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 104,
+      "baseline": {
+        "score": 892.3493892360284,
+        "actions": {
+          "scan": 100,
+          "comm": 50,
+          "cut": 0,
+          "shield": 10
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 904.3423780530796,
+        "actions": {
+          "scan": 100,
+          "comm": 50,
+          "cut": 0,
+          "shield": 10
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 160,
+        "seconds": 24.424432771047577,
+        "search_enabled": true
+      },
+      "delta": 11.992988817051241
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 105,
+      "baseline": {
+        "score": 825.8988975206821,
+        "actions": {
+          "scan": 100,
+          "comm": 47,
+          "cut": 0,
+          "shield": 11
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 855.9997808904062,
+        "actions": {
+          "scan": 100,
+          "comm": 45,
+          "cut": 0,
+          "shield": 12
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 157,
+        "seconds": 26.397959470981732,
+        "search_enabled": true
+      },
+      "delta": 30.1008833697241
+    },
+    {
+      "family": "negative_hub_spokes",
+      "repetition": 101,
+      "baseline": {
+        "score": 1710.5153660000005,
+        "actions": {
+          "scan": 100,
+          "comm": 67,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 1710.5153660000005,
+        "actions": {
+          "scan": 100,
+          "comm": 67,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 170,
+        "seconds": 11.857909213053063,
+        "search_enabled": true
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "negative_hub_spokes",
+      "repetition": 102,
+      "baseline": {
+        "score": 1591.1058319999997,
+        "actions": {
+          "scan": 100,
+          "comm": 67,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 1607.5000819999998,
+        "actions": {
+          "scan": 100,
+          "comm": 67,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 170,
+        "seconds": 7.235346761997789,
+        "search_enabled": true
+      },
+      "delta": 16.394250000000056
+    },
+    {
+      "family": "negative_hub_spokes",
+      "repetition": 103,
+      "baseline": {
+        "score": 1597.5108560000008,
+        "actions": {
+          "scan": 100,
+          "comm": 67,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 1597.5108560000008,
+        "actions": {
+          "scan": 100,
+          "comm": 67,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 170,
+        "seconds": 12.056174352997914,
+        "search_enabled": true
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "negative_hub_spokes",
+      "repetition": 104,
+      "baseline": {
+        "score": 1741.150013,
+        "actions": {
+          "scan": 100,
+          "comm": 67,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 1722.0995990761244,
+        "actions": {
+          "scan": 100,
+          "comm": 66,
+          "cut": 1,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 170,
+        "seconds": 8.320011254050769,
+        "search_enabled": true
+      },
+      "delta": -19.050413923875567
+    },
+    {
+      "family": "negative_hub_spokes",
+      "repetition": 105,
+      "baseline": {
+        "score": 1586.96864692246,
+        "actions": {
+          "scan": 100,
+          "comm": 70,
+          "cut": 0,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 1715.5535087647052,
+        "actions": {
+          "scan": 100,
+          "comm": 66,
+          "cut": 1,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 170,
+        "seconds": 9.522478659055196,
+        "search_enabled": true
+      },
+      "delta": 128.58486184224512
+    }
+  ],
+  "family_mean_delta": {
+    "double_bridge_communities": 7.732909227201731,
+    "ring_of_cliques": 9.661479847660052,
+    "negative_hub_spokes": 25.18573958367392
+  },
+  "mean_delta": 14.1933762195119,
+  "all_family_means_nonnegative": true,
+  "platform_score": null,
+  "promotion_allowed": false
+}
