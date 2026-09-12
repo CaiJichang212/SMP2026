@@ -1,0 +1,43 @@
+{
+  "experiment": "p7-public-robust-and-rollout",
+  "date": "2026-09-12",
+  "branch": "optimize-score900-p7-20260912",
+  "baseline_commit": "373103f",
+  "primary_goal": "official hidden-seed platform score > 900",
+  "official_baseline_user_report": 761.9467,
+  "local_metric": "paired final raw score against public_greedy; higher is better",
+  "platform_conversion": null,
+  "node_count": 50,
+  "budget": 100,
+  "step_limit": 117,
+  "development_repetitions": [301, 302, 303],
+  "confirmation_repetitions": [401, 402, 403, 404, 405],
+  "historical_blocks": ["existing", "independent", "holdout"],
+  "historical_family_count": 13,
+  "new_families": ["random_geometric", "barbell", "lollipop", "random_tree", "bipartite"],
+  "new_seed_id_permutation": true,
+  "response_strata": {
+    "low": [0.2, 0.55],
+    "standard": [0.2, 1.5],
+    "high": [1.1, 1.5]
+  },
+  "robust_variants": {
+    "strict": {"first_response_scenarios": [3.0, 12.75, 22.5], "minimum_paired_tail_gain": 0.0},
+    "bounded": {"first_response_scenarios": [3.0, 12.75, 22.5], "minimum_paired_tail_gain": -5.0, "positive_mean_required": true}
+  },
+  "robust_proposal": {"budget_search_depth": 2, "width": 4, "fallback": "current public_greedy first action"},
+  "rollout_variants": {
+    "mean": {"scenario_count": 1, "unobserved_first_response": 12.75},
+    "sampled": {"scenario_count": 3, "unobserved_first_response_distribution": "15 * Uniform(0.2,1.5); fixed common random numbers"}
+  },
+  "rollout_rule": "at most 3 first actions; subsequent public_greedy learns simulated responses only after simulated action; positive mean and nonnegative worst paired gain required",
+  "ceiling_diagnostics": ["natural", "fixed_topology_full_scan_oracle", "fixed_topology_free_scan_oracle"],
+  "ceiling_limit": "runner-only hindsight; not a bound on full structural action space or on platform score",
+  "analysis_unit": "paired seed; aggregate by graph family and keep response strata separate",
+  "confirmation_gate": ["development family means nonnegative", "freeze selected variant before confirmation", "all required paired cases present", "family bootstrap lower bound positive", "every confirmation family mean nonnegative", "zero failed or illegal actions", "budget and steps valid"],
+  "production_gate": ["confirmation gate passed", "remote custom-seed paired validation", "injected real LLM legal final choice validation"],
+  "failure_policy": "reject production promotion; retain isolated experiment evidence",
+  "skills": ["github/awesome-copilot/skills/autoresearch", "K-Dense-AI/scientific-agent-skills/skills/experimental-design"],
+  "scope": ["src/starnet/policy/*_experiment.py", "src/starnet/experiments", "scripts", "tests", "experiments/manifests", "experiments/reports"],
+  "constraints": ["public environment API only", "no hidden seed fields in policy", "no predictive writes to factual Blackboard", "no manual generated submission edits", "no credentials or raw assets committed"]
+}
