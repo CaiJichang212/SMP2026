@@ -29,8 +29,11 @@ class PairedEnvironment:
         self.response_error = 0.0
         self.remote_score: float | None = None
         self.local_score: float | None = None
+        self.pre_eval_budget: float | None = None
 
     def get_remaining_budget(self) -> float:
+        if self.pre_eval_budget is not None:
+            return self.pre_eval_budget
         actual = self.remote.get_remaining_budget()
         if abs(actual - self.shadow.get_remaining_budget()) > 1e-6:
             raise RuntimeError("remote/local budget mismatch")
@@ -70,6 +73,7 @@ class PairedEnvironment:
 
     def evaluate(self) -> float:
         # Only this local runner calls settlement; no policy can trigger it.
+        self.pre_eval_budget = self.get_remaining_budget()
         self.remote_score = self.remote.trigger_eval()
         self.local_score = self.shadow.evaluate()
         return self.remote_score
