@@ -4,7 +4,9 @@
 from __future__ import annotations
 
 import argparse
+from dataclasses import asdict, replace
 from datetime import datetime, timezone
+import hashlib
 import json
 import math
 import os
@@ -110,6 +112,61 @@ def default_step_limit(node_count: int, initial_budget: float) -> int:
     return node_count + int(initial_budget // MIN_INTERVENTION_COST) + STEP_TRANSITION_HEADROOM
 
 
+def runner_policy_config(
+    submission_config: object, max_steps: int, *, public_guard: bool | None = None,
+) -> object:
+    """Preserve submission policy flags while adapting the local runner fuse."""
+    if max_steps <= 0:
+        raise ValueError("max_steps must be positive")
+    # RuntimeController reserves its last configured step for a stop-only
+    # transition.  The runner itself executes at most ``max_steps`` calls.
+    adapted = replace(submission_config, max_steps=max_steps + 1)
+    if public_guard is not None:
+        if getattr(adapted.policy_mode, "value", None) != "public_greedy":
+            raise ValueError("public guard requires the public_greedy experimental policy")
+        adapted = replace(adapted, enable_public_comm_shield_guard=public_guard)
+    return adapted
+
+
+def resolve_log_dir(path: Path, invocation_cwd: Path) -> Path:
+    """Resolve a CLI log path before the runner enters the submission directory."""
+    return path.resolve() if path.is_absolute() else (invocation_cwd / path).resolve()
+
+
+def sha256_file(path: Path) -> str:
+    """Hash one experiment input or generated submission artifact."""
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def runner_configuration_data(
+    *,
+    runtime_config: object,
+    seed_path: Path,
+    submission_dir: Path,
+    model_name: str,
+    stage: object,
+    node_count: int,
+    initial_budget: float,
+) -> dict[str, object]:
+    """Build reproducibility metadata without credentials or service locations."""
+    return {
+        "policy_config": asdict(runtime_config),
+        "seed_sha256": sha256_file(seed_path),
+        "submission_sha256": {
+            "config.json": sha256_file(submission_dir / "config.json"),
+            "starnet_model.py": sha256_file(submission_dir / "starnet_model.py"),
+        },
+        "model": model_name,
+        "stage": getattr(stage, "value", str(stage)),
+        "node_count": node_count,
+        "initial_budget": initial_budget,
+    }
+
+
 def seed_snapshot_matches(
     seed: Mapping[str, object], nodes: Mapping[int, object], edges: set[tuple[int, int]]
 ) -> bool:
@@ -202,6 +259,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--no-console-log", action="store_true", help="关闭每步控制台摘要。")
     parser.add_argument("--no-trace", action="store_true", help="完全关闭诊断日志。")
     parser.add_argument("--experimental-policy-mode", choices=("public_greedy",))
+    parser.add_argument(
+        "--public-comm-shield-guard", choices=("on", "off"),
+        help="仅本地配对实验覆盖此开关；省略时保留提交配置。",
+    )
     return parser.parse_args()
 
 
@@ -221,8 +282,6 @@ def main() -> int:
         ConsoleTraceSink,
         JsonlTraceSink,
         ParticipantSquadModel,
-        PolicyConfig,
-        PolicyMode,
         ContestStage,
         RuntimeController,
         RuntimeTrace,
@@ -256,22 +315,19 @@ def main() -> int:
         print(f"warning: seed budget={expected_budget}, server budget={initial_budget}; continuing")
 
     original_cwd = Path.cwd()
+    resolved_log_dir = resolve_log_dir(args.log_dir, original_cwd)
     trace: RuntimeTrace | None = None
     trace_path: Path | None = None
     os.chdir(STARTER_KIT / "team_submission")
     try:
         person_list = json.loads((STARTER_KIT / "team_submission" / "config.json").read_text(encoding="utf-8"))["person"]
         model = ParticipantSquadModel(host_env=env, person_list=person_list, llm=llm)
-        # The default branch retains the historical three-call test; the
-        # explicit public-greedy branch exercises model decisions each step.
-        runtime_config = (
-            PolicyConfig(
-                policy_mode=PolicyMode.PUBLIC_GREEDY,
-                p0_exclusive=False,
-                max_llm_calls=240,
-            )
-            if args.experimental_policy_mode == "public_greedy"
-            else PolicyConfig(max_llm_calls=3)
+        runtime_config = runner_policy_config(
+            model.controller.config, max_steps,
+            public_guard=(
+                None if args.public_comm_shield_guard is None
+                else args.public_comm_shield_guard == "on"
+            ),
         )
         model.controller = RuntimeController(
             env,
@@ -287,7 +343,7 @@ def main() -> int:
             timestamp, seed_id, run_id = trace_identity(seed_path)
             sinks: list[object] = []
             try:
-                trace_path = args.log_dir.resolve() / f"{timestamp}_{seed_id}_{run_id}.jsonl"
+                trace_path = resolved_log_dir / f"{timestamp}_{seed_id}_{run_id}.jsonl"
                 sinks.append(JsonlTraceSink(trace_path))
             except Exception:
                 # Local filesystem diagnostics must not prevent the strategy from running.
@@ -296,6 +352,22 @@ def main() -> int:
                 sinks.append(ConsoleTraceSink())
             trace = RuntimeTrace(run_id=run_id, seed_id=seed_id, sinks=sinks)
             model.controller.attach_trace(trace)
+            trace.emit(
+                "runner.configuration",
+                step=0,
+                state=model.controller.state.value,
+                budget_before=initial_budget,
+                budget_after=initial_budget,
+                data=runner_configuration_data(
+                    runtime_config=runtime_config,
+                    seed_path=seed_path,
+                    submission_dir=STARTER_KIT / "team_submission",
+                    model_name=args.model,
+                    stage=stage,
+                    node_count=node_count,
+                    initial_budget=initial_budget,
+                ),
+            )
         model_steps = 0
         snapshot_matches: bool | None = None
         while model_steps < max_steps:

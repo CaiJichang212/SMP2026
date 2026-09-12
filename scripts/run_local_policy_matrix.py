@@ -34,6 +34,18 @@ INDEPENDENT_FAMILIES = (
     "two_block_bridge",
     "tree_broom",
 )
+HOLDOUT_FAMILIES = (
+    "double_bridge_communities",
+    "ring_of_cliques",
+    "negative_hub_spokes",
+)
+VARIANTS = (
+    "b1",
+    "b1_partial_80pct",
+    "public_greedy",
+    "public_greedy_llm_mock",
+    "public_adaptive_scan_80pct",
+)
 
 
 def independent_seed_payload(
@@ -111,13 +123,95 @@ def independent_seed_payload(
     }
 
 
+def holdout_seed_payload(
+    family: str, node_count: int = 50, repetition: int = 1
+) -> dict[str, Any]:
+    """Return a topology holdout excluded from all earlier local matrices.
+
+    The designs deliberately stress decisions that the original ER/BA/WS/SBM
+    and independent grid/cycle/tree blocks do not isolate: redundant bridges,
+    component-wide propagation, and dangerous high-degree spokes.  Response
+    factors are consumed by :class:`LocalPublicEnvironment` and never appear
+    in a scan response or experiment report.
+    """
+    if family not in HOLDOUT_FAMILIES:
+        raise ValueError(f"unknown holdout family: {family}")
+    if node_count < 12 or repetition <= 0:
+        raise ValueError("holdout node_count must be at least 12; repetition must be positive")
+    family_seed = sum((index + 3) * ord(char) for index, char in enumerate(family))
+    rng = random.Random(20260912 + family_seed + node_count * 509 + repetition * 10007)
+    graph = nx.Graph()
+    graph.add_nodes_from(range(node_count))
+    if family == "double_bridge_communities":
+        split = node_count // 2
+        left, right = range(split), range(split, node_count)
+        # Cycles make each side connected before sparse internal chords and two
+        # independent inter-community routes are added.
+        for group in (list(left), list(right)):
+            graph.add_edges_from(zip(group, group[1:] + group[:1]))
+            for index, node in enumerate(group):
+                if index % 3 == 0:
+                    graph.add_edge(node, group[(index + 3) % len(group)])
+        graph.add_edges_from(((split - 1, split), (split // 2, split + split // 2)))
+    elif family == "ring_of_cliques":
+        clique_size = max(3, min(6, node_count // 5))
+        groups = [list(range(start, min(start + clique_size, node_count))) for start in range(0, node_count, clique_size)]
+        for group in groups:
+            graph.add_edges_from(nx.complete_graph(group).edges)
+        for left, right in zip(groups, groups[1:] + groups[:1]):
+            graph.add_edge(left[-1], right[0])
+    else:
+        # Three negative hubs share a lightly connected periphery.  A policy
+        # that only follows degree needs to distinguish the hub signs first.
+        hubs = (0, node_count // 3, (2 * node_count) // 3)
+        periphery = [node for node in range(node_count) if node not in hubs]
+        graph.add_edges_from(zip(periphery, periphery[1:]))
+        graph.add_edge(periphery[-1], periphery[0])
+        for index, node in enumerate(periphery):
+            graph.add_edge(hubs[index % len(hubs)], node)
+            if index % 4 == 0:
+                graph.add_edge(hubs[(index + 1) % len(hubs)], node)
+        graph.add_edges_from(((hubs[0], hubs[1]), (hubs[1], hubs[2])))
+
+    nodes: list[dict[str, Any]] = []
+    for node_id in range(node_count):
+        if family == "double_bridge_communities":
+            persona = "暴力" if node_id < node_count // 2 else "和平"
+            weight = rng.uniform(-34.0, -10.0) if persona == "暴力" else rng.uniform(7.0, 25.0)
+        elif family == "ring_of_cliques":
+            group_index = node_id // max(3, min(6, node_count // 5))
+            persona = "暴力" if group_index % 3 == 0 else "和平" if group_index % 3 == 1 else "中立"
+            weight = (rng.uniform(-30.0, -7.0) if persona == "暴力" else rng.uniform(6.0, 24.0) if persona == "和平" else rng.uniform(-5.0, 7.0))
+        elif node_id in (0, node_count // 3, (2 * node_count) // 3):
+            persona, weight = "暴力", rng.uniform(-46.0, -24.0)
+        else:
+            persona = "和平" if rng.random() < 0.58 else "中立"
+            weight = rng.uniform(5.0, 25.0) if persona == "和平" else rng.uniform(-6.0, 6.0)
+        nodes.append({"id": node_id + 1, "w": round(weight, 6), "persona": persona,
+                      "r": round(rng.uniform(0.2, 1.5), 6), "comm_left": 3})
+    return {
+        "global_setting": {"max_budget": 100.0 if node_count <= 50 else 200.0,
+                           "max_api_calls": 120 if node_count <= 50 else 250},
+        "original_total": round(sum(node["w"] for node in nodes), 6),
+        "nodes": nodes,
+        "edges": [[left + 1, right + 1] for left, right in sorted(graph.edges)],
+        "prompts": PROMPT_VALUES,
+    }
+
+
 class LocalPublicEnvironment:
     """Small public-API-compatible environment for policy screening."""
 
     def __init__(self, seed: Mapping[str, Any]) -> None:
         settings = seed["global_setting"]
         self.budget = float(settings["max_budget"])
-        self.nodes = {int(node["id"]): dict(node) for node in seed["nodes"]}
+        # Keep response factors in the environment's private state.  Neither
+        # Blackboard nor scan/action results carry ``r``.
+        self._response_factors = {int(node["id"]): float(node["r"]) for node in seed["nodes"]}
+        self.nodes = {
+            int(node["id"]): {key: value for key, value in node.items() if key != "r"}
+            for node in seed["nodes"]
+        }
         self.edges = {
             tuple(sorted((int(edge[0]), int(edge[1])))) for edge in seed["edges"]
         }
@@ -158,7 +252,7 @@ class LocalPublicEnvironment:
             return {"status": "max_comm_reached"}
         self.budget -= 2.0
         turn = 4 - left
-        delta = self.prompts[prompt_id] * float(node["r"]) * MARGINAL_MULTIPLIERS[turn]
+        delta = self.prompts[prompt_id] * self._response_factors[node_id] * MARGINAL_MULTIPLIERS[turn]
         node["w"] = float(node["w"]) + delta
         node["comm_left"] = left - 1
         return {"status": "success", "new_w": node["w"]}
@@ -282,28 +376,38 @@ def bootstrap_ci(values: list[float], *, samples: int = 10_000) -> tuple[float, 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--block", choices=("existing", "independent"), default="existing")
+    parser.add_argument("--block", choices=("existing", "independent", "holdout"), default="existing")
     parser.add_argument("--node-counts", nargs="+", type=int, default=[50])
     parser.add_argument("--repetitions", type=int, default=1)
+    parser.add_argument(
+        "--variants", nargs="+", choices=VARIANTS,
+        help="Policy variants to pair against b1; defaults to b1 public_greedy.",
+    )
     parser.add_argument("--include-llm-mock", action="store_true")
     parser.add_argument("--include-adaptive-scan", action="store_true")
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     if args.repetitions <= 0 or any(count <= 0 for count in args.node_counts):
         raise SystemExit("node counts and repetitions must be positive")
-    families = SEED_SPECS if args.block == "existing" else INDEPENDENT_FAMILIES
-    make_seed = seed_payload if args.block == "existing" else independent_seed_payload
+    if args.block == "existing":
+        families, make_seed = SEED_SPECS, seed_payload
+    elif args.block == "independent":
+        families, make_seed = INDEPENDENT_FAMILIES, independent_seed_payload
+    else:
+        families, make_seed = HOLDOUT_FAMILIES, holdout_seed_payload
+    requested_variants = list(args.variants or ("b1", "public_greedy"))
+    if "b1" not in requested_variants:
+        raise SystemExit("--variants must include b1 for paired evaluation")
+    if args.include_llm_mock and "public_greedy_llm_mock" not in requested_variants:
+        requested_variants.append("public_greedy_llm_mock")
+    if args.include_adaptive_scan and "public_adaptive_scan_80pct" not in requested_variants:
+        requested_variants.append("public_adaptive_scan_80pct")
     rows: list[dict[str, Any]] = []
     for family in families:
         for node_count in args.node_counts:
             for repetition in range(1, args.repetitions + 1):
                 seed = make_seed(family, node_count, repetition)
-                variants = ["b1", "public_greedy"]
-                if args.include_llm_mock:
-                    variants.append("public_greedy_llm_mock")
-                if args.include_adaptive_scan:
-                    variants.append("public_adaptive_scan_80pct")
-                for variant in variants:
+                for variant in requested_variants:
                     result = run_variant(seed, variant)
                     rows.append({
                         "family": family,
@@ -316,31 +420,60 @@ def main() -> int:
     for row in rows:
         grouped.setdefault((row["family"], row["node_count"]), {}).setdefault(row["variant"], []).append(row)
     summary: list[dict[str, Any]] = []
+    pairwise_summary: list[dict[str, Any]] = []
     for (family, node_count), variants in sorted(grouped.items()):
-        if not {"b1", "public_greedy"}.issubset(variants):
-            continue
         b1_rows = variants["b1"]
-        public_rows = variants["public_greedy"]
-        if len(b1_rows) != len(public_rows):
-            continue
-        b1_mean = sum(row["score"] for row in b1_rows) / len(b1_rows)
-        public_mean = sum(row["score"] for row in public_rows) / len(public_rows)
-        paired_deltas = [public["score"] - b1["score"] for b1, public in zip(b1_rows, public_rows)]
-        structures = sum(
-            row["actions"]["cut"] + row["actions"]["shield"] for row in public_rows
-        )
-        summary.append({
-            "family": family,
-            "node_count": node_count,
-            "repetitions": len(b1_rows),
-            "b1_mean": b1_mean,
-            "public_greedy_mean": public_mean,
-            "delta": public_mean - b1_mean,
-            "minimum_paired_delta": min(paired_deltas),
-            "structure_action_rate": structures / len(public_rows),
-            "failures": sum(row["failures"] for row in b1_rows + public_rows),
-        })
-    payload = {"block": args.block, "families": list(families), "rows": rows, "summary": summary}
+        public_rows = variants.get("public_greedy", [])
+        if len(b1_rows) == len(public_rows) and public_rows:
+            b1_mean = sum(row["score"] for row in b1_rows) / len(b1_rows)
+            public_mean = sum(row["score"] for row in public_rows) / len(public_rows)
+            paired_deltas = [public["score"] - b1["score"] for b1, public in zip(b1_rows, public_rows)]
+            structures = sum(
+                row["actions"]["cut"] + row["actions"]["shield"] for row in public_rows
+            )
+            summary.append({
+                "family": family,
+                "node_count": node_count,
+                "repetitions": len(b1_rows),
+                "b1_mean": b1_mean,
+                "public_greedy_mean": public_mean,
+                "delta": public_mean - b1_mean,
+                "minimum_paired_delta": min(paired_deltas),
+                "structure_action_rate": structures / len(public_rows),
+                "failures": sum(row["failures"] for row in b1_rows + public_rows),
+            })
+        for candidate, candidate_rows in sorted(variants.items()):
+            if candidate == "b1" or len(candidate_rows) != len(b1_rows):
+                continue
+            deltas = [candidate_row["score"] - b1_row["score"] for b1_row, candidate_row in zip(b1_rows, candidate_rows)]
+            candidate_calls = sum(sum(row["actions"].values()) for row in candidate_rows)
+            candidate_failures = sum(row["failures"] for row in candidate_rows)
+            pairwise_summary.append({
+                "family": family,
+                "node_count": node_count,
+                "repetitions": len(b1_rows),
+                "baseline": "b1",
+                "candidate": candidate,
+                "baseline_mean": sum(row["score"] for row in b1_rows) / len(b1_rows),
+                "candidate_mean": sum(row["score"] for row in candidate_rows) / len(candidate_rows),
+                "mean_paired_delta": sum(deltas) / len(deltas),
+                "minimum_paired_delta": min(deltas),
+                "loss_count": sum(delta < 0.0 for delta in deltas),
+                "candidate_failures": candidate_failures,
+                "candidate_failure_rate": candidate_failures / max(1, candidate_calls),
+                "mean_actions": {
+                    kind: sum(row["actions"][kind] for row in candidate_rows) / len(candidate_rows)
+                    for kind in ("scan", "comm", "cut", "shield")
+                },
+            })
+    payload = {
+        "block": args.block,
+        "families": list(families),
+        "variants": requested_variants,
+        "rows": rows,
+        "summary": summary,
+        "pairwise_summary": pairwise_summary,
+    }
     if args.include_llm_mock:
         payload["llm_mock_summary"] = [
             {
