@@ -16,11 +16,12 @@
   "interpretation": "finite prior scenarios and selected candidates; not an unbiased benefit estimate or confidence interval; choose highest mean among candidates satisfying the variant risk rule",
   "old_development": {"families": 18, "repetitions": [501, 502, 503], "response_stratum": "standard"},
   "new_development": {"families": ["degree_corrected_sbm", "powerlaw_cluster", "watts_strogatz_mixed", "random_regular_mixed"], "repetitions": [501, 502, 503]},
-  "initial_screen": "all historical 13 families at repetition501; use mean gain, downside and runtime to select expansion; preserve all screening results",
+  "initial_screen": "all22 families at repetition501 in two batches historical13 and remaining9; use mean gain, downside and runtime to select expansion; preserve all screening results",
   "confirmation_repetitions": [601, 602, 603, 604, 605],
   "confirmation_status": "reserved until selected policy frozen",
   "validation_distribution": "randomized labels and independent topology repetitions; response strata standard, low, high, persona_correlated kept separate",
   "promotion": ["complete declared paired cohorts", "zero action failures and resource violations", "positive family-bootstrap lower bound", "each family mean nonnegative", "official public custom-seed replay", "injected LLM final-choice validation"],
   "constraints": ["Python validates each action", "no private environment access in policy", "hypotheses never written to factual Blackboard", "no direct generated submission edits", "no failed experimental policy silently enabled"],
-  "skills": ["autoresearch", "experimental-design"]
+  "skills": ["autoresearch", "experimental-design"],
+  "screen_coverage_amendment": "expand initial screen to include all declared families before selecting winner; remaining9 started while historical13 still running; no confirmation data opened"
 }
