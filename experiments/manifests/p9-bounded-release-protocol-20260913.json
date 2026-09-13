@@ -1,0 +1,30 @@
+{
+  "purpose": "Qualify the independently observed response-bound correction to P8; not a claim of official >900",
+  "registered_before_bounded_candidate_measurement": true,
+  "candidate": "P8 conservative with every hypothetical communication clipped to [-100,100], including marginal-slot allocation and the public response learned after censoring; no depth2, portfolio, coverage13, or prefix change",
+  "mechanism_evidence": "experiments/reports/p9-response-bounds-probe-20260913.json",
+  "mechanism_gate": "all 108 observed updates match the bounded model; test both signs, both response factors, three successive uses, and initial values outside bounds without clipping scans",
+  "development": "P9 distribution 901-902, four independently resampled families, seven shifts including near_upper_bound and saturated_hubs; archive controls run in the corrected environment",
+  "confirmation": {
+    "repetitions": [1001, 1002, 1003],
+    "families": ["er_resampled", "ba_resampled", "ws_resampled", "sbm_resampled"],
+    "strata": ["centered_independent", "negative_persona_aligned", "positive_persona_inverse", "wide_degree_positive", "compressed_degree_negative", "near_upper_bound", "saturated_hubs"],
+    "pairs": 84,
+    "unused_reserved_repetitions": [1004, 1005],
+    "unlock": "only after source hash freeze and development completion; no threshold or candidate tuning on confirmation"
+  },
+  "primary_comparator": "original submitted starnet-p8-mean-20260913.zip",
+  "secondary_comparator": "official-best historical starnet-public-greedy-experimental-20260908.zip; report every stratum and aggregate even if it outranks the correction",
+  "primary_estimand": "equal-weight average across the 28 family-by-shift cells, paired on the same initial seed",
+  "uncertainty": "bootstrap repetition blocks within each topology family while preserving all seven paired shifts together; 10000 draws with seed 20260913; report percentile 95% CI",
+  "release_gate": [
+    "mechanism gate and real framework/public API/resource tests pass",
+    "84/84 confirmation pairs complete with no illegal actions, action failures, nonfinite score or planner errors",
+    "mean gain against original P8 is positive and bootstrap lower 2.5 percentile is strictly positive",
+    "each of seven shift means versus original P8 is nonnegative",
+    "all five shifts whose maximum reachable w is below 100 retain original P8 scores within 1e-8; any difference must be explained and invalidates simple equivalence classification",
+    "actual generated ZIP executes the bounded estimator and real LLM final-choice route on a saturated development case"
+  ],
+  "scope_note": "This is a correction to a demonstrated environment-model mismatch. It has a separate prespecified gate against the deployed P8 behavior; it does not retroactively change the broad P9 strategy-development ranking against the historical official best. A local pass cannot establish the hidden official score.",
+  "production_enabled": false
+}
