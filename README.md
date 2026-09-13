@@ -162,6 +162,9 @@ HTTP 错误或格式错误不会重试，以确保一次控制器 LLM 计数只�
 
 - **清理隐私**：绝对不要把您的 API Key 写死在 `team_submission` 的任何代码里！
 - **正确打包 ZIP**：先运行 `uv run python scripts/build_submission.py` 和 `uv run python scripts/validate_submission.py`，再运行 `uv run python scripts/package_submission.py --name <name>.zip`。该脚本会从 `team_submission/` 创建 ZIP，避免误带外层目录。
+- **评测环境兼容**：线上 traceback 已确认 Python 3.9，FAQ 固定 `networkx==3.1`。
+  新增内联模块后要用该组合导入最终 ZIP。动态测试完成后重新构建、校验、打包，避免
+  把测试生成的 `__pycache__` 带入 ZIP。详见 [ADR-004](docs/01_architecture/adr/004-evaluator-python39-compatibility.md)。
 - **结构自查**：请双击打开您刚生成的 ZIP 包，里面必须直接是 `config.json` 等文件，**绝对不能**多套一层名为 `team_submission` 的外壳文件夹！
 - **平台上传**：在规定时间段内，将该 ZIP 文件提交至官方指定通道。
 

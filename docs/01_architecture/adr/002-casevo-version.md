@@ -14,3 +14,8 @@
 
 每次更换框架版本或导入适配方式时，必须记录：CaseVO commit、Python 版本、安装命令、
 可用导入名，以及一次干净环境中的提交包导入结果。
+
+这里必须分别记录“仓库研发环境”和“线上评测环境”。当前研发环境使用 Python 3.11+；
+平台 traceback 已确认线上解释器为 Python 3.9，FAQ 依赖清单使用 Mesa 2.3.2。
+最终单文件的标准库与第三方 API 兼容要求见
+[`ADR-004`](004-evaluator-python39-compatibility.md)。

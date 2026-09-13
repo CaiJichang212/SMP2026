@@ -106,7 +106,15 @@ from casevo import LLM_INTERFACE
 
 ### 3.1 环境准备
 
-Starter Kit README 写的是 Python 3.8+ 与 `requests networkx zhipuai`，但仓库内 casevo 0.3.19 的 `pyproject.toml` 要求 Python 3.11+，并依赖 Mesa 2.4.0 和 ChromaDB。为避免版本不匹配，建议使用 Python 3.11 或更高版本，并以赛方公布的安装方式为最终依据。
+Starter Kit README 写的是 Python 3.8+ 与 `requests networkx zhipuai`，但仓库内
+casevo 0.3.19 的 `pyproject.toml` 要求 Python 3.11+，并依赖 Mesa 2.4.0 和
+ChromaDB。因此仓库研发继续使用 Python 3.11 或更高版本。
+
+交付环境必须单独处理。2026-09-13 平台 traceback 显示评测解释器为 Python 3.9；
+赛方 FAQ 列出的固定版本包含 `networkx==3.1`、`mesa==2.3.2` 和
+`typing_extensions==4.5.0`。本地 CaseVO 环境与最终 ZIP 的兼容目标不同，不能因为
+Python 3.11+ 测试通过，就假设 Python 3.9 可以导入。详细决策见
+[`ADR-004`](adr/004-evaluator-python39-compatibility.md)。
 
 ```bash
 cd /path/to/SMP2026
@@ -354,7 +362,8 @@ if self.env.shield_node(node_id):
 3. **扩图**：改掉所有 4/5 节点常数，测试 50 与 100 节点合法 ID 边界。
 4. **图算法**：加入已知子图的度数、割点、桥边和连通分量特征，比较多个人工/自建种子上的平均分。
 5. **LLM 增强**：只让 LLM 处理接近候选，启用调用计数、超时和确定性回退。
-6. **提交演练**：清空 Key、缓存和 `__pycache__`，按最终 ZIP 结构打包，在干净环境中导入并运行。
+6. **提交演练**：清空 Key、缓存和 `__pycache__`，按最终 ZIP 结构打包；用 Python
+   3.9 与 NetworkX 3.1 导入最终 ZIP，并在动态测试后重新构建、校验、打包。
 
 ### 8.2 最少测试清单
 
@@ -380,6 +389,12 @@ if self.env.shield_node(node_id):
 - [ ] 单种子 LLM 调用数不超过当前赛段上限（初赛 120、复赛 250），错误路径也不会无限重试。
 - [ ] `team_submission/` 不含个人 API Key、`.env`、日志、缓存、`__pycache__` 或本地测试工具。
 - [ ] 最终 ZIP 内没有外层 `team_submission/` 文件夹，根目录直接是 `config.json`、`prompt/`、`starnet_model.py`，并已按最新官方说明复核额外文件的允许性。
+- [ ] `uv run python scripts/validate_submission.py` 已按 Python 3.9 grammar 通过，且
+  `starnet_model.py` 没有从 `typing` 导入线上 Python 3.9 不提供的名称。
+- [ ] 最终 ZIP 已在 CPython 3.9 与 `networkx==3.1` 下直接导入；使用的全部
+  `nx.*` API 均存在于 3.1。
+- [ ] 动态导入测试之后重新运行构建、校验和打包；最终 ZIP 不含测试生成的
+  `__pycache__` 或 `.pyc`，并记录上传包的 SHA-256。
 
 ## 10. 一句话路线图
 

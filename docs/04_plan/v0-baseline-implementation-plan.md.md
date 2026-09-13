@@ -414,10 +414,10 @@ LLM 仲裁：
 依次验证：
 
 ```bash
-python -m unittest discover -s tests -v
-python scripts/build_submission.py
-python scripts/validate_submission.py
-python scripts/package_submission.py --name v0-baseline.zip
+uv run python -m unittest discover -s tests -v
+uv run python scripts/build_submission.py
+uv run python scripts/validate_submission.py
+uv run python scripts/package_submission.py --name v0-baseline.zip
 ```
 
 额外断言：
@@ -426,7 +426,9 @@ python scripts/package_submission.py --name v0-baseline.zip
 - 文件中不存在 `from starnet`、私有环境方法、硬编码 API Key 和 `end_turn()`。
 - ZIP 根目录直接包含三项赛方契约内容，没有外层目录。
 - `ParticipantSquadModel` 类名、继承关系、构造参数和 `step()` 保持不变。
-- 在具备官方 `casevo` 的干净 Python 3.11+ 环境中完成一次导入烟雾测试。
+- 在 Python 3.11+ 研发环境完成测试，并在与线上一致的 Python 3.9、NetworkX 3.1
+  环境中直接导入最终 ZIP。参见
+  [`ADR-004`](../01_architecture/adr/004-evaluator-python39-compatibility.md)。
 - 远程沙盒测试必须使用新 session，关闭 `local_test.py` 的手工 API 演示，记录最终分、剩余预算、环境动作数和 LLM 调用数。
 
 ## 9. 执行安排
@@ -478,5 +480,7 @@ V0 只有在以下条件全部满足时才算完成：
 - 同时按 200 初始预算自动适配复赛 100 节点；复赛每种子最多 250 次 LLM 调用。
 - `prompt_id=1` 暂作唯一正向话术；正式提交前必须复核。
 - 当前公开信息不足以实现精确稳态模拟，因此 V0 使用联合启发式评分；真实 `ΔScore/cost` 模拟器属于 V1。
-- 当前系统 `python3` 为 3.9 且没有安装 NetworkX，不能作为项目验收环境；实施与测试统一使用 Python 3.11+。
+- 当时本机系统 `python3` 为 3.9 且没有安装 NetworkX，所以不能单独作为研发验收环境；
+  2026-09-13 平台 traceback 随后确认线上同样使用 Python 3.9。当前做法是 Python
+  3.11+ 负责研发测试，再用 Python 3.9 与 FAQ 的 NetworkX 3.1 对最终 ZIP 做交付验收。
 - Starter Kit 提交校验当前已通过，但现有策略单元测试尚未在正确安装的项目环境中完整运行；实施开始时先建立干净、可重复的开发环境。

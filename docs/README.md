@@ -4,7 +4,9 @@
 `SMP_Starter_Kit/team_submission/` 的交付边界为准，文档和实验资产不得进入最终 ZIP。
 
 - [`00_rules/`](00_rules/)：赛题、赛程和提交契约。
+  - [`赛方常见问题解答`](00_rules/SMP2026常见问题解答.docx)：评测机制、调用上限、沙盒修复和线上预装依赖版本。
 - [`01_architecture/`](01_architecture/)：研发架构、依赖兼容性与架构决策记录（ADR）。
+  - [`评测环境 Python 3.9 兼容基线`](01_architecture/adr/004-evaluator-python39-compatibility.md)：研发/交付环境分离、FAQ 固定依赖和最终 ZIP 验证顺序。
 - [`02_research/`](02_research/)：算法调研与策略路线。
 - [`03_experiments/`](03_experiments/)：可提交的实验结论与版本说明。
   - [`V1 推荐方案`](03_experiments/v1-recommended-design.md)：本地机制探针、V0 问题分析与结算器驱动的响应感知 Greedy 设计。
