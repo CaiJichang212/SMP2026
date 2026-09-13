@@ -14,7 +14,7 @@ import math
 from starnet.model.blackboard import Blackboard
 from starnet.policy.actions import Action, action_cost, is_legal_action
 from starnet.policy.calibration import CalibrationProfile
-from starnet.policy.cmg import ResponseLedger
+from starnet.policy.cmg import ResponseLedger, bounded_response_delta
 from starnet.policy.candidates import Candidate
 
 
@@ -182,7 +182,10 @@ def persuasion_candidates(
             continue
         if not is_legal_action(action, blackboard, budget):
             continue
-        response = _response(node_id, node.persona, turn, responses, profile, ledger)
+        response = bounded_response_delta(
+            node.w,
+            _response(node_id, node.persona, turn, responses, profile, ledger),
+        )
         coefficient = public_influence.get(node_id, 0.0)
         reason = "public component influence"
         if use_influence:

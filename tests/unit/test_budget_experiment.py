@@ -7,7 +7,7 @@ from unittest.mock import patch
 import networkx as nx
 
 from starnet.model.blackboard import Blackboard, NodeState
-from starnet.policy.actions import action_cost, is_legal_action
+from starnet.policy.actions import Action, action_cost, is_legal_action
 from starnet.policy.budget_experiment import budget_plan, communication_tail
 from starnet.policy.calibration import CalibrationProfile
 from starnet.policy.cmg import PredictiveState, SettlementPredictor
@@ -69,6 +69,14 @@ class BudgetExperimentTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 communication_tail(state, 10, response, 5)
 
+    def test_allocator_consumes_opinion_space_across_slots(self):
+        board = Blackboard(node_count=1)
+        board.record_scan(1, {"w": 95.0, "persona": "和平", "comm_left": 3, "neighbors": []})
+        state = PredictiveState.from_blackboard(board)
+        plan = communication_tail(state, 20.0, lambda *_: 15.0, 10)
+        self.assertEqual(plan.score, 100.0)
+        self.assertEqual(plan.actions, (Action("comm", 1, prompt_id=1),))
+
     def test_positive_graph_keeps_structure_gate_closed(self):
         for node in self.board.nodes.values():
             node.w = 20.0
@@ -87,6 +95,23 @@ class BudgetExperimentTests(unittest.TestCase):
                 general = budget_plan(board, 17, self.response, remaining_steps=8)
             self.assertEqual(fast.actions, general.actions)
             self.assertEqual(fast.score, general.score)
+
+    def test_connected_fast_path_matches_general_at_opinion_bound(self):
+        graph = nx.cycle_graph(6)
+        board = Blackboard(node_count=6)
+        for zero_id in graph:
+            board.record_scan(zero_id + 1, {
+                "w": -30.0 if zero_id == 0 else 95.0,
+                "persona": "暴力" if zero_id == 0 else "和平",
+                "comm_left": 3,
+                "neighbors": [neighbor + 1 for neighbor in graph[zero_id]],
+            })
+        response = lambda _node_id, _node, turn: 15.0 * 0.5 ** (turn - 1)
+        fast = budget_plan(board, 17, response, remaining_steps=8)
+        with patch("starnet.policy.budget_experiment.nx.is_connected", return_value=False):
+            general = budget_plan(board, 17, response, remaining_steps=8)
+        self.assertEqual(fast.actions, general.actions)
+        self.assertEqual(fast.score, general.score)
 
 
 if __name__ == "__main__":

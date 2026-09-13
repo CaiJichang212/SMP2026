@@ -218,6 +218,22 @@ class P8ExperimentTests(unittest.TestCase):
         self.assertEqual(calls, [{2: 22.5}])
         self.assertEqual(board.nodes[2].w, 8.0)
 
+    def test_simulation_records_realized_first_delta_after_clipping(self):
+        board = make_board()
+        board.nodes[2].w = 95.0
+        calls = []
+
+        def stop(projected, budget, observed):
+            calls.append(dict(observed))
+            return []
+
+        with patch("starnet.policy.p8_experiment._greedy_candidates", side_effect=stop), \
+             patch("starnet.policy.p8_experiment._scenario_factor", return_value=1.5):
+            _rollout(board, 4, {}, Action("comm", 2, prompt_id=1), 2,
+                     scenario=1, salt="c" * 64)
+        self.assertEqual(calls, [{2: 5.0}])
+        self.assertEqual(board.nodes[2].w, 95.0)
+
     def test_invalid_or_nonfinite_inputs_fail_closed(self):
         board = make_board()
         salt = public_board_salt(board)

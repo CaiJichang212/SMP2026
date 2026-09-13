@@ -124,6 +124,16 @@ class P1BaselineTests(unittest.TestCase):
         self.assertEqual(candidate.candidate_id, "comm:1:2")
         self.assertEqual(candidate.score, 7.5)
 
+    def test_candidate_gain_uses_remaining_opinion_space(self) -> None:
+        board = Blackboard(node_count=2)
+        board.record_scan(1, {"w": 95.0, "persona": "和平", "comm_left": 3, "neighbors": []})
+        board.record_scan(2, {"w": 100.0, "persona": "和平", "comm_left": 3, "neighbors": []})
+        candidates = {item.candidate_id: item for item in persuasion_candidates(
+            board, 10.0, {}, DEFAULT_CALIBRATION_PROFILE,
+        )}
+        self.assertEqual(candidates["comm:1:1"].score, 5.0)
+        self.assertNotIn("comm:2:1", candidates)
+
     def test_failed_b1_slot_is_not_regenerated(self) -> None:
         env = PathEnvironment(2, 20.0)
 

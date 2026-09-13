@@ -63,6 +63,13 @@ class StructuralPlannerTests(unittest.TestCase):
         self.assertEqual(len(candidates), 3)
         self.assertTrue(all(candidate.action.kind == "comm" for candidate in candidates))
 
+    def test_public_greedy_communication_gain_is_bounded(self) -> None:
+        graph = board({1: (95.0, "和平", 3)}, [])
+        planner = ExperimentalPublicGreedyPlanner(lambda *_: 15.0, min_observed_responses=0)
+        candidates = planner.candidates(graph, 20.0)
+        self.assertEqual(len(candidates), 1)
+        self.assertEqual(candidates[0].score, 5.0)
+
     def test_experimental_public_greedy_selects_positive_terminal_gain(self) -> None:
         graph = board(
             {1: (-40.0, "暴力", 3), 2: (10.0, "和平", 3), 3: (10.0, "和平", 3)},

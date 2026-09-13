@@ -21,7 +21,12 @@ from starnet.model.blackboard import Blackboard
 from starnet.policy.actions import Action, action_cost, is_legal_action
 from starnet.policy.calibration import CalibrationProfile
 from starnet.policy.candidates import Candidate
-from starnet.policy.cmg import PredictiveState, ResponseLedger, SettlementPredictor
+from starnet.policy.cmg import (
+    PredictiveState,
+    ResponseLedger,
+    SettlementPredictor,
+    bounded_response_delta,
+)
 from starnet.policy.config import PolicyMode
 
 
@@ -282,7 +287,9 @@ class StructuralPlanner:
         response = self.ledger.predicted_delta(
             action.target_node_1, node.persona, action.prompt_id, self.profile, turn=turn
         )
-        return None if response is None else max(0.0, float(response[0]))
+        return None if response is None else bounded_response_delta(
+            node.w, max(0.0, float(response[0])),
+        )
 
     def _complete_persuasion(
         self, state: PredictiveState, budget: float, remaining_steps: int,
@@ -692,6 +699,7 @@ class ExperimentalPublicGreedyPlanner:
                 continue
             response = self.response_fn(node_id, node, turn)
             if math.isfinite(float(response)):
+                response = bounded_response_delta(node.w, response)
                 comm_rois[node_id] = public_influence.get(node_id, 0.0) * max(
                     0.0, float(response)
                 ) / action_cost(action)
@@ -701,9 +709,10 @@ class ExperimentalPublicGreedyPlanner:
             if node.comm_left is not None and node.comm_left > 0:
                 turn = 4 - node.comm_left
                 if turn in (1, 2, 3):
-                    hypotheses.append(
-                        (Action("comm", node_id, prompt_id=1), self.response_fn(node_id, node, turn), turn)
+                    response = bounded_response_delta(
+                        node.w, self.response_fn(node_id, node, turn),
                     )
+                    hypotheses.append((Action("comm", node_id, prompt_id=1), response, turn))
             hypotheses.append((Action("shield", node_id), None, None))
         hypotheses.extend(
             (Action("cut", left, target_node_2=right), None, None)

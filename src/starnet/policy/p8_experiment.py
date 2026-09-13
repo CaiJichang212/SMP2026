@@ -20,7 +20,7 @@ from starnet.policy.actions import Action, action_cost, is_legal_action
 from starnet.policy.baseline import _response, public_response
 from starnet.policy.budget_experiment import budget_plan
 from starnet.policy.calibration import DEFAULT_CALIBRATION_PROFILE
-from starnet.policy.cmg import PredictiveState
+from starnet.policy.cmg import PredictiveState, bounded_response_delta
 from starnet.policy.fast_settlement_experiment import FastComponentSettlement
 from starnet.policy.structural import ExperimentalPublicGreedyPlanner, public_positive_graph_gate_closed
 
@@ -170,11 +170,12 @@ def _rollout(
             turn = 4 - node.comm_left
             first = visible.get(action.target_node_1)
             if first is None:
-                first = 15.0 * _scenario_factor(salt, action.target_node_1, scenario)
+                nominal_first = 15.0 * _scenario_factor(salt, action.target_node_1, scenario)
+                first = bounded_response_delta(node.w, nominal_first)
                 # The simulated policy learns this response only now, after
                 # the successful hypothetical action on its own path.
                 visible[action.target_node_1] = first
-            delta = first * (0.5 ** (turn - 1))
+            delta = bounded_response_delta(node.w, first * (0.5 ** (turn - 1)))
         state = state.apply(action, delta)
         budget -= action_cost(action)
     score = float(_FAST_SETTLEMENT.score(state))

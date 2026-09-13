@@ -11,7 +11,7 @@ import networkx as nx
 
 from starnet.model.blackboard import Blackboard
 from starnet.policy.actions import Action, action_cost, is_legal_action
-from starnet.policy.cmg import PredictiveState
+from starnet.policy.cmg import PredictiveState, bounded_response_delta
 from starnet.policy.structural import public_structure_risk_allowed
 
 ResponseFn = Callable[[int, Any, int], float]
@@ -21,6 +21,23 @@ ResponseFn = Callable[[int, Any, int], float]
 class BudgetPlan:
     score: float
     actions: tuple[Action, ...]
+
+
+def _realized_responses(
+    state: PredictiveState,
+    responses: dict[tuple[int, int], float],
+) -> dict[tuple[int, int], float]:
+    """Apply each node's slots cumulatively against its remaining opinion space."""
+    realized: dict[tuple[int, int], float] = {}
+    for node_id, node in state.nodes.items():
+        if not node.comm_left:
+            continue
+        opinion = float(node.w)
+        for turn in range(4 - node.comm_left, 4):
+            delta = bounded_response_delta(opinion, responses[node_id, turn])
+            realized[node_id, turn] = delta
+            opinion += delta
+    return realized
 
 
 def _connected_structure_score(
@@ -36,7 +53,8 @@ def _connected_structure_score(
         return 0.0
     factor = len(degrees) / sum(degrees.values())
     score = sum(factor * degree * state.nodes[node_id].w for node_id, degree in degrees.items())
-    gains = [factor * degree * responses[node_id, turn]
+    realized = _realized_responses(state, responses)
+    gains = [factor * degree * realized[node_id, turn]
              for node_id, degree in degrees.items() if state.nodes[node_id].comm_left
              for turn in range(4 - state.nodes[node_id].comm_left, 4)]
     for gain in heapq.nlargest(min(int(budget // 2), steps), gains):
@@ -74,7 +92,7 @@ def communication_tail(
         coefficients.update({node_id: factor * (len(adjacency[node_id]) + 1) for node_id in component})
     score = sum(coefficients[node_id] * node.w for node_id, node in state.nodes.items())
     heap: list[tuple[float, str, int, int]] = []
-    gains: dict[tuple[int, int], float] = {}
+    nominal: dict[tuple[int, int], float] = {}
     for node_id, node in sorted(state.nodes.items()):
         if not node.comm_left:
             continue
@@ -84,7 +102,12 @@ def communication_tail(
             if not math.isfinite(delta) or delta < 0 or delta > previous + 1e-9:
                 raise ValueError("response must be finite, nonnegative and diminishing")
             previous = delta
-            gains[node_id, turn] = coefficients[node_id] * delta
+            nominal[node_id, turn] = delta
+    realized = _realized_responses(state, nominal)
+    gains = {key: coefficients[key[0]] * delta for key, delta in realized.items()}
+    for node_id, node in sorted(state.nodes.items()):
+        if not node.comm_left:
+            continue
         turn = 4 - node.comm_left
         heapq.heappush(heap, (-gains[node_id, turn], f"comm:{node_id}:{turn}", node_id, turn))
     slots = min(max(0, int(budget // 2)), max(0, remaining_steps))

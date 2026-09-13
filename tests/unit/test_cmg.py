@@ -7,7 +7,14 @@ import unittest
 
 from starnet.model.blackboard import Blackboard
 from starnet.policy.calibration import CalibrationProfile
-from starnet.policy.cmg import ResponseLedger, SettlementPredictor, PredictiveState, choose_cmg_action, enumerate_cmg_actions
+from starnet.policy.cmg import (
+    PredictiveState,
+    ResponseLedger,
+    SettlementPredictor,
+    bounded_response_delta,
+    choose_cmg_action,
+    enumerate_cmg_actions,
+)
 
 
 def profile() -> CalibrationProfile:
@@ -37,6 +44,15 @@ class CMGTests(unittest.TestCase):
         self.assertEqual(SettlementPredictor(profile()).score(after), 6.0)
         self.assertEqual(board.nodes[1].w, 1.0)
         self.assertEqual(board.nodes[1].comm_left, 3)
+
+    def test_communication_prediction_clips_but_initial_scan_does_not(self) -> None:
+        board = Blackboard()
+        board.record_scan(1, {"w": 120.0, "persona": "和平", "comm_left": 3, "neighbors": []})
+        state = PredictiveState.from_blackboard(board)
+        self.assertEqual(state.nodes[1].w, 120.0)
+        self.assertEqual(state.apply(enumerate_cmg_actions(board, 10.0, 64)[0], 15.0).nodes[1].w, 100.0)
+        self.assertEqual(bounded_response_delta(95.0, 15.0), 5.0)
+        self.assertEqual(bounded_response_delta(10.0, 15.0), 15.0)
 
     def test_response_ledger_uses_first_observation_then_decay(self) -> None:
         ledger = ResponseLedger()

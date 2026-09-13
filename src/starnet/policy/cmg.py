@@ -19,6 +19,23 @@ class CMGPlanningError(RuntimeError):
     """A fail-closed prediction or time-budget failure."""
 
 
+OPINION_MIN = -100.0
+OPINION_MAX = 100.0
+
+
+def bounded_response_delta(opinion: float, nominal_delta: float) -> float:
+    """Return the realized change after the public opinion bound is applied."""
+    opinion = float(opinion)
+    nominal_delta = float(nominal_delta)
+    if not math.isfinite(opinion) or not math.isfinite(nominal_delta):
+        raise CMGPlanningError("nonfinite_prediction")
+    proposed = opinion + nominal_delta
+    if OPINION_MIN <= proposed <= OPINION_MAX:
+        # Preserve the old arithmetic path exactly away from saturation.
+        return nominal_delta
+    return min(OPINION_MAX, max(OPINION_MIN, proposed)) - opinion
+
+
 @dataclass
 class ResponseLedger:
     """Online posterior keyed by ``persona × prompt × turn``.
@@ -126,7 +143,8 @@ class PredictiveState:
         if action.kind == "comm":
             if comm_delta is None or action.target_node_1 not in nodes:
                 raise CMGPlanningError("invalid_hypothesis")
-            nodes[action.target_node_1].w += comm_delta
+            node = nodes[action.target_node_1]
+            node.w += bounded_response_delta(node.w, comm_delta)
             if nodes[action.target_node_1].comm_left is not None:
                 nodes[action.target_node_1].comm_left = max(0, nodes[action.target_node_1].comm_left - 1)
         elif action.kind == "cut":
@@ -296,6 +314,7 @@ def choose_cmg_action(
         if time.monotonic() - started > planning_seconds:
             raise CMGPlanningError("planning_timeout")
         delta: float | None = None
+        realized_delta: float | None = None
         response_sigma = 0.0
         if action.kind == "comm":
             node = board.nodes[action.target_node_1]
@@ -303,6 +322,7 @@ def choose_cmg_action(
             if response is None:
                 raise CMGPlanningError("missing_response_prior")
             delta, response_sigma = response
+            realized_delta = bounded_response_delta(node.w, delta)
         after = predictor.score(state.apply(action, delta))
         residual = profile.residual_for(action.kind)
         response_score_sigma = 0.0
@@ -324,6 +344,8 @@ def choose_cmg_action(
             f"shield:{action.target_node_1}" if action.kind == "shield" else
             f"cut:{action.target_node_1}-{action.target_node_2}"
         )
-        scored.append(ScoredCandidate(candidate_id, action, before, after, gain, sigma, roi, delta))
+        scored.append(ScoredCandidate(
+            candidate_id, action, before, after, gain, sigma, roi, realized_delta,
+        ))
     positives = [item for item in scored if item.lcb_roi > 0.0]
     return min(positives, key=lambda item: (-item.lcb_roi, item.candidate_id)) if positives else None
