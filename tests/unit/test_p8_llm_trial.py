@@ -45,6 +45,8 @@ class P8LLMTrialTests(unittest.TestCase):
         self.assertEqual(controller.candidates[controller.queue[0]].action, Action("shield", 1))
         self.assertEqual(controller.llm_calls, 1)
         self.assertEqual(controller.llm_accepted, 1)
+        self.assertEqual(controller.p8_selected_baseline, 1)
+        self.assertEqual(controller.p8_selected_proposals, 0)
 
     def test_invalid_llm_response_counts_and_uses_validated_recommendation(self):
         env, controller = self.controller(lambda _: {"candidate_id": "invalid"})
@@ -54,6 +56,8 @@ class P8LLMTrialTests(unittest.TestCase):
         self.assertEqual(controller.candidates[controller.queue[0]].action, Action("comm", 2, prompt_id=1))
         self.assertEqual(controller.llm_calls, 1)
         self.assertEqual(controller.llm_fallbacks, 1)
+        self.assertEqual(controller.p8_selected_proposals, 1)
+        self.assertEqual(controller.p8_selected_baseline, 0)
 
     def test_planning_error_preserves_baseline_and_public_facts(self):
         env, controller = self.controller(None)
@@ -62,6 +66,8 @@ class P8LLMTrialTests(unittest.TestCase):
             controller._refresh_candidates(env.get_remaining_budget(), "test")
         self.assertFalse(controller.p8_options)
         self.assertEqual(controller.p8_planning_errors, 1)
+        self.assertEqual(controller.p8_last_planning_error, "TimeoutError")
+        self.assertEqual(controller.p8_refresh_reasons, {"planning_error": 1})
         self.assertEqual(next(iter(controller.candidates.values())).action, Action("shield", 1))
         self.assertEqual(before, controller.blackboard.snapshot())
 
@@ -69,6 +75,17 @@ class P8LLMTrialTests(unittest.TestCase):
         env, _ = self.controller(None)
         controller = P8TrialController(env, node_count=3, require_stage_envelope=True)
         self.assertIsNone(controller.p8_mode)
+        controller._refresh_candidates(env.get_remaining_budget(), "test")
+        self.assertEqual(controller.p8_refresh_reasons, {"stage_envelope": 1})
+
+    def test_incomplete_scan_is_distinct_from_planning_error(self):
+        env, controller = self.controller(None)
+        controller.node_count = 4
+        with patch("starnet.runtime.p8_controller.choose_p8_action") as planner:
+            controller._refresh_candidates(env.get_remaining_budget(), "test")
+        planner.assert_not_called()
+        self.assertEqual(controller.p8_refresh_reasons, {"incomplete_scan": 1})
+        self.assertEqual(controller.p8_planning_errors, 0)
 
 
 if __name__ == "__main__":
