@@ -27,8 +27,11 @@ from starnet.submission.starnet_model import ParticipantSquadModel
 class P8TrialController(RuntimeController):
     """Keep the full production executor and quota guards in a local trial."""
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, p8_mode="audited", **kwargs):
+        if p8_mode not in ("conservative", "audited"):
+            raise ValueError("unsupported P8 trial mode")
         super().__init__(*args, **kwargs)
+        self.p8_mode = p8_mode
         self.p8_salt = None
         self.p8_cache = {}
         self.p8_options = False
@@ -47,7 +50,7 @@ class P8TrialController(RuntimeController):
             decision = choose_p8_action(
                 self.blackboard, budget, self.response_estimates,
                 remaining_steps=max(0, self._safe_step_limit - self.action_attempts),
-                salt=self.p8_salt, mode="audited", evaluation_cache=self.p8_cache,
+                salt=self.p8_salt, mode=self.p8_mode, evaluation_cache=self.p8_cache,
             )
         except Exception:
             self.p8_planning_errors += 1
@@ -62,12 +65,14 @@ class P8TrialController(RuntimeController):
         if baseline is None:
             return
         identity = f"p8:{action.kind}:{action.target_node_1}:{action.target_node_2}:{self.blackboard.state_version}"
-        gain = min(decision.mean_delta, decision.audit_mean_delta)
+        gain = (min(decision.mean_delta, decision.audit_mean_delta)
+                if self.p8_mode == "audited" else decision.mean_delta)
         # Values are continuation advantages relative to the baseline plan,
         # not immediate changes to the environment's score.
         proposed = Candidate(identity, action, 0, gain, gain / action_cost(action),
                              f"P8 assumed-response continuation advantage; selection mean={decision.mean_delta:.6f}; "
-                             f"unused-scenario mean={decision.audit_mean_delta:.6f}, minimum={decision.audit_minimum_delta:.6f}; "
+                             f"selection minimum={decision.minimum_delta:.6f}; mode={self.p8_mode}; "
+                             f"additional audit scenarios={len(decision.audit_paired_deltas)}, audit mean={decision.audit_mean_delta:.6f}, minimum={decision.audit_minimum_delta:.6f}; "
                              "baseline alternative has relative advantage zero", (identity,))
         fallback = Candidate(baseline.candidate_id, baseline.action, 0, 0.0, 0.0,
                              "Current public_greedy baseline; relative continuation advantage zero",
@@ -81,19 +86,19 @@ class P8TrialController(RuntimeController):
 
 
 class P8TrialModel(ParticipantSquadModel):
-    def __init__(self, host_env, person_list, llm):
+    def __init__(self, host_env, person_list, llm, *, p8_mode="audited"):
         super().__init__(host_env, person_list, llm)
         self.controller = P8TrialController(
             host_env, llm_ranker=self.commander_agent.rank_candidates,
-            stage=ContestStage.PRELIMINARY, config=self.controller.config,
+            stage=ContestStage.PRELIMINARY, config=self.controller.config, p8_mode=p8_mode,
         )
 
 
-def run_trial(seed, *, llm_mode="mock", timeout=20):
+def run_trial(seed, *, llm_mode="mock", timeout=20, p8_mode="audited"):
     llm = CountingLLM(timeout, offline_only=llm_mode != "real")
     env = LocalPublicEnvironment(seed)
     people = json.loads((ROOT / "src/starnet/submission/config.json").read_text())["person"]
-    model = P8TrialModel(env, people, llm)
+    model = P8TrialModel(env, people, llm, p8_mode=p8_mode)
     if llm_mode == "mock":
         def rank(payload):
             item = payload["candidates"][0]
@@ -111,7 +116,7 @@ def run_trial(seed, *, llm_mode="mock", timeout=20):
     return {"score": env.evaluate(), "actions": {kind: sum(call[0] == kind for call in env.calls)
                                                 for kind in ("scan", "comm", "cut", "shield")},
             "remaining_budget": env.get_remaining_budget(), "failures": controller.action_failures,
-            "llm_mode": llm_mode, "llm_calls": controller.llm_calls,
+            "llm_mode": llm_mode, "p8_mode": p8_mode, "llm_calls": controller.llm_calls,
             "llm_accepted": controller.llm_accepted, "llm_fallbacks": controller.llm_fallbacks,
             "transport_attempts": llm.attempts, "transport_errors": llm.errors,
             "p8_proposals": controller.p8_proposals, "p8_planning_errors": controller.p8_planning_errors,
@@ -123,13 +128,14 @@ def main():
     parser.add_argument("--family", choices=FAMILIES, default="ba_negative_hubs")
     parser.add_argument("--repetition", type=int, choices=DEVELOPMENT_REPETITIONS, default=501)
     parser.add_argument("--llm-mode", choices=("real", "mock", "unavailable"), default="mock")
+    parser.add_argument("--variant", choices=("conservative", "audited"), default="audited")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     if args.llm_mode == "real":
         load_local_env(ROOT / ".env")
     seed = seed_payload(args.family, args.repetition)
     baseline = run_variant(seed, "public_greedy")
-    candidate = run_trial(seed, llm_mode=args.llm_mode)
+    candidate = run_trial(seed, llm_mode=args.llm_mode, p8_mode=args.variant)
     report = {"family": args.family, "repetition": args.repetition, "baseline": baseline,
               "candidate": candidate, "delta": candidate["score"] - baseline["score"],
               "evaluation": "local research with actual CaseVO orchestration", "platform_score": None,
