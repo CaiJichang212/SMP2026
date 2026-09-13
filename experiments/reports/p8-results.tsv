@@ -1,0 +1,4 @@
+experiment	commit	metric	status	description
+0	a5c5450	574.6384	baseline	P8 standard22-family r501 public_greedy mean
+1	a5c5450	580.1730	reject_promotion	expected screen22; tree_broom,bipartite,powerlaw losses
+2	a5c5450	581.0853	reject_promotion	conservative screen22; bipartite loss despite positive mean interval
