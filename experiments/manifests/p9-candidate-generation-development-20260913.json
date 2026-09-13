@@ -1,0 +1,60 @@
+{
+  "experiment": "P9 bounded candidate-generation development",
+  "date": "2026-09-13",
+  "branch": "optimize-p9-attribution-20260913",
+  "objective": "improve paired final score beyond frozen P8 conservative by covering first actions that can change the terminal portfolio",
+  "primary_comparator": "frozen P8 conservative",
+  "secondary_comparator": "public_greedy",
+  "metric": "paired final score; higher is better",
+  "analysis_unit": "one graph-family/repetition seed paired across variants",
+  "node_count": 50,
+  "initial_budget": 100.0,
+  "step_limit": 117,
+  "development_screen": {
+    "families": "all 22 P8 families",
+    "repetitions": [501],
+    "response_stratum": "standard"
+  },
+  "development_expansion": {
+    "families": "all 22 P8 families",
+    "repetitions": [502, 503],
+    "response_stratum": "standard",
+    "condition": "run only variants whose screen mean is greater than frozen P8 conservative and which have zero failed actions"
+  },
+  "variants": {
+    "depth2": "replace P8 depth-1 structural plan candidate with depth-2 width-4 budget-complete structural plan; retain the P8 immediate structure and untried communication candidates",
+    "portfolio": "depth-2 plan plus class-balanced immediate shield/cut actions and up to two communication actions, including public known-response ranking when distinct"
+  },
+  "selection_rule": [
+    "zero failed or illegal actions and valid budget/step use",
+    "screen mean gain over P8 conservative must be positive",
+    "after expansion, mean gain over P8 conservative must remain positive",
+    "prefer the simpler variant unless the portfolio variant improves the 66-case mean by at least 0.25 points",
+    "report every family mean and worst paired loss; development success does not authorize production or confirmation"
+  ],
+  "compute_limits": {
+    "maximum_domain_size": 8,
+    "selection_scenarios": 5,
+    "maximum_rollouts_per_decision": 40,
+    "per_case_timeout_seconds": 180
+  },
+  "causal_hypotheses": [
+    "two structural actions can change the terminal portfolio where P8's singleton representatives cannot",
+    "class-balanced structure candidates avoid suppressing a useful cut behind a higher-scoring shield or vice versa",
+    "after a first successful communication, candidates ranked by observed response can dominate another untried communication"
+  ],
+  "known_negative_evidence": [
+    "P4 tail lookahead changed order but not terminal portfolios or score",
+    "selected P7 losses were caused by first structural-action response-model error",
+    "P6 depth-2 budget search improved the overall mean but regressed in several graph families"
+  ],
+  "reserved_confirmation_repetitions": [801, 802, 803, 804, 805],
+  "confirmation_status": "unopened; this task does not run confirmation",
+  "constraints": [
+    "public Blackboard facts only",
+    "counterfactual states remain PredictiveState projections",
+    "no environment access from candidate generation",
+    "do not modify frozen P8 source, qualification, production runtime, or submission configuration",
+    "no official-score conversion from local results"
+  ]
+}
