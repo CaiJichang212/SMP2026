@@ -1191,6 +1191,13 @@ class RuntimeController:
             },
         )
 
+    def _llm_candidate_options(self, candidates: list[Candidate]) -> list[Candidate]:
+        """Bound ordinary immediate-ROI choices; trial controllers may compare tails."""
+        if self.effective_policy_mode is PolicyMode.PUBLIC_GREEDY and self.commander.can_request_llm:
+            best_roi = max(candidate.roi for candidate in candidates)
+            return [candidate for candidate in candidates if candidate.roi >= 0.98 * best_roi][:4]
+        return candidates
+
     def _create_plan(self, budget: float) -> None:
         candidates = list(self.candidates.values())
         if self.effective_policy_mode in {PolicyMode.B1_PERSUASION, PolicyMode.B2_INFLUENCE}:
@@ -1202,14 +1209,7 @@ class RuntimeController:
             self._emit_queue_revalidated("persuasion_heap", validation, budget)
             return
         assert self.analysis is not None
-        if self.effective_policy_mode is PolicyMode.PUBLIC_GREEDY and self.commander.can_request_llm:
-            # Keep the model's choice meaningful while bounding the cost of
-            # selecting a lower-ROI candidate on a noisy generation.
-            best_roi = max(candidate.roi for candidate in candidates)
-            candidates = [
-                candidate for candidate in candidates
-                if candidate.roi >= 0.98 * best_roi
-            ][:4]
+        candidates = self._llm_candidate_options(candidates)
         request_payload: Mapping[str, Any] | None = None
         if self.commander.can_request_llm and self.config.llm_schedule is not LLMSchedule.OFF and (
             self.config.llm_schedule is LLMSchedule.STEP or self._event_llm_pending
