@@ -720,7 +720,6 @@ class ExperimentalPublicGreedyPlanner:
                 or (self.conservative_structure and not _public_structure_direction_allowed(board, action))
             ):
                 continue
-            after = self.predictor.score(state.apply(action, delta))
             # Keep communication scores bit-for-bit on the same closed-form
             # path as B1.  The predictor difference is mathematically equal,
             # but tiny operation-order differences can otherwise reorder tied
@@ -728,7 +727,7 @@ class ExperimentalPublicGreedyPlanner:
             gain = (
                 public_influence.get(action.target_node_1, 0.0) * float(delta)
                 if action.kind == "comm"
-                else after - baseline
+                else self.predictor.score(state.apply(action, delta)) - baseline
             )
             if not math.isfinite(gain) or gain <= 0.0:
                 continue

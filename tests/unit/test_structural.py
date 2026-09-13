@@ -57,7 +57,9 @@ class StructuralPlannerTests(unittest.TestCase):
         planner = ExperimentalPublicGreedyPlanner(lambda *_: 15.0, min_observed_responses=0)
         with patch.object(planner.predictor, "score", wraps=planner.predictor.score) as score:
             candidates = planner.candidates(graph, 20.0)
-        self.assertEqual(score.call_count, 4)
+        # Communications already have their exact linear gain; only the
+        # original topology requires scoring when structure is disabled.
+        self.assertEqual(score.call_count, 1)
         self.assertEqual(len(candidates), 3)
         self.assertTrue(all(candidate.action.kind == "comm" for candidate in candidates))
 
