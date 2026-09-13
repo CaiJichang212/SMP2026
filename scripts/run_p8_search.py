@@ -17,7 +17,7 @@ sys.path.insert(0, str(ROOT))
 
 from scripts.run_local_policy_matrix import LocalPublicEnvironment, run_variant
 from starnet.experiments.p8_seeds import (
-    DEVELOPMENT_REPETITIONS, FAMILIES, OLD_FAMILIES, R_STRATA, seed_payload,
+    CONFIRMATION_REPETITIONS, DEVELOPMENT_REPETITIONS, FAMILIES, OLD_FAMILIES, R_STRATA, seed_payload,
 )
 from starnet.model.blackboard import Blackboard
 from starnet.policy.actions import Action, is_legal_action
@@ -120,14 +120,16 @@ def main() -> int:
     parser.add_argument("--repetitions", nargs="+", type=int, default=[501])
     parser.add_argument("--strata", nargs="+", choices=R_STRATA, default=["standard"])
     parser.add_argument("--variants", nargs="+", choices=VARIANTS, default=list(VARIANTS))
+    parser.add_argument("--confirm", action="store_true", help="Explicitly select the reserved confirmation cohort after freezing a variant")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     families = tuple(dict.fromkeys(args.families))
     repetitions = tuple(dict.fromkeys(args.repetitions))
     strata = tuple(dict.fromkeys(args.strata))
     variants = tuple(dict.fromkeys(args.variants))
-    if not repetitions or not set(repetitions).issubset(DEVELOPMENT_REPETITIONS):
-        parser.error("P8 search may read only development repetitions 501-503")
+    allowed = CONFIRMATION_REPETITIONS if args.confirm else DEVELOPMENT_REPETITIONS
+    if not repetitions or not set(repetitions).issubset(allowed):
+        parser.error("Use 501-503 for development, or --confirm with 601-605 after variant freeze")
     policy_path = ROOT / "src/starnet/policy/p8_experiment.py"
     policy_sha256 = hashlib.sha256(policy_path.read_bytes()).hexdigest()
     config = {"block": "p8", "nodes": 50, "families": list(families),
