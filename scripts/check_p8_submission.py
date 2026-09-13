@@ -62,7 +62,7 @@ def main():
             commander = next(person for person in people if person["role"] == "CommanderAgent")
             if mode == "as_built":
                 requested = commander.get("experimental_p8_mode")
-                gate_path = ROOT / "experiments/reports/p8-mean-objective-result-20260913.json"
+                gate_path = ROOT / module.P8_GATE_REPORT_RELATIVE_PATH
                 gate = json.loads(gate_path.read_text())
                 if (requested != gate["selected_variant"]
                         or not gate["variants"][requested]["mean_score_gate_passed"]

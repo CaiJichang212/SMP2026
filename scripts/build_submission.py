@@ -53,14 +53,14 @@ def require_source() -> None:
 def verify_p8_release() -> None:
     """Do not package an enabled P8 flag with stale policy/evidence metadata."""
     from starnet.policy.p8_qualification import (
-        P8_CERTIFIED_MODE, P8_GATE_REPORT_SHA256, qualified_p8_mode,
+        P8_CERTIFIED_MODE, P8_GATE_REPORT_SHA256, P8_GATE_REPORT_RELATIVE_PATH, qualified_p8_mode,
     )
     config = json.loads((SOURCE_DIR / "config.json").read_text(encoding="utf-8"))
     requested = next((person.get("experimental_p8_mode") for person in config.get("person", [])
                       if isinstance(person, dict) and person.get("role") == "CommanderAgent"), None)
     if qualified_p8_mode(requested) is None:
         return
-    report = PROJECT_ROOT / "experiments/reports/p8-mean-objective-result-20260913.json"
+    report = PROJECT_ROOT / P8_GATE_REPORT_RELATIVE_PATH
     if not report.is_file() or hashlib.sha256(report.read_bytes()).hexdigest() != P8_GATE_REPORT_SHA256:
         raise SystemExit("P8 资格报告缺失或哈希不匹配。")
     evidence = json.loads(report.read_text(encoding="utf-8"))

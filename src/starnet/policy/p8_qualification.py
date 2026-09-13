@@ -8,6 +8,7 @@ from __future__ import annotations
 
 P8_CERTIFIED_MODE: str | None = "conservative"
 P8_GATE_REPORT_SHA256: str | None = "0594442f917eacbffe553bb7499b832d31a8b8fde12ba47c6479573ec464850c"
+P8_GATE_REPORT_RELATIVE_PATH = "experiments/reports/p8-mean-objective-result-20260913.json"
 
 
 def qualified_p8_mode(requested: object) -> str | None:
