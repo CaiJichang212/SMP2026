@@ -3043,11 +3043,12 @@ def budget_plan(
 
 from collections import OrderedDict
 from dataclasses import dataclass
-from typing import TypeAlias
 
 
 
-TopologyKey: TypeAlias = tuple[tuple[int, ...], frozenset[tuple[int, int]]]
+# The official evaluator runs Python 3.9, where typing.TypeAlias is absent.
+# A plain alias has identical runtime behavior and needs no backport.
+TopologyKey = tuple[tuple[int, ...], frozenset[tuple[int, int]]]
 
 
 @dataclass(frozen=True)

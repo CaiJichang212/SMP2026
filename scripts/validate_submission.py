@@ -20,10 +20,25 @@ SUSPICIOUS_PATTERNS = (
     re.compile(r"\b(?:sk|sk-proj)-[A-Za-z0-9_-]{16,}\b"),
 )
 FORBIDDEN_ENV_ACCESS = re.compile(r"self\.env\.(?:_[A-Za-z0-9_]+|end_turn)\b")
+PY39_MISSING_TYPING_NAMES = frozenset({
+    "TypeAlias", "TypeGuard", "ParamSpec", "Concatenate", "Self", "Never",
+    "Required", "NotRequired", "LiteralString", "TypeVarTuple", "Unpack",
+    "assert_never", "assert_type", "reveal_type", "dataclass_transform",
+})
 
 
 def fail(message: str) -> None:
     print(f"[失败] {message}", file=sys.stderr)
+
+
+def unsupported_python39_typing_names(tree: ast.AST) -> list[str]:
+    return sorted({
+        alias.name
+        for node in ast.walk(tree)
+        if isinstance(node, ast.ImportFrom) and node.module == "typing"
+        for alias in node.names
+        if alias.name in PY39_MISSING_TYPING_NAMES
+    })
 
 
 def validate_dynamic_loader_compatibility(model_file: Path) -> str | None:
@@ -79,7 +94,12 @@ def main() -> int:
         if model_file.is_file():
             try:
                 model_source = model_file.read_text(encoding="utf-8")
-                model_tree = ast.parse(model_source, filename=str(model_file))
+                # The FAQ package list and the platform traceback establish a
+                # Python 3.9 evaluator. Parse at that grammar level even when
+                # local development uses a newer interpreter.
+                model_tree = ast.parse(
+                    model_source, filename=str(model_file), feature_version=(3, 9)
+                )
             except SyntaxError as exc:
                 errors.append(f"starnet_model.py 语法错误: {exc}")
             else:
@@ -95,6 +115,12 @@ def main() -> int:
                 )
                 if static_casevo_import:
                     errors.append("starnet_model.py 不能静态导入平台缺失的 casevo 包")
+                unsupported_typing = unsupported_python39_typing_names(model_tree)
+                if unsupported_typing:
+                    errors.append(
+                        "starnet_model.py 导入了 Python 3.9 typing 不提供的名称: "
+                        f"{unsupported_typing}；请使用普通类型别名或 typing_extensions"
+                    )
                 compatibility_error = validate_dynamic_loader_compatibility(model_file)
                 if compatibility_error is not None:
                     errors.append(compatibility_error)

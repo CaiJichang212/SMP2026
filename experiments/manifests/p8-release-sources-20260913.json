@@ -10,7 +10,7 @@
     "src/starnet/policy/candidates.py": "3d62597170426053aef3e87d30f4abe196af5d8911e759344a8c338c2b37b0fa",
     "src/starnet/policy/cmg.py": "53053afc455b1cb41cc3e1b48605593da4fa2d724413023bd0e1d3f6b7667a6b",
     "src/starnet/policy/config.py": "b43c1fb108f8634c3bc036e85614e8a7b0518410bb41d1f1cbab0d5bc3801e6d",
-    "src/starnet/policy/fast_settlement_experiment.py": "fd23daa874598da1d2c0a667fa61b48190e60cc27aff4230c831e6acad417fc9",
+    "src/starnet/policy/fast_settlement_experiment.py": "bdc97091e78c98a8b006e0d81149b8a047322f5c8f3bb05de461076ed1782783",
     "src/starnet/policy/graph_analysis.py": "aa10b77fe1b2388ef2e6d5f03fed0212ae2dddd594ed5fe8238d211a6759596f",
     "src/starnet/policy/p8_experiment.py": "56709076b9c89d7934899f046c20198f569575b165871adfc9055e49269500b0",
     "src/starnet/policy/p8_qualification.py": "efa8d2f670c1167fe0525ca51b0239dc39cf160ef69262ebbfd9dc1d9f421e20",
