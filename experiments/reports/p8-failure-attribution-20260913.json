@@ -72,10 +72,13 @@
         "steps": 86,
         "planning_calls": 37,
         "rollouts": 2,
-        "seconds": 3.3350930280284956
+        "seconds": 3.3385972150135785
       },
       "full_delta": -13.983044582012894,
-      "attribution": "response_estimation_error",
+      "replanning_residual": 0.0,
+      "first_action_response_model_error": true,
+      "additional_replanning_loss": false,
+      "attribution": "first_action_response_model_error",
       "policy_hidden_response_inputs": []
     },
     {
@@ -150,10 +153,13 @@
         "steps": 80,
         "planning_calls": 31,
         "rollouts": 8,
-        "seconds": 3.486937209032476
+        "seconds": 3.2049877899698913
       },
       "full_delta": -49.1650360275234,
-      "attribution": "response_estimation_error",
+      "replanning_residual": 0.0,
+      "first_action_response_model_error": true,
+      "additional_replanning_loss": false,
+      "attribution": "first_action_response_model_error",
       "policy_hidden_response_inputs": []
     },
     {
@@ -228,10 +234,13 @@
         "steps": 87,
         "planning_calls": 38,
         "rollouts": 2,
-        "seconds": 2.5658290119608864
+        "seconds": 2.687547251000069
       },
       "full_delta": -11.901983357457425,
-      "attribution": "response_estimation_error",
+      "replanning_residual": 0.0,
+      "first_action_response_model_error": true,
+      "additional_replanning_loss": false,
+      "attribution": "first_action_response_model_error",
       "policy_hidden_response_inputs": []
     }
   ],
@@ -242,5 +251,6 @@
     402
   ],
   "repetition_601_or_later_opened": false,
+  "environment": "LocalPublicEnvironment only",
   "production_enabled": false
 }
