@@ -1,0 +1,4 @@
+experiment	commit	metric	status	description
+0	5670907	0.000000000	baseline	frozen P8 conservative; delta versus itself
+1	92b0541	0.449315888	keep_screen	depth2 candidate domain; 22 family repetition-501 pairs; one win and no losses
+2	92b0541	0.449315888	keep_screen	portfolio candidate domain; identical score to depth2 with higher computation
