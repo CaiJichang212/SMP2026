@@ -1,0 +1,375 @@
+{
+  "scope": "diagnostic replay of three previously observed P7 failures only",
+  "policy_commit": "a5c5450",
+  "cases": [
+    {
+      "family": "er_balanced",
+      "repetition": 402,
+      "source": "existing",
+      "variant": "expected",
+      "baseline": {
+        "score": 651.28664864532,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 637.3036040633071,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 80,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 51,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "p7_budget_structure",
+            "mean_delta": 1.8171582700989801,
+            "minimum_delta": -13.955168994277415,
+            "paired_deltas": [
+              1.8481666125684342,
+              4.34468352588658,
+              -5.118170405375508,
+              -13.955168994277415,
+              21.96628061169281
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 17,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 29,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "public_board_salt": "d29c71ec780620f4e925601cd7b1e1ea5dd08af5a2f0e53d0611095c2949f0c0",
+        "seconds": 55.13887915201485
+      },
+      "delta": -13.983044582012894,
+      "cold_elapsed_seconds": 55.139097176957875
+    },
+    {
+      "family": "er_balanced",
+      "repetition": 402,
+      "source": "existing",
+      "variant": "conservative",
+      "baseline": {
+        "score": 651.28664864532,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 651.28664864532,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 215,
+        "deviation_count": 0,
+        "deviations": [],
+        "public_board_salt": "d29c71ec780620f4e925601cd7b1e1ea5dd08af5a2f0e53d0611095c2949f0c0",
+        "seconds": 261.9687805440044
+      },
+      "delta": 0.0,
+      "cold_elapsed_seconds": 261.9690829049796
+    },
+    {
+      "family": "lollipop",
+      "repetition": 301,
+      "source": "new",
+      "variant": "expected",
+      "baseline": {
+        "score": 222.32750651173382,
+        "actions": {
+          "scan": 50,
+          "comm": 23,
+          "cut": 1,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 184.2104784842104,
+        "actions": {
+          "scan": 50,
+          "comm": 26,
+          "cut": 1,
+          "shield": 4
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 81,
+        "planning_calls": 32,
+        "rollouts": 71,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 51,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 45,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "cut",
+              "target_node_1": 36,
+              "target_node_2": 50,
+              "prompt_id": null
+            },
+            "source": "untried_comm_roi",
+            "mean_delta": 8.293250792179203,
+            "minimum_delta": -19.355405401701773,
+            "paired_deltas": [
+              11.778924385326803,
+              20.622694541558474,
+              -19.355405401701773,
+              4.549594513032673,
+              23.870445922679835
+            ],
+            "compared_actions": [
+              {
+                "kind": "cut",
+                "target_node_1": 36,
+                "target_node_2": 50,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 45,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "comm",
+                "target_node_1": 45,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ]
+          }
+        ],
+        "public_board_salt": "8c0c4c1f51ec1928eb303d96ac8e507f779ad0aac1d081e7e2db81a73d10dad3",
+        "seconds": 65.61225897399709
+      },
+      "delta": -38.11702802752342,
+      "cold_elapsed_seconds": 65.61251482798252
+    },
+    {
+      "family": "lollipop",
+      "repetition": 301,
+      "source": "new",
+      "variant": "conservative",
+      "baseline": {
+        "score": 222.32750651173382,
+        "actions": {
+          "scan": 50,
+          "comm": 23,
+          "cut": 1,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 222.32750651173382,
+        "actions": {
+          "scan": 50,
+          "comm": 23,
+          "cut": 1,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 79,
+        "planning_calls": 30,
+        "rollouts": 109,
+        "deviation_count": 0,
+        "deviations": [],
+        "public_board_salt": "8c0c4c1f51ec1928eb303d96ac8e507f779ad0aac1d081e7e2db81a73d10dad3",
+        "seconds": 62.538450829917565
+      },
+      "delta": 0.0,
+      "cold_elapsed_seconds": 62.53866384306457
+    },
+    {
+      "family": "bipartite",
+      "repetition": 303,
+      "source": "new",
+      "variant": "expected",
+      "baseline": {
+        "score": 579.8815706431716,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 567.9795872857142,
+        "actions": {
+          "scan": 50,
+          "comm": 36,
+          "cut": 1,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 60,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 51,
+            "action": {
+              "kind": "cut",
+              "target_node_1": 14,
+              "target_node_2": 26,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 34,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "p7_budget_structure",
+            "mean_delta": 0.06044623212666238,
+            "minimum_delta": -7.945330975667048,
+            "paired_deltas": [
+              1.4247170689113773,
+              2.160824270130206,
+              -5.993478714328148,
+              -7.945330975667048,
+              10.655499511586925
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 34,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "cut",
+                "target_node_1": 14,
+                "target_node_2": 26,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "public_board_salt": "73c965d975fbe45d1c08df4d620cfddf005f98f4b967d17562d0eb52d3778e83",
+        "seconds": 26.698555247974582
+      },
+      "delta": -11.901983357457425,
+      "cold_elapsed_seconds": 26.698780904058367
+    },
+    {
+      "family": "bipartite",
+      "repetition": 303,
+      "source": "new",
+      "variant": "conservative",
+      "baseline": {
+        "score": 579.8815706431716,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 579.8815706431716,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 365,
+        "deviation_count": 0,
+        "deviations": [],
+        "public_board_salt": "73c965d975fbe45d1c08df4d620cfddf005f98f4b967d17562d0eb52d3778e83",
+        "seconds": 181.00401863700245
+      },
+      "delta": 0.0,
+      "cold_elapsed_seconds": 181.00433737796266
+    }
+  ],
+  "case_count": 3,
+  "variants": [
+    "expected",
+    "conservative"
+  ],
+  "new_p8_distribution_aggregate": null,
+  "parameters_tuned": false,
+  "repetition_601_or_later_opened": false,
+  "production_enabled": false
+}
