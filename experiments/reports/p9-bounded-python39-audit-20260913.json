@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "purpose": "Independent Python 3.9 compatibility and semantic audit of the locked bounded-response candidate",
+  "runtime_source_modified": false,
+  "prefix_matrix_started": false,
+  "environment": {
+    "python": "3.9.25",
+    "python_executable_sha256": "84c920f304e265c53096e42d83309c6f7b829988f937a7dd15c24eebcb63f59a",
+    "networkx": "3.1",
+    "scope": "Isolated uv environment containing NetworkX 3.1; this is not represented as the full FAQ dependency stack."
+  },
+  "source_identity": {
+    "cmg_sha256": "767367659ce48ed37be1939c0c2e42b5b59fe3ca96a5bd2c35c46bdf970fae8c",
+    "baseline_sha256": "a06e7bbe07a7d27101d6ee1795fca8654e485d47e4c7c32ae8f6372a4eb326e6",
+    "structural_sha256": "392db9f3497536fab56ac5ee3ff305f47dd0765d518c3905d4aade799fdc763e",
+    "budget_experiment_sha256": "baacd360e9351a6cfd1266dc147e440f8889c65d8202d2a95db708134f5c5a0c",
+    "p8_experiment_sha256": "51b2a003a4b01afd21453db2c1f26d8bf381558c66fabef8d2d201e96f97f96d"
+  },
+  "python39_tests": {
+    "command": "PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 uv run --no-project --python 3.9 --with 'networkx==3.1' -- python -B -m unittest tests.unit.test_cmg tests.unit.test_p1_baseline tests.unit.test_structural tests.unit.test_budget_experiment tests.unit.test_p8_experiment tests.unit.test_response_bounds_evidence -v",
+    "tests_run": 52,
+    "failures": 0,
+    "errors": 0,
+    "seconds": 2.283,
+    "covered": [
+      "PredictiveState clips communication but preserves out-of-range scan values",
+      "B1 and public-greedy communication gains use remaining opinion space",
+      "budget communication slots consume opinion space cumulatively",
+      "connected budget fast path matches the general path at saturation",
+      "P8 records a clipped realized first response without writing predictions to Blackboard",
+      "all 108 recorded public API updates are recomputed from raw fields"
+    ]
+  },
+  "public_probe_recalculation": {
+    "report": "experiments/reports/p9-response-bounds-probe-20260913.json",
+    "report_sha256": "0cc68a7bf2e7d5c71ddb3ed4f324e881ad9d37cf5f6dff3bb3b22208bfa8627c",
+    "runs": 4,
+    "updates": 108,
+    "scan_value_mismatches": 0,
+    "bounded_update_mismatches": 0,
+    "clipped_updates": 43,
+    "initial_values_below_minus_100_among_clipped_updates": 7,
+    "initial_values_above_100_among_clipped_updates": 8,
+    "method": "For each row, recompute nominal=strength*factor*0.5**(turn-1), then expected=previous_w+bounded_response_delta(previous_w, nominal); do not trust the stored prediction fields."
+  },
+  "manual_linear_gain_audit": {
+    "production_inline_status": "No unbounded manual communication gain bypass remains in the locked inline modules, apart from the distinct censored-observation issue below.",
+    "checked_paths": [
+      "baseline.persuasion_candidates converts the response estimate to a realized delta before multiplying by influence",
+      "structural.StructuralPlanner converts response deltas before its linear shortcut and uses clipped PredictiveState for nonlinear scoring",
+      "structural.ExperimentalPublicGreedyPlanner bounds both communication ROI comparisons and candidate gains",
+      "budget_experiment computes cumulative realized slots for both the general tail and connected fast path",
+      "cmg.choose_cmg_action routes mean and uncertainty states through clipped PredictiveState.apply",
+      "p8_experiment bounds direct rollout transitions and keeps hypothetical state outside Blackboard"
+    ],
+    "reviewed_non_omissions": [
+      "StructuralPlanner.influence_coefficients changes w by one only to derive a topology coefficient; it is not an environment communication transition.",
+      "robust_experiment delegates all communication tail gains to bounded communication_tail.",
+      "adaptive applies scan observations rather than communication deltas."
+    ],
+    "experiment_only_unbounded_shortcuts": [
+      "src/starnet/policy/response_experiment.py ResponseBudgetPlanner.next_choice",
+      "scripts/run_public_tail_structure_lookahead.py _project_comm_tail",
+      "scripts/diagnose_p7_ceiling.py persuasion oracle"
+    ],
+    "release_impact": "The experiment-only shortcuts are absent from scripts/build_submission.py INLINE_MODULES."
+  },
+  "censored_first_response_findings": [
+    {
+      "severity": "production_edge_case",
+      "trigger": "initial comm_left=3, initial w below -100, and a positive first communication whose nominal delta is too small to move the unbounded value above -100",
+      "minimal_case": {
+        "initial_w": -110.0,
+        "initial_comm_left": 3,
+        "prompt_id": 1,
+        "response_factor": 0.2,
+        "nominal_deltas": [3.0, 1.5, 0.75],
+        "public_environment_weights": [-100.0, -98.5, -97.75],
+        "current_p8_rollout_terminal": -92.5,
+        "correct_terminal": -97.75,
+        "terminal_error": 5.25
+      },
+      "cause": "The rollout correctly stores realized first delta 10 in visible, but then also uses 10 as the latent first-slot response and generates later nominal deltas 5 and 2.5 instead of 1.5 and 0.75.",
+      "recommended_fix": "Keep scenario-local latent_first[node]=15*r solely for environment transitions while visible[node] retains only the realized returned delta for simulated policy ranking. Never write latent_first to Blackboard or visible.",
+      "real_policy_note": "The real controller also treats a censored returned first delta as an ordinary first-response estimate. It cannot recover the exact latent value; mark the observation censored and use a declared prior or interval for later ranking rather than decaying the boundary snap."
+    },
+    {
+      "severity": "nonstandard_initial_quota_edge_case",
+      "trigger": "A scan first exposes comm_left=2 or 1 with no response observed in this model instance, especially near an opinion bound.",
+      "example": "At w=95, comm_left=2 and sampled latent first response 15, the current rollout clips 15 to 5 and then halves it to 2.5; the correct second-slot environment delta is clip_delta(95,7.5)=5.",
+      "cause": "The sampled first-slot latent value is clipped at the current later-slot state before the turn multiplier is applied.",
+      "recommended_fix": "Apply the turn multiplier to the latent first response before clipping the current transition; keep unknown historical observations out of visible.",
+      "contract_status": "The task specification shows comm_left=3 as an example and requires preserving the returned value; it does not state that every scan must return 3."
+    }
+  ],
+  "locked_matrix_impact": {
+    "confirmation_initial_w_range": "[-100,100]",
+    "confirmation_initial_comm_left": 3,
+    "affected": false,
+    "reason": "The registered P9 bounded confirmation generators start every node within the bounds with three slots, so neither censored-first edge case is entered.",
+    "official_hidden_distribution_claim": "No claim; hidden initial values and comm_left distribution are not available."
+  }
+}
