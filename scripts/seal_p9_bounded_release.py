@@ -49,6 +49,8 @@ def seal(development, confirmation, real_entry, py39_entry, modern_entry):
             or py39_entry["actions_sha256"] != modern_entry["actions_sha256"]
             or py39_entry["score"] != modern_entry["score"]):
         raise ValueError("target interpreter/framework execution is unverified or differs")
+    if len({entry["seed_sha256"] for entry in (real_entry, py39_entry, modern_entry)}) != 1:
+        raise ValueError("entry checks did not use the same development seed")
     result = dict(confirmation)
     result["variants"] = {"conservative": {"mean_score_gate_passed": True}}
     result["selected_variant"] = "conservative"
