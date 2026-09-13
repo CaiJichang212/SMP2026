@@ -1,0 +1,1186 @@
+{
+  "config": {
+    "block": "p8",
+    "nodes": 50,
+    "families": [
+      "random_geometric",
+      "barbell",
+      "lollipop",
+      "random_tree",
+      "bipartite",
+      "degree_corrected_sbm",
+      "powerlaw_cluster",
+      "watts_strogatz_mixed",
+      "random_regular_mixed"
+    ],
+    "repetitions": [
+      501
+    ],
+    "variants": [
+      "expected",
+      "conservative"
+    ],
+    "strata": [
+      "standard"
+    ],
+    "prior": "Uniform(0.2,1.5)",
+    "sequential_screen": "best mean-positive structure plus untried comm over five paired scenarios",
+    "policy_sha256": "25b179db8589ee0d8a6698c7751166600ae96e29dbabfae4c58a2df9686c597c"
+  },
+  "rows": [
+    {
+      "family": "random_geometric",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "75530e007c1ad1e7206cf7b943cae09f776a24825085e9213c5d1e90be14c834",
+      "variant": "expected",
+      "baseline": {
+        "score": 882.4826562323424,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 889.0464680871298,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 150,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 68,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 46,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 39,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "p7_budget_structure",
+            "mean_delta": 0.11350751771010437,
+            "minimum_delta": -20.124601531547,
+            "paired_deltas": [
+              1.2506079237070935,
+              17.7149962021781,
+              -15.213780354763571,
+              -20.124601531547,
+              16.9403153489759
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 39,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 46,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "public_board_salt": "3964102e6a3124282d343e65bf1714827dccdd332b752ba0108af606ca299b32",
+        "seconds": 108.37546908599325
+      },
+      "delta": 6.5638118547874456
+    },
+    {
+      "family": "random_geometric",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "75530e007c1ad1e7206cf7b943cae09f776a24825085e9213c5d1e90be14c834",
+      "variant": "conservative",
+      "baseline": {
+        "score": 882.4826562323424,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 882.4826562323424,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 160,
+        "deviation_count": 0,
+        "deviations": [],
+        "public_board_salt": "3964102e6a3124282d343e65bf1714827dccdd332b752ba0108af606ca299b32",
+        "seconds": 72.84430441795848
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "barbell",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "421c3f8bf837ceef2815b62367bcea7d0c1907e4569076ba46b02d9b894bb4b1",
+      "variant": "expected",
+      "baseline": {
+        "score": 922.9428487225807,
+        "actions": {
+          "scan": 50,
+          "comm": 31,
+          "cut": 1,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 922.9428487225807,
+        "actions": {
+          "scan": 50,
+          "comm": 31,
+          "cut": 1,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 84,
+        "planning_calls": 35,
+        "rollouts": 122,
+        "deviation_count": 0,
+        "deviations": [],
+        "public_board_salt": "d56fa8b49ed60a5a8a54ab9403f5fdb540102193ce486cd18a38352387ff16bb",
+        "seconds": 99.10412713792175
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "barbell",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "421c3f8bf837ceef2815b62367bcea7d0c1907e4569076ba46b02d9b894bb4b1",
+      "variant": "conservative",
+      "baseline": {
+        "score": 922.9428487225807,
+        "actions": {
+          "scan": 50,
+          "comm": 31,
+          "cut": 1,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 922.9428487225807,
+        "actions": {
+          "scan": 50,
+          "comm": 31,
+          "cut": 1,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 84,
+        "planning_calls": 35,
+        "rollouts": 0,
+        "deviation_count": 0,
+        "deviations": [],
+        "public_board_salt": "d56fa8b49ed60a5a8a54ab9403f5fdb540102193ce486cd18a38352387ff16bb",
+        "seconds": 5.810841329977848
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "lollipop",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "8ef29cd7b3197a35e44e64abe59e74c9482827e33bfaa4c53dd2469d2c6a384c",
+      "variant": "expected",
+      "baseline": {
+        "score": 144.78268398860544,
+        "actions": {
+          "scan": 50,
+          "comm": 21,
+          "cut": 1,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 146.97187413157906,
+        "actions": {
+          "scan": 50,
+          "comm": 21,
+          "cut": 1,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 78,
+        "planning_calls": 29,
+        "rollouts": 82,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 51,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 41,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "cut",
+              "target_node_1": 13,
+              "target_node_2": 33,
+              "prompt_id": null
+            },
+            "source": "untried_comm_roi",
+            "mean_delta": 1.2229517703225212,
+            "minimum_delta": -19.473539963734368,
+            "paired_deltas": [
+              1.2229517703224815,
+              -5.747240071277815,
+              8.193143611922892,
+              21.919443504379416,
+              -19.473539963734368
+            ],
+            "compared_actions": [
+              {
+                "kind": "cut",
+                "target_node_1": 13,
+                "target_node_2": 33,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 13,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "comm",
+                "target_node_1": 41,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ]
+          }
+        ],
+        "public_board_salt": "5f1939a5c5f97308a2376c82c48f89dec27f16ecb7e3c52cf5f6231311219f9e",
+        "seconds": 86.9842397540342
+      },
+      "delta": 2.189190142973615
+    },
+    {
+      "family": "lollipop",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "8ef29cd7b3197a35e44e64abe59e74c9482827e33bfaa4c53dd2469d2c6a384c",
+      "variant": "conservative",
+      "baseline": {
+        "score": 144.78268398860544,
+        "actions": {
+          "scan": 50,
+          "comm": 21,
+          "cut": 1,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 144.78268398860544,
+        "actions": {
+          "scan": 50,
+          "comm": 21,
+          "cut": 1,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 78,
+        "planning_calls": 29,
+        "rollouts": 60,
+        "deviation_count": 0,
+        "deviations": [],
+        "public_board_salt": "5f1939a5c5f97308a2376c82c48f89dec27f16ecb7e3c52cf5f6231311219f9e",
+        "seconds": 58.8254946829984
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "random_tree",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "08be083c49a024975b1f7123de5f0231abb9c61e31113a4a2c2a11bf6241963c",
+      "variant": "expected",
+      "baseline": {
+        "score": 609.0772187693276,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 620.9508150046217,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 40,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 53,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 46,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "p7_budget_structure",
+            "mean_delta": 5.884817323819743,
+            "minimum_delta": 3.0872377512322373,
+            "paired_deltas": [
+              10.359879108907421,
+              4.67391812551034,
+              3.0872377512322373,
+              5.802870196442655,
+              5.500181437006063
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 16,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 46,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "public_board_salt": "7244a790b10096c9acd68012fc9c84bd7f1fce5612f7b743327655f547d5bb82",
+        "seconds": 9.39345987897832
+      },
+      "delta": 11.873596235294144
+    },
+    {
+      "family": "random_tree",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "08be083c49a024975b1f7123de5f0231abb9c61e31113a4a2c2a11bf6241963c",
+      "variant": "conservative",
+      "baseline": {
+        "score": 609.0772187693276,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 620.9508150046217,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 0,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 53,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 46,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "p7_budget_structure",
+            "mean_delta": 5.884817323819743,
+            "minimum_delta": 3.0872377512322373,
+            "paired_deltas": [
+              10.359879108907421,
+              4.67391812551034,
+              3.0872377512322373,
+              5.802870196442655,
+              5.500181437006063
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 16,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 46,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "public_board_salt": "7244a790b10096c9acd68012fc9c84bd7f1fce5612f7b743327655f547d5bb82",
+        "seconds": 0.6622126409783959
+      },
+      "delta": 11.873596235294144
+    },
+    {
+      "family": "bipartite",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "59f67294f4cc518047d3af9e5c1bf1c4d67d9d9f1f7d671fc1d4a0fbe9e8b86d",
+      "variant": "expected",
+      "baseline": {
+        "score": 514.7397355141703,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 510.12337716393466,
+        "actions": {
+          "scan": 50,
+          "comm": 36,
+          "cut": 1,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 40,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 51,
+            "action": {
+              "kind": "cut",
+              "target_node_1": 28,
+              "target_node_2": 36,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 33,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "p7_budget_structure",
+            "mean_delta": 4.661617690617459,
+            "minimum_delta": 0.6825964946066279,
+            "paired_deltas": [
+              6.7602479376784,
+              0.7373507049565546,
+              6.651855114088789,
+              0.6825964946066279,
+              8.476038201756921
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 33,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "cut",
+                "target_node_1": 28,
+                "target_node_2": 36,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "public_board_salt": "c6c58a0e74c5f052cd3b82bb288c04ebb41570920404877380bb19cc33251332",
+        "seconds": 20.873870983952656
+      },
+      "delta": -4.616358350235657
+    },
+    {
+      "family": "bipartite",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "59f67294f4cc518047d3af9e5c1bf1c4d67d9d9f1f7d671fc1d4a0fbe9e8b86d",
+      "variant": "conservative",
+      "baseline": {
+        "score": 514.7397355141703,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 510.12337716393466,
+        "actions": {
+          "scan": 50,
+          "comm": 36,
+          "cut": 1,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 0,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 51,
+            "action": {
+              "kind": "cut",
+              "target_node_1": 28,
+              "target_node_2": 36,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 33,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "p7_budget_structure",
+            "mean_delta": 4.661617690617459,
+            "minimum_delta": 0.6825964946066279,
+            "paired_deltas": [
+              6.7602479376784,
+              0.7373507049565546,
+              6.651855114088789,
+              0.6825964946066279,
+              8.476038201756921
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 33,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "cut",
+                "target_node_1": 28,
+                "target_node_2": 36,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "public_board_salt": "c6c58a0e74c5f052cd3b82bb288c04ebb41570920404877380bb19cc33251332",
+        "seconds": 2.6971724230097607
+      },
+      "delta": -4.616358350235657
+    },
+    {
+      "family": "degree_corrected_sbm",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "48c5bea022f0f1e153fd0d1588eb08d7be2666a2b4a2ac3d8c9c24111cdc2a56",
+      "variant": "expected",
+      "baseline": {
+        "score": 509.71862341696425,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 509.71862341696425,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 78,
+        "planning_calls": 29,
+        "rollouts": 136,
+        "deviation_count": 0,
+        "deviations": [],
+        "public_board_salt": "4756ad39a3fec022e69015957a9bf1cee9d6fbec9c0302838dd2311ac5106833",
+        "seconds": 26.505877768038772
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "degree_corrected_sbm",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "48c5bea022f0f1e153fd0d1588eb08d7be2666a2b4a2ac3d8c9c24111cdc2a56",
+      "variant": "conservative",
+      "baseline": {
+        "score": 509.71862341696425,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 509.71862341696425,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 78,
+        "planning_calls": 29,
+        "rollouts": 0,
+        "deviation_count": 0,
+        "deviations": [],
+        "public_board_salt": "4756ad39a3fec022e69015957a9bf1cee9d6fbec9c0302838dd2311ac5106833",
+        "seconds": 0.8992845960892737
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "powerlaw_cluster",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "6bdccf21f0b9610b03064a7d376bcb3fe97fa1a802cb70bdca864c8801e9aefd",
+      "variant": "expected",
+      "baseline": {
+        "score": 710.8935960000001,
+        "actions": {
+          "scan": 50,
+          "comm": 32,
+          "cut": 0,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 704.9431013913044,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 149,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 71,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 18,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "p7_budget_structure",
+            "mean_delta": 4.867483988142226,
+            "minimum_delta": -5.797273798003744,
+            "paired_deltas": [
+              4.8674839881423395,
+              -5.797273798003744,
+              15.532241774288082,
+              10.831980611630797,
+              -1.0970126353463456
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 18,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 50,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "comm",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ]
+          }
+        ],
+        "public_board_salt": "6a47c4440c8caff4cb14d4558a8bcd1d83eb24a60f777e8d2dec6ec715756d07",
+        "seconds": 50.513736858963966
+      },
+      "delta": -5.950494608695749
+    },
+    {
+      "family": "powerlaw_cluster",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "6bdccf21f0b9610b03064a7d376bcb3fe97fa1a802cb70bdca864c8801e9aefd",
+      "variant": "conservative",
+      "baseline": {
+        "score": 710.8935960000001,
+        "actions": {
+          "scan": 50,
+          "comm": 32,
+          "cut": 0,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 710.8935960000001,
+        "actions": {
+          "scan": 50,
+          "comm": 32,
+          "cut": 0,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 84,
+        "planning_calls": 35,
+        "rollouts": 70,
+        "deviation_count": 0,
+        "deviations": [],
+        "public_board_salt": "6a47c4440c8caff4cb14d4558a8bcd1d83eb24a60f777e8d2dec6ec715756d07",
+        "seconds": 7.50985332892742
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "watts_strogatz_mixed",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "ed7e9e3a0ea16bd25339b08e7cd05a356904290c14c8acd2584d1a75c7273b67",
+      "variant": "expected",
+      "baseline": {
+        "score": 475.8669244804596,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 494.8482530011546,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 166,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 69,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 34,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 7,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "p7_budget_structure",
+            "mean_delta": 1.5771264392657371,
+            "minimum_delta": -1.6234401331072377,
+            "paired_deltas": [
+              1.2623543501128438,
+              -1.54638269728855,
+              -1.6234401331072377,
+              6.531751402734244,
+              3.2613492738773857
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 7,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 34,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "public_board_salt": "120971581dee4a1ab153be33d241b79a9b122abe90f3b1b78b3c49369cde4f6c",
+        "seconds": 103.53203619492706
+      },
+      "delta": 18.981328520695
+    },
+    {
+      "family": "watts_strogatz_mixed",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "ed7e9e3a0ea16bd25339b08e7cd05a356904290c14c8acd2584d1a75c7273b67",
+      "variant": "conservative",
+      "baseline": {
+        "score": 475.8669244804596,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 494.8482530011546,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 10,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 70,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 34,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 14,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "p7_budget_structure",
+            "mean_delta": 1.3061400274242487,
+            "minimum_delta": 0.18490987322041974,
+            "paired_deltas": [
+              1.3061400274242487,
+              2.377025941769489,
+              0.23525411307895183,
+              2.4273701816281346,
+              0.18490987322041974
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 14,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 34,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "public_board_salt": "120971581dee4a1ab153be33d241b79a9b122abe90f3b1b78b3c49369cde4f6c",
+        "seconds": 6.094273927039467
+      },
+      "delta": 18.981328520695
+    },
+    {
+      "family": "random_regular_mixed",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "de206ec9b3b36878808f16425c9afc2cf5cc73abcdaaaa8795a92e02cc9873ca",
+      "variant": "expected",
+      "baseline": {
+        "score": 601.3039651191707,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 601.3039651191707,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 10,
+        "deviation_count": 0,
+        "deviations": [],
+        "public_board_salt": "d7879c60e4413a0665e545f2b0418fd4df37b059fe3fbec67f3c2c3114542118",
+        "seconds": 4.308342544944026
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "random_regular_mixed",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "de206ec9b3b36878808f16425c9afc2cf5cc73abcdaaaa8795a92e02cc9873ca",
+      "variant": "conservative",
+      "baseline": {
+        "score": 601.3039651191707,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 601.3039651191707,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 0,
+        "deviation_count": 0,
+        "deviations": [],
+        "public_board_salt": "d7879c60e4413a0665e545f2b0418fd4df37b059fe3fbec67f3c2c3114542118",
+        "seconds": 0.6572419449221343
+      },
+      "delta": 0.0
+    }
+  ],
+  "summary": {
+    "expected": {
+      "cases": 9,
+      "mean_delta": 3.226785977202089,
+      "minimum_delta": -5.950494608695749,
+      "family_mean_delta": {
+        "random_geometric": 6.5638118547874456,
+        "barbell": 0.0,
+        "lollipop": 2.189190142973615,
+        "random_tree": 11.873596235294144,
+        "bipartite": -4.616358350235657,
+        "degree_corrected_sbm": 0.0,
+        "powerlaw_cluster": -5.950494608695749,
+        "watts_strogatz_mixed": 18.981328520695,
+        "random_regular_mixed": 0.0
+      },
+      "all_family_means_nonnegative": false,
+      "failures": 0
+    },
+    "conservative": {
+      "cases": 9,
+      "mean_delta": 2.915396267305943,
+      "minimum_delta": -4.616358350235657,
+      "family_mean_delta": {
+        "random_geometric": 0.0,
+        "barbell": 0.0,
+        "lollipop": 0.0,
+        "random_tree": 11.873596235294144,
+        "bipartite": -4.616358350235657,
+        "degree_corrected_sbm": 0.0,
+        "powerlaw_cluster": 0.0,
+        "watts_strogatz_mixed": 18.981328520695,
+        "random_regular_mixed": 0.0
+      },
+      "all_family_means_nonnegative": false,
+      "failures": 0
+    }
+  },
+  "stratum_summary": {
+    "standard": {
+      "expected": {
+        "cases": 9,
+        "mean_delta": 3.226785977202089,
+        "minimum_delta": -5.950494608695749,
+        "family_mean_delta": {
+          "random_geometric": 6.5638118547874456,
+          "barbell": 0.0,
+          "lollipop": 2.189190142973615,
+          "random_tree": 11.873596235294144,
+          "bipartite": -4.616358350235657,
+          "degree_corrected_sbm": 0.0,
+          "powerlaw_cluster": -5.950494608695749,
+          "watts_strogatz_mixed": 18.981328520695,
+          "random_regular_mixed": 0.0
+        },
+        "all_family_means_nonnegative": false,
+        "failures": 0
+      },
+      "conservative": {
+        "cases": 9,
+        "mean_delta": 2.915396267305943,
+        "minimum_delta": -4.616358350235657,
+        "family_mean_delta": {
+          "random_geometric": 0.0,
+          "barbell": 0.0,
+          "lollipop": 0.0,
+          "random_tree": 11.873596235294144,
+          "bipartite": -4.616358350235657,
+          "degree_corrected_sbm": 0.0,
+          "powerlaw_cluster": 0.0,
+          "watts_strogatz_mixed": 18.981328520695,
+          "random_regular_mixed": 0.0
+        },
+        "all_family_means_nonnegative": false,
+        "failures": 0
+      }
+    }
+  },
+  "platform_score": null,
+  "production_promotion_allowed": false
+}

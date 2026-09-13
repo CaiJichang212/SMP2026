@@ -1,0 +1,137 @@
+{
+  "family": "ba_negative_hubs",
+  "repetition": 501,
+  "r_stratum": "standard",
+  "seed_sha256": "0065cacb1b5fc96a80267c2cbceb8f6efbb325f76c96829405f0edb734bafb73",
+  "policy_sha256": "25b179db8589ee0d8a6698c7751166600ae96e29dbabfae4c58a2df9686c597c",
+  "evaluation": "official custom-seed sandbox; deterministic research arms, no LLM",
+  "platform_score": null,
+  "production_promotion_allowed": false,
+  "rows": [
+    {
+      "score": 274.82,
+      "failures": 0,
+      "steps": 75,
+      "remaining_budget": 1.0,
+      "variant": "baseline",
+      "local_replay_score": 274.76497219117647,
+      "settlement_residual": 0.05502780882352454,
+      "maximum_response_error": 0.0,
+      "seconds": 66.05033130501397
+    },
+    {
+      "score": 303.74,
+      "actions": {
+        "scan": 50,
+        "comm": 17,
+        "cut": 0,
+        "shield": 8
+      },
+      "failures": 0,
+      "remaining_budget": 1.0,
+      "steps": 75,
+      "planning_calls": 26,
+      "rollouts": 126,
+      "deviation_count": 2,
+      "deviations": [
+        {
+          "step": 52,
+          "action": {
+            "kind": "shield",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          "baseline_action": {
+            "kind": "shield",
+            "target_node_1": 6,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          "source": "p7_budget_structure",
+          "mean_delta": 24.33977841142583,
+          "minimum_delta": 14.25,
+          "paired_deltas": [
+            14.25,
+            38.55886796033556,
+            24.16448012523358,
+            17.221866397194617,
+            27.503677574365383
+          ],
+          "compared_actions": [
+            {
+              "kind": "shield",
+              "target_node_1": 6,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 6,
+              "target_node_2": null,
+              "prompt_id": 1
+            }
+          ]
+        },
+        {
+          "step": 55,
+          "action": {
+            "kind": "shield",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          "baseline_action": {
+            "kind": "comm",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          "source": "immediate_structure_gain",
+          "mean_delta": 16.043081843559037,
+          "minimum_delta": 2.9838545425402003,
+          "paired_deltas": [
+            14.249999999999943,
+            2.9838545425402003,
+            24.594274591431486,
+            29.560699347003492,
+            8.826580736820063
+          ],
+          "compared_actions": [
+            {
+              "kind": "comm",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 14,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          ]
+        }
+      ],
+      "public_board_salt": "e85e006c463498f05b85339436e6c572b2cce8d25ef79348f04d41311d585d99",
+      "seconds": 49.554741836036555,
+      "variant": "conservative",
+      "local_replay_score": 303.6875601323529,
+      "settlement_residual": 0.05243986764708097,
+      "maximum_response_error": 0.0
+    }
+  ],
+  "paired_gain": 28.920000000000016
+}
