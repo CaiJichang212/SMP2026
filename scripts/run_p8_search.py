@@ -25,7 +25,7 @@ from starnet.policy.p8_experiment import EvaluationCache, P8Mode, choose_p8_acti
 from starnet.runtime.env_adapter import apply_action_outcome
 
 
-VARIANTS: tuple[P8Mode, ...] = ("expected", "conservative")
+VARIANTS: tuple[P8Mode, ...] = ("expected", "conservative", "audited")
 
 
 def _action_payload(action: Action) -> dict[str, Any]:
@@ -49,6 +49,7 @@ def run_p8(seed: dict[str, Any], mode: P8Mode, *, evaluation_cache: EvaluationCa
     actions = dict.fromkeys(("scan", "comm", "cut", "shield"), 0)
     first_responses: dict[int, float] = {}
     deviations: list[dict[str, Any]] = []
+    audit_rejections: list[dict[str, Any]] = []
     failures = planning_calls = rollouts = steps = 0
     limit = 117 if count <= 50 else 247
     for node_id in range(1, count + 1):
@@ -72,15 +73,24 @@ def run_p8(seed: dict[str, Any], mode: P8Mode, *, evaluation_cache: EvaluationCa
         action = decision.action
         if action is None:
             break
+        diagnostic = {
+            "step": steps + 1,
+            "action": _action_payload(action),
+            "baseline_action": _action_payload(decision.baseline_action),
+            "proposed_action": _action_payload(decision.proposed_action or action),
+            "source": decision.source, "mean_delta": decision.mean_delta,
+            "minimum_delta": decision.minimum_delta,
+            "paired_deltas": list(decision.paired_deltas),
+            "audit_mean_delta": decision.audit_mean_delta,
+            "audit_minimum_delta": decision.audit_minimum_delta,
+            "audit_paired_deltas": list(decision.audit_paired_deltas),
+            "compared_actions": [_action_payload(item) for item in decision.compared_actions],
+        }
         if decision.deviated:
-            deviations.append({
-                "step": steps + 1, "action": _action_payload(action),
-                "baseline_action": _action_payload(decision.baseline_action),
-                "source": decision.source, "mean_delta": decision.mean_delta,
-                "minimum_delta": decision.minimum_delta,
-                "paired_deltas": list(decision.paired_deltas),
-                "compared_actions": [_action_payload(item) for item in decision.compared_actions],
-            })
+            deviations.append(diagnostic)
+        elif (mode == "audited" and decision.proposed_action is not None
+              and decision.proposed_action != decision.baseline_action):
+            audit_rejections.append(diagnostic)
         if not is_legal_action(action, board, budget):
             raise RuntimeError("illegal P8 planned action")
         old_w = board.nodes[action.target_node_1].w if action.kind == "comm" else None
@@ -98,6 +108,8 @@ def run_p8(seed: dict[str, Any], mode: P8Mode, *, evaluation_cache: EvaluationCa
         "remaining_budget": env.get_remaining_budget(), "steps": steps,
         "planning_calls": planning_calls, "rollouts": rollouts,
         "deviation_count": len(deviations), "deviations": deviations,
+        "audit_rejection_count": len(audit_rejections),
+        "audit_rejections": audit_rejections,
         "public_board_salt": salt, "seconds": time.perf_counter() - started,
     }
 
@@ -121,7 +133,7 @@ def main() -> int:
     config = {"block": "p8", "nodes": 50, "families": list(families),
               "repetitions": list(repetitions), "variants": list(variants),
               "strata": list(strata), "prior": "Uniform(0.2,1.5)",
-              "sequential_screen": "best mean-positive structure plus untried comm over five paired scenarios",
+              "sequential_screen": "five-scenario selection; audited adds eight independent paired scenarios without reselection",
               "policy_sha256": policy_sha256}
     progress_path = args.output.with_suffix(".progress.json")
     rows: list[dict[str, Any]] = []
@@ -163,6 +175,7 @@ def main() -> int:
                         "score": candidate["score"], "failures": candidate["failures"],
                         "rollouts": candidate["rollouts"],
                         "deviation_count": candidate["deviation_count"],
+                        "audit_rejection_count": candidate["audit_rejection_count"],
                         "seconds": candidate["seconds"],
                     }, ensure_ascii=False), flush=True)
 

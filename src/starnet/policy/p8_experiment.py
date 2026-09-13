@@ -21,11 +21,13 @@ from starnet.policy.baseline import _response, public_response
 from starnet.policy.budget_experiment import budget_plan
 from starnet.policy.calibration import DEFAULT_CALIBRATION_PROFILE
 from starnet.policy.cmg import PredictiveState
+from starnet.policy.fast_settlement_experiment import FastComponentSettlement
 from starnet.policy.structural import ExperimentalPublicGreedyPlanner, public_positive_graph_gate_closed
 
 
-P8Mode = Literal["expected", "conservative"]
+P8Mode = Literal["expected", "conservative", "audited"]
 EvaluationCache = MutableMapping[tuple[object, ...], float]
+_FAST_SETTLEMENT = FastComponentSettlement(max_topologies=128)
 
 
 @dataclass(frozen=True)
@@ -69,6 +71,10 @@ class P8Decision:
     mean_delta: float
     minimum_delta: float
     rollouts: int
+    proposed_action: Action | None = None
+    audit_paired_deltas: tuple[float, ...] = ()
+    audit_mean_delta: float = 0.0
+    audit_minimum_delta: float = 0.0
 
     @property
     def deviated(self) -> bool:
@@ -112,22 +118,24 @@ def _response_fn(board: Blackboard | _ProjectedBoard, observed: Mapping[int, flo
 
 
 def _greedy_candidates(board: Blackboard | _ProjectedBoard, budget: float,
-                       observed: Mapping[int, float]):
+                       observed: Mapping[int, float], *, fast: bool = True):
     planner = ExperimentalPublicGreedyPlanner(
         _response_fn(board, observed),
         candidate_limit=len(board.edges) + 2 * len(board.nodes) + 1,
         min_observed_responses=0,
         structure_roi_margin=1.0,
     )
+    if fast:
+        planner.predictor = _FAST_SETTLEMENT
     return planner.candidates(board, budget, observed_response_count=len(observed))
 
 
 def _scenario_factor(salt: str, node_id: int, scenario: int) -> float:
-    """Return mean plus two fixed antithetic Uniform(0.2, 1.5) pairs."""
+    """Return mean plus six fixed antithetic Uniform(0.2, 1.5) pairs."""
     if scenario == 0:
         return 0.85
-    if scenario not in (1, 2, 3, 4):
-        raise ValueError("P8 scenario must be in 0..4")
+    if scenario not in range(1, 13):
+        raise ValueError("P8 scenario must be in 0..12")
     pair = (scenario - 1) // 2
     digest = hashlib.sha256(f"{salt}:{node_id}:{pair}".encode("ascii")).digest()
     base = random.Random(int.from_bytes(digest[:8], "big")).uniform(0.2, 1.5)
@@ -143,7 +151,6 @@ def _rollout(
     state = PredictiveState.from_blackboard(board)
     visible = dict(observed)
     pending: Action | None = first_action
-    predictor = ExperimentalPublicGreedyPlanner(lambda *_: 1.0).predictor
     for _ in range(remaining_steps):
         projected = _ProjectedBoard.from_state(state, board.node_count or len(board.nodes))
         if pending is None:
@@ -170,7 +177,7 @@ def _rollout(
             delta = first * (0.5 ** (turn - 1))
         state = state.apply(action, delta)
         budget -= action_cost(action)
-    score = float(predictor.score(state))
+    score = float(_FAST_SETTLEMENT.score(state))
     if not math.isfinite(score):
         raise ValueError("nonfinite P8 rollout score")
     return score
@@ -215,7 +222,7 @@ def choose_p8_action(
     This sequential screen is a bounded decision rule, not an unbiased
     estimate or a confidence interval.
     """
-    if mode not in ("expected", "conservative"):
+    if mode not in ("expected", "conservative", "audited"):
         raise ValueError("unknown P8 mode")
     if remaining_steps < 0 or not math.isfinite(budget) or budget < 0 or len(salt) != 64:
         raise ValueError("invalid P8 decision inputs")
@@ -282,9 +289,21 @@ def choose_p8_action(
         return P8Decision(baseline, baseline, "public_greedy",
                           tuple(action for action, _ in domain), (), 0.0, 0.0, rollouts)
     _, _, winner, source, deltas, mean_delta, minimum = min(accepted)
+    compared = tuple(action for action, _ in domain)
+    if mode != "audited":
+        return P8Decision(winner, baseline, source, compared, deltas,
+                          mean_delta, minimum, rollouts, proposed_action=winner)
+    audit_deltas = tuple(score(winner, scenario) - score(baseline, scenario)
+                         for scenario in range(5, 13))
+    audit_mean = sum(audit_deltas) / len(audit_deltas)
+    audit_minimum = min(audit_deltas)
+    audit_passed = audit_mean > 1e-9 and audit_minimum >= -1e-9
     return P8Decision(
-        winner, baseline, source,
-        tuple(action for action, _ in domain), deltas, mean_delta, minimum, rollouts,
+        winner if audit_passed else baseline, baseline,
+        source if audit_passed else "public_greedy", compared,
+        deltas, mean_delta, minimum, rollouts, proposed_action=winner,
+        audit_paired_deltas=audit_deltas, audit_mean_delta=audit_mean,
+        audit_minimum_delta=audit_minimum,
     )
 
 

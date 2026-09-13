@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import math
+import random
 import unittest
 from unittest.mock import patch
 
@@ -9,7 +10,8 @@ from starnet.policy.actions import Action
 from starnet.policy.budget_experiment import BudgetPlan
 from starnet.policy.candidates import Candidate
 from starnet.policy.p8_experiment import (
-    _candidate_domain, _rollout, _scenario_factor, choose_p8_action, public_board_salt,
+    _candidate_domain, _greedy_candidates, _rollout, _scenario_factor,
+    choose_p8_action, public_board_salt,
 )
 
 
@@ -45,10 +47,37 @@ class P8ExperimentTests(unittest.TestCase):
     def test_antithetic_pairs_and_uniform_bounds(self):
         salt = "a" * 64
         self.assertEqual(_scenario_factor(salt, 3, 0), 0.85)
-        for left, right in ((1, 2), (3, 4)):
+        for left, right in ((1, 2), (3, 4), (5, 6), (7, 8), (9, 10), (11, 12)):
             values = (_scenario_factor(salt, 3, left), _scenario_factor(salt, 3, right))
             self.assertTrue(all(0.2 <= value <= 1.5 for value in values))
             self.assertAlmostEqual(sum(values), 1.7)
+
+    def test_fast_planner_matches_reference_candidates_on_random_public_states(self):
+        rng = random.Random(20260913)
+        for _ in range(240):
+            count = rng.randint(5, 10)
+            edges = {(left, right) for left in range(1, count + 1)
+                     for right in range(left + 1, count + 1) if rng.random() < 0.28}
+            neighbors = {node: [] for node in range(1, count + 1)}
+            for left, right in edges:
+                neighbors[left].append(right)
+                neighbors[right].append(left)
+            board = Blackboard(node_count=count)
+            observed = {}
+            for node_id in range(1, count + 1):
+                comm_left = rng.randint(1, 3)
+                board.record_scan(node_id, {
+                    "w": rng.uniform(-40, 30),
+                    "persona": rng.choice(("和平", "中立", "暴力")),
+                    "comm_left": comm_left, "neighbors": neighbors[node_id],
+                })
+                if comm_left < 3:
+                    observed[node_id] = rng.uniform(3, 22)
+            budget = rng.choice((2.0, 3.0, 5.0, 9.0, 20.0))
+            self.assertEqual(
+                _greedy_candidates(board, budget, observed, fast=True),
+                _greedy_candidates(board, budget, observed, fast=False),
+            )
 
     def test_domain_adds_untried_comm_and_stays_bounded(self):
         board = make_board()
@@ -134,6 +163,43 @@ class P8ExperimentTests(unittest.TestCase):
         self.assertEqual(conservative.action, safe)
         self.assertEqual(expected.rollouts, 15)
         self.assertEqual(conservative.rollouts, 0)
+
+    def test_audited_uses_independent_scenarios_and_does_not_reselect(self):
+        board = make_board()
+        baseline, winner = Action("comm", 2, prompt_id=1), Action("shield", 1)
+        domain = ((baseline, "public_greedy"), (winner, "p7_budget_structure"))
+
+        def score(_board, _budget, _observed, action, _steps, *, scenario, salt):
+            if action == baseline:
+                return 100.0
+            return 102.0 if scenario < 12 else 99.0
+
+        with patch("starnet.policy.p8_experiment._candidate_domain", return_value=domain), \
+             patch("starnet.policy.p8_experiment._rollout", side_effect=score):
+            decision = choose_p8_action(board, 10, {}, remaining_steps=4,
+                                        salt="f" * 64, mode="audited")
+        self.assertEqual(decision.proposed_action, winner)
+        self.assertEqual(decision.action, baseline)
+        self.assertFalse(decision.deviated)
+        self.assertEqual(len(decision.audit_paired_deltas), 8)
+        self.assertEqual(decision.audit_minimum_delta, -1.0)
+        self.assertEqual(decision.rollouts, 26)
+
+    def test_audited_accepts_same_winner_when_extra_pair_gate_passes(self):
+        board = make_board()
+        baseline, winner = Action("comm", 2, prompt_id=1), Action("shield", 1)
+        domain = ((baseline, "public_greedy"), (winner, "p7_budget_structure"))
+
+        def score(_board, _budget, _observed, action, _steps, *, scenario, salt):
+            return 100.0 if action == baseline else 101.0
+
+        with patch("starnet.policy.p8_experiment._candidate_domain", return_value=domain), \
+             patch("starnet.policy.p8_experiment._rollout", side_effect=score):
+            decision = choose_p8_action(board, 10, {}, remaining_steps=4,
+                                        salt="1" * 64, mode="audited")
+        self.assertEqual(decision.action, winner)
+        self.assertEqual(decision.audit_mean_delta, 1.0)
+        self.assertEqual(decision.audit_minimum_delta, 1.0)
 
     def test_simulation_reveals_unknown_only_after_success_and_never_records_facts(self):
         board = make_board()
