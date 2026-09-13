@@ -1,0 +1,13 @@
+{
+  "purpose": "Test structural candidates excluded before P8 rollouts by sign, persona, and immediate-ROI gates",
+  "registered_before_measurement": true,
+  "motivation": "The official-best historical experimental archive generated all positive structural gains; P8 inherits a narrower candidate gate, so more rollouts cannot recover excluded actions.",
+  "comparator": "frozen P8 conservative",
+  "candidate": "coverage13: retain the P8 decision, add at most one maximum-gain and one maximum-ROI newly excluded action per structural class, five-scenario selection followed by eight unused antithetic audit scenarios; any audit loss returns to P8 without reselection",
+  "development": {"families": "all 22 P8 families", "repetitions": [501], "stratum": "standard"},
+  "expansion_if_positive_mean_and_zero_failures": {"repetitions": [502, 503], "families": "all 22 P8 families"},
+  "selection": "Keep for independent confirmation only if the expanded mean gain over P8 is positive, resource/API failures zero. Report all family losses and execution cost. Do not infer official improvement from development.",
+  "confirmation": "801-805 remain unopened; separate frozen protocol required",
+  "public_only": true,
+  "production_enabled": false
+}
