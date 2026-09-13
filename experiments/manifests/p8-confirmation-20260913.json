@@ -1,0 +1,23 @@
+{
+  "variant": "audited",
+  "policy_commit": "47064c6",
+  "policy_sha256": "56709076b9c89d7934899f046c20198f569575b165871adfc9055e49269500b0",
+  "selection_evidence": "experiments/reports/p8-audited-dev66-summary-20260913.json",
+  "development_pairs": 66,
+  "development_mean_gain": 1.1047073880206133,
+  "development_win_tie_loss": [6, 60, 0],
+  "development_family_bootstrap_interval": [0.017605928571426968, 2.970962451177663],
+  "response_shift_diagnostic_pairs": 12,
+  "response_shift_negative_pairs": 0,
+  "node_count": 50,
+  "budget": 100,
+  "strata": ["standard"],
+  "families": "all22 in p8_seeds.FAMILIES, no exclusions",
+  "repetitions": [601, 602, 603, 604, 605],
+  "expected_pairs": 110,
+  "gate": "complete and identical-source paired cohort; no action or resource violations; positive family-bootstrap lower bound; each family mean nonnegative",
+  "failure_action": "reject promotion; preserve all cases; do not tune on confirmation",
+  "promotion_still_requires": ["public sandbox replay", "real injected-LLM final choice and runtime validation"],
+  "platform_score": null,
+  "production_enabled": false
+}
