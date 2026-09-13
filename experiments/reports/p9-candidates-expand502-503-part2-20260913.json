@@ -1,0 +1,1678 @@
+{
+  "config": {
+    "families": [
+      "grid_lattice",
+      "cycle_chords",
+      "two_block_bridge",
+      "tree_broom",
+      "double_bridge_communities",
+      "ring_of_cliques"
+    ],
+    "repetitions": [
+      502,
+      503
+    ],
+    "variants": [
+      "depth2",
+      "portfolio"
+    ],
+    "stratum": "standard",
+    "policy_sha256": "11e2441faf75f2c89daed11e52e77462e715d6ddff84537d9c597fc4301683b9"
+  },
+  "summary": {
+    "depth2": {
+      "cases": 12,
+      "mean_delta_vs_p8": 0.0,
+      "mean_delta_vs_public_greedy": -0.694313537311416,
+      "minimum_delta_vs_p8": 0.0,
+      "win_tie_loss_vs_p8": [
+        0,
+        12,
+        0
+      ],
+      "family_mean_delta_vs_p8": {
+        "grid_lattice": 0.0,
+        "cycle_chords": 0.0,
+        "two_block_bridge": 0.0,
+        "tree_broom": 0.0,
+        "double_bridge_communities": 0.0,
+        "ring_of_cliques": 0.0
+      },
+      "failures": 0,
+      "mean_seconds": 12.5810648566597
+    },
+    "portfolio": {
+      "cases": 12,
+      "mean_delta_vs_p8": -0.08283835227270704,
+      "mean_delta_vs_public_greedy": -0.7771518895841231,
+      "minimum_delta_vs_p8": -0.7681755681817322,
+      "win_tie_loss_vs_p8": [
+        0,
+        10,
+        2
+      ],
+      "family_mean_delta_vs_p8": {
+        "grid_lattice": -0.4970301136362423,
+        "cycle_chords": 0.0,
+        "two_block_bridge": 0.0,
+        "tree_broom": 0.0,
+        "double_bridge_communities": 0.0,
+        "ring_of_cliques": 0.0
+      },
+      "failures": 0,
+      "mean_seconds": 41.839777417577956
+    }
+  },
+  "rows": [
+    {
+      "family": "grid_lattice",
+      "repetition": 502,
+      "seed_sha256": "d5c372ac9bbe37342492089874fc6f105a4acb991003a101c1410da591516467",
+      "variant": "depth2",
+      "public_greedy": {
+        "score": 1145.2958556818178,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 1145.2958556818178,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 0,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "7c65473c8e2cedf3023b072e29ad5fa311d527e79ec7c57dc0d406a4197297b1",
+        "seconds": 1.0246102570090443
+      },
+      "candidate": {
+        "score": 1145.2958556818178,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 0,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 1.3312106269877404
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 502,
+      "seed_sha256": "d5c372ac9bbe37342492089874fc6f105a4acb991003a101c1410da591516467",
+      "variant": "portfolio",
+      "public_greedy": {
+        "score": 1145.2958556818178,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 1145.2958556818178,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 0,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "7c65473c8e2cedf3023b072e29ad5fa311d527e79ec7c57dc0d406a4197297b1",
+        "seconds": 1.0246102570090443
+      },
+      "candidate": {
+        "score": 1145.069971022727,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 550,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 54,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 14,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 15,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "observed_comm_roi",
+            "mean_delta": 0.20779890921803598,
+            "minimum_delta": 0.0,
+            "domain_size": 3
+          }
+        ],
+        "seconds": 56.543309765984304
+      },
+      "delta_vs_public_greedy": -0.2258846590907524,
+      "delta_vs_p8": -0.2258846590907524
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 503,
+      "seed_sha256": "ab4f99a9f97c97d5eaef3e1bb465dd9c5eca7e5638f6d011ae2cc0ee8061d691",
+      "variant": "depth2",
+      "public_greedy": {
+        "score": 1114.3647181818183,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 1114.3647181818183,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 10,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "192bd9fd4d011a26eb9c4146642c09ef73fd335bf62efdabea1fc4212befccdb",
+        "seconds": 1.5961414079647511
+      },
+      "candidate": {
+        "score": 1114.3647181818183,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 10,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 1.5877649650210515
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 503,
+      "seed_sha256": "ab4f99a9f97c97d5eaef3e1bb465dd9c5eca7e5638f6d011ae2cc0ee8061d691",
+      "variant": "portfolio",
+      "public_greedy": {
+        "score": 1114.3647181818183,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 1114.3647181818183,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 10,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "192bd9fd4d011a26eb9c4146642c09ef73fd335bf62efdabea1fc4212befccdb",
+        "seconds": 1.5961414079647511
+      },
+      "candidate": {
+        "score": 1113.5965426136365,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 550,
+        "deviation_count": 2,
+        "deviations": [
+          {
+            "step": 58,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 19,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "observed_comm_roi",
+            "mean_delta": 2.2984527997053648,
+            "minimum_delta": 0.0,
+            "domain_size": 3
+          },
+          {
+            "step": 60,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 19,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 22,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "observed_comm_roi",
+            "mean_delta": 2.225392184149496,
+            "minimum_delta": 0.0,
+            "domain_size": 3
+          }
+        ],
+        "seconds": 64.58195380796678
+      },
+      "delta_vs_public_greedy": -0.7681755681817322,
+      "delta_vs_p8": -0.7681755681817322
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 502,
+      "seed_sha256": "f112b71bd67131845b695deae1ab8bf8e6f583cf9ff303d9b8fe680a88310cd1",
+      "variant": "depth2",
+      "public_greedy": {
+        "score": 553.3478776639002,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 553.3478776639002,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 38,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "890580f50ac765101a14696f11381f9575237ae6cda4b6eacd8f01b279387c01",
+        "seconds": 11.970407080021687
+      },
+      "candidate": {
+        "score": 553.3478776639002,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 38,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 16.65869476797525
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 502,
+      "seed_sha256": "f112b71bd67131845b695deae1ab8bf8e6f583cf9ff303d9b8fe680a88310cd1",
+      "variant": "portfolio",
+      "public_greedy": {
+        "score": 553.3478776639002,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 553.3478776639002,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 38,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "890580f50ac765101a14696f11381f9575237ae6cda4b6eacd8f01b279387c01",
+        "seconds": 11.970407080021687
+      },
+      "candidate": {
+        "score": 553.3478776639002,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 516,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 79.78078770102002
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 503,
+      "seed_sha256": "a2c761b3969cc21fc0bfc6a473fd9354cd159e01de79fe3002e0193057a2b58f",
+      "variant": "depth2",
+      "public_greedy": {
+        "score": 741.295715593361,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 741.295715593361,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 70,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "df892c8983ac1199e61f69efe9cdd0e9abed586dec6f0e21e1375c4fd925a385",
+        "seconds": 10.21426838694606
+      },
+      "candidate": {
+        "score": 741.295715593361,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 70,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 13.44804938591551
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 503,
+      "seed_sha256": "a2c761b3969cc21fc0bfc6a473fd9354cd159e01de79fe3002e0193057a2b58f",
+      "variant": "portfolio",
+      "public_greedy": {
+        "score": 741.295715593361,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 741.295715593361,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 70,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "df892c8983ac1199e61f69efe9cdd0e9abed586dec6f0e21e1375c4fd925a385",
+        "seconds": 10.21426838694606
+      },
+      "candidate": {
+        "score": 741.295715593361,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 500,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 60.91020229400601
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 502,
+      "seed_sha256": "ee84878c633cfbac1cb5de5207ddd23ab233fc8d41265f0961ea0552c3184b50",
+      "variant": "depth2",
+      "public_greedy": {
+        "score": 468.0882506000001,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 468.0882506000001,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "planning_calls": 25,
+        "rollouts": 91,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "2e6f411866363a9c50a41ff4ef2389615814daabacf349c885e29c7a24b56287",
+        "seconds": 7.988457216066308
+      },
+      "candidate": {
+        "score": 468.0882506000001,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "planning_calls": 25,
+        "rollouts": 91,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 8.159353525028564
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 502,
+      "seed_sha256": "ee84878c633cfbac1cb5de5207ddd23ab233fc8d41265f0961ea0552c3184b50",
+      "variant": "portfolio",
+      "public_greedy": {
+        "score": 468.0882506000001,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 468.0882506000001,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "planning_calls": 25,
+        "rollouts": 91,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "2e6f411866363a9c50a41ff4ef2389615814daabacf349c885e29c7a24b56287",
+        "seconds": 7.988457216066308
+      },
+      "candidate": {
+        "score": 468.0882506000001,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "planning_calls": 25,
+        "rollouts": 265,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 11.516520524979569
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 503,
+      "seed_sha256": "acfa58de21cafe9e4df49d54dcff02e3206bea56f6ea2c7c6119c2ce47edc6e4",
+      "variant": "depth2",
+      "public_greedy": {
+        "score": 500.94403238857154,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 500.94403238857154,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "planning_calls": 25,
+        "rollouts": 95,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "10b616069ae19b446cafe3cef9aba2a4a541c2faa3862ebb1c3c5600d39b70d7",
+        "seconds": 8.2799338119803
+      },
+      "candidate": {
+        "score": 500.94403238857154,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "planning_calls": 25,
+        "rollouts": 95,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 11.070628235000186
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 503,
+      "seed_sha256": "acfa58de21cafe9e4df49d54dcff02e3206bea56f6ea2c7c6119c2ce47edc6e4",
+      "variant": "portfolio",
+      "public_greedy": {
+        "score": 500.94403238857154,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 500.94403238857154,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "planning_calls": 25,
+        "rollouts": 95,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "10b616069ae19b446cafe3cef9aba2a4a541c2faa3862ebb1c3c5600d39b70d7",
+        "seconds": 8.2799338119803
+      },
+      "candidate": {
+        "score": 500.94403238857154,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "planning_calls": 25,
+        "rollouts": 265,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 11.484748553019017
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 502,
+      "seed_sha256": "37949958776019219ae68eeb4faead22f23acc65fbab406526e13515666a93f1",
+      "variant": "depth2",
+      "public_greedy": {
+        "score": 257.5758037718749,
+        "actions": {
+          "scan": 50,
+          "comm": 27,
+          "cut": 0,
+          "shield": 4
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 249.24404132413792,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 89,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 72,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 41,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 41,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "p7_budget_structure",
+            "mean_delta": 4.480162115070828,
+            "minimum_delta": 3.070027663929693,
+            "paired_deltas": [
+              4.480162115070868,
+              3.3682536147898077,
+              5.592070615351844,
+              5.89029656621193,
+              3.070027663929693
+            ],
+            "audit_mean_delta": 0.0,
+            "audit_minimum_delta": 0.0,
+            "audit_paired_deltas": [],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 25,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 41,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "1399dfa3034ea26324d069b821a1b5727811674031ffcb834eb82767da9e7ad8",
+        "seconds": 11.660393563914113
+      },
+      "candidate": {
+        "score": 249.24404132413792,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 101,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 72,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 41,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "depth2_budget_structure",
+            "mean_delta": 4.480162115070828,
+            "minimum_delta": 3.070027663929693,
+            "domain_size": 2
+          }
+        ],
+        "seconds": 14.395773966913112
+      },
+      "delta_vs_public_greedy": -8.331762447736992,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 502,
+      "seed_sha256": "37949958776019219ae68eeb4faead22f23acc65fbab406526e13515666a93f1",
+      "variant": "portfolio",
+      "public_greedy": {
+        "score": 257.5758037718749,
+        "actions": {
+          "scan": 50,
+          "comm": 27,
+          "cut": 0,
+          "shield": 4
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 249.24404132413792,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 89,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 72,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 41,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 41,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "p7_budget_structure",
+            "mean_delta": 4.480162115070828,
+            "minimum_delta": 3.070027663929693,
+            "paired_deltas": [
+              4.480162115070868,
+              3.3682536147898077,
+              5.592070615351844,
+              5.89029656621193,
+              3.070027663929693
+            ],
+            "audit_mean_delta": 0.0,
+            "audit_minimum_delta": 0.0,
+            "audit_paired_deltas": [],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 25,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 41,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "1399dfa3034ea26324d069b821a1b5727811674031ffcb834eb82767da9e7ad8",
+        "seconds": 11.660393563914113
+      },
+      "candidate": {
+        "score": 249.24404132413792,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 395,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 72,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 41,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "depth2_budget_structure",
+            "mean_delta": 4.480162115070828,
+            "minimum_delta": 3.070027663929693,
+            "domain_size": 4
+          }
+        ],
+        "seconds": 34.64929487591144
+      },
+      "delta_vs_public_greedy": -8.331762447736992,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 503,
+      "seed_sha256": "2309d9ee7560a6bf76cb58df0dbb0203e4c103d8574daa0891d70467eef9ecd2",
+      "variant": "depth2",
+      "public_greedy": {
+        "score": 353.79673903266786,
+        "actions": {
+          "scan": 50,
+          "comm": 27,
+          "cut": 0,
+          "shield": 4
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 353.79673903266786,
+        "actions": {
+          "scan": 50,
+          "comm": 27,
+          "cut": 0,
+          "shield": 4
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 81,
+        "planning_calls": 32,
+        "rollouts": 83,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "035271e930e76c1ca1fc418663351f3fe31c500c73d851ace3f319d8719ff217",
+        "seconds": 9.613603353034705
+      },
+      "candidate": {
+        "score": 353.79673903266786,
+        "actions": {
+          "scan": 50,
+          "comm": 27,
+          "cut": 0,
+          "shield": 4
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 81,
+        "planning_calls": 32,
+        "rollouts": 103,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 14.486399168963544
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 503,
+      "seed_sha256": "2309d9ee7560a6bf76cb58df0dbb0203e4c103d8574daa0891d70467eef9ecd2",
+      "variant": "portfolio",
+      "public_greedy": {
+        "score": 353.79673903266786,
+        "actions": {
+          "scan": 50,
+          "comm": 27,
+          "cut": 0,
+          "shield": 4
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 353.79673903266786,
+        "actions": {
+          "scan": 50,
+          "comm": 27,
+          "cut": 0,
+          "shield": 4
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 81,
+        "planning_calls": 32,
+        "rollouts": 83,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "035271e930e76c1ca1fc418663351f3fe31c500c73d851ace3f319d8719ff217",
+        "seconds": 9.613603353034705
+      },
+      "candidate": {
+        "score": 353.79673903266786,
+        "actions": {
+          "scan": 50,
+          "comm": 27,
+          "cut": 0,
+          "shield": 4
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 81,
+        "planning_calls": 32,
+        "rollouts": 425,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 51,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 26,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 1,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "untried_comm_roi",
+            "mean_delta": 6.174638816052846,
+            "minimum_delta": 0.0,
+            "domain_size": 3
+          }
+        ],
+        "seconds": 45.337971362052485
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 502,
+      "seed_sha256": "6d9c7936a89620f1c64132ebff20904142c5a4b09e9f37adfcbff1ff99712050",
+      "variant": "depth2",
+      "public_greedy": {
+        "score": 406.8030055466667,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 406.8030055466667,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 78,
+        "planning_calls": 29,
+        "rollouts": 144,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "1bc505b17507341f3f5b77fa14a45cc36bf36bf17cd6434f87036e4c74f7496f",
+        "seconds": 11.98927062295843
+      },
+      "candidate": {
+        "score": 406.8030055466667,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 78,
+        "planning_calls": 29,
+        "rollouts": 144,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 12.76042889803648
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 502,
+      "seed_sha256": "6d9c7936a89620f1c64132ebff20904142c5a4b09e9f37adfcbff1ff99712050",
+      "variant": "portfolio",
+      "public_greedy": {
+        "score": 406.8030055466667,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 406.8030055466667,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 78,
+        "planning_calls": 29,
+        "rollouts": 144,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "1bc505b17507341f3f5b77fa14a45cc36bf36bf17cd6434f87036e4c74f7496f",
+        "seconds": 11.98927062295843
+      },
+      "candidate": {
+        "score": 406.8030055466667,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 78,
+        "planning_calls": 29,
+        "rollouts": 334,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 26.125608392059803
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 503,
+      "seed_sha256": "1fdfa44e1448da5e5a107ccef518371b77019026b981150ea207634fff68c35d",
+      "variant": "depth2",
+      "public_greedy": {
+        "score": 478.8212561320756,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 478.8212561320756,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 270,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "d721b08508647836c01911eaae78092ff3d617f6394e8081c09552090f1665d6",
+        "seconds": 22.004573359969072
+      },
+      "candidate": {
+        "score": 478.8212561320756,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 277,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 23.545939974021167
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 503,
+      "seed_sha256": "1fdfa44e1448da5e5a107ccef518371b77019026b981150ea207634fff68c35d",
+      "variant": "portfolio",
+      "public_greedy": {
+        "score": 478.8212561320756,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 478.8212561320756,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 270,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "d721b08508647836c01911eaae78092ff3d617f6394e8081c09552090f1665d6",
+        "seconds": 22.004573359969072
+      },
+      "candidate": {
+        "score": 478.8212561320756,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 306,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 21.768570432905108
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 502,
+      "seed_sha256": "7dfccd792300fa3c35f3809144cc9b1e4f817fa1e38a316f58019ade4f8a5c6a",
+      "variant": "depth2",
+      "public_greedy": {
+        "score": 618.3738617669867,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 618.3738617669867,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 78,
+        "planning_calls": 29,
+        "rollouts": 86,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "4847973f358f7eb5fc35e402c5681ea38cc965251d958f2f5626f609ef4872a0",
+        "seconds": 9.664343580952846
+      },
+      "candidate": {
+        "score": 618.3738617669867,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 78,
+        "planning_calls": 29,
+        "rollouts": 86,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 12.443867214024067
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 502,
+      "seed_sha256": "7dfccd792300fa3c35f3809144cc9b1e4f817fa1e38a316f58019ade4f8a5c6a",
+      "variant": "portfolio",
+      "public_greedy": {
+        "score": 618.3738617669867,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 618.3738617669867,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 78,
+        "planning_calls": 29,
+        "rollouts": 86,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "4847973f358f7eb5fc35e402c5681ea38cc965251d958f2f5626f609ef4872a0",
+        "seconds": 9.664343580952846
+      },
+      "candidate": {
+        "score": 618.3738617669867,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 78,
+        "planning_calls": 29,
+        "rollouts": 357,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 37.04646013502497
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 503,
+      "seed_sha256": "4367ece0575992e1fe23e33997bf9752a354105654e9721eab881497bbb68491",
+      "variant": "depth2",
+      "public_greedy": {
+        "score": 487.9067561285676,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 487.9067561285676,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 56,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "b492ba2a035b578c6b37b77164660bf033b193961dbaa1c10343bc9b820754a2",
+        "seconds": 13.834435708005913
+      },
+      "candidate": {
+        "score": 487.9067561285676,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 70,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 21.084667552029714
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 503,
+      "seed_sha256": "4367ece0575992e1fe23e33997bf9752a354105654e9721eab881497bbb68491",
+      "variant": "portfolio",
+      "public_greedy": {
+        "score": 487.9067561285676,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 487.9067561285676,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 56,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "b492ba2a035b578c6b37b77164660bf033b193961dbaa1c10343bc9b820754a2",
+        "seconds": 13.834435708005913
+      },
+      "candidate": {
+        "score": 487.9067561285676,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 395,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 52.33190116600599
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    }
+  ],
+  "production_enabled": false
+}

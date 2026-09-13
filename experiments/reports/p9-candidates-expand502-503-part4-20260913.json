@@ -1,0 +1,1679 @@
+{
+  "config": {
+    "families": [
+      "bipartite",
+      "degree_corrected_sbm",
+      "powerlaw_cluster",
+      "watts_strogatz_mixed",
+      "random_regular_mixed"
+    ],
+    "repetitions": [
+      502,
+      503
+    ],
+    "variants": [
+      "depth2",
+      "portfolio"
+    ],
+    "stratum": "standard",
+    "policy_sha256": "11e2441faf75f2c89daed11e52e77462e715d6ddff84537d9c597fc4301683b9"
+  },
+  "summary": {
+    "depth2": {
+      "cases": 10,
+      "mean_delta_vs_p8": 0.0,
+      "mean_delta_vs_public_greedy": 1.3225716746512375,
+      "minimum_delta_vs_p8": 0.0,
+      "win_tie_loss_vs_p8": [
+        0,
+        10,
+        0
+      ],
+      "family_mean_delta_vs_p8": {
+        "bipartite": 0.0,
+        "degree_corrected_sbm": 0.0,
+        "powerlaw_cluster": 0.0,
+        "watts_strogatz_mixed": 0.0,
+        "random_regular_mixed": 0.0
+      },
+      "failures": 0,
+      "mean_seconds": 23.340587762393987
+    },
+    "portfolio": {
+      "cases": 10,
+      "mean_delta_vs_p8": 0.0,
+      "mean_delta_vs_public_greedy": 1.3225716746512375,
+      "minimum_delta_vs_p8": 0.0,
+      "win_tie_loss_vs_p8": [
+        0,
+        10,
+        0
+      ],
+      "family_mean_delta_vs_p8": {
+        "bipartite": 0.0,
+        "degree_corrected_sbm": 0.0,
+        "powerlaw_cluster": 0.0,
+        "watts_strogatz_mixed": 0.0,
+        "random_regular_mixed": 0.0
+      },
+      "failures": 0,
+      "mean_seconds": 69.00143379679648
+    }
+  },
+  "rows": [
+    {
+      "family": "bipartite",
+      "repetition": 502,
+      "seed_sha256": "138623b47664974df6b29118e2549a974441ed00a99d57280e693511e6a83aa3",
+      "variant": "depth2",
+      "public_greedy": {
+        "score": 465.4335646780304,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 465.4335646780304,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 50,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "1b7be953d90d0ddfe8cee1138aa1dcdb65c5c13d39d8c7f827da9718f36c412b",
+        "seconds": 7.985315701924264
+      },
+      "candidate": {
+        "score": 465.4335646780304,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 50,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 12.87301809003111
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "bipartite",
+      "repetition": 502,
+      "seed_sha256": "138623b47664974df6b29118e2549a974441ed00a99d57280e693511e6a83aa3",
+      "variant": "portfolio",
+      "public_greedy": {
+        "score": 465.4335646780304,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 465.4335646780304,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 50,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "1b7be953d90d0ddfe8cee1138aa1dcdb65c5c13d39d8c7f827da9718f36c412b",
+        "seconds": 7.985315701924264
+      },
+      "candidate": {
+        "score": 465.4335646780304,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 525,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 116.76641154696699
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "bipartite",
+      "repetition": 503,
+      "seed_sha256": "c57ea766daa0ab5647064263cf231370da8596d136dcef7e603e6d1e68b9ab45",
+      "variant": "depth2",
+      "public_greedy": {
+        "score": 403.50964064960635,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 403.50964064960635,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 200,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "2fb603b4f5500c2e70885b76fbd0960bd19f6d9ed97c9a8b45d9d29c8804ecca",
+        "seconds": 60.50129606493283
+      },
+      "candidate": {
+        "score": 403.50964064960635,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 200,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 57.80423655791674
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "bipartite",
+      "repetition": 503,
+      "seed_sha256": "c57ea766daa0ab5647064263cf231370da8596d136dcef7e603e6d1e68b9ab45",
+      "variant": "portfolio",
+      "public_greedy": {
+        "score": 403.50964064960635,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 403.50964064960635,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 200,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "2fb603b4f5500c2e70885b76fbd0960bd19f6d9ed97c9a8b45d9d29c8804ecca",
+        "seconds": 60.50129606493283
+      },
+      "candidate": {
+        "score": 403.50964064960635,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 450,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 76.10159886896145
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "degree_corrected_sbm",
+      "repetition": 502,
+      "seed_sha256": "b5574f34a7b99c053a3dc6b0ac3895898c088ebc2b5fc215d5fade5d7eb0fadd",
+      "variant": "depth2",
+      "public_greedy": {
+        "score": 658.6509541398965,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 658.6509541398965,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 102,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "493d847f17fd4285ad37aca5b68560f80f0a6ad647d530b7b03e70cf41d040a6",
+        "seconds": 8.82565244100988
+      },
+      "candidate": {
+        "score": 658.6509541398965,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 102,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 12.16089297097642
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "degree_corrected_sbm",
+      "repetition": 502,
+      "seed_sha256": "b5574f34a7b99c053a3dc6b0ac3895898c088ebc2b5fc215d5fade5d7eb0fadd",
+      "variant": "portfolio",
+      "public_greedy": {
+        "score": 658.6509541398965,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 658.6509541398965,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 102,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "493d847f17fd4285ad37aca5b68560f80f0a6ad647d530b7b03e70cf41d040a6",
+        "seconds": 8.82565244100988
+      },
+      "candidate": {
+        "score": 658.6509541398965,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 479,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 54,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 48,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 9,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "observed_comm_roi",
+            "mean_delta": 0.31106109832826406,
+            "minimum_delta": 0.0,
+            "domain_size": 4
+          }
+        ],
+        "seconds": 41.36570186098106
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "degree_corrected_sbm",
+      "repetition": 503,
+      "seed_sha256": "b8348a0ef9267bcb15a2549e39b23d20852cf4b540a6d5f3a2a91dfe4f136918",
+      "variant": "depth2",
+      "public_greedy": {
+        "score": 582.3441526104654,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 604.1524712151165,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 182,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 66,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "p7_budget_structure",
+            "mean_delta": 11.845657271290452,
+            "minimum_delta": 6.289773220645884,
+            "paired_deltas": [
+              11.73383570778833,
+              17.4818315820861,
+              6.289773220645884,
+              8.406091911563522,
+              15.316753934368421
+            ],
+            "audit_mean_delta": 0.0,
+            "audit_minimum_delta": 0.0,
+            "audit_paired_deltas": [],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 27,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 27,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "9a4a0f7b8b49c99b115413a7b0315849421b49863438e8128e25938d4d85c8f3",
+        "seconds": 14.839951894944534
+      },
+      "candidate": {
+        "score": 604.1524712151165,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 182,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 66,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "depth2_budget_structure",
+            "mean_delta": 11.845657271290452,
+            "minimum_delta": 6.289773220645884,
+            "domain_size": 2
+          }
+        ],
+        "seconds": 16.000527955009602
+      },
+      "delta_vs_public_greedy": 21.808318604651163,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "degree_corrected_sbm",
+      "repetition": 503,
+      "seed_sha256": "b8348a0ef9267bcb15a2549e39b23d20852cf4b540a6d5f3a2a91dfe4f136918",
+      "variant": "portfolio",
+      "public_greedy": {
+        "score": 582.3441526104654,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 604.1524712151165,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 182,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 66,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "p7_budget_structure",
+            "mean_delta": 11.845657271290452,
+            "minimum_delta": 6.289773220645884,
+            "paired_deltas": [
+              11.73383570778833,
+              17.4818315820861,
+              6.289773220645884,
+              8.406091911563522,
+              15.316753934368421
+            ],
+            "audit_mean_delta": 0.0,
+            "audit_minimum_delta": 0.0,
+            "audit_paired_deltas": [],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 27,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 27,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "9a4a0f7b8b49c99b115413a7b0315849421b49863438e8128e25938d4d85c8f3",
+        "seconds": 14.839951894944534
+      },
+      "candidate": {
+        "score": 604.1524712151165,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 460,
+        "deviation_count": 2,
+        "deviations": [
+          {
+            "step": 61,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 28,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 22,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "observed_comm_roi",
+            "mean_delta": 2.801853015993811,
+            "minimum_delta": 0.0,
+            "domain_size": 4
+          },
+          {
+            "step": 71,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 12,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 8,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "untried_comm_roi",
+            "mean_delta": 1.4934097995437696,
+            "minimum_delta": 0.0,
+            "domain_size": 4
+          }
+        ],
+        "seconds": 36.639807694009505
+      },
+      "delta_vs_public_greedy": 21.808318604651163,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "powerlaw_cluster",
+      "repetition": 502,
+      "seed_sha256": "77464e2dc79f5846eda253b9061adc5c9b5d268ae3b56dba117a24b520c56c75",
+      "variant": "depth2",
+      "public_greedy": {
+        "score": 917.3541221393444,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 914.5688324098364,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 120,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 52,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 35,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 22,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 35,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "p7_budget_structure",
+            "mean_delta": 5.53163109371003,
+            "minimum_delta": 3.4002192053930003,
+            "paired_deltas": [
+              4.997621898940338,
+              3.4002192053930003,
+              4.3240209937891905,
+              9.373843126666088,
+              5.562450243761532
+            ],
+            "audit_mean_delta": 0.0,
+            "audit_minimum_delta": 0.0,
+            "audit_paired_deltas": [],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 22,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 35,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "a741dcea7809531e21da10d09063bb424b6a146966b0a56931b01e158c60ae94",
+        "seconds": 21.541342516080476
+      },
+      "candidate": {
+        "score": 914.5688324098364,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 120,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 52,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 35,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 22,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "depth2_budget_structure",
+            "mean_delta": 5.53163109371003,
+            "minimum_delta": 3.4002192053930003,
+            "domain_size": 2
+          }
+        ],
+        "seconds": 28.213802025071345
+      },
+      "delta_vs_public_greedy": -2.7852897295080083,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "powerlaw_cluster",
+      "repetition": 502,
+      "seed_sha256": "77464e2dc79f5846eda253b9061adc5c9b5d268ae3b56dba117a24b520c56c75",
+      "variant": "portfolio",
+      "public_greedy": {
+        "score": 917.3541221393444,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 914.5688324098364,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 120,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 52,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 35,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 22,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 35,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "p7_budget_structure",
+            "mean_delta": 5.53163109371003,
+            "minimum_delta": 3.4002192053930003,
+            "paired_deltas": [
+              4.997621898940338,
+              3.4002192053930003,
+              4.3240209937891905,
+              9.373843126666088,
+              5.562450243761532
+            ],
+            "audit_mean_delta": 0.0,
+            "audit_minimum_delta": 0.0,
+            "audit_paired_deltas": [],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 22,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 35,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "a741dcea7809531e21da10d09063bb424b6a146966b0a56931b01e158c60ae94",
+        "seconds": 21.541342516080476
+      },
+      "candidate": {
+        "score": 914.5688324098364,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 470,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 52,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 35,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 22,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "depth2_budget_structure",
+            "mean_delta": 5.53163109371003,
+            "minimum_delta": 3.4002192053930003,
+            "domain_size": 4
+          }
+        ],
+        "seconds": 65.075049869949
+      },
+      "delta_vs_public_greedy": -2.7852897295080083,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "powerlaw_cluster",
+      "repetition": 503,
+      "seed_sha256": "bb9b37c7d32cfd341ebc77d6a7f38ef153d5b5ba1f9648a71c2f90b8c0b07858",
+      "variant": "depth2",
+      "public_greedy": {
+        "score": 949.3590158634183,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 949.3590158634183,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 162,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "c87097b99cb3d24142941a8d4e73aced6bde92db6fcdb033af909e470a57709d",
+        "seconds": 21.419057736056857
+      },
+      "candidate": {
+        "score": 949.3590158634183,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 162,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 23.38723576790653
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "powerlaw_cluster",
+      "repetition": 503,
+      "seed_sha256": "bb9b37c7d32cfd341ebc77d6a7f38ef153d5b5ba1f9648a71c2f90b8c0b07858",
+      "variant": "portfolio",
+      "public_greedy": {
+        "score": 949.3590158634183,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 949.3590158634183,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 162,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "c87097b99cb3d24142941a8d4e73aced6bde92db6fcdb033af909e470a57709d",
+        "seconds": 21.419057736056857
+      },
+      "candidate": {
+        "score": 949.3590158634183,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 455,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 55.31314520398155
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "watts_strogatz_mixed",
+      "repetition": 502,
+      "seed_sha256": "aa42bf2301314f71fe94611944414d6e1b40c1ba35058d7fb9a8b3aa4226bca0",
+      "variant": "depth2",
+      "public_greedy": {
+        "score": 608.7115195080833,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 608.7115195080833,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 32,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "9df7a7ba9c4d4d00618ad23b4e4dc67924c3f2c4935b926c40258053633c9e7c",
+        "seconds": 11.92592210508883
+      },
+      "candidate": {
+        "score": 608.7115195080833,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 32,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 17.6324707060121
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "watts_strogatz_mixed",
+      "repetition": 502,
+      "seed_sha256": "aa42bf2301314f71fe94611944414d6e1b40c1ba35058d7fb9a8b3aa4226bca0",
+      "variant": "portfolio",
+      "public_greedy": {
+        "score": 608.7115195080833,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 608.7115195080833,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 32,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "9df7a7ba9c4d4d00618ad23b4e4dc67924c3f2c4935b926c40258053633c9e7c",
+        "seconds": 11.92592210508883
+      },
+      "candidate": {
+        "score": 608.7115195080833,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 519,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 126.79345209803432
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "watts_strogatz_mixed",
+      "repetition": 503,
+      "seed_sha256": "33be943aba089870f8be2cca81b51d55989a6417f82c642e25ace7167a4eb2c7",
+      "variant": "depth2",
+      "public_greedy": {
+        "score": 569.4465113045973,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 569.4465113045973,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 81,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "44a3e8500809ecce1aa48c167b4f6316c7cdaeb6d636c9e8f90fdfdf605755df",
+        "seconds": 21.64042885089293
+      },
+      "candidate": {
+        "score": 569.4465113045973,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 81,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 26.614929593983106
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "watts_strogatz_mixed",
+      "repetition": 503,
+      "seed_sha256": "33be943aba089870f8be2cca81b51d55989a6417f82c642e25ace7167a4eb2c7",
+      "variant": "portfolio",
+      "public_greedy": {
+        "score": 569.4465113045973,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 569.4465113045973,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 81,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "44a3e8500809ecce1aa48c167b4f6316c7cdaeb6d636c9e8f90fdfdf605755df",
+        "seconds": 21.64042885089293
+      },
+      "candidate": {
+        "score": 569.4465113045973,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 495,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 118.23079881002195
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "random_regular_mixed",
+      "repetition": 502,
+      "seed_sha256": "6fb100d8a67d4c8f02ba2040240dceaef35ac0319446963e6cc89bcbf519a5d7",
+      "variant": "depth2",
+      "public_greedy": {
+        "score": 560.611111,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 554.8137988713693,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 160,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 66,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 24,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "p7_budget_structure",
+            "mean_delta": 7.787390381742694,
+            "minimum_delta": 6.849367273581038,
+            "paired_deltas": [
+              7.787390381742625,
+              6.849367273581038,
+              8.72541348990444,
+              7.432436943067728,
+              8.142343820417636
+            ],
+            "audit_mean_delta": 0.0,
+            "audit_minimum_delta": 0.0,
+            "audit_paired_deltas": [],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 24,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 50,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "d15e0ebfa37cf9613a9027896fd787512e15976fac4ac5d0ee48c75a56b4ff9f",
+        "seconds": 25.54860808304511
+      },
+      "candidate": {
+        "score": 554.8137988713693,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 160,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 66,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 24,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "depth2_budget_structure",
+            "mean_delta": 7.787390381742694,
+            "minimum_delta": 6.849367273581038,
+            "domain_size": 2
+          }
+        ],
+        "seconds": 24.880061737028882
+      },
+      "delta_vs_public_greedy": -5.797312128630779,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "random_regular_mixed",
+      "repetition": 502,
+      "seed_sha256": "6fb100d8a67d4c8f02ba2040240dceaef35ac0319446963e6cc89bcbf519a5d7",
+      "variant": "portfolio",
+      "public_greedy": {
+        "score": 560.611111,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 554.8137988713693,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 160,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 66,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 24,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "p7_budget_structure",
+            "mean_delta": 7.787390381742694,
+            "minimum_delta": 6.849367273581038,
+            "paired_deltas": [
+              7.787390381742625,
+              6.849367273581038,
+              8.72541348990444,
+              7.432436943067728,
+              8.142343820417636
+            ],
+            "audit_mean_delta": 0.0,
+            "audit_minimum_delta": 0.0,
+            "audit_paired_deltas": [],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 24,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 50,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "d15e0ebfa37cf9613a9027896fd787512e15976fac4ac5d0ee48c75a56b4ff9f",
+        "seconds": 25.54860808304511
+      },
+      "candidate": {
+        "score": 554.8137988713693,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 455,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 66,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 24,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "depth2_budget_structure",
+            "mean_delta": 7.787390381742694,
+            "minimum_delta": 6.849367273581038,
+            "domain_size": 4
+          }
+        ],
+        "seconds": 34.595559732057154
+      },
+      "delta_vs_public_greedy": -5.797312128630779,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "random_regular_mixed",
+      "repetition": 503,
+      "seed_sha256": "a1242993408d3282ecd9614deb2b1742ffccb53f7cd24f8b6859493d8fc58918",
+      "variant": "depth2",
+      "public_greedy": {
+        "score": 679.5807140000001,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 679.5807140000001,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 190,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "8ad8d89ff26628671df3b75b55a15eaf3a602e72bbffbb85ec1b952e76793b0e",
+        "seconds": 17.203841709066182
+      },
+      "candidate": {
+        "score": 679.5807140000001,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 190,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 13.838702220004052
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    },
+    {
+      "family": "random_regular_mixed",
+      "repetition": 503,
+      "seed_sha256": "a1242993408d3282ecd9614deb2b1742ffccb53f7cd24f8b6859493d8fc58918",
+      "variant": "portfolio",
+      "public_greedy": {
+        "score": 679.5807140000001,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "p8": {
+        "score": 679.5807140000001,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 190,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "8ad8d89ff26628671df3b75b55a15eaf3a602e72bbffbb85ec1b952e76793b0e",
+        "seconds": 17.203841709066182
+      },
+      "candidate": {
+        "score": 679.5807140000001,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 455,
+        "deviation_count": 0,
+        "deviations": [],
+        "seconds": 19.13281228300184
+      },
+      "delta_vs_public_greedy": 0.0,
+      "delta_vs_p8": 0.0
+    }
+  ],
+  "production_enabled": false
+}
