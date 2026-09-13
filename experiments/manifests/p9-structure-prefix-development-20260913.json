@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "experiment": "p9-structure-prefix-development-20260913",
+  "status": "preregistered",
+  "purpose": "Test whether a depth-two budget plan has value that requires executing both leading structural actions before returning to public greedy.",
+  "families": [
+    "ba_negative_hubs",
+    "sbm_violent_cluster",
+    "double_bridge_communities",
+    "bipartite"
+  ],
+  "repetitions": [501],
+  "arms": [
+    "p8_conservative",
+    "depth2_first_action_with_5_selection_8_audit",
+    "depth2_full_structure_prefix_with_5_selection_8_audit"
+  ],
+  "candidate_rule": "Use the consecutive cut/shield prefix from budget_plan depth=2 width=4; a collaborative opportunity requires at least two actions.",
+  "rollout_rule": "Apply the candidate prefix on PredictiveState, validate each predicted action against its projected public state, then continue public greedy.",
+  "response_rule": "Use P8 public salt and scenarios 0-4 for selection plus 5-12 for an independent audit; both means must be positive and both minima nonnegative.",
+  "execution_rule": "The first arm executes only the first structural action; the full arm validates returned public state and executes the complete accepted structural prefix before replanning.",
+  "safety": "Predictions remain in PredictiveState and never enter Blackboard; every real action is revalidated and Blackboard changes only from returned environment outcomes.",
+  "stop_rule": "Stop this arm without broader search if there are no length-two structural opportunities, all second actions repeat/collapse prior actions, or full-prefix execution has no attributable advantage over first-only execution on this diagnostic cohort.",
+  "promotion_allowed": false
+}
