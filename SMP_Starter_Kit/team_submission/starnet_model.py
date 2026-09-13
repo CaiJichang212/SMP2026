@@ -2737,7 +2737,9 @@ class ExperimentalPublicGreedyPlanner:
         observed_response_count: int = 0,
     ) -> list[Candidate]:
         state = PredictiveState.from_blackboard(board)
-        baseline = self.predictor.score(state)
+        prepare = getattr(self.predictor, "prepare", None)
+        prepared = prepare(state) if prepare is not None else None
+        baseline = prepared.score() if prepared is not None else self.predictor.score(state)
         structure_enabled = not self.conservative_structure or (
             observed_response_count >= self.min_observed_responses
             and not public_positive_graph_gate_closed(board)
@@ -2785,7 +2787,6 @@ class ExperimentalPublicGreedyPlanner:
                 or (self.conservative_structure and not _public_structure_direction_allowed(board, action))
             ):
                 continue
-            after = self.predictor.score(state.apply(action, delta))
             # Keep communication scores bit-for-bit on the same closed-form
             # path as B1.  The predictor difference is mathematically equal,
             # but tiny operation-order differences can otherwise reorder tied
@@ -2793,7 +2794,8 @@ class ExperimentalPublicGreedyPlanner:
             gain = (
                 public_influence.get(action.target_node_1, 0.0) * float(delta)
                 if action.kind == "comm"
-                else after - baseline
+                else (prepared.score_after(action) if prepared is not None
+                      else self.predictor.score(state.apply(action, delta))) - baseline
             )
             if not math.isfinite(gain) or gain <= 0.0:
                 continue
@@ -2855,6 +2857,679 @@ __all__ = [
 ]
 
 # End inline: src/starnet/policy/structural.py
+
+# Begin inline: src/starnet/policy/budget_experiment.py
+"""Offline-only budget-complete structural search on copied public state."""
+
+
+from dataclasses import dataclass
+import heapq
+import math
+from typing import Any, Callable
+
+import networkx as nx
+
+
+ResponseFn = Callable[[int, Any, int], float]
+
+
+@dataclass(frozen=True)
+class BudgetPlan:
+    score: float
+    actions: tuple[Action, ...]
+
+
+def _connected_structure_score(
+    state: PredictiveState, action: Action, graph: nx.Graph,
+    responses: dict[tuple[int, int], float], budget: float, steps: int,
+) -> float:
+    """Fast linear score when a certified non-bridge/non-articulation changes."""
+    removed = action.target_node_1 if action.kind == "shield" else None
+    affected = set(graph[removed]) if removed is not None else {action.target_node_1, action.target_node_2}
+    degrees = {node_id: graph.degree[node_id] + 1 - int(node_id in affected)
+               for node_id in state.nodes if node_id != removed}
+    if not degrees:
+        return 0.0
+    factor = len(degrees) / sum(degrees.values())
+    score = sum(factor * degree * state.nodes[node_id].w for node_id, degree in degrees.items())
+    gains = [factor * degree * responses[node_id, turn]
+             for node_id, degree in degrees.items() if state.nodes[node_id].comm_left
+             for turn in range(4 - state.nodes[node_id].comm_left, 4)]
+    for gain in heapq.nlargest(min(int(budget // 2), steps), gains):
+        if gain > 0:
+            score += gain
+    return score
+
+
+def communication_tail(
+    state: PredictiveState, budget: float, response_fn: ResponseFn, remaining_steps: int,
+    *, include_actions: bool = True,
+) -> BudgetPlan:
+    """Exact equal-cost allocation for nonnegative diminishing responses.
+
+    Under the experimental degree-plus-one consensus model, a fixed
+    topology's score is linear. A heap preserves each node's slot precedence.
+    """
+    adjacency = {node_id: set() for node_id in state.nodes}
+    for left, right in state.edges:
+        if left in adjacency and right in adjacency:
+            adjacency[left].add(right)
+            adjacency[right].add(left)
+    coefficients: dict[int, float] = {}
+    unseen = set(state.nodes)
+    while unseen:
+        start = min(unseen)
+        unseen.remove(start)
+        component = [start]
+        for node_id in component:
+            for neighbor in sorted(adjacency[node_id]):
+                if neighbor in unseen:
+                    unseen.remove(neighbor)
+                    component.append(neighbor)
+        factor = len(component) / sum(len(adjacency[node_id]) + 1 for node_id in component)
+        coefficients.update({node_id: factor * (len(adjacency[node_id]) + 1) for node_id in component})
+    score = sum(coefficients[node_id] * node.w for node_id, node in state.nodes.items())
+    heap: list[tuple[float, str, int, int]] = []
+    gains: dict[tuple[int, int], float] = {}
+    for node_id, node in sorted(state.nodes.items()):
+        if not node.comm_left:
+            continue
+        previous = math.inf
+        for turn in range(4 - node.comm_left, 4):
+            delta = float(response_fn(node_id, node, turn))
+            if not math.isfinite(delta) or delta < 0 or delta > previous + 1e-9:
+                raise ValueError("response must be finite, nonnegative and diminishing")
+            previous = delta
+            gains[node_id, turn] = coefficients[node_id] * delta
+        turn = 4 - node.comm_left
+        heapq.heappush(heap, (-gains[node_id, turn], f"comm:{node_id}:{turn}", node_id, turn))
+    slots = min(max(0, int(budget // 2)), max(0, remaining_steps))
+    if not include_actions:
+        for gain in heapq.nlargest(slots, gains.values()):
+            if gain > 0:
+                score += gain
+        return BudgetPlan(score, ())
+    actions: list[Action] = []
+    for _ in range(slots):
+        if not heap or heap[0][0] >= 0:
+            break
+        negative_gain, _, node_id, turn = heapq.heappop(heap)
+        score -= negative_gain
+        actions.append(Action("comm", node_id, prompt_id=1))
+        if turn < 3:
+            heapq.heappush(heap, (-gains[node_id, turn + 1], f"comm:{node_id}:{turn + 1}", node_id, turn + 1))
+    return BudgetPlan(score, tuple(actions))
+
+
+def budget_plan(
+    board: Blackboard, budget: float, response_fn: ResponseFn, *,
+    remaining_steps: int, depth: int = 2, width: int = 4,
+) -> BudgetPlan:
+    """Compare complete allocations, retaining the public structure gate.
+
+    This module has no production configuration flag. Calibration and scenario
+    promotion are required before a runtime may expose its plans to an LLM.
+    """
+    if depth < 0 or width <= 0 or remaining_steps < 0 or not math.isfinite(budget) or budget < 0:
+        raise ValueError("invalid planning limits")
+    initial = PredictiveState.from_blackboard(board)
+    # Structure changes neither a survivor's opinion nor its response slots.
+    responses = {(node_id, turn): response_fn(node_id, node, turn)
+                 for node_id, node in initial.nodes.items() if node.comm_left
+                 for turn in range(4 - node.comm_left, 4)}
+    fixed_response = lambda node_id, _node, turn: responses[node_id, turn]
+    best = communication_tail(initial, budget, fixed_response, remaining_steps)
+    hypotheses = [Action("shield", node_id) for node_id in sorted(initial.nodes)]
+    hypotheses += [Action("cut", left, target_node_2=right) for left, right in sorted(initial.edges)]
+    # The gate sees only returned facts, never a Blackboard with predictions.
+    hypotheses = [action for action in hypotheses if is_legal_action(action, board, budget)
+                  and public_structure_risk_allowed(board, action, 1.0)]
+    beam = [(initial, (), budget)]
+    for _ in range(min(depth, remaining_steps)):
+        ranked = []
+        visited = set()
+        for state, prefix, available in beam:
+            graph = nx.Graph()
+            graph.add_nodes_from(state.nodes)
+            graph.add_edges_from(state.edges)
+            connected = bool(state.nodes) and nx.is_connected(graph)
+            articulations = set(nx.articulation_points(graph)) if connected else set()
+            bridges = {tuple(sorted(edge)) for edge in nx.bridges(graph)} if connected else set()
+            for action in hypotheses:
+                cost = action_cost(action)
+                if cost > available or action.target_node_1 not in state.nodes:
+                    continue
+                if action.kind == "cut" and tuple(sorted((action.target_node_1, action.target_node_2))) not in state.edges:
+                    continue
+                # Canonical topology changes also collapse cuts subsequently
+                # erased by a shield, just like a full copied-state key.
+                sequence = prefix + (action,)
+                removed = frozenset(item.target_node_1 for item in sequence if item.kind == "shield")
+                cuts = frozenset(tuple(sorted((item.target_node_1, item.target_node_2)))
+                                 for item in sequence if item.kind == "cut"
+                                 and item.target_node_1 not in removed and item.target_node_2 not in removed)
+                key = (removed, cuts)
+                # Equal topology with different costs must remain distinct.
+                visit_key = (key, available - cost)
+                if visit_key in visited:
+                    continue
+                visited.add(visit_key)
+                fast = connected and (
+                    action.kind == "shield" and action.target_node_1 not in articulations
+                    or action.kind == "cut" and tuple(sorted((action.target_node_1, action.target_node_2))) not in bridges
+                )
+                changed = None
+                if fast:
+                    score = _connected_structure_score(state, action, graph, responses, available - cost, remaining_steps - len(sequence))
+                else:
+                    changed = state.apply(action)
+                    score = communication_tail(changed, available - cost, fixed_response, remaining_steps - len(sequence), include_actions=False).score
+                if score > best.score + 1e-9:
+                    changed = changed or state.apply(action)
+                    selected = communication_tail(changed, available - cost, fixed_response, remaining_steps - len(sequence))
+                    best = BudgetPlan(selected.score, sequence + selected.actions)
+                ranked.append((score, len(ranked), state, sequence, available - cost))
+        ranked.sort(key=lambda row: (-row[0], row[1]))
+        beam = [(row[2].apply(row[3][-1]), row[3], row[4]) for row in ranked[:width]]
+        if not beam:
+            break
+    return best
+
+# End inline: src/starnet/policy/budget_experiment.py
+
+# Begin inline: src/starnet/policy/fast_settlement_experiment.py
+"""Experiment-only topology cache for exact component settlement scores."""
+
+
+from collections import OrderedDict
+from dataclasses import dataclass
+from typing import TypeAlias
+
+
+
+TopologyKey: TypeAlias = tuple[tuple[int, ...], frozenset[tuple[int, int]]]
+
+
+@dataclass(frozen=True)
+class _Component:
+    nodes: tuple[int, ...]
+    factors: tuple[int, ...]
+    denominator: int
+
+    @property
+    def size(self) -> int:
+        return len(self.nodes)
+
+
+class FastComponentSettlement:
+    """Cache topology terms while recomputing every opinion contribution."""
+
+    def __init__(self, max_topologies: int = 128) -> None:
+        if isinstance(max_topologies, bool) or max_topologies <= 0:
+            raise ValueError("max_topologies must be positive")
+        self.max_topologies = max_topologies
+        self._cache: OrderedDict[TopologyKey, tuple[_Component, ...]] = OrderedDict()
+        # Cache only topology coefficients, never opinions or live boards.
+        # A small parent-graph cap bounds the additional action-coefficient table.
+        self._action_cache: OrderedDict[TopologyKey, dict[Action, tuple[_Component, ...]]] = OrderedDict()
+        self.max_action_topologies = 16
+        self.hits = 0
+        self.misses = 0
+
+    @staticmethod
+    def topology_key(state: PredictiveState) -> TopologyKey:
+        nodes = tuple(sorted(state.nodes))
+        node_set = set(nodes)
+        edges = frozenset(
+            (left, right)
+            for left, right in state.edges
+            if left in node_set and right in node_set
+        )
+        return nodes, edges
+
+    @staticmethod
+    def _compile(key: TopologyKey) -> tuple[_Component, ...]:
+        nodes, edges = key
+        parent = {node: node for node in nodes}
+        degree = {node: 0 for node in nodes}
+
+        def find(node: int) -> int:
+            root = node
+            while parent[root] != root:
+                root = parent[root]
+            while parent[node] != node:
+                next_node = parent[node]
+                parent[node] = root
+                node = next_node
+            return root
+
+        def union(left: int, right: int) -> None:
+            left_root, right_root = find(left), find(right)
+            if left_root != right_root:
+                parent[right_root] = left_root
+
+        for left, right in edges:
+            degree[left] += 1
+            degree[right] += 1
+            union(left, right)
+        groups: dict[int, list[int]] = {}
+        for node in nodes:
+            groups.setdefault(find(node), []).append(node)
+        ordered = sorted((tuple(group) for group in groups.values()), key=lambda group: group[0])
+        return tuple(
+            _Component(
+                component,
+                tuple(degree[node] + 1 for node in component),
+                sum(degree[node] + 1 for node in component),
+            )
+            for component in ordered
+        )
+
+    def _components(self, key: TopologyKey) -> tuple[_Component, ...]:
+        components = self._cache.get(key)
+        if components is None:
+            self.misses += 1
+            components = self._compile(key)
+            self._cache[key] = components
+            if len(self._cache) > self.max_topologies:
+                self._cache.popitem(last=False)
+        else:
+            self.hits += 1
+            self._cache.move_to_end(key)
+
+        return components
+
+    @staticmethod
+    def _weighted_score(components, nodes) -> float:
+        def component_score(component: _Component) -> float:
+            weighted = 0.0
+            for node, factor in zip(component.nodes, component.factors):
+                weighted += factor * float(nodes[node].w)
+            return component.size * weighted / component.denominator
+
+        return sum(component_score(component) for component in components)
+
+    def score(self, state: PredictiveState) -> float:
+        if not state.nodes:
+            return 0.0
+        return self._weighted_score(self._components(self.topology_key(state)), state.nodes)
+
+    def prepare(self, state: PredictiveState):
+        """Reuse one topology key for a complete candidate-generation call."""
+        key = self.topology_key(state)
+        components = self._components(key)
+        table = self._action_cache.get(key)
+        if table is None:
+            table = {}
+            self._action_cache[key] = table
+            if len(self._action_cache) > self.max_action_topologies:
+                self._action_cache.popitem(last=False)
+        else:
+            self._action_cache.move_to_end(key)
+        return _PreparedSettlement(self, state.nodes, key, components, table)
+
+    @property
+    def cache_size(self) -> int:
+        return len(self._cache)
+
+
+class _PreparedSettlement:
+    """Ephemeral opinion view; only topology-derived tables enter the cache."""
+
+    def __init__(self, predictor, nodes, key, components, table):
+        self.predictor = predictor
+        self.nodes = nodes
+        self.key = key
+        self.components = components
+        self.table = table
+
+    def score(self):
+        return self.predictor._weighted_score(self.components, self.nodes)
+
+    def score_after(self, action: Action):
+        if action not in self.table:
+            nodes, edges = self.key
+            if action.kind == "shield" and action.target_node_1 in self.nodes:
+                changed_nodes = tuple(node for node in nodes if node != action.target_node_1)
+                changed_edges = frozenset(edge for edge in edges if action.target_node_1 not in edge)
+            elif action.kind == "cut" and action.target_node_2 is not None:
+                edge = tuple(sorted((action.target_node_1, action.target_node_2)))
+                changed_nodes, changed_edges = nodes, edges.difference({edge})
+            else:
+                raise ValueError("prepared score requires a valid structural action")
+            self.table[action] = self.predictor._compile((changed_nodes, changed_edges))
+        return self.predictor._weighted_score(self.table[action], self.nodes)
+
+
+__all__ = ["FastComponentSettlement", "TopologyKey"]
+
+# End inline: src/starnet/policy/fast_settlement_experiment.py
+
+# Begin inline: src/starnet/policy/p8_experiment.py
+"""P8 bounded public-state value-of-information rollout experiment.
+
+The unobserved response assumption is explicitly ``r ~ Uniform(0.2, 1.5)``.
+All counterfactual state stays in :class:`PredictiveState` and a dedicated
+read-only projection; it is never written to the factual Blackboard.
+"""
+
+
+from dataclasses import dataclass
+import hashlib
+import json
+import math
+import random
+from types import MappingProxyType
+from typing import Literal, Mapping, MutableMapping
+
+
+
+P8Mode = Literal["expected", "conservative", "audited"]
+EvaluationCache = MutableMapping[tuple[object, ...], float]
+_FAST_SETTLEMENT = FastComponentSettlement(max_topologies=128)
+
+
+@dataclass(frozen=True)
+class _ProjectedNode:
+    w: float
+    persona: str
+    comm_left: int | None
+
+
+@dataclass(frozen=True)
+class _ProjectedBoard:
+    nodes: Mapping[int, _ProjectedNode]
+    edges: frozenset[tuple[int, int]]
+    dead_nodes: frozenset[int]
+    node_count: int
+
+    @classmethod
+    def from_state(cls, state: PredictiveState, node_count: int) -> "_ProjectedBoard":
+        nodes = MappingProxyType({
+            node_id: _ProjectedNode(node.w, node.persona, node.comm_left)
+            for node_id, node in state.nodes.items()
+        })
+        return cls(nodes, frozenset(state.edges), frozenset(state.dead_nodes), node_count)
+
+    @property
+    def scanned_ids(self) -> frozenset[int]:
+        return frozenset(self.nodes) | self.dead_nodes
+
+    @property
+    def shielded_ids(self) -> frozenset[int]:
+        return self.dead_nodes
+
+
+@dataclass(frozen=True)
+class P8Decision:
+    action: Action | None
+    baseline_action: Action | None
+    source: str
+    compared_actions: tuple[Action, ...]
+    paired_deltas: tuple[float, ...]
+    mean_delta: float
+    minimum_delta: float
+    rollouts: int
+    proposed_action: Action | None = None
+    audit_paired_deltas: tuple[float, ...] = ()
+    audit_mean_delta: float = 0.0
+    audit_minimum_delta: float = 0.0
+
+    @property
+    def deviated(self) -> bool:
+        return self.action is not None and self.action != self.baseline_action
+
+
+def _action_key(action: Action) -> tuple[object, ...]:
+    return (action.kind, action.target_node_1, action.target_node_2, action.prompt_id)
+
+
+def _public_state_payload(board: Blackboard | _ProjectedBoard) -> dict[str, object]:
+    return {
+        "node_count": board.node_count,
+        "nodes": [[node_id, node.w, node.persona, node.comm_left]
+                  for node_id, node in sorted(board.nodes.items())],
+        "edges": [list(edge) for edge in sorted(board.edges)],
+        "dead_nodes": sorted(board.dead_nodes),
+    }
+
+
+def public_board_salt(board: Blackboard) -> str:
+    """Hash a complete initial public board without events or private data."""
+    if board.node_count is None or len(board.scanned_ids) != board.node_count:
+        raise ValueError("P8 salt requires a completely scanned public board")
+    payload = json.dumps(_public_state_payload(board), ensure_ascii=False,
+                         sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def _state_digest(board: Blackboard | _ProjectedBoard) -> str:
+    payload = json.dumps(_public_state_payload(board), ensure_ascii=False,
+                         sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def _response_fn(board: Blackboard | _ProjectedBoard, observed: Mapping[int, float]):
+    estimate = _response if public_positive_graph_gate_closed(board) else public_response
+    return lambda node_id, node, turn: estimate(
+        node_id, node.persona, turn, observed, DEFAULT_CALIBRATION_PROFILE,
+    )
+
+
+def _greedy_candidates(board: Blackboard | _ProjectedBoard, budget: float,
+                       observed: Mapping[int, float], *, fast: bool = True):
+    planner = ExperimentalPublicGreedyPlanner(
+        _response_fn(board, observed),
+        candidate_limit=len(board.edges) + 2 * len(board.nodes) + 1,
+        min_observed_responses=0,
+        structure_roi_margin=1.0,
+    )
+    if fast:
+        planner.predictor = _FAST_SETTLEMENT
+    return planner.candidates(board, budget, observed_response_count=len(observed))
+
+
+def _scenario_factor(salt: str, node_id: int, scenario: int) -> float:
+    """Return mean plus six fixed antithetic Uniform(0.2, 1.5) pairs."""
+    if scenario == 0:
+        return 0.85
+    if scenario not in range(1, 13):
+        raise ValueError("P8 scenario must be in 0..12")
+    pair = (scenario - 1) // 2
+    digest = hashlib.sha256(f"{salt}:{node_id}:{pair}".encode("ascii")).digest()
+    base = random.Random(int.from_bytes(digest[:8], "big")).uniform(0.2, 1.5)
+    return base if scenario % 2 else 1.7 - base
+
+
+def _rollout(
+    board: Blackboard, budget: float, observed: Mapping[int, float], first_action: Action,
+    remaining_steps: int, *, scenario: int, salt: str,
+) -> float:
+    if remaining_steps < 0 or not math.isfinite(budget) or budget < 0:
+        raise ValueError("invalid P8 rollout resources")
+    state = PredictiveState.from_blackboard(board)
+    visible = dict(observed)
+    pending: Action | None = first_action
+    for _ in range(remaining_steps):
+        projected = _ProjectedBoard.from_state(state, board.node_count or len(board.nodes))
+        if pending is None:
+            candidates = _greedy_candidates(projected, budget, visible)
+            if not candidates:
+                break
+            action = candidates[0].action
+        else:
+            action, pending = pending, None
+        if not is_legal_action(action, projected, budget):
+            raise ValueError("illegal P8 rollout action")
+        delta = None
+        if action.kind == "comm":
+            node = state.nodes[action.target_node_1]
+            if node.comm_left is None:
+                raise ValueError("missing public communication count")
+            turn = 4 - node.comm_left
+            first = visible.get(action.target_node_1)
+            if first is None:
+                first = 15.0 * _scenario_factor(salt, action.target_node_1, scenario)
+                # The simulated policy learns this response only now, after
+                # the successful hypothetical action on its own path.
+                visible[action.target_node_1] = first
+            delta = first * (0.5 ** (turn - 1))
+        state = state.apply(action, delta)
+        budget -= action_cost(action)
+    score = float(_FAST_SETTLEMENT.score(state))
+    if not math.isfinite(score):
+        raise ValueError("nonfinite P8 rollout score")
+    return score
+
+
+def _candidate_domain(
+    board: Blackboard, budget: float, observed: Mapping[int, float], remaining_steps: int,
+) -> tuple[tuple[Action, str], ...]:
+    ranked = _greedy_candidates(board, budget, observed)
+    if not ranked:
+        return ()
+    candidates: list[tuple[Action, str]] = [(ranked[0].action, "public_greedy")]
+    plan = budget_plan(board, budget, _response_fn(board, observed),
+                       remaining_steps=remaining_steps, depth=1, width=2)
+    if plan.actions and plan.actions[0].kind in {"cut", "shield"}:
+        candidates.append((plan.actions[0], "p7_budget_structure"))
+    structures = [item for item in ranked if item.action.kind in {"cut", "shield"}]
+    if structures:
+        best = min(structures, key=lambda item: (-item.score, item.candidate_id))
+        candidates.append((best.action, "immediate_structure_gain"))
+    untried = [item for item in ranked if item.action.kind == "comm"
+               and item.action.target_node_1 not in observed]
+    if untried:
+        best = min(untried, key=lambda item: (-item.roi, -item.score, item.candidate_id))
+        candidates.append((best.action, "untried_comm_roi"))
+    unique: list[tuple[Action, str]] = []
+    seen: set[Action] = set()
+    for action, source in candidates:
+        if action not in seen:
+            seen.add(action)
+            unique.append((action, source))
+    return tuple(unique[:4])
+
+
+def choose_p8_action(
+    board: Blackboard, budget: float, observed: Mapping[int, float], *,
+    remaining_steps: int, salt: str, mode: P8Mode,
+    evaluation_cache: EvaluationCache | None = None,
+) -> P8Decision:
+    """Run a fixed mean screen, then five paired scenarios for one winner.
+
+    This sequential screen is a bounded decision rule, not an unbiased
+    estimate or a confidence interval.
+    """
+    if mode not in ("expected", "conservative", "audited"):
+        raise ValueError("unknown P8 mode")
+    if remaining_steps < 0 or not math.isfinite(budget) or budget < 0 or len(salt) != 64:
+        raise ValueError("invalid P8 decision inputs")
+    if any(not math.isfinite(float(value)) for value in observed.values()):
+        raise ValueError("nonfinite public response")
+    if remaining_steps == 0:
+        return P8Decision(None, None, "none", (), (), 0.0, 0.0, 0)
+    domain = _candidate_domain(board, budget, observed, remaining_steps)
+    if not domain:
+        return P8Decision(None, None, "none", (), (), 0.0, 0.0, 0)
+    baseline = domain[0][0]
+    if len(domain) == 1:
+        return P8Decision(baseline, baseline, "public_greedy", (baseline,), (), 0.0, 0.0, 0)
+    cache = evaluation_cache if evaluation_cache is not None else {}
+    digest = _state_digest(board)
+    observed_key = tuple(sorted((node, float(value)) for node, value in observed.items()))
+    rollouts = 0
+
+    def score(action: Action, scenario: int) -> float:
+        nonlocal rollouts
+        key = (digest, float(budget), remaining_steps, observed_key, salt,
+               _action_key(action), scenario)
+        if key not in cache:
+            cache[key] = _rollout(board, budget, observed, action, remaining_steps,
+                                  scenario=scenario, salt=salt)
+            rollouts += 1
+        value = float(cache[key])
+        if not math.isfinite(value):
+            raise ValueError("nonfinite cached P8 score")
+        return value
+
+    baseline_mean = score(baseline, 0)
+    screened_structures: list[tuple[float, tuple[object, ...], Action, str]] = []
+    untried_comm: tuple[Action, str] | None = None
+    for action, source in domain[1:]:
+        delta = score(action, 0) - baseline_mean
+        if source == "untried_comm_roi":
+            # A constant mean response deliberately removes the value of
+            # learning. Preserve this candidate for the heterogeneous paired
+            # scenarios even when its mean-only screen is neutral.
+            untried_comm = (action, source)
+        elif action.kind in {"cut", "shield"} and delta > 1e-9:
+            screened_structures.append((-delta, _action_key(action), action, source))
+    finalists: list[tuple[Action, str]] = []
+    if screened_structures:
+        _, _, action, source = min(screened_structures)
+        finalists.append((action, source))
+    if untried_comm is not None and untried_comm[0] not in {item[0] for item in finalists}:
+        finalists.append(untried_comm)
+    if not finalists:
+        return P8Decision(baseline, baseline, "public_greedy",
+                          tuple(action for action, _ in domain), (), 0.0, 0.0, rollouts)
+    accepted: list[tuple[float, tuple[object, ...], Action, str,
+                         tuple[float, ...], float, float]] = []
+    for candidate, source in finalists:
+        deltas = tuple(score(candidate, scenario) - score(baseline, scenario)
+                       for scenario in range(5))
+        mean_delta = sum(deltas) / len(deltas)
+        minimum = min(deltas)
+        if mean_delta > 1e-9 and (mode == "expected" or minimum >= -1e-9):
+            accepted.append((-mean_delta, _action_key(candidate), candidate, source,
+                             deltas, mean_delta, minimum))
+    if not accepted:
+        return P8Decision(baseline, baseline, "public_greedy",
+                          tuple(action for action, _ in domain), (), 0.0, 0.0, rollouts)
+    _, _, winner, source, deltas, mean_delta, minimum = min(accepted)
+    compared = tuple(action for action, _ in domain)
+    if mode != "audited":
+        return P8Decision(winner, baseline, source, compared, deltas,
+                          mean_delta, minimum, rollouts, proposed_action=winner)
+    audit_deltas = tuple(score(winner, scenario) - score(baseline, scenario)
+                         for scenario in range(5, 13))
+    audit_mean = sum(audit_deltas) / len(audit_deltas)
+    audit_minimum = min(audit_deltas)
+    audit_passed = audit_mean > 1e-9 and audit_minimum >= -1e-9
+    return P8Decision(
+        winner if audit_passed else baseline, baseline,
+        source if audit_passed else "public_greedy", compared,
+        deltas, mean_delta, minimum, rollouts, proposed_action=winner,
+        audit_paired_deltas=audit_deltas, audit_mean_delta=audit_mean,
+        audit_minimum_delta=audit_minimum,
+    )
+
+
+__all__ = ["EvaluationCache", "P8Decision", "P8Mode", "choose_p8_action", "public_board_salt"]
+
+# End inline: src/starnet/policy/p8_experiment.py
+
+# Begin inline: src/starnet/policy/p8_qualification.py
+"""Local mean-objective qualification, not per-family noninferiority.
+
+New repetitions 701--705 passed the preregistered mean/composition criterion;
+the earlier 601--605 strict gate remains failed. Unqualified requests close.
+"""
+
+P8_CERTIFIED_MODE: str | None = "conservative"
+P8_GATE_REPORT_SHA256: str | None = "0594442f917eacbffe553bb7499b832d31a8b8fde12ba47c6479573ec464850c"
+
+
+def qualified_p8_mode(requested: object) -> str | None:
+    if (P8_CERTIFIED_MODE in ("conservative", "audited")
+            and requested == P8_CERTIFIED_MODE
+            and isinstance(P8_GATE_REPORT_SHA256, str)
+            and len(P8_GATE_REPORT_SHA256) == 64):
+        return P8_CERTIFIED_MODE
+    return None
+
+# End inline: src/starnet/policy/p8_qualification.py
 
 # Begin inline: src/starnet/policy/adaptive.py
 """B5 adaptive exploration primitives.
@@ -4325,6 +5000,13 @@ class RuntimeController:
             },
         )
 
+    def _llm_candidate_options(self, candidates: list[Candidate]) -> list[Candidate]:
+        """Bound ordinary immediate-ROI choices; trial controllers may compare tails."""
+        if self.effective_policy_mode is PolicyMode.PUBLIC_GREEDY and self.commander.can_request_llm:
+            best_roi = max(candidate.roi for candidate in candidates)
+            return [candidate for candidate in candidates if candidate.roi >= 0.98 * best_roi][:4]
+        return candidates
+
     def _create_plan(self, budget: float) -> None:
         candidates = list(self.candidates.values())
         if self.effective_policy_mode in {PolicyMode.B1_PERSUASION, PolicyMode.B2_INFLUENCE}:
@@ -4336,14 +5018,7 @@ class RuntimeController:
             self._emit_queue_revalidated("persuasion_heap", validation, budget)
             return
         assert self.analysis is not None
-        if self.effective_policy_mode is PolicyMode.PUBLIC_GREEDY and self.commander.can_request_llm:
-            # Keep the model's choice meaningful while bounding the cost of
-            # selecting a lower-ROI candidate on a noisy generation.
-            best_roi = max(candidate.roi for candidate in candidates)
-            candidates = [
-                candidate for candidate in candidates
-                if candidate.roi >= 0.98 * best_roi
-            ][:4]
+        candidates = self._llm_candidate_options(candidates)
         request_payload: Mapping[str, Any] | None = None
         if self.commander.can_request_llm and self.config.llm_schedule is not LLMSchedule.OFF and (
             self.config.llm_schedule is LLMSchedule.STEP or self._event_llm_pending
@@ -4657,6 +5332,82 @@ __all__ = [
 
 # End inline: src/starnet/runtime/controller.py
 
+# Begin inline: src/starnet/runtime/p8_controller.py
+"""Shared P8 executor; production activation is controlled by qualification."""
+
+
+
+
+class P8RuntimeController(RuntimeController):
+    """Keep the full production executor and quota guards in a local trial."""
+
+    def __init__(self, *args, p8_mode="audited", require_stage_envelope=False, **kwargs):
+        if p8_mode not in ("conservative", "audited"):
+            raise ValueError("unsupported P8 trial mode")
+        super().__init__(*args, **kwargs)
+        self.require_stage_envelope = require_stage_envelope
+        self.p8_mode = p8_mode if (not require_stage_envelope or (
+            self.node_count == 50 and self.initial_budget == 100.0
+        )) else None
+        self.p8_salt = None
+        self.p8_cache = {}
+        self.p8_options = False
+        self.p8_proposals = 0
+        self.p8_planning_errors = 0
+
+    def _refresh_candidates(self, budget: float, phase: str) -> None:
+        super()._refresh_candidates(budget, phase)
+        self.p8_options = False
+        if (self.p8_mode is None
+                or (self.require_stage_envelope and self.blackboard.nonexistent_ids)
+                or self.effective_policy_mode is not PolicyMode.PUBLIC_GREEDY
+                or len(self.blackboard.scanned_ids) != self.node_count or not self.candidates):
+            return
+        try:
+            if self.p8_salt is None:
+                self.p8_salt = public_board_salt(self.blackboard)
+            decision = choose_p8_action(
+                self.blackboard, budget, self.response_estimates,
+                remaining_steps=max(0, self._safe_step_limit - self.action_attempts),
+                salt=self.p8_salt, mode=self.p8_mode, evaluation_cache=self.p8_cache,
+            )
+        except Exception:
+            self.p8_planning_errors += 1
+            return
+        if not decision.deviated:
+            return
+        action = decision.action
+        if action in self.failed_actions or not is_legal_action(action, self.blackboard, budget):
+            return
+        baseline = next((candidate for candidate in self.candidates.values()
+                         if candidate.action == decision.baseline_action), None)
+        if baseline is None:
+            return
+        identity = f"p8:{action.kind}:{action.target_node_1}:{action.target_node_2}:{self.blackboard.state_version}"
+        gain = (min(decision.mean_delta, decision.audit_mean_delta)
+                if self.p8_mode == "audited" else decision.mean_delta)
+        # Values are continuation advantages relative to the baseline plan,
+        # not immediate changes to the environment's score.
+        proposed = Candidate(identity, action, 0, gain, gain / action_cost(action),
+                             f"P8 assumed-response continuation advantage; selection mean={decision.mean_delta:.6f}; "
+                             f"selection minimum={decision.minimum_delta:.6f}; mode={self.p8_mode}; "
+                             f"additional audit scenarios={len(decision.audit_paired_deltas)}, audit mean={decision.audit_mean_delta:.6f}, minimum={decision.audit_minimum_delta:.6f}; "
+                             "baseline alternative has relative advantage zero", (identity,))
+        fallback = Candidate(baseline.candidate_id, baseline.action, 0, 0.0, 0.0,
+                             "Current public_greedy baseline; relative continuation advantage zero",
+                             baseline.evidence_ids)
+        self.candidates = {proposed.candidate_id: proposed, fallback.candidate_id: fallback}
+        self.p8_options = True
+        self.p8_proposals += 1
+
+    def _llm_candidate_options(self, candidates):
+        return candidates if self.p8_options else super()._llm_candidate_options(candidates)
+
+
+__all__ = ["P8RuntimeController"]
+
+# End inline: src/starnet/runtime/p8_controller.py
+
 # Begin inline: src/starnet/submission/starnet_model.py
 """赛方入口：保留 CaseVO 编排，把策略计算委托给可测试的纯 Python 控制器。"""
 
@@ -4770,11 +5521,15 @@ class ParticipantSquadModel(ModelBase):
 
         runtime_config = _runtime_config_for_descriptions(descriptions, commander_description)
 
-        self.controller = RuntimeController(
+        p8_mode = qualified_p8_mode(commander_description.get("experimental_p8_mode"))
+        controller_type = P8RuntimeController if p8_mode is not None else RuntimeController
+        controller_options = {"p8_mode": p8_mode, "require_stage_envelope": True} if p8_mode is not None else {}
+        self.controller = controller_type(
             host_env,
             llm_ranker=self.commander_agent.rank_candidates,
             stage=ContestStage.PRELIMINARY,
             config=runtime_config,
+            **controller_options,
         )
 
     def step(self) -> int:

@@ -8,7 +8,8 @@
       "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
       "focus": "基于公开事实完成每次扫描与干预的最终选择。",
       "experimental_policy_mode": "public_greedy",
-      "experimental_public_comm_shield_guard": false
+      "experimental_public_comm_shield_guard": false,
+      "experimental_p8_mode": "conservative"
     }
   ]
 }

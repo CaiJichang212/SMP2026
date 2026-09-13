@@ -1,7 +1,11 @@
-"""Reviewed qualification only; unqualified submission requests fail closed."""
+"""Local mean-objective qualification, not per-family noninferiority.
 
-P8_CERTIFIED_MODE: str | None = None
-P8_GATE_REPORT_SHA256: str | None = None
+New repetitions 701--705 passed the preregistered mean/composition criterion;
+the earlier 601--605 strict gate remains failed. Unqualified requests close.
+"""
+
+P8_CERTIFIED_MODE: str | None = "conservative"
+P8_GATE_REPORT_SHA256: str | None = "0594442f917eacbffe553bb7499b832d31a8b8fde12ba47c6479573ec464850c"
 
 
 def qualified_p8_mode(requested: object) -> str | None:
