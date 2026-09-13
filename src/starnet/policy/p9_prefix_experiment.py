@@ -9,7 +9,7 @@ from typing import Literal, Mapping, MutableMapping
 from starnet.model.blackboard import Blackboard
 from starnet.policy.actions import Action, action_cost, is_legal_action
 from starnet.policy.budget_experiment import budget_plan
-from starnet.policy.cmg import PredictiveState
+from starnet.policy.cmg import PredictiveState, bounded_response_delta
 from starnet.policy.p8_experiment import (
     _FAST_SETTLEMENT,
     _ProjectedBoard,
@@ -99,9 +99,10 @@ def _rollout_prefix(
             turn = 4 - node.comm_left
             first = visible.get(action.target_node_1)
             if first is None:
-                first = 15.0 * _scenario_factor(salt, action.target_node_1, scenario)
+                nominal_first = 15.0 * _scenario_factor(salt, action.target_node_1, scenario)
+                first = bounded_response_delta(node.w, nominal_first)
                 visible[action.target_node_1] = first
-            delta = first * (0.5 ** (turn - 1))
+            delta = bounded_response_delta(node.w, first * (0.5 ** (turn - 1)))
         state = state.apply(action, delta)
         budget -= action_cost(action)
     if pending:

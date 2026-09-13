@@ -19,7 +19,7 @@ from starnet.policy.actions import Action, action_cost, is_legal_action
 from starnet.policy.baseline import _response, public_response
 from starnet.policy.budget_experiment import budget_plan
 from starnet.policy.calibration import DEFAULT_CALIBRATION_PROFILE
-from starnet.policy.cmg import PredictiveState
+from starnet.policy.cmg import PredictiveState, bounded_response_delta
 from starnet.policy.structural import (
     ExperimentalPublicGreedyPlanner,
     public_positive_graph_gate_closed,
@@ -118,8 +118,12 @@ def _rollout(
             turn = 4 - node.comm_left
             first = visible.get(action.target_node_1)
             if first is None:
-                first = 15.0 * _scenario_factor(action.target_node_1, scenario, scenario_count)
-            delta = first * (0.5 ** (turn - 1))
+                nominal_first = 15.0 * _scenario_factor(
+                    action.target_node_1, scenario, scenario_count,
+                )
+                first = bounded_response_delta(node.w, nominal_first)
+                visible[action.target_node_1] = first
+            delta = bounded_response_delta(node.w, first * (0.5 ** (turn - 1)))
             if turn == 1:
                 visible[action.target_node_1] = first
         state = state.apply(action, delta)
