@@ -33,6 +33,7 @@ from starnet.experiments.seeds import SEED_SPECS, seed_payload
 
 ROOT = Path(__file__).resolve().parents[1]
 OFFICIAL = {
+    "starnet-p8-mean-20260913.zip": None,
     # These locally built 2026-09-12 archives have no separate platform score
     # attached. Keeping them here permits the same paired local runner used
     # for the historical submission comparison.
@@ -151,6 +152,7 @@ def worker(job_path: Path) -> int:
                 asdict(policy_config) if policy_config is not None
                 else {"legacy_max_llm_calls": getattr(module, "MAX_LLM_CALLS", None)}
             )
+            result["effective_p8_mode"] = getattr(model.controller, "p8_mode", None)
             result["model_sha256"] = digest((folder / "starnet_model.py").read_bytes())
             result["llm_model"] = os.getenv("SMP_LLM_MODEL", DEFAULT_MODEL)
             for step in range(1, 121):

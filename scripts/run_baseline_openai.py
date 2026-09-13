@@ -133,6 +133,17 @@ def resolve_log_dir(path: Path, invocation_cwd: Path) -> Path:
     return path.resolve() if path.is_absolute() else (invocation_cwd / path).resolve()
 
 
+def make_runner_controller(original, fallback_type, env, ranker, *, initial_budget, node_count, stage, config):
+    """Preserve a qualified submission controller when adapting local limits."""
+    mode = getattr(original, "p8_mode", None)
+    keep_p8 = (mode in ("conservative", "audited") and node_count == 50
+               and initial_budget == 100.0 and not config.enable_public_comm_shield_guard)
+    controller_type = type(original) if keep_p8 else fallback_type
+    extras = {"p8_mode": mode, "require_stage_envelope": True} if keep_p8 else {}
+    return controller_type(env, ranker, initial_budget=initial_budget, node_count=node_count,
+                           stage=stage, config=config, **extras)
+
+
 def sha256_file(path: Path) -> str:
     """Hash one experiment input or generated submission artifact."""
     digest = hashlib.sha256()
@@ -329,7 +340,8 @@ def main() -> int:
                 else args.public_comm_shield_guard == "on"
             ),
         )
-        model.controller = RuntimeController(
+        model.controller = make_runner_controller(
+            model.controller, RuntimeController,
             env,
             model.commander_agent.rank_candidates,
             initial_budget=initial_budget,
@@ -337,7 +349,7 @@ def main() -> int:
             stage=stage,
             config=runtime_config,
         )
-        # 仅使小型自定义种子可完成一轮扫描；提交模型仍由公开预算推断正式赛制规模。
+        # 小型种子的覆盖只作用于本地调试；提交入口使用显式初赛契约。
         model.controller.scout.node_count = node_count
         if not args.no_trace:
             timestamp, seed_id, run_id = trace_identity(seed_path)
@@ -408,6 +420,7 @@ def main() -> int:
         f"dead_nodes={len(model.controller.blackboard.dead_nodes)}; candidates={len(model.controller.candidates)}; "
         f"llm_calls={model.controller.llm_calls}; llm_accepted={model.controller.llm_accepted}; "
         f"llm_fallbacks={model.controller.llm_fallbacks}; stop_reason={stop_reason}; "
+        f"p8_mode={getattr(model.controller, 'p8_mode', None)}; "
         f"seed_budget_match={budget_matches}; seed_snapshot_match={snapshot_matches}; "
         f"score_comparable={score_comparable}; debug_node_count={node_count}"
     )

@@ -1,0 +1,35 @@
+{
+  "purpose": "generated-entry equivalence and fail-closed smoke test",
+  "qualification_patched_in_memory_only": true,
+  "does_not_qualify_or_promote_a_policy": true,
+  "results": [
+    {
+      "test_qualification": "as_built",
+      "score": 303.6875601323529,
+      "controller": "P8RuntimeController",
+      "llm_mock_calls": 75,
+      "action_failures": 0
+    },
+    {
+      "test_qualification": null,
+      "score": 274.76497219117647,
+      "controller": "RuntimeController",
+      "llm_mock_calls": 75,
+      "action_failures": 0
+    },
+    {
+      "test_qualification": "conservative",
+      "score": 303.6875601323529,
+      "controller": "P8RuntimeController",
+      "llm_mock_calls": 75,
+      "action_failures": 0
+    },
+    {
+      "test_qualification": "audited",
+      "score": 285.52880189705877,
+      "controller": "P8RuntimeController",
+      "llm_mock_calls": 75,
+      "action_failures": 0
+    }
+  ]
+}

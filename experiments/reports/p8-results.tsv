@@ -2,3 +2,7 @@ experiment	commit	metric	status	description
 0	a5c5450	574.6384	baseline	P8 standard22-family r501 public_greedy mean
 1	a5c5450	580.1730	reject_promotion	expected screen22; tree_broom,bipartite,powerlaw losses
 2	a5c5450	581.0853	reject_promotion	conservative screen22; bipartite loss despite positive mean interval
+3	47064c6	599.5609628062845	pass_development	audited66 development; 6 wins60 ties0 losses
+4	47064c6	575.9218181976023	reject_strict	audited110 repetitions601-605; strict family gate failed; retained unchanged
+5	47064c6	593.4000780536317	selected_mean_gate	conservative110 fresh701-705; new preregistered mean/composition gate and shift checks passed
+6	47064c6	592.2953359130636	qualified_comparator	audited110 fresh701-705; passed mean gate but lower observed mean

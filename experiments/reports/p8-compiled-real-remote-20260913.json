@@ -1,0 +1,37 @@
+{
+  "purpose": "generated-entry equivalence and fail-closed smoke test",
+  "environment": "official custom-seed sandbox",
+  "qualification_patched_in_memory_only": true,
+  "does_not_qualify_or_promote_a_policy": true,
+  "complete": true,
+  "results": [
+    {
+      "test_qualification": null,
+      "score": 274.82,
+      "controller": "RuntimeController",
+      "llm_mode": "real",
+      "llm_model": "gpt-5.6-luna",
+      "llm_calls": 75,
+      "llm_accepted": 75,
+      "llm_fallbacks": 0,
+      "transport_errors": 0,
+      "action_failures": 0,
+      "local_replay_score": 274.76497219117647,
+      "public_response_error": 0.0
+    },
+    {
+      "test_qualification": "as_built",
+      "score": 303.74,
+      "controller": "P8RuntimeController",
+      "llm_mode": "real",
+      "llm_model": "gpt-5.6-luna",
+      "llm_calls": 75,
+      "llm_accepted": 75,
+      "llm_fallbacks": 0,
+      "transport_errors": 0,
+      "action_failures": 0,
+      "local_replay_score": 303.6875601323529,
+      "public_response_error": 0.0
+    }
+  ]
+}

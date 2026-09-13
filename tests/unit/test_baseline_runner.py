@@ -9,6 +9,7 @@ import unittest
 
 from scripts.run_baseline_openai import (
     default_step_limit,
+    make_runner_controller,
     resolve_log_dir,
     runner_configuration_data,
     runner_policy_config,
@@ -19,6 +20,23 @@ from starnet.policy.config import PolicyConfig, PolicyMode
 
 
 class BaselineRunnerTests(unittest.TestCase):
+    def test_runner_keeps_qualified_p8_instead_of_replacing_it(self):
+        class Base:
+            def __init__(self, *args, **kwargs):
+                self.options = kwargs
+        class Qualified(Base):
+            p8_mode = "conservative"
+        config = PolicyConfig(policy_mode=PolicyMode.PUBLIC_GREEDY)
+        kept = make_runner_controller(Qualified(), Base, None, None, initial_budget=100.0,
+                                      node_count=50, stage="preliminary", config=config)
+        self.assertIsInstance(kept, Qualified)
+        self.assertEqual(kept.options["p8_mode"], "conservative")
+        self.assertTrue(kept.options["require_stage_envelope"])
+        fallback = make_runner_controller(Qualified(), Base, None, None, initial_budget=20.0,
+                                          node_count=4, stage="preliminary", config=config)
+        self.assertIs(type(fallback), Base)
+        self.assertNotIn("p8_mode", fallback.options)
+
     def test_seed_budget_requires_numeric_max_budget(self) -> None:
         self.assertEqual(seed_budget({"global_setting": {"max_budget": 20}}), 20.0)
         self.assertIsNone(seed_budget({"global_setting": {"max_budget": "20"}}))

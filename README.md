@@ -41,6 +41,12 @@ artifacts/submission/<name>.zip       最终上传文件
 - `runtime/`：环境适配、控制器状态机与运行轨迹。
 - `submission/`：提交配置、提示词和 `ParticipantSquadModel` 的开发态入口。
 
+2026-09-13 的初赛候选为 P8 `conservative`，通过独立预登记的本地平均分与图族占比
+压力测试后启用。110 对标准分布确认均分为 `588.4723 → 593.4001`（`+0.84%`），
+但仍有 7 个案例退步，不能承诺每个种子提高，也不能换算为官方成绩。
+资格记录与配置必须匹配，且只覆盖 50 节点/100 预算；其他情况回退原策略。
+详见 [P8 结果](experiments/reports/p8-results-20260913.md)。
+
 `SMP_Starter_Kit/team_submission/` 不是第二份需要维护的策略源码。构建脚本会复制
 `config.json` 与 `prompt/`，并将 `src/starnet` 的策略模块内联为单文件
 `starnet_model.py`。因此不要直接修改该目录；本地 OpenAI 兼容模型运行器、校验和打包都
@@ -113,13 +119,13 @@ SMP_LLM_MODEL=gpt-5.6-luna
 ```
 
 ### 3. 运行本地测试
-使用当前 V0 策略和 OpenAI Chat Completions 兼容模型运行远程沙盒：
+使用当前提交策略和 OpenAI Chat Completions 兼容模型运行远程沙盒：
 
 ```bash
 uv run python scripts/run_baseline_openai.py
 ```
 该脚本会先构建 `team_submission/`，再加载生成的 `ParticipantSquadModel` 运行，并将本地
-诊断轨迹写入 `runs/v0-baseline/`。
+诊断轨迹写入 `runs/v0-baseline/`（保留历史目录名；完成摘要中的 `p8_mode` 表明实际启用模式）。
 
 运行器使用标准的 `POST /v1/chat/completions`、Bearer API Key 和
 `response_format: {"type":"json_object"}`；`SMP_LLM_BASE_URL` 可以带或不带 `/v1`，
