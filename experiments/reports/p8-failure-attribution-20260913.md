@@ -23,13 +23,18 @@ isolates the first divergent action from later rollout replanning.
 
 All three divergences occur on the first intervention after the full scan,
 before any real response has been observed. In every case the forced-first
-counterfactual equals the full rollout loss. The failure is therefore present
-in the first mean-response comparison; repeated receding-horizon plan changes
-do not create or amplify these three losses.
+counterfactual equals the full rollout loss, so the measured residual
+`full_delta - first_action_counterfactual_gain` is zero. The loss is already
+present in the first mean-response comparison; this diagnostic observed no
+additional net loss from later receding-horizon decisions in these three
+cases. The decomposition permits both contributions in other cases and does
+not assign an entire episode to one exclusive cause merely because its first
+action is harmful.
 
 The predicted margins are small, from +1.42 to +3.26, while realized losses
-are much larger. This supports treating unobserved-response uncertainty as the
-primary mechanism. It does not identify a universal numeric threshold: the
+are much larger. This identifies unobserved-response estimation as a harmful
+first-decision mechanism in these selected cases. It does not identify a
+universal numeric threshold: the
 three cases were selected because they had already failed, so fitting a margin
 to them would be circular. A defensible next candidate should change the
 uncertainty model or gather public response evidence, then be frozen and tested
@@ -50,5 +55,7 @@ uv run python -m unittest tests.unit.test_p8_failure_attribution -v
 ```
 
 The machine-readable report includes both forced branches, action counts,
-remaining budget, prediction error, full-episode replay, and an explicit empty
-list of policy hidden-response inputs.
+remaining budget, prediction error, full-episode replay, the additive
+replanning residual, and an explicit empty list of policy hidden-response
+inputs. This tool uses `LocalPublicEnvironment` only; it is not a remote
+evaluation runner.

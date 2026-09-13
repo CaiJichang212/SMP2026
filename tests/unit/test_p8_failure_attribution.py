@@ -71,7 +71,10 @@ class P8FailureAttributionTests(unittest.TestCase):
         result = attribute_case(("er_balanced", 402, "existing"))
         self.assertEqual(result["actual_counterfactual_gain"], 2.0)
         self.assertEqual(result["full_delta"], -1.0)
-        self.assertEqual(result["attribution"], "receding_horizon_replanning")
+        self.assertEqual(result["replanning_residual"], -3.0)
+        self.assertFalse(result["first_action_response_model_error"])
+        self.assertTrue(result["additional_replanning_loss"])
+        self.assertEqual(result["attribution"], "additional_replanning_loss")
         self.assertEqual(result["policy_hidden_response_inputs"], [])
 
 

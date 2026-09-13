@@ -178,12 +178,17 @@ def attribute_case(
     full_baseline = run_variant(seed, "public_greedy")
     full_candidate = run_rollout_search(seed, scenario_count=1, env_factory=env_factory)
     full_delta = full_candidate["score"] - full_baseline["score"]
-    if actual_gain < -1e-8:
-        attribution = "response_estimation_error"
-    elif full_delta < -1e-8:
-        attribution = "receding_horizon_replanning"
+    replanning_residual = full_delta - actual_gain
+    first_action_error = actual_gain < -1e-8
+    replanning_loss = replanning_residual < -1e-8
+    if first_action_error and replanning_loss:
+        attribution = "first_action_error_and_additional_replanning_loss"
+    elif first_action_error and not replanning_loss:
+        attribution = "first_action_response_model_error"
+    elif not first_action_error and replanning_loss:
+        attribution = "additional_replanning_loss"
     else:
-        attribution = "not_a_reproduced_failure"
+        attribution = "no_attributed_loss"
     family, repetition, source = case
     return {
         "family": family, "repetition": repetition, "source": source,
@@ -195,6 +200,9 @@ def attribute_case(
         "full_baseline": full_baseline,
         "full_candidate": full_candidate,
         "full_delta": full_delta,
+        "replanning_residual": replanning_residual,
+        "first_action_response_model_error": first_action_error,
+        "additional_replanning_loss": replanning_loss,
         "attribution": attribution,
         "policy_hidden_response_inputs": [],
     }
@@ -210,6 +218,7 @@ def main() -> int:
         "case_limit": 3,
         "opened_repetitions": sorted({row["repetition"] for row in rows}),
         "repetition_601_or_later_opened": False,
+        "environment": "LocalPublicEnvironment only",
         "production_enabled": False,
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
