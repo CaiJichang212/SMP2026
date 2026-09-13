@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "experiment": "p9-expected-clip-development-20260913",
+  "status": "preregistered",
+  "registered_before_results": true,
+  "purpose": "Test whether the analytic expectation after clipping ranks untried communication actions better than clipping the mean response.",
+  "candidate": "On mixed/risky graphs only, replace the fixed untried response min(12.75*slot, room) with E[min(15*r*slot, room)] for r uniform on [0.2,1.5]. Preserve observed responses, positive-graph pooling, P8 scenario sampling, gates, and action validation.",
+  "cohort": {
+    "status": "consumed development only",
+    "families": ["er_resampled", "ba_resampled", "ws_resampled", "sbm_resampled"],
+    "repetitions": [901],
+    "shift_strata": ["near_upper_bound", "saturated_hubs"],
+    "cases": 8
+  },
+  "comparator": "current bounded P8 conservative pure-policy replay on identical seeds",
+  "metrics": [
+    "paired terminal score delta",
+    "number of cases with a changed action sequence",
+    "changed intervention positions",
+    "first divergence and action multiset differences"
+  ],
+  "decision": "Stop and record a negative result if no action changes, mean score delta is nonpositive, or any material loss offsets the small boundary-specific rationale. Do not expand to repetition 902 without a clear positive signal.",
+  "confirmation_opened": false,
+  "production_promotion_allowed": false,
+  "workers": 1
+}
