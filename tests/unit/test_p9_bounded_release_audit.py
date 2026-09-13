@@ -1,11 +1,15 @@
 import copy
 import itertools
+import json
 import unittest
 
 from scripts.analyze_p9_bounded_release import (
-    FAMILIES, PRIMARY, SHIFT_STRATA, audit_episode, block_bootstrap,
+    FAMILIES, MECHANISM_REPORT, MECHANISM_SOURCE, PRIMARY, SHIFT_STRATA,
+    audit_episode, audit_mechanism_report, audit_uncapped_envelope,
+    block_bootstrap, digest, json_digest,
 )
 from scripts.run_p9_distribution_validation import LoggedEnvironment
+from starnet.experiments.p9_distribution_seeds import seed_payload
 
 
 class BoundedReleaseAuditTests(unittest.TestCase):
@@ -35,6 +39,58 @@ class BoundedReleaseAuditTests(unittest.TestCase):
         invalid["action_log"][-1]["public_result"]["new_w"] = 101
         with self.assertRaises(ValueError):
             audit_episode(invalid)
+
+    def test_seed_bound_episode_audit_rejects_changed_public_fact_and_log_hash(self):
+        seed = seed_payload("er_resampled", 901, "centered_independent")
+        env = LoggedEnvironment(seed)
+        for node in range(1, 51):
+            env.scan_node(node)
+        env.communicate(1, 1)
+        result = {
+            "action_log": env.action_log,
+            "action_log_sha256": json_digest(env.action_log),
+            "action_attempts": len(env.action_log),
+            "action_counts": {"scan": 50, "comm": 1, "cut": 0, "shield": 0},
+            "action_failures": 0,
+            "remaining_budget": env.get_remaining_budget(),
+            "score": env.evaluate(),
+        }
+        self.assertEqual(audit_episode(result, seed), 0)
+        invalid = copy.deepcopy(result)
+        invalid["action_log"][0]["public_result"]["w"] += 1.0
+        invalid["action_log_sha256"] = json_digest(invalid["action_log"])
+        with self.assertRaisesRegex(ValueError, "scan facts"):
+            audit_episode(invalid, seed)
+        invalid = copy.deepcopy(result)
+        invalid["action_log_sha256"] = "0" * 64
+        with self.assertRaisesRegex(ValueError, "action count"):
+            audit_episode(invalid, seed)
+        invalid = copy.deepcopy(result)
+        invalid["action_log"][-1]["public_result"]["new_w"] += 0.5
+        invalid["action_log_sha256"] = json_digest(invalid["action_log"])
+        with self.assertRaisesRegex(ValueError, "paired seed"):
+            audit_episode(invalid, seed)
+
+    def test_mechanism_gate_requires_all_108_chained_observations(self):
+        report = json.loads(MECHANISM_REPORT.read_text(encoding="utf-8"))
+        self.assertEqual(
+            audit_mechanism_report(report, source_sha256=digest(MECHANISM_SOURCE)), 108,
+        )
+        invalid = copy.deepcopy(report)
+        invalid["runs"][0]["observations"].pop()
+        with self.assertRaisesRegex(ValueError, "complete nine-node"):
+            audit_mechanism_report(invalid, source_sha256=digest(MECHANISM_SOURCE))
+
+    def test_uncapped_envelope_is_proved_from_seed_values(self):
+        for family, repetition, shift in itertools.product(
+            FAMILIES, (901, 902), SHIFT_STRATA[:-2],
+        ):
+            self.assertTrue(audit_uncapped_envelope(seed_payload(family, repetition, shift)))
+        boundary = seed_payload("er_resampled", 901, "centered_independent")
+        boundary["nodes"][0]["w"] = 99.0
+        boundary["nodes"][0]["r"] = 1.5
+        with self.assertRaisesRegex(ValueError, "opinion bound"):
+            audit_uncapped_envelope(boundary)
 
     def test_resamples_whole_graphs_not_individual_shifts(self):
         repetitions = (1001, 1002, 1003)
