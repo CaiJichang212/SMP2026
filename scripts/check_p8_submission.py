@@ -38,6 +38,17 @@ def main():
     baseline = run_variant(seed, "public_greedy")
     original = (module.P8_CERTIFIED_MODE, module.P8_GATE_REPORT_SHA256)
     results = []
+    name = "p8-compiled-real-remote-20260913.json" if args.real and args.remote else "p8-compiled-real-20260913.json" if args.real else "p8-compiled-smoke-20260913.json"
+    output = ROOT / "experiments/reports" / name
+
+    def save(complete):
+        report = {"purpose": "generated-entry equivalence and fail-closed smoke test",
+                  "environment": "official custom-seed sandbox" if args.remote else "local simulator",
+                  "qualification_patched_in_memory_only": True,
+                  "does_not_qualify_or_promote_a_policy": True,
+                  "complete": complete, "results": results}
+        output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+        return report
     try:
         modes = ((None, "as_built") if args.remote else ("as_built",)) if args.real else ("as_built", None, "conservative", "audited")
         for mode in modes:
@@ -61,8 +72,9 @@ def main():
             else:
                 commander["experimental_p8_mode"] = mode or "audited"
                 requested = mode
-            env = PairedEnvironment(seed, "http://8.222.218.162:5000", 20) if args.remote else LocalPublicEnvironment(seed)
             llm = CountingLLM(20, offline_only=not args.real)
+            llm_model = llm.chat.model if args.real else None
+            env = PairedEnvironment(seed, "http://8.222.218.162:5000", 20) if args.remote else LocalPublicEnvironment(seed)
             model = module.ParticipantSquadModel(env, people, llm)
 
             def choice(payload):
@@ -89,7 +101,7 @@ def main():
             results.append({"test_qualification": mode, "score": score,
                             "controller": type(model.controller).__name__,
                             "llm_mode": "real" if args.real else "mock",
-                            "llm_model": llm.model if args.real else None,
+                            "llm_model": llm_model,
                             "llm_calls": model.controller.llm_calls,
                             "llm_accepted": model.controller.llm_accepted,
                             "llm_fallbacks": model.controller.llm_fallbacks,
@@ -97,16 +109,11 @@ def main():
                             "action_failures": model.controller.action_failures,
                             "local_replay_score": env.local_score if args.remote else score,
                             "public_response_error": env.response_error if args.remote else None})
+            save(False)
             print(json.dumps(results[-1]), flush=True)
     finally:
         module.P8_CERTIFIED_MODE, module.P8_GATE_REPORT_SHA256 = original
-    report = {"purpose": "generated-entry equivalence and fail-closed smoke test",
-              "environment": "official custom-seed sandbox" if args.remote else "local simulator",
-              "qualification_patched_in_memory_only": True,
-              "does_not_qualify_or_promote_a_policy": True, "results": results}
-    name = "p8-compiled-real-remote-20260913.json" if args.real and args.remote else "p8-compiled-real-20260913.json" if args.real else "p8-compiled-smoke-20260913.json"
-    output = ROOT / "experiments/reports" / name
-    output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    report = save(True)
     print(json.dumps(report), flush=True)
 
 

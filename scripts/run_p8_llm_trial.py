@@ -33,6 +33,7 @@ class P8TrialModel(ParticipantSquadModel):
 
 def run_trial(seed, *, llm_mode="mock", timeout=20, p8_mode="audited"):
     llm = CountingLLM(timeout, offline_only=llm_mode != "real")
+    llm_model = llm.chat.model if llm_mode == "real" else None
     env = LocalPublicEnvironment(seed)
     people = json.loads((ROOT / "src/starnet/submission/config.json").read_text())["person"]
     model = P8TrialModel(env, people, llm, p8_mode=p8_mode)
@@ -53,7 +54,7 @@ def run_trial(seed, *, llm_mode="mock", timeout=20, p8_mode="audited"):
     return {"score": env.evaluate(), "actions": {kind: sum(call[0] == kind for call in env.calls)
                                                 for kind in ("scan", "comm", "cut", "shield")},
             "remaining_budget": env.get_remaining_budget(), "failures": controller.action_failures,
-            "llm_mode": llm_mode, "llm_model": llm.model if llm_mode == "real" else None,
+            "llm_mode": llm_mode, "llm_model": llm_model,
             "p8_mode": p8_mode, "llm_calls": controller.llm_calls,
             "llm_accepted": controller.llm_accepted, "llm_fallbacks": controller.llm_fallbacks,
             "transport_attempts": llm.attempts, "transport_errors": llm.errors,
