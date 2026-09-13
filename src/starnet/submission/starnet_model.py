@@ -25,6 +25,8 @@ ModelBase = _starnet_runtime.ModelBase
 from starnet.runtime.controller import RuntimeController
 from starnet.runtime.stage import ContestStage
 from starnet.policy.config import DEFAULT_POLICY_CONFIG, PolicyConfig, PolicyMode
+from starnet.policy.p8_qualification import qualified_p8_mode
+from starnet.runtime.p8_controller import P8RuntimeController
 
 
 def _runtime_config_for_descriptions(
@@ -114,11 +116,15 @@ class ParticipantSquadModel(ModelBase):
 
         runtime_config = _runtime_config_for_descriptions(descriptions, commander_description)
 
-        self.controller = RuntimeController(
+        p8_mode = qualified_p8_mode(commander_description.get("experimental_p8_mode"))
+        controller_type = P8RuntimeController if p8_mode is not None else RuntimeController
+        controller_options = {"p8_mode": p8_mode, "require_stage_envelope": True} if p8_mode is not None else {}
+        self.controller = controller_type(
             host_env,
             llm_ranker=self.commander_agent.rank_candidates,
             stage=ContestStage.PRELIMINARY,
             config=runtime_config,
+            **controller_options,
         )
 
     def step(self) -> int:

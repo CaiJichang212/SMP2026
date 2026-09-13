@@ -37,7 +37,7 @@ class P8LLMTrialTests(unittest.TestCase):
                     "candidate_id": option["candidate_id"], "reason_code": "baseline",
                     "evidence_ids": [option["evidence_ids"][0]]}
         env, controller = self.controller(choose_baseline)
-        with patch("scripts.run_p8_llm_trial.choose_p8_action", return_value=self.decision()):
+        with patch("starnet.runtime.p8_controller.choose_p8_action", return_value=self.decision()):
             controller._refresh_candidates(env.get_remaining_budget(), "test")
         self.assertTrue(controller.p8_options)
         self.assertEqual(len(controller._llm_candidate_options(list(controller.candidates.values()))), 2)
@@ -48,7 +48,7 @@ class P8LLMTrialTests(unittest.TestCase):
 
     def test_invalid_llm_response_counts_and_uses_validated_recommendation(self):
         env, controller = self.controller(lambda _: {"candidate_id": "invalid"})
-        with patch("scripts.run_p8_llm_trial.choose_p8_action", return_value=self.decision()):
+        with patch("starnet.runtime.p8_controller.choose_p8_action", return_value=self.decision()):
             controller._refresh_candidates(env.get_remaining_budget(), "test")
         controller._create_plan(env.get_remaining_budget())
         self.assertEqual(controller.candidates[controller.queue[0]].action, Action("comm", 2, prompt_id=1))
@@ -58,12 +58,17 @@ class P8LLMTrialTests(unittest.TestCase):
     def test_planning_error_preserves_baseline_and_public_facts(self):
         env, controller = self.controller(None)
         before = controller.blackboard.snapshot()
-        with patch("scripts.run_p8_llm_trial.choose_p8_action", side_effect=TimeoutError):
+        with patch("starnet.runtime.p8_controller.choose_p8_action", side_effect=TimeoutError):
             controller._refresh_candidates(env.get_remaining_budget(), "test")
         self.assertFalse(controller.p8_options)
         self.assertEqual(controller.p8_planning_errors, 1)
         self.assertEqual(next(iter(controller.candidates.values())).action, Action("shield", 1))
         self.assertEqual(before, controller.blackboard.snapshot())
+
+    def test_production_envelope_mismatch_disables_p8(self):
+        env, _ = self.controller(None)
+        controller = P8TrialController(env, node_count=3, require_stage_envelope=True)
+        self.assertIsNone(controller.p8_mode)
 
 
 if __name__ == "__main__":

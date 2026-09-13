@@ -29,9 +29,14 @@ INLINE_MODULES = (
     "src/starnet/policy/candidates.py",
     "src/starnet/policy/cmg.py",
     "src/starnet/policy/structural.py",
+    "src/starnet/policy/budget_experiment.py",
+    "src/starnet/policy/fast_settlement_experiment.py",
+    "src/starnet/policy/p8_experiment.py",
+    "src/starnet/policy/p8_qualification.py",
     "src/starnet/policy/adaptive.py",
     "src/starnet/runtime/stage.py",
     "src/starnet/runtime/controller.py",
+    "src/starnet/runtime/p8_controller.py",
     "src/starnet/submission/starnet_model.py",
 )
 
