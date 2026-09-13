@@ -53,20 +53,21 @@ def require_source() -> None:
 def verify_p8_release() -> None:
     """Do not package an enabled P8 flag with stale policy/evidence metadata."""
     from starnet.policy.p8_qualification import (
-        P8_CERTIFIED_MODE, P8_GATE_REPORT_SHA256, P8_POLICY_SHA256, qualified_p8_mode,
+        P8_CERTIFIED_MODE, P8_GATE_REPORT_SHA256, qualified_p8_mode,
     )
     config = json.loads((SOURCE_DIR / "config.json").read_text(encoding="utf-8"))
     requested = next((person.get("experimental_p8_mode") for person in config.get("person", [])
                       if isinstance(person, dict) and person.get("role") == "CommanderAgent"), None)
     if qualified_p8_mode(requested) is None:
         return
-    source = PROJECT_ROOT / "src/starnet/policy/p8_experiment.py"
-    if hashlib.sha256(source.read_bytes()).hexdigest() != P8_POLICY_SHA256:
-        raise SystemExit("P8 策略源码已改变，必须重新验证资格后才能构建启用包。")
     report = PROJECT_ROOT / "experiments/reports/p8-mean-objective-result-20260913.json"
     if not report.is_file() or hashlib.sha256(report.read_bytes()).hexdigest() != P8_GATE_REPORT_SHA256:
         raise SystemExit("P8 资格报告缺失或哈希不匹配。")
     evidence = json.loads(report.read_text(encoding="utf-8"))
+    source_hashes = set(evidence.get("standard_audit", {}).get("reported_policy_hashes", {}).values())
+    source = PROJECT_ROOT / "src/starnet/policy/p8_experiment.py"
+    if source_hashes != {hashlib.sha256(source.read_bytes()).hexdigest()}:
+        raise SystemExit("P8 策略源码已改变，必须重新验证资格后才能构建启用包。")
     if (evidence.get("selected_variant") != P8_CERTIFIED_MODE
             or evidence.get("variants", {}).get(P8_CERTIFIED_MODE, {}).get("mean_score_gate_passed") is not True):
         raise SystemExit("P8 资格报告未批准当前模式。")
