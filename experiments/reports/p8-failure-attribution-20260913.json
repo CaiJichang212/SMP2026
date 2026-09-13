@@ -1,0 +1,246 @@
+{
+  "cases": [
+    {
+      "family": "er_balanced",
+      "repetition": 402,
+      "source": "existing",
+      "action_index_after_scan": 1,
+      "budget": 75.0,
+      "candidate_action": {
+        "kind": "shield",
+        "target_node_1": 29,
+        "target_node_2": null,
+        "prompt_id": null
+      },
+      "baseline_action": {
+        "kind": "comm",
+        "target_node_1": 17,
+        "target_node_2": null,
+        "prompt_id": 1
+      },
+      "predicted_scenario_deltas": [
+        1.8481666125684342
+      ],
+      "predicted_gain": 1.8481666125684342,
+      "candidate_first_then_public_greedy": {
+        "score": 637.3036040633071,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        }
+      },
+      "baseline_first_then_public_greedy": {
+        "score": 651.28664864532,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        }
+      },
+      "actual_counterfactual_gain": -13.983044582012894,
+      "prediction_error": -15.831211194581329,
+      "full_baseline": {
+        "score": 651.28664864532,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "full_candidate": {
+        "score": 637.3036040633071,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 2,
+        "seconds": 3.3350930280284956
+      },
+      "full_delta": -13.983044582012894,
+      "attribution": "response_estimation_error",
+      "policy_hidden_response_inputs": []
+    },
+    {
+      "family": "lollipop",
+      "repetition": 301,
+      "source": "new",
+      "action_index_after_scan": 1,
+      "budget": 75.0,
+      "candidate_action": {
+        "kind": "shield",
+        "target_node_1": 45,
+        "target_node_2": null,
+        "prompt_id": null
+      },
+      "baseline_action": {
+        "kind": "cut",
+        "target_node_1": 36,
+        "target_node_2": 50,
+        "prompt_id": null
+      },
+      "predicted_scenario_deltas": [
+        3.25745638532689
+      ],
+      "predicted_gain": 3.25745638532689,
+      "candidate_first_then_public_greedy": {
+        "score": 173.16247048421042,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        }
+      },
+      "baseline_first_then_public_greedy": {
+        "score": 222.32750651173382,
+        "remaining_budget": 1.0,
+        "steps": 79,
+        "actions": {
+          "scan": 50,
+          "comm": 23,
+          "cut": 1,
+          "shield": 5
+        }
+      },
+      "actual_counterfactual_gain": -49.1650360275234,
+      "prediction_error": -52.42249241285029,
+      "full_baseline": {
+        "score": 222.32750651173382,
+        "actions": {
+          "scan": 50,
+          "comm": 23,
+          "cut": 1,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "full_candidate": {
+        "score": 173.16247048421042,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 8,
+        "seconds": 3.486937209032476
+      },
+      "full_delta": -49.1650360275234,
+      "attribution": "response_estimation_error",
+      "policy_hidden_response_inputs": []
+    },
+    {
+      "family": "bipartite",
+      "repetition": 303,
+      "source": "new",
+      "action_index_after_scan": 1,
+      "budget": 75.0,
+      "candidate_action": {
+        "kind": "cut",
+        "target_node_1": 14,
+        "target_node_2": 26,
+        "prompt_id": null
+      },
+      "baseline_action": {
+        "kind": "comm",
+        "target_node_1": 34,
+        "target_node_2": null,
+        "prompt_id": 1
+      },
+      "predicted_scenario_deltas": [
+        1.4247170689113773
+      ],
+      "predicted_gain": 1.4247170689113773,
+      "candidate_first_then_public_greedy": {
+        "score": 567.9795872857142,
+        "remaining_budget": 0.0,
+        "steps": 87,
+        "actions": {
+          "scan": 50,
+          "comm": 36,
+          "cut": 1,
+          "shield": 0
+        }
+      },
+      "baseline_first_then_public_greedy": {
+        "score": 579.8815706431716,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        }
+      },
+      "actual_counterfactual_gain": -11.901983357457425,
+      "prediction_error": -13.326700426368802,
+      "full_baseline": {
+        "score": 579.8815706431716,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "full_candidate": {
+        "score": 567.9795872857142,
+        "actions": {
+          "scan": 50,
+          "comm": 36,
+          "cut": 1,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 2,
+        "seconds": 2.5658290119608864
+      },
+      "full_delta": -11.901983357457425,
+      "attribution": "response_estimation_error",
+      "policy_hidden_response_inputs": []
+    }
+  ],
+  "case_limit": 3,
+  "opened_repetitions": [
+    301,
+    303,
+    402
+  ],
+  "repetition_601_or_later_opened": false,
+  "production_enabled": false
+}
