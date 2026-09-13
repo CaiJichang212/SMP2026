@@ -120,16 +120,18 @@ def main() -> int:
     parser.add_argument("--repetitions", nargs="+", type=int, default=[501])
     parser.add_argument("--strata", nargs="+", choices=R_STRATA, default=["standard"])
     parser.add_argument("--variants", nargs="+", choices=VARIANTS, default=list(VARIANTS))
-    parser.add_argument("--confirm", action="store_true", help="Explicitly select the reserved confirmation cohort after freezing a variant")
+    cohort = parser.add_mutually_exclusive_group()
+    cohort.add_argument("--confirm", action="store_true", help="Explicitly select the reserved confirmation cohort after freezing a variant")
+    cohort.add_argument("--objective-confirm", action="store_true", help="Select the separately preregistered mean-objective cohort 701-705")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     families = tuple(dict.fromkeys(args.families))
     repetitions = tuple(dict.fromkeys(args.repetitions))
     strata = tuple(dict.fromkeys(args.strata))
     variants = tuple(dict.fromkeys(args.variants))
-    allowed = CONFIRMATION_REPETITIONS if args.confirm else DEVELOPMENT_REPETITIONS
+    allowed = tuple(range(701, 706)) if args.objective_confirm else (CONFIRMATION_REPETITIONS if args.confirm else DEVELOPMENT_REPETITIONS)
     if not repetitions or not set(repetitions).issubset(allowed):
-        parser.error("Use 501-503 for development, or --confirm with 601-605 after variant freeze")
+        parser.error("Use 501-503, --confirm with 601-605, or --objective-confirm with 701-705")
     policy_path = ROOT / "src/starnet/policy/p8_experiment.py"
     policy_sha256 = hashlib.sha256(policy_path.read_bytes()).hexdigest()
     config = {"block": "p8", "nodes": 50, "families": list(families),

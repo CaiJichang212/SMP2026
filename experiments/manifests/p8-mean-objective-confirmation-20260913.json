@@ -1,0 +1,19 @@
+{
+  "purpose": "Fresh confirmation aligned with mean score, with bounded composition stress; do not reinterpret the earlier strict confirmation as passed.",
+  "variants": ["conservative", "audited"],
+  "policy_commit": "47064c6",
+  "policy_sha256": "56709076b9c89d7934899f046c20198f569575b165871adfc9055e49269500b0",
+  "standard": {"families": "all22 P8 families", "repetitions": [701, 702, 703, 704, 705], "pairs_per_variant": 110},
+  "shift": {"families": "NEW_FAMILIES four", "repetitions": [701, 702, 703], "strata": ["low", "high", "persona_correlated"], "pairs_per_variant": 36},
+  "primary_estimand": "equally weighted mean of the 22 declared family-specific paired score gains",
+  "resampling": "10000 paired bootstrap samples within each fixed family; keep family weights fixed, unlike a bootstrap that resamples the family list",
+  "composition_stress": "minimize gain over family weights summing to1, each between0.5/K and2/K; this is an explicit sensitivity assumption, not knowledge of official family weights",
+  "statistical_gate": "2.5th bootstrap percentile of composition-stressed gain must be positive for an arm; two arms each use a one-sided97.5% bound (Bonferroni intention), bootstrap coverage remains approximate",
+  "shift_gate": "each of the three separately reported shift-group mean gains nonnegative; this is an empirical check, not proof of population noninferiority",
+  "hard_gates": ["complete declared Cartesian cohorts", "same seeds/baselines and frozen policy hash", "zero failed or illegal actions", "valid budget/steps", "real CaseVO/LLM validation before packaging an enabled candidate"],
+  "selection_rule": "choose highest standard mean gain among arms passing all gates; report both arms and all losses, including family-specific negative means",
+  "legacy_gate": "still report each-family-mean-nonnegative status; it does not replace this newly preregistered mean-score criterion",
+  "why_change": "The competition objective is a mean, not simultaneous nonnegative point estimates in every hand-selected graph family. Preserve a strict action-safety gate and test composition sensitivity on fresh data instead of changing the verdict of the old cohort.",
+  "platform_score": null,
+  "production_enabled": false
+}
