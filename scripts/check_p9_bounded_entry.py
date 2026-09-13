@@ -40,6 +40,7 @@ def main():
     seed = seed_payload(args.family, args.repetition, args.shift)
     report = {"family": args.family, "shift": args.shift, "repetition": args.repetition,
               "python_version": sys.version.split()[0],
+              "entry_runner_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
               "seed_sha256": hashlib.sha256(json.dumps(seed, sort_keys=True).encode()).hexdigest(),
               "archive": str(args.archive) if args.archive else None,
               "unreleased_candidate_assembly": args.archive is None,

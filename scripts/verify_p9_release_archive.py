@@ -13,6 +13,65 @@ from zipfile import ZipFile
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from build_submission import assemble_model, strip_project_imports, verify_p8_release
+from starnet.policy.p8_qualification import (
+    P8_GATE_REPORT_RELATIVE_PATH, P8_GATE_REPORT_SHA256,
+)
+
+
+_QUALIFICATION_METADATA = {
+    "P8_CERTIFIED_MODE", "P8_GATE_REPORT_SHA256", "P8_GATE_REPORT_RELATIVE_PATH",
+}
+
+
+def qualification_structure(source):
+    """Normalize only the three approved qualification metadata values."""
+    tree = ast.parse(source)
+    if (tree.body and isinstance(tree.body[0], ast.Expr)
+            and isinstance(tree.body[0].value, ast.Constant)
+            and isinstance(tree.body[0].value.value, str)):
+        tree.body[0].value = ast.Constant(value="<qualification-docstring>")
+    counts = {name: 0 for name in _QUALIFICATION_METADATA}
+    for node in tree.body:
+        if isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name):
+            if node.target.id in _QUALIFICATION_METADATA:
+                if not isinstance(node.value, ast.Constant) or not (
+                    isinstance(node.value.value, str) or node.value.value is None
+                ):
+                    raise ValueError("qualification metadata must be a string or None literal")
+                counts[node.target.id] += 1
+                node.value = ast.Constant(value="<qualification-metadata>")
+        elif isinstance(node, ast.Assign):
+            names = [target.id for target in node.targets if isinstance(target, ast.Name)]
+            if len(names) == 1 and names[0] in _QUALIFICATION_METADATA:
+                if not isinstance(node.value, ast.Constant) or not (
+                    isinstance(node.value.value, str) or node.value.value is None
+                ):
+                    raise ValueError("qualification metadata must be a string or None literal")
+                counts[names[0]] += 1
+                node.value = ast.Constant(value="<qualification-metadata>")
+    if any(count != 1 for count in counts.values()):
+        raise ValueError("qualification metadata fields are incomplete or ambiguous")
+    return ast.dump(tree, include_attributes=False)
+
+
+def require_unique_members(names):
+    files = [name for name in names if not name.endswith("/")]
+    if len(files) != len(set(files)):
+        raise ValueError("archive contains duplicate members")
+    return set(files)
+
+
+def load_current_seal(path, *, relative_path=P8_GATE_REPORT_RELATIVE_PATH,
+                      expected_sha256=P8_GATE_REPORT_SHA256):
+    gate_report = (ROOT / relative_path).resolve()
+    if (path.resolve() != gate_report
+            or hashlib.sha256(path.read_bytes()).hexdigest() != expected_sha256):
+        raise ValueError("sealed report is not the current qualification evidence")
+    evidence = json.loads(path.read_text())
+    if (evidence.get("release_gate_passed") is not True
+            or evidence.get("release_gate_pending") is not None):
+        raise ValueError("qualification evidence is not a completed release seal")
+    return evidence
 
 
 def main():
@@ -23,7 +82,7 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     verify_p8_release()
-    evidence = json.loads(args.sealed_report.read_text())
+    evidence = load_current_seal(args.sealed_report)
     relative = "src/starnet/policy/p8_qualification.py"
     historical = subprocess.check_output(
         ["git", "show", f"{args.validated_commit}:{relative}"], cwd=ROOT,
@@ -32,12 +91,8 @@ def main():
         raise ValueError("qualification source does not match validated snapshot")
     current = (ROOT / relative).read_text()
 
-    def function_bodies(source):
-        return [ast.dump(node, include_attributes=False) for node in ast.parse(source).body
-                if isinstance(node, (ast.FunctionDef, ast.ClassDef))]
-
-    if function_bodies(current) != function_bodies(historical.decode()):
-        raise ValueError("qualification logic changed after entry validation")
+    if qualification_structure(current) != qualification_structure(historical.decode()):
+        raise ValueError("qualification changed outside approved metadata")
     for path, expected in evidence["source_snapshot"].items():
         if path != relative and hashlib.sha256((ROOT / path).read_bytes()).hexdigest() != expected:
             raise ValueError(f"runtime body changed after qualification: {path}")
@@ -53,7 +108,7 @@ def main():
     if hashlib.sha256(reconstructed.encode()).hexdigest() != evidence["validated_unreleased_model_sha256"]:
         raise ValueError("final assembly differs from tested candidate outside metadata")
     with ZipFile(args.archive) as bundle:
-        files = {name for name in bundle.namelist() if not name.endswith("/")}
+        files = require_unique_members(bundle.namelist())
         required = {"config.json", "starnet_model.py"}
         required.update("prompt/" + path.name for path in (ROOT / "src/starnet/submission/prompt").iterdir() if path.is_file())
         if files != required or bundle.read("starnet_model.py") != final_code.encode():
