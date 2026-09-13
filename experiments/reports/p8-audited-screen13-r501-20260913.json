@@ -1,0 +1,1215 @@
+{
+  "config": {
+    "block": "p8",
+    "nodes": 50,
+    "families": [
+      "er_balanced",
+      "ba_negative_hubs",
+      "ws_peace_majority",
+      "sbm_negative_bridges",
+      "sbm_violent_cluster",
+      "three_sparse_components",
+      "grid_lattice",
+      "cycle_chords",
+      "two_block_bridge",
+      "tree_broom",
+      "double_bridge_communities",
+      "ring_of_cliques",
+      "negative_hub_spokes"
+    ],
+    "repetitions": [
+      501
+    ],
+    "variants": [
+      "audited"
+    ],
+    "strata": [
+      "standard"
+    ],
+    "prior": "Uniform(0.2,1.5)",
+    "sequential_screen": "five-scenario selection; audited adds eight independent paired scenarios without reselection",
+    "policy_sha256": "56709076b9c89d7934899f046c20198f569575b165871adfc9055e49269500b0"
+  },
+  "rows": [
+    {
+      "family": "er_balanced",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "c37405ed01b3d931820009f2a83e5058f0a1aab4e604283cb12f6dec47d810e9",
+      "variant": "audited",
+      "baseline": {
+        "score": 813.8961748272728,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 813.8961748272728,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 126,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "5b868e040d1bb2b95ef5df4984588c4ee49788fbb0573de72f300f32a03a2723",
+        "seconds": 15.313214109977707
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "ba_negative_hubs",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "0065cacb1b5fc96a80267c2cbceb8f6efbb325f76c96829405f0edb734bafb73",
+      "variant": "audited",
+      "baseline": {
+        "score": 274.76497219117647,
+        "actions": {
+          "scan": 50,
+          "comm": 17,
+          "cut": 0,
+          "shield": 8
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 285.52880189705877,
+        "actions": {
+          "scan": 50,
+          "comm": 17,
+          "cut": 0,
+          "shield": 8
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 75,
+        "planning_calls": 26,
+        "rollouts": 185,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 54,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 1,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 1,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 1,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "immediate_structure_gain",
+            "mean_delta": 21.137659896888454,
+            "minimum_delta": 14.25,
+            "paired_deltas": [
+              14.25,
+              25.189430661913946,
+              24.16448012523358,
+              14.580711122929358,
+              27.503677574365383
+            ],
+            "audit_mean_delta": 24.424885449246478,
+            "audit_minimum_delta": 6.446641893097421,
+            "audit_paired_deltas": [
+              6.446641893097421,
+              21.862557070953414,
+              21.142247361427394,
+              20.58015745005099,
+              52.6489562844757,
+              7.875267488365353,
+              14.145861247788957,
+              50.69739479781259
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 1,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 1,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "audit_rejection_count": 2,
+        "audit_rejections": [
+          {
+            "step": 52,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 6,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 6,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 24.33977841142583,
+            "minimum_delta": 14.25,
+            "paired_deltas": [
+              14.25,
+              38.55886796033556,
+              24.16448012523358,
+              17.221866397194617,
+              27.503677574365383
+            ],
+            "audit_mean_delta": 17.52441986669369,
+            "audit_minimum_delta": -0.6120447989694071,
+            "audit_paired_deltas": [
+              6.446641893097421,
+              14.276772363809812,
+              18.939330051436485,
+              20.58015745005099,
+              52.6489562844757,
+              -0.6120447989694071,
+              14.145861247788957,
+              13.769684441859567
+            ],
+            "compared_actions": [
+              {
+                "kind": "shield",
+                "target_node_1": 6,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "comm",
+                "target_node_1": 6,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ]
+          },
+          {
+            "step": 53,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 24.33977841142583,
+            "minimum_delta": 14.25,
+            "paired_deltas": [
+              14.25,
+              38.55886796033556,
+              24.16448012523358,
+              17.221866397194617,
+              27.503677574365383
+            ],
+            "audit_mean_delta": 17.52441986669369,
+            "audit_minimum_delta": -0.6120447989694071,
+            "audit_paired_deltas": [
+              6.446641893097421,
+              14.276772363809812,
+              18.939330051436485,
+              20.58015745005099,
+              52.6489562844757,
+              -0.6120447989694071,
+              14.145861247788957,
+              13.769684441859567
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 5,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "public_board_salt": "e85e006c463498f05b85339436e6c572b2cce8d25ef79348f04d41311d585d99",
+        "seconds": 19.548137056059204
+      },
+      "delta": 10.763829705882301
+    },
+    {
+      "family": "ws_peace_majority",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "63bf7ab0643e28716cfe465eb394876618c90e3913d177d8b0ae3227ed6fca8d",
+      "variant": "audited",
+      "baseline": {
+        "score": 930.2503402857142,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 930.2503402857142,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 26,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 1,
+        "audit_rejections": [
+          {
+            "step": 73,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 48,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 48,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "comm",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "public_greedy",
+            "mean_delta": 0.8278143416163403,
+            "minimum_delta": 0.0,
+            "paired_deltas": [
+              0.0,
+              0.0,
+              0.0,
+              4.139071708081701,
+              0.0
+            ],
+            "audit_mean_delta": -0.06150704996116474,
+            "audit_minimum_delta": -6.572469393945539,
+            "audit_paired_deltas": [
+              6.080412994256221,
+              0.0,
+              0.0,
+              -6.572469393945539,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 48,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "comm",
+                "target_node_1": 29,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ]
+          }
+        ],
+        "public_board_salt": "aebeda9aee4f157cb14071c7ac2832757624f1c89f578c0361ee1d45fa05ed09",
+        "seconds": 1.510318900924176
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "be9a9f8407cc9c524d85a476b9502720b2ee5e9bd2355527b401436a2e475f3f",
+      "variant": "audited",
+      "baseline": {
+        "score": 565.6388593714286,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 565.6388593714286,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 172,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 3,
+        "audit_rejections": [
+          {
+            "step": 53,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 2.084388475311653,
+            "minimum_delta": 0.0,
+            "paired_deltas": [
+              0.3513397985129245,
+              5.714804939661349,
+              0.0,
+              4.35579763838399,
+              0.0
+            ],
+            "audit_mean_delta": -3.6491957333765157,
+            "audit_minimum_delta": -13.839079379227769,
+            "audit_paired_deltas": [
+              0.0,
+              -11.054932103810415,
+              -4.299554383973941,
+              0.0,
+              0.0,
+              0.0,
+              -13.839079379227769,
+              0.0
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 25,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          },
+          {
+            "step": 55,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 32,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 32,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 1.2184701360678674,
+            "minimum_delta": 0.0,
+            "paired_deltas": [
+              0.4158975043017108,
+              5.676453176037626,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "audit_mean_delta": -2.8265664284768803,
+            "audit_minimum_delta": -14.059634085175958,
+            "audit_paired_deltas": [
+              0.0,
+              -10.816036314206485,
+              0.0,
+              0.0,
+              2.2631389715674004,
+              0.0,
+              -14.059634085175958,
+              0.0
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 32,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 25,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          },
+          {
+            "step": 56,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 8,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 8,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 1.2837236878807061,
+            "minimum_delta": 0.0,
+            "paired_deltas": [
+              0.4568664984599309,
+              5.9617519409436,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "audit_mean_delta": -3.146358135748244,
+            "audit_minimum_delta": -14.42086901569212,
+            "audit_paired_deltas": [
+              0.0,
+              -10.749996070293832,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -14.42086901569212,
+              0.0
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 8,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 25,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "public_board_salt": "2b48acce60054cbb4d8c5ee2af4b31f7092e0704401d36b8ea8fd2baef059505",
+        "seconds": 34.8968099480262
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "1521ffc56052cb4f6db8983df71c8064cdcbc9f3d6d6d3f9cbcd2b6f60f7a3a5",
+      "variant": "audited",
+      "baseline": {
+        "score": 199.13262254497351,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 199.13262254497351,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "planning_calls": 25,
+        "rollouts": 120,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "06930c8c8a9a5fef9751f4bfb71e812db4aff6e2ddaca7f956b830365dd23f5c",
+        "seconds": 10.846126273041591
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "three_sparse_components",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "7b14509973f69852fc012f233cf9edb6b18da619e3cbb0060d19c53826178fe1",
+      "variant": "audited",
+      "baseline": {
+        "score": 282.0115647335723,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 282.0115647335723,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 68,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "7da5c855d20e4fb19ede76c43cc7ca0c1237e8619ec97da976d1ad93dca46ced",
+        "seconds": 8.952967114979401
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "grid_lattice",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "7b9ee8eceb9fe2ce1f173827a1f354cbc1ccc07a46af8686eaec46fe4c6daf32",
+      "variant": "audited",
+      "baseline": {
+        "score": 1049.0954892045454,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 1049.0954892045454,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 30,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "d6a463704e19cd4adad90b14f454d44d85c86e88786664fe1d580f1824e5520b",
+        "seconds": 0.9374201230239123
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "cycle_chords",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "606ed52c1a9db075283c8fe283fb92bfc235357daa0e5030b77f4c02401fdb72",
+      "variant": "audited",
+      "baseline": {
+        "score": 756.759913,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 756.759913,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 250,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "e70e3be394eeda3874c68d8a5264839a49ad74c9b1c4e88660b3507f2773215a",
+        "seconds": 27.867476608022116
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "two_block_bridge",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "39a11eb3e4515c2be137c3acc4cf272ee64e4406aa2f2202c960f7ec8126098a",
+      "variant": "audited",
+      "baseline": {
+        "score": 473.7839411764706,
+        "actions": {
+          "scan": 50,
+          "comm": 12,
+          "cut": 0,
+          "shield": 10
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 473.7839411764706,
+        "actions": {
+          "scan": 50,
+          "comm": 12,
+          "cut": 0,
+          "shield": 10
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 72,
+        "planning_calls": 23,
+        "rollouts": 100,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "6332facfb9f7a408ab33e282d3ec5b8d49058a4b7a65bdb184f2aac16716a994",
+        "seconds": 5.829394435975701
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "tree_broom",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "72e7d03adb81e741a7c1dc9a19736621b90d8715488db5acfd8f0b41304baa2f",
+      "variant": "audited",
+      "baseline": {
+        "score": 288.717569,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 288.717569,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 100,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "3ef2782460a8925821ffcc598356ee30c89afe43b59839e9aadebee6a3308f8c",
+        "seconds": 14.29122333903797
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "8098627caaeacfec1c00e13d6b1c84035df3f7132ad1c1305a3445e022daee58",
+      "variant": "audited",
+      "baseline": {
+        "score": 370.3865288026315,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 370.3865288026315,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 78,
+        "planning_calls": 29,
+        "rollouts": 146,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 1,
+        "audit_rejections": [
+          {
+            "step": 51,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 13,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 13,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "proposed_action": {
+              "kind": "comm",
+              "target_node_1": 13,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "public_greedy",
+            "mean_delta": 26.980394957407167,
+            "minimum_delta": 15.768805557140752,
+            "paired_deltas": [
+              20.40379090263974,
+              26.693293149379315,
+              20.671238293436033,
+              51.36484688444,
+              15.768805557140752
+            ],
+            "audit_mean_delta": 25.96629726304944,
+            "audit_minimum_delta": -3.676651012590355,
+            "audit_paired_deltas": [
+              38.91956848413179,
+              19.781128808988797,
+              47.17635180083619,
+              9.326725822171511,
+              21.433354509662195,
+              17.395184988896574,
+              57.37471470229883,
+              -3.676651012590355
+            ],
+            "compared_actions": [
+              {
+                "kind": "shield",
+                "target_node_1": 13,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "comm",
+                "target_node_1": 13,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ]
+          }
+        ],
+        "public_board_salt": "b96c54cb9fc47025a690abe7a5c852c5fc6230768dcd9bc769a45cf0658c7b25",
+        "seconds": 7.389662363100797
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "ring_of_cliques",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "02708ce9c01f4e14abed69fc76754619154502460af7f0ab1cebb0f6a9839110",
+      "variant": "audited",
+      "baseline": {
+        "score": 554.2858111469726,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 554.2858111469726,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 79,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "18ceb81721cff341b1d5c9646c18af3c089d25ae148bcc7e8ffca3bba5b9db89",
+        "seconds": 10.293046643026173
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "negative_hub_spokes",
+      "repetition": 501,
+      "r_stratum": "standard",
+      "seed_sha256": "f6e33d82882f70023c80fc896796ac0e74ba1ff4a340f673f039fb005ea8db1a",
+      "variant": "audited",
+      "baseline": {
+        "score": 711.5130239340662,
+        "actions": {
+          "scan": 50,
+          "comm": 32,
+          "cut": 0,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 724.2160551428573,
+        "actions": {
+          "scan": 50,
+          "comm": 32,
+          "cut": 0,
+          "shield": 2
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 84,
+        "planning_calls": 35,
+        "rollouts": 115,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 53,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 34,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 34,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 34,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "immediate_structure_gain",
+            "mean_delta": 17.4662203157563,
+            "minimum_delta": 10.0879120879124,
+            "paired_deltas": [
+              10.0879120879124,
+              27.255607517494923,
+              15.801497536542001,
+              20.265671976990348,
+              13.920412459841828
+            ],
+            "audit_mean_delta": 16.178367490046654,
+            "audit_minimum_delta": 9.12923480135646,
+            "audit_paired_deltas": [
+              10.964528527507014,
+              18.263188780272912,
+              20.5415020933973,
+              15.614655756061325,
+              27.372507274783857,
+              10.661989762414805,
+              16.879332924579558,
+              9.12923480135646
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 34,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 17,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 34,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "audit_rejection_count": 1,
+        "audit_rejections": [
+          {
+            "step": 51,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 23.286929752864786,
+            "minimum_delta": 3.4046396577500673,
+            "paired_deltas": [
+              38.249999999999886,
+              13.241855760168505,
+              3.4046396577500673,
+              44.28590708694048,
+              17.252246259464982
+            ],
+            "audit_mean_delta": 15.000497107647163,
+            "audit_minimum_delta": -4.450598760826097,
+            "audit_paired_deltas": [
+              10.9645285275069,
+              -4.450598760826097,
+              3.1917858378027404,
+              5.93255353555594,
+              9.919744148212658,
+              54.411278822545455,
+              30.90544994902291,
+              9.129234801356802
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 17,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 17,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "public_board_salt": "6455c9bb15952b20088aa21f02fac10239f6d5f2c62f2a2e7e76d6a6158bb27d",
+        "seconds": 9.78731628600508
+      },
+      "delta": 12.703031208791117
+    }
+  ],
+  "summary": {
+    "audited": {
+      "cases": 13,
+      "mean_delta": 1.8051431472825707,
+      "minimum_delta": 0.0,
+      "family_mean_delta": {
+        "er_balanced": 0.0,
+        "ba_negative_hubs": 10.763829705882301,
+        "ws_peace_majority": 0.0,
+        "sbm_negative_bridges": 0.0,
+        "sbm_violent_cluster": 0.0,
+        "three_sparse_components": 0.0,
+        "grid_lattice": 0.0,
+        "cycle_chords": 0.0,
+        "two_block_bridge": 0.0,
+        "tree_broom": 0.0,
+        "double_bridge_communities": 0.0,
+        "ring_of_cliques": 0.0,
+        "negative_hub_spokes": 12.703031208791117
+      },
+      "all_family_means_nonnegative": true,
+      "failures": 0
+    }
+  },
+  "stratum_summary": {
+    "standard": {
+      "audited": {
+        "cases": 13,
+        "mean_delta": 1.8051431472825707,
+        "minimum_delta": 0.0,
+        "family_mean_delta": {
+          "er_balanced": 0.0,
+          "ba_negative_hubs": 10.763829705882301,
+          "ws_peace_majority": 0.0,
+          "sbm_negative_bridges": 0.0,
+          "sbm_violent_cluster": 0.0,
+          "three_sparse_components": 0.0,
+          "grid_lattice": 0.0,
+          "cycle_chords": 0.0,
+          "two_block_bridge": 0.0,
+          "tree_broom": 0.0,
+          "double_bridge_communities": 0.0,
+          "ring_of_cliques": 0.0,
+          "negative_hub_spokes": 12.703031208791117
+        },
+        "all_family_means_nonnegative": true,
+        "failures": 0
+      }
+    }
+  },
+  "platform_score": null,
+  "production_promotion_allowed": false
+}

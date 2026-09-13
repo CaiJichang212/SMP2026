@@ -1,0 +1,1845 @@
+{
+  "config": {
+    "block": "p8",
+    "nodes": 50,
+    "families": [
+      "random_geometric",
+      "barbell",
+      "lollipop",
+      "random_tree",
+      "bipartite",
+      "degree_corrected_sbm",
+      "powerlaw_cluster",
+      "watts_strogatz_mixed",
+      "random_regular_mixed"
+    ],
+    "repetitions": [
+      502,
+      503
+    ],
+    "variants": [
+      "audited"
+    ],
+    "strata": [
+      "standard"
+    ],
+    "prior": "Uniform(0.2,1.5)",
+    "sequential_screen": "five-scenario selection; audited adds eight independent paired scenarios without reselection",
+    "policy_sha256": "56709076b9c89d7934899f046c20198f569575b165871adfc9055e49269500b0"
+  },
+  "rows": [
+    {
+      "family": "random_geometric",
+      "repetition": 502,
+      "r_stratum": "standard",
+      "seed_sha256": "2ac30e79a9ade046916fcad471edd834231b92eef85f048504043956289325ec",
+      "variant": "audited",
+      "baseline": {
+        "score": 713.9480588782052,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 713.9480588782052,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 28,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "f45ae6497808e66b7525c2dd63297604c298ea96eb83ca1ae83a33bec9d78ca2",
+        "seconds": 10.908753106952645
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "random_geometric",
+      "repetition": 503,
+      "r_stratum": "standard",
+      "seed_sha256": "b99bbada662c070266563c1f8cf72e06f381ea57f337cf52bc356974df3f5e21",
+      "variant": "audited",
+      "baseline": {
+        "score": 696.6884604037267,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 696.6884604037267,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 205,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "cf0b396364f9d8adb33740c8e9d61729f8644b272b8786c289203614a6464a9f",
+        "seconds": 79.84705403901171
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "barbell",
+      "repetition": 502,
+      "r_stratum": "standard",
+      "seed_sha256": "f9ad137a8684650f4494b2f8e27f23ca04a4642e2dcae1a4c9a4423cae1a31a5",
+      "variant": "audited",
+      "baseline": {
+        "score": 888.5873625175439,
+        "actions": {
+          "scan": 50,
+          "comm": 28,
+          "cut": 1,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 888.5873625175439,
+        "actions": {
+          "scan": 50,
+          "comm": 28,
+          "cut": 1,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 82,
+        "planning_calls": 33,
+        "rollouts": 212,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "0f0580834258ca75a0b4004dd80d0d40ac10aab1d8af16c8c624a8972e1d82e8",
+        "seconds": 68.35993148491252
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "barbell",
+      "repetition": 503,
+      "r_stratum": "standard",
+      "seed_sha256": "b367b1fdea3ff52c2075f304681d29ef8264af4bf54970899e429e90f4b9110b",
+      "variant": "audited",
+      "baseline": {
+        "score": 760.1231672430993,
+        "actions": {
+          "scan": 50,
+          "comm": 28,
+          "cut": 1,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 760.1231672430993,
+        "actions": {
+          "scan": 50,
+          "comm": 28,
+          "cut": 1,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 82,
+        "planning_calls": 33,
+        "rollouts": 205,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "25df6a1e9d5aca9057b7dc5670ba5657962ed80d3dc2364a318c471c97dc2e88",
+        "seconds": 85.53276191302575
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "lollipop",
+      "repetition": 502,
+      "r_stratum": "standard",
+      "seed_sha256": "e5ed6dfdae4dfdef26b61dcd4257f75005d512c9aec4c7902c907647015c70ef",
+      "variant": "audited",
+      "baseline": {
+        "score": 261.17026376921723,
+        "actions": {
+          "scan": 50,
+          "comm": 28,
+          "cut": 1,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 261.17026376921723,
+        "actions": {
+          "scan": 50,
+          "comm": 28,
+          "cut": 1,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 82,
+        "planning_calls": 33,
+        "rollouts": 183,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "dadf8eb4e6fcff562f6e9b1db8cc40e24488bf9c225d1cfd274b0f56f7f35ac5",
+        "seconds": 78.21554493694566
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "lollipop",
+      "repetition": 503,
+      "r_stratum": "standard",
+      "seed_sha256": "2d3ca7851879d21eac389d64d6f459460657f5e95faaa24eb51f208d2dc17278",
+      "variant": "audited",
+      "baseline": {
+        "score": 133.73381024771408,
+        "actions": {
+          "scan": 50,
+          "comm": 33,
+          "cut": 1,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 133.73381024771408,
+        "actions": {
+          "scan": 50,
+          "comm": 33,
+          "cut": 1,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 85,
+        "planning_calls": 36,
+        "rollouts": 373,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 2,
+        "audit_rejections": [
+          {
+            "step": 53,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 11,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 7.255258806013325,
+            "minimum_delta": 0.1467539772513362,
+            "paired_deltas": [
+              7.255258806013302,
+              6.26356589834262,
+              8.246951713684012,
+              14.363763634775353,
+              0.1467539772513362
+            ],
+            "audit_mean_delta": 6.6484576397540955,
+            "audit_minimum_delta": -0.3016002512809166,
+            "audit_paired_deltas": [
+              5.1524808981804995,
+              9.358036713846218,
+              7.468207499389052,
+              7.04231011263775,
+              -0.3016002512809166,
+              14.812117863307577,
+              2.078838714052324,
+              7.5772695679002595
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 11,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          },
+          {
+            "step": 54,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 11,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 11,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 11,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 7.3332760564346415,
+            "minimum_delta": 0.1832608213662752,
+            "paired_deltas": [
+              7.3332760564346415,
+              6.29326567712576,
+              8.373286435743466,
+              14.483291291503065,
+              0.1832608213662752
+            ],
+            "audit_mean_delta": 7.333276056434691,
+            "audit_minimum_delta": -0.23680904418063164,
+            "audit_paired_deltas": [
+              5.146508746049591,
+              9.520043366819777,
+              7.610027073515511,
+              7.056525039353886,
+              -0.23680904418063164,
+              14.903361157050057,
+              6.920433895185084,
+              7.746118217684256
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 11,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 11,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "public_board_salt": "c86aa702136008eacc3f64753746206983a5646fbefb9b0329951fa118c766ec",
+        "seconds": 89.2116010650061
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "random_tree",
+      "repetition": 502,
+      "r_stratum": "standard",
+      "seed_sha256": "f6ff253bb61d848ddf6dec030b9c5e3fbdd0f852437d09951bc083959fdda297",
+      "variant": "audited",
+      "baseline": {
+        "score": 680.8657445604779,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 680.8657445604779,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 256,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 3,
+        "audit_rejections": [
+          {
+            "step": 51,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 22,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 22,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 26,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 10.663923036607912,
+            "minimum_delta": 2.4988049378008554,
+            "paired_deltas": [
+              19.647900141915557,
+              2.4988049378008554,
+              7.718939092461937,
+              9.66625287847853,
+              13.787718132382679
+            ],
+            "audit_mean_delta": 13.49948027854613,
+            "audit_minimum_delta": -2.5002850377178447,
+            "audit_paired_deltas": [
+              17.82892221783561,
+              19.590159098857043,
+              0.8155884930582715,
+              23.807928875798893,
+              -2.5002850377178447,
+              11.5573441546494,
+              19.996133907475496,
+              16.900050518412172
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 22,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 26,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          },
+          {
+            "step": 52,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 12,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 12,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 26,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 14.448695779428657,
+            "minimum_delta": 2.4981001947875257,
+            "paired_deltas": [
+              19.441521591171067,
+              2.4981001947875257,
+              12.551025900917352,
+              10.013054091698905,
+              27.73977711856844
+            ],
+            "audit_mean_delta": 13.621965897220221,
+            "audit_minimum_delta": -3.648191879214096,
+            "audit_paired_deltas": [
+              18.25755336421571,
+              19.859200340463417,
+              3.913189468846099,
+              22.880900027615667,
+              -3.648191879214096,
+              11.5573441546494,
+              18.922189979455425,
+              17.23354172173015
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 12,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 26,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          },
+          {
+            "step": 53,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 26,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 26,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 26,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 13.402851529667236,
+            "minimum_delta": 0.1465901686409552,
+            "paired_deltas": [
+              18.198637259262455,
+              0.1465901686409552,
+              12.551025900917352,
+              4.44160203094566,
+              31.67640228856976
+            ],
+            "audit_mean_delta": 10.52024971172203,
+            "audit_minimum_delta": -5.874978993036507,
+            "audit_paired_deltas": [
+              20.63584473974163,
+              16.459198269107787,
+              -2.17321412526519,
+              11.073777482425612,
+              -5.874978993036507,
+              11.5573441546494,
+              15.188131616962892,
+              17.29589454919062
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 26,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 26,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "public_board_salt": "48e5df3b5892b9d118faf325d98aec15c06af46f138497e09f746bf5effc43c2",
+        "seconds": 24.2791481759632
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "random_tree",
+      "repetition": 503,
+      "r_stratum": "standard",
+      "seed_sha256": "1cbd150ad4e3cdd073be3faa2c01bbedf59f7acbe16b03382c79e5bb58f2ec85",
+      "variant": "audited",
+      "baseline": {
+        "score": 773.2706858108107,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 773.2706858108107,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 290,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "8222727bbbd8bddab245560a0512e15a37884caae6893bb8dbd6709ecb50a274",
+        "seconds": 15.628078139037825
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "bipartite",
+      "repetition": 502,
+      "r_stratum": "standard",
+      "seed_sha256": "138623b47664974df6b29118e2549a974441ed00a99d57280e693511e6a83aa3",
+      "variant": "audited",
+      "baseline": {
+        "score": 465.4335646780304,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 465.4335646780304,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 50,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "1b7be953d90d0ddfe8cee1138aa1dcdb65c5c13d39d8c7f827da9718f36c412b",
+        "seconds": 6.486818457953632
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "bipartite",
+      "repetition": 503,
+      "r_stratum": "standard",
+      "seed_sha256": "c57ea766daa0ab5647064263cf231370da8596d136dcef7e603e6d1e68b9ab45",
+      "variant": "audited",
+      "baseline": {
+        "score": 403.50964064960635,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 403.50964064960635,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 200,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "2fb603b4f5500c2e70885b76fbd0960bd19f6d9ed97c9a8b45d9d29c8804ecca",
+        "seconds": 61.55654370598495
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "degree_corrected_sbm",
+      "repetition": 502,
+      "r_stratum": "standard",
+      "seed_sha256": "b5574f34a7b99c053a3dc6b0ac3895898c088ebc2b5fc215d5fade5d7eb0fadd",
+      "variant": "audited",
+      "baseline": {
+        "score": 658.6509541398965,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 658.6509541398965,
+        "actions": {
+          "scan": 50,
+          "comm": 30,
+          "cut": 0,
+          "shield": 3
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 83,
+        "planning_calls": 34,
+        "rollouts": 102,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "493d847f17fd4285ad37aca5b68560f80f0a6ad647d530b7b03e70cf41d040a6",
+        "seconds": 6.847179914009757
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "degree_corrected_sbm",
+      "repetition": 503,
+      "r_stratum": "standard",
+      "seed_sha256": "b8348a0ef9267bcb15a2549e39b23d20852cf4b540a6d5f3a2a91dfe4f136918",
+      "variant": "audited",
+      "baseline": {
+        "score": 582.3441526104654,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 582.3441526104654,
+        "actions": {
+          "scan": 50,
+          "comm": 25,
+          "cut": 0,
+          "shield": 5
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 80,
+        "planning_calls": 31,
+        "rollouts": 172,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 1,
+        "audit_rejections": [
+          {
+            "step": 66,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 11.845657271290452,
+            "minimum_delta": 6.289773220645884,
+            "paired_deltas": [
+              11.73383570778833,
+              17.4818315820861,
+              6.289773220645884,
+              8.406091911563522,
+              15.316753934368421
+            ],
+            "audit_mean_delta": 3.2304457337719725,
+            "audit_minimum_delta": -25.31427831057556,
+            "audit_paired_deltas": [
+              22.68309010147084,
+              -25.31427831057556,
+              -4.061827251533714,
+              7.562034302435222,
+              15.932073789717492,
+              -12.434905489159519,
+              0.7648901362564402,
+              20.71248859156458
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 27,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 27,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "public_board_salt": "9a4a0f7b8b49c99b115413a7b0315849421b49863438e8128e25938d4d85c8f3",
+        "seconds": 9.058208824018948
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "powerlaw_cluster",
+      "repetition": 502,
+      "r_stratum": "standard",
+      "seed_sha256": "77464e2dc79f5846eda253b9061adc5c9b5d268ae3b56dba117a24b520c56c75",
+      "variant": "audited",
+      "baseline": {
+        "score": 917.3541221393444,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 917.3541221393444,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 287,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 2,
+        "audit_rejections": [
+          {
+            "step": 52,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 22,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 22,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 35,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 5.53163109371003,
+            "minimum_delta": 3.4002192053930003,
+            "paired_deltas": [
+              4.997621898940338,
+              3.4002192053930003,
+              4.3240209937891905,
+              9.373843126666088,
+              5.562450243761532
+            ],
+            "audit_mean_delta": 1.060832791431963,
+            "audit_minimum_delta": -35.67032593280646,
+            "audit_paired_deltas": [
+              5.590991732642465,
+              1.2522083360564693,
+              10.303493113817012,
+              1.256301003113549,
+              14.950831947539427,
+              -35.67032593280646,
+              1.798853094524361,
+              9.004309036568884
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 22,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 35,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          },
+          {
+            "step": 56,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 35,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 35,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 35,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 5.665586277653437,
+            "minimum_delta": 3.0617961162245138,
+            "paired_deltas": [
+              4.352147271141689,
+              3.0617961162245138,
+              3.371494827359925,
+              8.201760828330748,
+              9.340732345210313
+            ],
+            "audit_mean_delta": 3.762814795778482,
+            "audit_minimum_delta": -17.125821027698407,
+            "audit_paired_deltas": [
+              4.291288331943406,
+              10.274950751635629,
+              9.615664168107514,
+              -2.2294498739181563,
+              14.950831947539427,
+              -17.125821027698407,
+              0.4581218399221143,
+              9.866932228696328
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 35,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 35,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "public_board_salt": "a741dcea7809531e21da10d09063bb424b6a146966b0a56931b01e158c60ae94",
+        "seconds": 29.742048960062675
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "powerlaw_cluster",
+      "repetition": 503,
+      "r_stratum": "standard",
+      "seed_sha256": "bb9b37c7d32cfd341ebc77d6a7f38ef153d5b5ba1f9648a71c2f90b8c0b07858",
+      "variant": "audited",
+      "baseline": {
+        "score": 949.3590158634183,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 949.3590158634183,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 162,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "c87097b99cb3d24142941a8d4e73aced6bde92db6fcdb033af909e470a57709d",
+        "seconds": 14.122200088924728
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "watts_strogatz_mixed",
+      "repetition": 502,
+      "r_stratum": "standard",
+      "seed_sha256": "aa42bf2301314f71fe94611944414d6e1b40c1ba35058d7fb9a8b3aa4226bca0",
+      "variant": "audited",
+      "baseline": {
+        "score": 608.7115195080833,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 608.7115195080833,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 32,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "9df7a7ba9c4d4d00618ad23b4e4dc67924c3f2c4935b926c40258053633c9e7c",
+        "seconds": 6.2141508479835466
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "watts_strogatz_mixed",
+      "repetition": 503,
+      "r_stratum": "standard",
+      "seed_sha256": "33be943aba089870f8be2cca81b51d55989a6417f82c642e25ace7167a4eb2c7",
+      "variant": "audited",
+      "baseline": {
+        "score": 569.4465113045973,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 569.4465113045973,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "planning_calls": 37,
+        "rollouts": 81,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "44a3e8500809ecce1aa48c167b4f6316c7cdaeb6d636c9e8f90fdfdf605755df",
+        "seconds": 17.833430561004207
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "random_regular_mixed",
+      "repetition": 502,
+      "r_stratum": "standard",
+      "seed_sha256": "6fb100d8a67d4c8f02ba2040240dceaef35ac0319446963e6cc89bcbf519a5d7",
+      "variant": "audited",
+      "baseline": {
+        "score": 560.611111,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 560.611111,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 520,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 10,
+        "audit_rejections": [
+          {
+            "step": 66,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 24,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 24,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 7.787390381742694,
+            "minimum_delta": 6.849367273581038,
+            "paired_deltas": [
+              7.787390381742625,
+              6.849367273581038,
+              8.72541348990444,
+              7.432436943067728,
+              8.142343820417636
+            ],
+            "audit_mean_delta": 6.1651527620486775,
+            "audit_minimum_delta": -1.700830764394368,
+            "audit_paired_deltas": [
+              4.371132328867702,
+              9.64630231814374,
+              2.292597616708349,
+              13.282183146777243,
+              -0.8562400399740682,
+              11.40606833258596,
+              10.880009157674863,
+              -1.700830764394368
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 24,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 50,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          },
+          {
+            "step": 67,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 7.847053037344426,
+            "minimum_delta": 6.999660296320599,
+            "paired_deltas": [
+              7.847053037344494,
+              6.999660296320599,
+              8.694445778368163,
+              7.436458640540877,
+              8.257647434147998
+            ],
+            "audit_mean_delta": 6.228659998403906,
+            "audit_minimum_delta": -1.5610672186127772,
+            "audit_paired_deltas": [
+              4.371132328867702,
+              9.6871648711234,
+              2.4179840640506427,
+              13.276122010638232,
+              -0.6481335590966637,
+              11.406068332585846,
+              10.880009157674863,
+              -1.5610672186127772
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 25,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 50,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          },
+          {
+            "step": 68,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 26,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 26,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 7.7783634937759185,
+            "minimum_delta": 6.8893569623788835,
+            "paired_deltas": [
+              7.778363493775942,
+              6.8893569623788835,
+              8.667370025172886,
+              7.509305548607358,
+              8.047421438944525
+            ],
+            "audit_mean_delta": 6.203638907196272,
+            "audit_minimum_delta": -1.557100213713852,
+            "audit_paired_deltas": [
+              4.37113232886793,
+              9.765237245348658,
+              2.3835338536017616,
+              13.173193133949894,
+              -0.7929625807451544,
+              11.40606833258596,
+              10.880009157674976,
+              -1.557100213713852
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 26,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 50,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          },
+          {
+            "step": 69,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 7.665071045643162,
+            "minimum_delta": 6.821042826714461,
+            "paired_deltas": [
+              7.665071045643344,
+              6.821042826714461,
+              8.50909926457166,
+              7.334367302516398,
+              7.99577478876995
+            ],
+            "audit_mean_delta": 6.12519246050433,
+            "audit_minimum_delta": -1.6226890377653262,
+            "audit_paired_deltas": [
+              4.371132328867816,
+              9.541781220704934,
+              2.3278566548865456,
+              13.002285436399802,
+              -0.9049044093200678,
+              11.406068332586187,
+              10.880009157674749,
+              -1.6226890377653262
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 27,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 50,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          },
+          {
+            "step": 70,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 28,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 28,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 7.8038336182571815,
+            "minimum_delta": 6.82485100363624,
+            "paired_deltas": [
+              7.803833618257158,
+              6.82485100363624,
+              8.782816232878076,
+              7.39628140714467,
+              8.21138582936976
+            ],
+            "audit_mean_delta": 6.216353900527146,
+            "audit_minimum_delta": -1.4594442528378408,
+            "audit_paired_deltas": [
+              4.371132328867816,
+              9.657184340863353,
+              2.5468501584956584,
+              13.060817078018772,
+              -0.731785939451413,
+              11.40606833258596,
+              10.880009157674863,
+              -1.4594442528378408
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 28,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 50,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          },
+          {
+            "step": 71,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 7.76926863900419,
+            "minimum_delta": 6.670107146350574,
+            "paired_deltas": [
+              7.7692686390040535,
+              6.670107146350574,
+              8.86843013165776,
+              7.2865078525624085,
+              8.252029425446153
+            ],
+            "audit_mean_delta": 6.200895374000275,
+            "audit_minimum_delta": -1.6417073077893178,
+            "audit_paired_deltas": [
+              4.371132328867816,
+              9.735454135548991,
+              2.3780713916601144,
+              13.160465886348106,
+              -0.6823309328944447,
+              11.406068332586074,
+              10.880009157674863,
+              -1.6417073077893178
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 29,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 50,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          },
+          {
+            "step": 72,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 2,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 2,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 7.703757601659777,
+            "minimum_delta": 6.521513587198569,
+            "paired_deltas": [
+              7.703757601659618,
+              6.521513587198569,
+              8.886001616121007,
+              7.3500597657069875,
+              8.057455437612703
+            ],
+            "audit_mean_delta": 6.763738860732126,
+            "audit_minimum_delta": -1.6427460454916059,
+            "audit_paired_deltas": [
+              4.371132328867702,
+              9.686485038166609,
+              2.2152877748745823,
+              13.192227428445108,
+              -0.6499597295590434,
+              16.057474932878677,
+              10.880009157674976,
+              -1.6427460454916059
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 2,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 50,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          },
+          {
+            "step": 73,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 30,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 30,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 7.653676024896242,
+            "minimum_delta": 6.38451599373451,
+            "paired_deltas": [
+              7.6536760248961855,
+              6.38451599373451,
+              8.922836056057804,
+              7.186768631580776,
+              8.120583418211936
+            ],
+            "audit_mean_delta": 6.708928227493573,
+            "audit_minimum_delta": -1.6957793714639138,
+            "audit_paired_deltas": [
+              4.371132328867816,
+              9.501359605284676,
+              2.293038584908004,
+              13.014313464884594,
+              -0.582321570150441,
+              15.889673619942982,
+              10.880009157674863,
+              -1.6957793714639138
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 30,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 50,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          },
+          {
+            "step": 74,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 31,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 31,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 7.592385900414877,
+            "minimum_delta": 6.283603724981219,
+            "paired_deltas": [
+              7.592385900414797,
+              6.283603724981219,
+              8.901168075848318,
+              7.148632653300524,
+              8.036139147529525
+            ],
+            "audit_mean_delta": 6.688172455954891,
+            "audit_minimum_delta": -1.661913639554939,
+            "audit_paired_deltas": [
+              4.371132328867816,
+              9.546608198992033,
+              2.1251927085620537,
+              13.059579092267654,
+              -0.6276302918753913,
+              15.812402092705156,
+              10.880009157674749,
+              -1.661913639554939
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 31,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 50,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          },
+          {
+            "step": 75,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 32,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 32,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "public_greedy",
+            "mean_delta": 7.697508141078833,
+            "minimum_delta": 6.545140374941639,
+            "paired_deltas": [
+              7.69750814107897,
+              6.545140374941639,
+              8.84987590721596,
+              7.352760398236114,
+              8.042255883921484
+            ],
+            "audit_mean_delta": 6.775764047536228,
+            "audit_minimum_delta": -1.5631303703625008,
+            "audit_paired_deltas": [
+              4.37113232886793,
+              9.728068699794164,
+              2.2501203243393775,
+              13.144895957818335,
+              -0.4931436912260665,
+              15.888159973383722,
+              10.880009157674863,
+              -1.5631303703625008
+            ],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 32,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 50,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "public_board_salt": "d15e0ebfa37cf9613a9027896fd787512e15976fac4ac5d0ee48c75a56b4ff9f",
+        "seconds": 41.99458544992376
+      },
+      "delta": 0.0
+    },
+    {
+      "family": "random_regular_mixed",
+      "repetition": 503,
+      "r_stratum": "standard",
+      "seed_sha256": "a1242993408d3282ecd9614deb2b1742ffccb53f7cd24f8b6859493d8fc58918",
+      "variant": "audited",
+      "baseline": {
+        "score": 679.5807140000001,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "stop_reason": "no_valid_actions",
+        "llm_calls": 0
+      },
+      "candidate": {
+        "score": 679.5807140000001,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 190,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "8ad8d89ff26628671df3b75b55a15eaf3a602e72bbffbb85ec1b952e76793b0e",
+        "seconds": 26.507089355029166
+      },
+      "delta": 0.0
+    }
+  ],
+  "summary": {
+    "audited": {
+      "cases": 18,
+      "mean_delta": 0.0,
+      "minimum_delta": 0.0,
+      "family_mean_delta": {
+        "random_geometric": 0.0,
+        "barbell": 0.0,
+        "lollipop": 0.0,
+        "random_tree": 0.0,
+        "bipartite": 0.0,
+        "degree_corrected_sbm": 0.0,
+        "powerlaw_cluster": 0.0,
+        "watts_strogatz_mixed": 0.0,
+        "random_regular_mixed": 0.0
+      },
+      "all_family_means_nonnegative": true,
+      "failures": 0
+    }
+  },
+  "stratum_summary": {
+    "standard": {
+      "audited": {
+        "cases": 18,
+        "mean_delta": 0.0,
+        "minimum_delta": 0.0,
+        "family_mean_delta": {
+          "random_geometric": 0.0,
+          "barbell": 0.0,
+          "lollipop": 0.0,
+          "random_tree": 0.0,
+          "bipartite": 0.0,
+          "degree_corrected_sbm": 0.0,
+          "powerlaw_cluster": 0.0,
+          "watts_strogatz_mixed": 0.0,
+          "random_regular_mixed": 0.0
+        },
+        "all_family_means_nonnegative": true,
+        "failures": 0
+      }
+    }
+  },
+  "platform_score": null,
+  "production_promotion_allowed": false
+}

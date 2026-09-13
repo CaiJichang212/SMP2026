@@ -1,0 +1,41 @@
+{
+  "family": "ba_negative_hubs",
+  "repetition": 501,
+  "baseline": {
+    "score": 274.76497219117647,
+    "actions": {
+      "scan": 50,
+      "comm": 17,
+      "cut": 0,
+      "shield": 8
+    },
+    "failures": 0,
+    "remaining_budget": 1.0,
+    "stop_reason": "no_valid_actions",
+    "llm_calls": 0
+  },
+  "candidate": {
+    "score": 285.52880189705877,
+    "actions": {
+      "scan": 50,
+      "comm": 17,
+      "cut": 0,
+      "shield": 8
+    },
+    "remaining_budget": 1.0,
+    "failures": 0,
+    "llm_mode": "mock",
+    "llm_calls": 75,
+    "llm_accepted": 75,
+    "llm_fallbacks": 0,
+    "transport_attempts": 0,
+    "transport_errors": 0,
+    "p8_proposals": 1,
+    "p8_planning_errors": 0,
+    "steps": 75
+  },
+  "delta": 10.763829705882301,
+  "evaluation": "local research with actual CaseVO orchestration",
+  "platform_score": null,
+  "production_enabled": false
+}
