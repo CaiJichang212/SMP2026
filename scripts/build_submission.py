@@ -64,6 +64,8 @@ def verify_p8_release() -> None:
     if not report.is_file() or hashlib.sha256(report.read_bytes()).hexdigest() != P8_GATE_REPORT_SHA256:
         raise SystemExit("P8 资格报告缺失或哈希不匹配。")
     evidence = json.loads(report.read_text(encoding="utf-8"))
+    if "release_gate_pending" in evidence and evidence.get("release_gate_passed") is not True:
+        raise SystemExit("策略统计门禁不能替代最终入口验证；发布证据尚未封存。")
     source_hashes = set(evidence.get("standard_audit", {}).get("reported_policy_hashes", {}).values())
     source = PROJECT_ROOT / "src/starnet/policy/p8_experiment.py"
     if source_hashes != {hashlib.sha256(source.read_bytes()).hexdigest()}:

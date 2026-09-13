@@ -39,6 +39,7 @@ def main():
         load_local_env(ROOT / ".env")
     seed = seed_payload(args.family, args.repetition, args.shift)
     report = {"family": args.family, "shift": args.shift, "repetition": args.repetition,
+              "python_version": sys.version.split()[0],
               "seed_sha256": hashlib.sha256(json.dumps(seed, sort_keys=True).encode()).hexdigest(),
               "archive": str(args.archive) if args.archive else None,
               "unreleased_candidate_assembly": args.archive is None,
@@ -62,6 +63,8 @@ def main():
         module = importlib.util.module_from_spec(spec)
         sys.modules[spec.name] = module
         spec.loader.exec_module(module)
+        report["networkx_version"] = module.nx.__version__
+        report["framework_model_module"] = module.ModelBase.__module__
         helper = getattr(module, "bounded_response_delta", None)
         report["bounded_estimator_active"] = bool(callable(helper) and
             helper(90.0, 15.0) == 10.0 and helper(100.0, 15.0) == 0.0
