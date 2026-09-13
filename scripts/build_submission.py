@@ -71,6 +71,18 @@ def verify_p8_release() -> None:
     if (evidence.get("selected_variant") != P8_CERTIFIED_MODE
             or evidence.get("variants", {}).get(P8_CERTIFIED_MODE, {}).get("mean_score_gate_passed") is not True):
         raise SystemExit("P8 资格报告未批准当前模式。")
+    manifest_path = PROJECT_ROOT / "experiments/manifests/p8-release-sources-20260913.json"
+    if not manifest_path.is_file():
+        raise SystemExit("P8 运行源码审阅清单缺失。")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    expected_paths = set(INLINE_MODULES) | {"src/starnet/submission/config.json"}
+    expected_paths.update(str(path.relative_to(PROJECT_ROOT)) for path in (SOURCE_DIR / "prompt").rglob("*") if path.is_file())
+    if (manifest.get("gate_report_sha256") != P8_GATE_REPORT_SHA256
+            or set(manifest.get("files", {})) != expected_paths):
+        raise SystemExit("P8 运行源码审阅清单与当前构建不一致。")
+    for relative, digest in manifest["files"].items():
+        if hashlib.sha256((PROJECT_ROOT / relative).read_bytes()).hexdigest() != digest:
+            raise SystemExit(f"P8 已审阅运行源码发生变化: {relative}；请验证后更新资格记录。")
 
 
 def strip_project_imports(source: str, path: Path) -> str:
