@@ -2,6 +2,10 @@
 
 Response factor ``r`` is offline environment data. Production policies must
 only learn responses from public action returns and never import this module.
+The ``degree_corrected_sbm`` family is a synthetic approximation made from a
+random-partition graph plus heterogeneous hub edges, not a formal DCSBM draw.
+Historical fixed-topology families retain their topology semantics; only the
+four new families guarantee independent topology and ID permutation by repeat.
 """
 
 from __future__ import annotations
@@ -135,7 +139,12 @@ def seed_payload(
     r_stratum: str = "standard",
     node_count: int = 50,
 ) -> dict[str, Any]:
-    """Return one P8 seed across the 18 historical and four new families."""
+    """Return one P8 seed across the 18 historical and four new families.
+
+    Every response stratum, including ``standard``, is sampled by this P8
+    wrapper. Therefore an old-family P8 seed is not hash-compatible with an
+    earlier P7 seed that happens to use the same repetition number.
+    """
     if family not in FAMILIES:
         raise ValueError(f"unknown P8 family: {family}")
     if r_stratum not in R_STRATA:
