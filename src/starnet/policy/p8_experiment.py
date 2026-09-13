@@ -150,6 +150,10 @@ def _rollout(
         raise ValueError("invalid P8 rollout resources")
     state = PredictiveState.from_blackboard(board)
     visible = dict(observed)
+    # A scenario's latent first-slot response drives its environment
+    # transitions. ``visible`` contains only realized public returns used by
+    # the simulated policy, which can differ when a bound censors an action.
+    latent_first: dict[int, float] = {}
     pending: Action | None = first_action
     for _ in range(remaining_steps):
         projected = _ProjectedBoard.from_state(state, board.node_count or len(board.nodes))
@@ -168,14 +172,18 @@ def _rollout(
             if node.comm_left is None:
                 raise ValueError("missing public communication count")
             turn = 4 - node.comm_left
-            first = visible.get(action.target_node_1)
+            node_id = action.target_node_1
+            public_first = visible.get(node_id)
+            first = latent_first.get(node_id)
             if first is None:
-                nominal_first = 15.0 * _scenario_factor(salt, action.target_node_1, scenario)
-                first = bounded_response_delta(node.w, nominal_first)
+                first = (float(public_first) if public_first is not None else
+                         15.0 * _scenario_factor(salt, node_id, scenario))
+                latent_first[node_id] = first
+            delta = bounded_response_delta(node.w, first * (0.5 ** (turn - 1)))
+            if public_first is None and turn == 1:
                 # The simulated policy learns this response only now, after
                 # the successful hypothetical action on its own path.
-                visible[action.target_node_1] = first
-            delta = bounded_response_delta(node.w, first * (0.5 ** (turn - 1)))
+                visible[node_id] = delta
         state = state.apply(action, delta)
         budget -= action_cost(action)
     score = float(_FAST_SETTLEMENT.score(state))

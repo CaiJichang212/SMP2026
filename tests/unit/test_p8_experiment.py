@@ -234,6 +234,57 @@ class P8ExperimentTests(unittest.TestCase):
         self.assertEqual(calls, [{2: 5.0}])
         self.assertEqual(board.nodes[2].w, 95.0)
 
+    def test_censored_first_return_does_not_replace_latent_scenario_response(self):
+        board = Blackboard(node_count=1)
+        board.record_scan(1, {
+            "w": -110.0, "persona": "和平", "comm_left": 3, "neighbors": [],
+        })
+
+        def repeat(projected, budget, observed):
+            node = projected.nodes[1]
+            if not node.comm_left:
+                return []
+            turn = 4 - node.comm_left
+            return [candidate(Action("comm", 1, prompt_id=1), 1.0, 1.0,
+                              f"comm:1:{turn}")]
+
+        with patch("starnet.policy.p8_experiment._greedy_candidates", side_effect=repeat), \
+             patch("starnet.policy.p8_experiment._scenario_factor", return_value=0.2):
+            score = _rollout(board, 20, {}, Action("comm", 1, prompt_id=1), 3,
+                             scenario=1, salt="c" * 64)
+        self.assertEqual(score, -97.75)
+        self.assertEqual(board.nodes[1].w, -110.0)
+
+    def test_unknown_later_slot_decays_latent_before_clipping(self):
+        board = Blackboard(node_count=1)
+        board.record_scan(1, {
+            "w": 95.0, "persona": "和平", "comm_left": 2, "neighbors": [],
+        })
+        with patch("starnet.policy.p8_experiment._scenario_factor", return_value=1.0):
+            score = _rollout(board, 2, {}, Action("comm", 1, prompt_id=1), 1,
+                             scenario=1, salt="d" * 64)
+        self.assertEqual(score, 100.0)
+        self.assertEqual(board.nodes[1].w, 95.0)
+
+        full = Blackboard(node_count=1)
+        full.record_scan(1, {
+            "w": 95.0, "persona": "和平", "comm_left": 3, "neighbors": [],
+        })
+
+        def repeat(projected, budget, observed):
+            node = projected.nodes[1]
+            if not node.comm_left:
+                return []
+            turn = 4 - node.comm_left
+            return [candidate(Action("comm", 1, prompt_id=1), 1.0, 1.0,
+                              f"comm:1:{turn}")]
+
+        with patch("starnet.policy.p8_experiment._scenario_factor", return_value=1.0), \
+             patch("starnet.policy.p8_experiment._greedy_candidates", side_effect=repeat):
+            full_score = _rollout(full, 20, {}, Action("comm", 1, prompt_id=1), 3,
+                                  scenario=1, salt="d" * 64)
+        self.assertEqual(full_score, 100.0)
+
     def test_invalid_or_nonfinite_inputs_fail_closed(self):
         board = make_board()
         salt = public_board_salt(board)
