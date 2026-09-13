@@ -28,10 +28,13 @@ The temporary assembled single-file model SHA-256 was
    zero planning errors, and zero action failures. It completed 84 steps with
    score `2071.3959395744687` and action SHA-256
    `9485faabecbae8cc13ea2c1dc56e884caa074aee21d1a00f5b183b69d66f5733`.
+   The report itself records Python `3.9.25`, NetworkX `3.1`, and framework
+   model module `casevo.model_base`.
 4. The same entry check in the modern development environment produced the
    same model hash, score, action hash, counters, and action sequence. After
-   deleting only `seconds`, both JSON reports have SHA-256
-   `fb6976af7e6b9c0e5f31d631a21e992dbce7693c323f11855b9b7ff071605256`.
+   deleting `seconds` and the intentionally different `python_version` and
+   `networkx_version` fields, both JSON reports have SHA-256
+   `515d9ff6b3393ab66385fa0f590376960916064baae428cf58df913a46c1fd22`.
 
 Machine-readable entry reports:
 
