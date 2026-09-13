@@ -1,0 +1,16 @@
+{
+  "variant": "audited",
+  "reason": "Five selection scenarios accepted a first cut on development bipartite501 with predicted gains all positive but actual paired loss -4.616358; test additional samples not used for selection.",
+  "selection": "original conservative P8 selection over mean plus two antithetic pairs",
+  "independent_action_audit": "only for a selected nonbaseline action, evaluate eight unused scenarios (four antithetic pairs indexed2-5) for that action and the same baseline continuation",
+  "acceptance": "audit mean positive and audit minimum nonnegative; otherwise baseline without selecting another alternative",
+  "maximum_rollouts_per_decision": 32,
+  "interpretation": "finite assumed-prior scenarios; does not guarantee true nonnegative gain or yield a statistical confidence interval",
+  "topology_cache": "FastComponentSettlement LRU128, topology-only; adopt only after exact-score/candidate equivalence checks",
+  "development_screen": {"families": "all22 P8 families", "repetitions": [501], "strata": ["standard"]},
+  "development_expansion": {"repetitions": [502, 503], "condition": "screen shows useful gain and acceptable downside; report all families"},
+  "confirmation": {"repetitions": [601, 602, 603, 604, 605], "status": "reserved until variant selection and freeze"},
+  "promotion_gate": "same declared complete-cohort, public-API/resource, family-mean and bootstrap gates as P8 initial manifest",
+  "prior_results": "preserve initial expected/conservative screening reports; no parameter selection on confirmation",
+  "production_enabled": false
+}
