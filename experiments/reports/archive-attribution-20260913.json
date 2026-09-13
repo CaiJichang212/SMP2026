@@ -1,0 +1,7944 @@
+{
+  "schema_version": 1,
+  "families": [
+    "er_balanced",
+    "ba_negative_hubs",
+    "ws_peace_majority",
+    "sbm_negative_bridges",
+    "sbm_violent_cluster",
+    "three_sparse_components"
+  ],
+  "node_count": 50,
+  "budget": 100,
+  "repetition": 1,
+  "llm_mode": "offline_forced_failure",
+  "rows": [
+    {
+      "archive": "starnet-p8-mean-20260913.zip",
+      "archive_sha256": "067d232f5360e67114d1bf0f1937a574f71b743cd2049cf6d20372a45eb06c50",
+      "runner_sha256": "c6db222569a40a74c0340d8ffc3c59c38e120e68d768fcc1b23083891d8ab467",
+      "family": "ws_peace_majority",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "b780e56957304189c394c22f43c709f9c9b5d13c90746b7b5d3666a7508ad972",
+      "offline_only": true,
+      "allow_offline_fallback": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "step",
+        "person": [
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "基于公开事实完成每次扫描与干预的最终选择。",
+            "experimental_policy_mode": "public_greedy",
+            "experimental_public_comm_shield_guard": false,
+            "experimental_p8_mode": "conservative"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 240,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "step",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "enable_public_comm_shield_guard": false,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "effective_p8_mode": "conservative",
+      "controller_type": "P8RuntimeController",
+      "model_sha256": "d40b1431af78e8161a9874eb3414d731ba6d10b6a79f0a3b7c1249fa3d3d43cb",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 907.9251816428571,
+      "steps": 88,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "forced_llm_failures": 87,
+      "llm_mode": "forced_offline_failure",
+      "llm_accepted": 0,
+      "llm_fallbacks": 87,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "ca75cf93debf17a51f1f3aa7542b98711258b0ebaabd0ea1065cd8ff77d5dd47",
+      "action_sequence": [
+        [
+          "scan",
+          1
+        ],
+        [
+          "scan",
+          2
+        ],
+        [
+          "scan",
+          3
+        ],
+        [
+          "scan",
+          50
+        ],
+        [
+          "scan",
+          49
+        ],
+        [
+          "scan",
+          4
+        ],
+        [
+          "scan",
+          5
+        ],
+        [
+          "scan",
+          7
+        ],
+        [
+          "scan",
+          6
+        ],
+        [
+          "scan",
+          32
+        ],
+        [
+          "scan",
+          48
+        ],
+        [
+          "scan",
+          46
+        ],
+        [
+          "scan",
+          47
+        ],
+        [
+          "scan",
+          45
+        ],
+        [
+          "scan",
+          44
+        ],
+        [
+          "scan",
+          43
+        ],
+        [
+          "scan",
+          42
+        ],
+        [
+          "scan",
+          8
+        ],
+        [
+          "scan",
+          9
+        ],
+        [
+          "scan",
+          10
+        ],
+        [
+          "scan",
+          11
+        ],
+        [
+          "scan",
+          12
+        ],
+        [
+          "scan",
+          13
+        ],
+        [
+          "scan",
+          14
+        ],
+        [
+          "scan",
+          15
+        ],
+        [
+          "scan",
+          41
+        ],
+        [
+          "scan",
+          40
+        ],
+        [
+          "scan",
+          16
+        ],
+        [
+          "scan",
+          17
+        ],
+        [
+          "scan",
+          18
+        ],
+        [
+          "scan",
+          19
+        ],
+        [
+          "scan",
+          21
+        ],
+        [
+          "scan",
+          20
+        ],
+        [
+          "scan",
+          39
+        ],
+        [
+          "scan",
+          35
+        ],
+        [
+          "scan",
+          33
+        ],
+        [
+          "scan",
+          30
+        ],
+        [
+          "scan",
+          31
+        ],
+        [
+          "scan",
+          34
+        ],
+        [
+          "scan",
+          36
+        ],
+        [
+          "scan",
+          37
+        ],
+        [
+          "scan",
+          38
+        ],
+        [
+          "scan",
+          28
+        ],
+        [
+          "scan",
+          29
+        ],
+        [
+          "scan",
+          27
+        ],
+        [
+          "scan",
+          24
+        ],
+        [
+          "scan",
+          25
+        ],
+        [
+          "scan",
+          22
+        ],
+        [
+          "scan",
+          23
+        ],
+        [
+          "scan",
+          26
+        ],
+        [
+          "comm",
+          3,
+          1
+        ],
+        [
+          "comm",
+          9,
+          1
+        ],
+        [
+          "comm",
+          10,
+          1
+        ],
+        [
+          "comm",
+          12,
+          1
+        ],
+        [
+          "comm",
+          19,
+          1
+        ],
+        [
+          "comm",
+          21,
+          1
+        ],
+        [
+          "comm",
+          25,
+          1
+        ],
+        [
+          "comm",
+          2,
+          1
+        ],
+        [
+          "comm",
+          32,
+          1
+        ],
+        [
+          "comm",
+          33,
+          1
+        ],
+        [
+          "comm",
+          39,
+          1
+        ],
+        [
+          "comm",
+          48,
+          1
+        ],
+        [
+          "comm",
+          5,
+          1
+        ],
+        [
+          "comm",
+          11,
+          1
+        ],
+        [
+          "comm",
+          3,
+          1
+        ],
+        [
+          "comm",
+          13,
+          1
+        ],
+        [
+          "comm",
+          15,
+          1
+        ],
+        [
+          "comm",
+          12,
+          1
+        ],
+        [
+          "comm",
+          16,
+          1
+        ],
+        [
+          "comm",
+          20,
+          1
+        ],
+        [
+          "comm",
+          23,
+          1
+        ],
+        [
+          "comm",
+          24,
+          1
+        ],
+        [
+          "comm",
+          2,
+          1
+        ],
+        [
+          "comm",
+          27,
+          1
+        ],
+        [
+          "comm",
+          28,
+          1
+        ],
+        [
+          "comm",
+          29,
+          1
+        ],
+        [
+          "comm",
+          30,
+          1
+        ],
+        [
+          "comm",
+          31,
+          1
+        ],
+        [
+          "comm",
+          34,
+          1
+        ],
+        [
+          "comm",
+          35,
+          1
+        ],
+        [
+          "comm",
+          37,
+          1
+        ],
+        [
+          "comm",
+          40,
+          1
+        ],
+        [
+          "comm",
+          41,
+          1
+        ],
+        [
+          "comm",
+          43,
+          1
+        ],
+        [
+          "comm",
+          44,
+          1
+        ],
+        [
+          "comm",
+          46,
+          1
+        ],
+        [
+          "comm",
+          47,
+          1
+        ]
+      ],
+      "p8_proposals": 0,
+      "p8_planning_errors": 0,
+      "elapsed_seconds": 6.744685145909898
+    },
+    {
+      "archive": "starnet-p8-mean-20260913.zip",
+      "archive_sha256": "067d232f5360e67114d1bf0f1937a574f71b743cd2049cf6d20372a45eb06c50",
+      "runner_sha256": "c6db222569a40a74c0340d8ffc3c59c38e120e68d768fcc1b23083891d8ab467",
+      "family": "er_balanced",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "e274154be9f610faca235730fb68ded23d1af233daca5a0efd6db1c9ada66518",
+      "offline_only": true,
+      "allow_offline_fallback": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "step",
+        "person": [
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "基于公开事实完成每次扫描与干预的最终选择。",
+            "experimental_policy_mode": "public_greedy",
+            "experimental_public_comm_shield_guard": false,
+            "experimental_p8_mode": "conservative"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 240,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "step",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "enable_public_comm_shield_guard": false,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "effective_p8_mode": "conservative",
+      "controller_type": "P8RuntimeController",
+      "model_sha256": "d40b1431af78e8161a9874eb3414d731ba6d10b6a79f0a3b7c1249fa3d3d43cb",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 802.8062920839894,
+      "steps": 86,
+      "actions": {
+        "scan": 50,
+        "comm": 35,
+        "cut": 0,
+        "shield": 1
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "forced_llm_failures": 86,
+      "llm_mode": "forced_offline_failure",
+      "llm_accepted": 0,
+      "llm_fallbacks": 86,
+      "remaining_budget": 0.0,
+      "stop_reason": "None",
+      "actions_sha256": "fa3065cb05fb6992367c5d0c971d049ed83db0a6ec31b90c9eb37aaed696e901",
+      "action_sequence": [
+        [
+          "scan",
+          1
+        ],
+        [
+          "scan",
+          14
+        ],
+        [
+          "scan",
+          15
+        ],
+        [
+          "scan",
+          39
+        ],
+        [
+          "scan",
+          23
+        ],
+        [
+          "scan",
+          10
+        ],
+        [
+          "scan",
+          33
+        ],
+        [
+          "scan",
+          5
+        ],
+        [
+          "scan",
+          35
+        ],
+        [
+          "scan",
+          24
+        ],
+        [
+          "scan",
+          38
+        ],
+        [
+          "scan",
+          17
+        ],
+        [
+          "scan",
+          12
+        ],
+        [
+          "scan",
+          7
+        ],
+        [
+          "scan",
+          50
+        ],
+        [
+          "scan",
+          19
+        ],
+        [
+          "scan",
+          44
+        ],
+        [
+          "scan",
+          29
+        ],
+        [
+          "scan",
+          28
+        ],
+        [
+          "scan",
+          37
+        ],
+        [
+          "scan",
+          46
+        ],
+        [
+          "scan",
+          36
+        ],
+        [
+          "scan",
+          8
+        ],
+        [
+          "scan",
+          9
+        ],
+        [
+          "scan",
+          45
+        ],
+        [
+          "scan",
+          20
+        ],
+        [
+          "scan",
+          16
+        ],
+        [
+          "scan",
+          3
+        ],
+        [
+          "scan",
+          47
+        ],
+        [
+          "scan",
+          40
+        ],
+        [
+          "scan",
+          25
+        ],
+        [
+          "scan",
+          30
+        ],
+        [
+          "scan",
+          41
+        ],
+        [
+          "scan",
+          48
+        ],
+        [
+          "scan",
+          18
+        ],
+        [
+          "scan",
+          49
+        ],
+        [
+          "scan",
+          11
+        ],
+        [
+          "scan",
+          34
+        ],
+        [
+          "scan",
+          32
+        ],
+        [
+          "scan",
+          26
+        ],
+        [
+          "scan",
+          21
+        ],
+        [
+          "scan",
+          27
+        ],
+        [
+          "scan",
+          6
+        ],
+        [
+          "scan",
+          42
+        ],
+        [
+          "scan",
+          13
+        ],
+        [
+          "scan",
+          22
+        ],
+        [
+          "scan",
+          4
+        ],
+        [
+          "scan",
+          43
+        ],
+        [
+          "scan",
+          31
+        ],
+        [
+          "scan",
+          2
+        ],
+        [
+          "shield",
+          17
+        ],
+        [
+          "comm",
+          47,
+          1
+        ],
+        [
+          "comm",
+          5,
+          1
+        ],
+        [
+          "comm",
+          15,
+          1
+        ],
+        [
+          "comm",
+          38,
+          1
+        ],
+        [
+          "comm",
+          39,
+          1
+        ],
+        [
+          "comm",
+          45,
+          1
+        ],
+        [
+          "comm",
+          16,
+          1
+        ],
+        [
+          "comm",
+          28,
+          1
+        ],
+        [
+          "comm",
+          7,
+          1
+        ],
+        [
+          "comm",
+          10,
+          1
+        ],
+        [
+          "comm",
+          19,
+          1
+        ],
+        [
+          "comm",
+          29,
+          1
+        ],
+        [
+          "comm",
+          37,
+          1
+        ],
+        [
+          "comm",
+          8,
+          1
+        ],
+        [
+          "comm",
+          39,
+          1
+        ],
+        [
+          "comm",
+          16,
+          1
+        ],
+        [
+          "comm",
+          46,
+          1
+        ],
+        [
+          "comm",
+          47,
+          1
+        ],
+        [
+          "comm",
+          15,
+          1
+        ],
+        [
+          "comm",
+          7,
+          1
+        ],
+        [
+          "comm",
+          12,
+          1
+        ],
+        [
+          "comm",
+          20,
+          1
+        ],
+        [
+          "comm",
+          23,
+          1
+        ],
+        [
+          "comm",
+          24,
+          1
+        ],
+        [
+          "comm",
+          25,
+          1
+        ],
+        [
+          "comm",
+          34,
+          1
+        ],
+        [
+          "comm",
+          3,
+          1
+        ],
+        [
+          "comm",
+          44,
+          1
+        ],
+        [
+          "comm",
+          49,
+          1
+        ],
+        [
+          "comm",
+          9,
+          1
+        ],
+        [
+          "comm",
+          38,
+          1
+        ],
+        [
+          "comm",
+          29,
+          1
+        ],
+        [
+          "comm",
+          37,
+          1
+        ],
+        [
+          "comm",
+          28,
+          1
+        ],
+        [
+          "comm",
+          11,
+          1
+        ]
+      ],
+      "p8_proposals": 0,
+      "p8_planning_errors": 0,
+      "elapsed_seconds": 14.13974599307403
+    },
+    {
+      "archive": "starnet-p8-mean-20260913.zip",
+      "archive_sha256": "067d232f5360e67114d1bf0f1937a574f71b743cd2049cf6d20372a45eb06c50",
+      "runner_sha256": "c6db222569a40a74c0340d8ffc3c59c38e120e68d768fcc1b23083891d8ab467",
+      "family": "ba_negative_hubs",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "616a1972473a1e1e24b0a9b73c9c270c0a47e5d39df5419310344a6b973a3067",
+      "offline_only": true,
+      "allow_offline_fallback": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "step",
+        "person": [
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "基于公开事实完成每次扫描与干预的最终选择。",
+            "experimental_policy_mode": "public_greedy",
+            "experimental_public_comm_shield_guard": false,
+            "experimental_p8_mode": "conservative"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 240,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "step",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "enable_public_comm_shield_guard": false,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "effective_p8_mode": "conservative",
+      "controller_type": "P8RuntimeController",
+      "model_sha256": "d40b1431af78e8161a9874eb3414d731ba6d10b6a79f0a3b7c1249fa3d3d43cb",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 590.240586484472,
+      "steps": 77,
+      "actions": {
+        "scan": 50,
+        "comm": 20,
+        "cut": 0,
+        "shield": 7
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "forced_llm_failures": 77,
+      "llm_mode": "forced_offline_failure",
+      "llm_accepted": 0,
+      "llm_fallbacks": 77,
+      "remaining_budget": 0.0,
+      "stop_reason": "None",
+      "actions_sha256": "c77f532e3eae9046f2c62f0ac4ab821fbecf9c915644ad3bd9be5fe341342b1b",
+      "action_sequence": [
+        [
+          "scan",
+          1
+        ],
+        [
+          "scan",
+          2
+        ],
+        [
+          "scan",
+          11
+        ],
+        [
+          "scan",
+          3
+        ],
+        [
+          "scan",
+          16
+        ],
+        [
+          "scan",
+          19
+        ],
+        [
+          "scan",
+          7
+        ],
+        [
+          "scan",
+          5
+        ],
+        [
+          "scan",
+          6
+        ],
+        [
+          "scan",
+          8
+        ],
+        [
+          "scan",
+          13
+        ],
+        [
+          "scan",
+          18
+        ],
+        [
+          "scan",
+          20
+        ],
+        [
+          "scan",
+          24
+        ],
+        [
+          "scan",
+          25
+        ],
+        [
+          "scan",
+          4
+        ],
+        [
+          "scan",
+          38
+        ],
+        [
+          "scan",
+          40
+        ],
+        [
+          "scan",
+          43
+        ],
+        [
+          "scan",
+          9
+        ],
+        [
+          "scan",
+          10
+        ],
+        [
+          "scan",
+          12
+        ],
+        [
+          "scan",
+          14
+        ],
+        [
+          "scan",
+          15
+        ],
+        [
+          "scan",
+          17
+        ],
+        [
+          "scan",
+          21
+        ],
+        [
+          "scan",
+          22
+        ],
+        [
+          "scan",
+          23
+        ],
+        [
+          "scan",
+          26
+        ],
+        [
+          "scan",
+          27
+        ],
+        [
+          "scan",
+          28
+        ],
+        [
+          "scan",
+          29
+        ],
+        [
+          "scan",
+          30
+        ],
+        [
+          "scan",
+          31
+        ],
+        [
+          "scan",
+          32
+        ],
+        [
+          "scan",
+          33
+        ],
+        [
+          "scan",
+          34
+        ],
+        [
+          "scan",
+          35
+        ],
+        [
+          "scan",
+          36
+        ],
+        [
+          "scan",
+          37
+        ],
+        [
+          "scan",
+          39
+        ],
+        [
+          "scan",
+          41
+        ],
+        [
+          "scan",
+          42
+        ],
+        [
+          "scan",
+          44
+        ],
+        [
+          "scan",
+          45
+        ],
+        [
+          "scan",
+          46
+        ],
+        [
+          "scan",
+          47
+        ],
+        [
+          "scan",
+          48
+        ],
+        [
+          "scan",
+          49
+        ],
+        [
+          "scan",
+          50
+        ],
+        [
+          "shield",
+          3
+        ],
+        [
+          "shield",
+          6
+        ],
+        [
+          "comm",
+          5,
+          1
+        ],
+        [
+          "comm",
+          1,
+          1
+        ],
+        [
+          "comm",
+          1,
+          1
+        ],
+        [
+          "comm",
+          17,
+          1
+        ],
+        [
+          "shield",
+          5
+        ],
+        [
+          "shield",
+          20
+        ],
+        [
+          "shield",
+          14
+        ],
+        [
+          "shield",
+          7
+        ],
+        [
+          "comm",
+          15,
+          1
+        ],
+        [
+          "comm",
+          2,
+          1
+        ],
+        [
+          "comm",
+          13,
+          1
+        ],
+        [
+          "comm",
+          35,
+          1
+        ],
+        [
+          "comm",
+          13,
+          1
+        ],
+        [
+          "comm",
+          23,
+          1
+        ],
+        [
+          "comm",
+          27,
+          1
+        ],
+        [
+          "comm",
+          8,
+          1
+        ],
+        [
+          "shield",
+          17
+        ],
+        [
+          "comm",
+          21,
+          1
+        ],
+        [
+          "comm",
+          33,
+          1
+        ],
+        [
+          "comm",
+          4,
+          1
+        ],
+        [
+          "comm",
+          9,
+          1
+        ],
+        [
+          "comm",
+          1,
+          1
+        ],
+        [
+          "comm",
+          11,
+          1
+        ],
+        [
+          "comm",
+          28,
+          1
+        ],
+        [
+          "comm",
+          29,
+          1
+        ]
+      ],
+      "p8_proposals": 3,
+      "p8_planning_errors": 0,
+      "elapsed_seconds": 15.225720038055442
+    },
+    {
+      "archive": "starnet-p8-mean-20260913.zip",
+      "archive_sha256": "067d232f5360e67114d1bf0f1937a574f71b743cd2049cf6d20372a45eb06c50",
+      "runner_sha256": "c6db222569a40a74c0340d8ffc3c59c38e120e68d768fcc1b23083891d8ab467",
+      "family": "sbm_negative_bridges",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "b87ad119087c8343fe82a77f7594e9e2b5ceb055f5f868b9aeb1be9aba43288f",
+      "offline_only": true,
+      "allow_offline_fallback": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "step",
+        "person": [
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "基于公开事实完成每次扫描与干预的最终选择。",
+            "experimental_policy_mode": "public_greedy",
+            "experimental_public_comm_shield_guard": false,
+            "experimental_p8_mode": "conservative"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 240,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "step",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "enable_public_comm_shield_guard": false,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "effective_p8_mode": "conservative",
+      "controller_type": "P8RuntimeController",
+      "model_sha256": "d40b1431af78e8161a9874eb3414d731ba6d10b6a79f0a3b7c1249fa3d3d43cb",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 563.7690441320756,
+      "steps": 85,
+      "actions": {
+        "scan": 50,
+        "comm": 32,
+        "cut": 0,
+        "shield": 2
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "forced_llm_failures": 84,
+      "llm_mode": "forced_offline_failure",
+      "llm_accepted": 0,
+      "llm_fallbacks": 84,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "0126f7befff4337c2fde799ab30724427d53eb03efe121ac1c99170cebfc6456",
+      "action_sequence": [
+        [
+          "scan",
+          1
+        ],
+        [
+          "scan",
+          13
+        ],
+        [
+          "scan",
+          16
+        ],
+        [
+          "scan",
+          20
+        ],
+        [
+          "scan",
+          3
+        ],
+        [
+          "scan",
+          12
+        ],
+        [
+          "scan",
+          7
+        ],
+        [
+          "scan",
+          14
+        ],
+        [
+          "scan",
+          15
+        ],
+        [
+          "scan",
+          19
+        ],
+        [
+          "scan",
+          8
+        ],
+        [
+          "scan",
+          25
+        ],
+        [
+          "scan",
+          2
+        ],
+        [
+          "scan",
+          21
+        ],
+        [
+          "scan",
+          6
+        ],
+        [
+          "scan",
+          10
+        ],
+        [
+          "scan",
+          11
+        ],
+        [
+          "scan",
+          22
+        ],
+        [
+          "scan",
+          9
+        ],
+        [
+          "scan",
+          17
+        ],
+        [
+          "scan",
+          18
+        ],
+        [
+          "scan",
+          24
+        ],
+        [
+          "scan",
+          4
+        ],
+        [
+          "scan",
+          49
+        ],
+        [
+          "scan",
+          32
+        ],
+        [
+          "scan",
+          34
+        ],
+        [
+          "scan",
+          37
+        ],
+        [
+          "scan",
+          44
+        ],
+        [
+          "scan",
+          48
+        ],
+        [
+          "scan",
+          36
+        ],
+        [
+          "scan",
+          39
+        ],
+        [
+          "scan",
+          46
+        ],
+        [
+          "scan",
+          30
+        ],
+        [
+          "scan",
+          38
+        ],
+        [
+          "scan",
+          42
+        ],
+        [
+          "scan",
+          47
+        ],
+        [
+          "scan",
+          26
+        ],
+        [
+          "scan",
+          35
+        ],
+        [
+          "scan",
+          40
+        ],
+        [
+          "scan",
+          45
+        ],
+        [
+          "scan",
+          29
+        ],
+        [
+          "scan",
+          31
+        ],
+        [
+          "scan",
+          50
+        ],
+        [
+          "scan",
+          43
+        ],
+        [
+          "scan",
+          33
+        ],
+        [
+          "scan",
+          27
+        ],
+        [
+          "scan",
+          28
+        ],
+        [
+          "scan",
+          41
+        ],
+        [
+          "scan",
+          5
+        ],
+        [
+          "scan",
+          23
+        ],
+        [
+          "comm",
+          16,
+          1
+        ],
+        [
+          "comm",
+          20,
+          1
+        ],
+        [
+          "comm",
+          32,
+          1
+        ],
+        [
+          "comm",
+          37,
+          1
+        ],
+        [
+          "shield",
+          26
+        ],
+        [
+          "comm",
+          8,
+          1
+        ],
+        [
+          "comm",
+          11,
+          1
+        ],
+        [
+          "comm",
+          12,
+          1
+        ],
+        [
+          "comm",
+          39,
+          1
+        ],
+        [
+          "comm",
+          46,
+          1
+        ],
+        [
+          "comm",
+          7,
+          1
+        ],
+        [
+          "comm",
+          15,
+          1
+        ],
+        [
+          "comm",
+          2,
+          1
+        ],
+        [
+          "comm",
+          34,
+          1
+        ],
+        [
+          "comm",
+          36,
+          1
+        ],
+        [
+          "comm",
+          42,
+          1
+        ],
+        [
+          "comm",
+          45,
+          1
+        ],
+        [
+          "comm",
+          47,
+          1
+        ],
+        [
+          "comm",
+          20,
+          1
+        ],
+        [
+          "comm",
+          22,
+          1
+        ],
+        [
+          "comm",
+          25,
+          1
+        ],
+        [
+          "comm",
+          30,
+          1
+        ],
+        [
+          "comm",
+          35,
+          1
+        ],
+        [
+          "comm",
+          38,
+          1
+        ],
+        [
+          "comm",
+          3,
+          1
+        ],
+        [
+          "comm",
+          43,
+          1
+        ],
+        [
+          "comm",
+          44,
+          1
+        ],
+        [
+          "comm",
+          50,
+          1
+        ],
+        [
+          "comm",
+          9,
+          1
+        ],
+        [
+          "comm",
+          36,
+          1
+        ],
+        [
+          "comm",
+          23,
+          1
+        ],
+        [
+          "comm",
+          46,
+          1
+        ],
+        [
+          "shield",
+          12
+        ],
+        [
+          "comm",
+          35,
+          1
+        ]
+      ],
+      "p8_proposals": 0,
+      "p8_planning_errors": 0,
+      "elapsed_seconds": 10.42660036101006
+    },
+    {
+      "archive": "starnet-p8-mean-20260913.zip",
+      "archive_sha256": "067d232f5360e67114d1bf0f1937a574f71b743cd2049cf6d20372a45eb06c50",
+      "runner_sha256": "c6db222569a40a74c0340d8ffc3c59c38e120e68d768fcc1b23083891d8ab467",
+      "family": "sbm_violent_cluster",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "c47914b819abf4774c3ea7ee832a8f3e4c6d87ea033dc6eb6aef1ab93ea3c7b8",
+      "offline_only": true,
+      "allow_offline_fallback": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "step",
+        "person": [
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "基于公开事实完成每次扫描与干预的最终选择。",
+            "experimental_policy_mode": "public_greedy",
+            "experimental_public_comm_shield_guard": false,
+            "experimental_p8_mode": "conservative"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 240,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "step",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "enable_public_comm_shield_guard": false,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "effective_p8_mode": "conservative",
+      "controller_type": "P8RuntimeController",
+      "model_sha256": "d40b1431af78e8161a9874eb3414d731ba6d10b6a79f0a3b7c1249fa3d3d43cb",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 312.5215108695652,
+      "steps": 73,
+      "actions": {
+        "scan": 50,
+        "comm": 12,
+        "cut": 0,
+        "shield": 10
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "forced_llm_failures": 72,
+      "llm_mode": "forced_offline_failure",
+      "llm_accepted": 0,
+      "llm_fallbacks": 72,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "af29d67b7493990e60f63bb6e342e7b61481ef753cf5006a6eb289b1574aed97",
+      "action_sequence": [
+        [
+          "scan",
+          1
+        ],
+        [
+          "scan",
+          25
+        ],
+        [
+          "scan",
+          8
+        ],
+        [
+          "scan",
+          14
+        ],
+        [
+          "scan",
+          21
+        ],
+        [
+          "scan",
+          13
+        ],
+        [
+          "scan",
+          16
+        ],
+        [
+          "scan",
+          18
+        ],
+        [
+          "scan",
+          11
+        ],
+        [
+          "scan",
+          19
+        ],
+        [
+          "scan",
+          3
+        ],
+        [
+          "scan",
+          10
+        ],
+        [
+          "scan",
+          2
+        ],
+        [
+          "scan",
+          23
+        ],
+        [
+          "scan",
+          4
+        ],
+        [
+          "scan",
+          5
+        ],
+        [
+          "scan",
+          20
+        ],
+        [
+          "scan",
+          22
+        ],
+        [
+          "scan",
+          24
+        ],
+        [
+          "scan",
+          6
+        ],
+        [
+          "scan",
+          7
+        ],
+        [
+          "scan",
+          12
+        ],
+        [
+          "scan",
+          17
+        ],
+        [
+          "scan",
+          9
+        ],
+        [
+          "scan",
+          15
+        ],
+        [
+          "scan",
+          27
+        ],
+        [
+          "scan",
+          28
+        ],
+        [
+          "scan",
+          29
+        ],
+        [
+          "scan",
+          33
+        ],
+        [
+          "scan",
+          39
+        ],
+        [
+          "scan",
+          43
+        ],
+        [
+          "scan",
+          36
+        ],
+        [
+          "scan",
+          26
+        ],
+        [
+          "scan",
+          44
+        ],
+        [
+          "scan",
+          49
+        ],
+        [
+          "scan",
+          47
+        ],
+        [
+          "scan",
+          50
+        ],
+        [
+          "scan",
+          46
+        ],
+        [
+          "scan",
+          34
+        ],
+        [
+          "scan",
+          31
+        ],
+        [
+          "scan",
+          45
+        ],
+        [
+          "scan",
+          48
+        ],
+        [
+          "scan",
+          32
+        ],
+        [
+          "scan",
+          42
+        ],
+        [
+          "scan",
+          37
+        ],
+        [
+          "scan",
+          40
+        ],
+        [
+          "scan",
+          41
+        ],
+        [
+          "scan",
+          30
+        ],
+        [
+          "scan",
+          38
+        ],
+        [
+          "scan",
+          35
+        ],
+        [
+          "shield",
+          16
+        ],
+        [
+          "shield",
+          21
+        ],
+        [
+          "shield",
+          2
+        ],
+        [
+          "shield",
+          18
+        ],
+        [
+          "comm",
+          49,
+          1
+        ],
+        [
+          "comm",
+          6,
+          1
+        ],
+        [
+          "comm",
+          33,
+          1
+        ],
+        [
+          "comm",
+          45,
+          1
+        ],
+        [
+          "comm",
+          46,
+          1
+        ],
+        [
+          "comm",
+          48,
+          1
+        ],
+        [
+          "comm",
+          50,
+          1
+        ],
+        [
+          "shield",
+          3
+        ],
+        [
+          "shield",
+          1
+        ],
+        [
+          "shield",
+          22
+        ],
+        [
+          "shield",
+          5
+        ],
+        [
+          "shield",
+          23
+        ],
+        [
+          "shield",
+          14
+        ],
+        [
+          "comm",
+          27,
+          1
+        ],
+        [
+          "comm",
+          31,
+          1
+        ],
+        [
+          "comm",
+          36,
+          1
+        ],
+        [
+          "comm",
+          40,
+          1
+        ],
+        [
+          "comm",
+          47,
+          1
+        ]
+      ],
+      "p8_proposals": 0,
+      "p8_planning_errors": 0,
+      "elapsed_seconds": 10.430437527014874
+    },
+    {
+      "archive": "starnet-public-greedy-v9-optimized-20260908.zip",
+      "archive_sha256": "0b1ea60f7f5e52f3485328efbc7ec5fb592d657c94762c55ea3015a12c2de214",
+      "runner_sha256": "c6db222569a40a74c0340d8ffc3c59c38e120e68d768fcc1b23083891d8ab467",
+      "family": "er_balanced",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "e274154be9f610faca235730fb68ded23d1af233daca5a0efd6db1c9ada66518",
+      "offline_only": true,
+      "allow_offline_fallback": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。",
+            "experimental_policy_mode": "public_greedy"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "effective_p8_mode": null,
+      "controller_type": "RuntimeController",
+      "model_sha256": "27cc32569a0954779d9a7375b01bb42264a631f716790a1cddd45f0e8a5db661",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 802.8062920839894,
+      "steps": 86,
+      "actions": {
+        "scan": 50,
+        "comm": 35,
+        "cut": 0,
+        "shield": 1
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "forced_llm_failures": 0,
+      "llm_mode": "not_requested_by_archive",
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 0.0,
+      "stop_reason": "None",
+      "actions_sha256": "dcf82111862b5fc36c28ac8a09219696ee6ea1d744475aaeac65a61335e3b8f2",
+      "action_sequence": [
+        [
+          "scan",
+          1
+        ],
+        [
+          "scan",
+          2
+        ],
+        [
+          "scan",
+          3
+        ],
+        [
+          "scan",
+          4
+        ],
+        [
+          "scan",
+          5
+        ],
+        [
+          "scan",
+          6
+        ],
+        [
+          "scan",
+          7
+        ],
+        [
+          "scan",
+          8
+        ],
+        [
+          "scan",
+          9
+        ],
+        [
+          "scan",
+          10
+        ],
+        [
+          "scan",
+          11
+        ],
+        [
+          "scan",
+          12
+        ],
+        [
+          "scan",
+          13
+        ],
+        [
+          "scan",
+          14
+        ],
+        [
+          "scan",
+          15
+        ],
+        [
+          "scan",
+          16
+        ],
+        [
+          "scan",
+          17
+        ],
+        [
+          "scan",
+          18
+        ],
+        [
+          "scan",
+          19
+        ],
+        [
+          "scan",
+          20
+        ],
+        [
+          "scan",
+          21
+        ],
+        [
+          "scan",
+          22
+        ],
+        [
+          "scan",
+          23
+        ],
+        [
+          "scan",
+          24
+        ],
+        [
+          "scan",
+          25
+        ],
+        [
+          "scan",
+          26
+        ],
+        [
+          "scan",
+          27
+        ],
+        [
+          "scan",
+          28
+        ],
+        [
+          "scan",
+          29
+        ],
+        [
+          "scan",
+          30
+        ],
+        [
+          "scan",
+          31
+        ],
+        [
+          "scan",
+          32
+        ],
+        [
+          "scan",
+          33
+        ],
+        [
+          "scan",
+          34
+        ],
+        [
+          "scan",
+          35
+        ],
+        [
+          "scan",
+          36
+        ],
+        [
+          "scan",
+          37
+        ],
+        [
+          "scan",
+          38
+        ],
+        [
+          "scan",
+          39
+        ],
+        [
+          "scan",
+          40
+        ],
+        [
+          "scan",
+          41
+        ],
+        [
+          "scan",
+          42
+        ],
+        [
+          "scan",
+          43
+        ],
+        [
+          "scan",
+          44
+        ],
+        [
+          "scan",
+          45
+        ],
+        [
+          "scan",
+          46
+        ],
+        [
+          "scan",
+          47
+        ],
+        [
+          "scan",
+          48
+        ],
+        [
+          "scan",
+          49
+        ],
+        [
+          "scan",
+          50
+        ],
+        [
+          "shield",
+          17
+        ],
+        [
+          "comm",
+          47,
+          1
+        ],
+        [
+          "comm",
+          5,
+          1
+        ],
+        [
+          "comm",
+          15,
+          1
+        ],
+        [
+          "comm",
+          38,
+          1
+        ],
+        [
+          "comm",
+          39,
+          1
+        ],
+        [
+          "comm",
+          45,
+          1
+        ],
+        [
+          "comm",
+          16,
+          1
+        ],
+        [
+          "comm",
+          28,
+          1
+        ],
+        [
+          "comm",
+          7,
+          1
+        ],
+        [
+          "comm",
+          10,
+          1
+        ],
+        [
+          "comm",
+          19,
+          1
+        ],
+        [
+          "comm",
+          29,
+          1
+        ],
+        [
+          "comm",
+          37,
+          1
+        ],
+        [
+          "comm",
+          8,
+          1
+        ],
+        [
+          "comm",
+          39,
+          1
+        ],
+        [
+          "comm",
+          16,
+          1
+        ],
+        [
+          "comm",
+          46,
+          1
+        ],
+        [
+          "comm",
+          47,
+          1
+        ],
+        [
+          "comm",
+          15,
+          1
+        ],
+        [
+          "comm",
+          7,
+          1
+        ],
+        [
+          "comm",
+          12,
+          1
+        ],
+        [
+          "comm",
+          20,
+          1
+        ],
+        [
+          "comm",
+          23,
+          1
+        ],
+        [
+          "comm",
+          24,
+          1
+        ],
+        [
+          "comm",
+          25,
+          1
+        ],
+        [
+          "comm",
+          34,
+          1
+        ],
+        [
+          "comm",
+          3,
+          1
+        ],
+        [
+          "comm",
+          44,
+          1
+        ],
+        [
+          "comm",
+          49,
+          1
+        ],
+        [
+          "comm",
+          9,
+          1
+        ],
+        [
+          "comm",
+          38,
+          1
+        ],
+        [
+          "comm",
+          29,
+          1
+        ],
+        [
+          "comm",
+          37,
+          1
+        ],
+        [
+          "comm",
+          28,
+          1
+        ],
+        [
+          "comm",
+          11,
+          1
+        ]
+      ],
+      "p8_proposals": null,
+      "p8_planning_errors": null,
+      "elapsed_seconds": 6.738395437016152
+    },
+    {
+      "archive": "starnet-public-greedy-v9-optimized-20260908.zip",
+      "archive_sha256": "0b1ea60f7f5e52f3485328efbc7ec5fb592d657c94762c55ea3015a12c2de214",
+      "runner_sha256": "c6db222569a40a74c0340d8ffc3c59c38e120e68d768fcc1b23083891d8ab467",
+      "family": "ba_negative_hubs",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "616a1972473a1e1e24b0a9b73c9c270c0a47e5d39df5419310344a6b973a3067",
+      "offline_only": true,
+      "allow_offline_fallback": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。",
+            "experimental_policy_mode": "public_greedy"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "effective_p8_mode": null,
+      "controller_type": "RuntimeController",
+      "model_sha256": "27cc32569a0954779d9a7375b01bb42264a631f716790a1cddd45f0e8a5db661",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 522.7820028444444,
+      "steps": 79,
+      "actions": {
+        "scan": 50,
+        "comm": 22,
+        "cut": 0,
+        "shield": 6
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "forced_llm_failures": 0,
+      "llm_mode": "not_requested_by_archive",
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "db404f19b7b1742e0ea49f86769a9e9b87ecc0232b6f4622cdd12181147d7548",
+      "action_sequence": [
+        [
+          "scan",
+          1
+        ],
+        [
+          "scan",
+          2
+        ],
+        [
+          "scan",
+          3
+        ],
+        [
+          "scan",
+          4
+        ],
+        [
+          "scan",
+          5
+        ],
+        [
+          "scan",
+          6
+        ],
+        [
+          "scan",
+          7
+        ],
+        [
+          "scan",
+          8
+        ],
+        [
+          "scan",
+          9
+        ],
+        [
+          "scan",
+          10
+        ],
+        [
+          "scan",
+          11
+        ],
+        [
+          "scan",
+          12
+        ],
+        [
+          "scan",
+          13
+        ],
+        [
+          "scan",
+          14
+        ],
+        [
+          "scan",
+          15
+        ],
+        [
+          "scan",
+          16
+        ],
+        [
+          "scan",
+          17
+        ],
+        [
+          "scan",
+          18
+        ],
+        [
+          "scan",
+          19
+        ],
+        [
+          "scan",
+          20
+        ],
+        [
+          "scan",
+          21
+        ],
+        [
+          "scan",
+          22
+        ],
+        [
+          "scan",
+          23
+        ],
+        [
+          "scan",
+          24
+        ],
+        [
+          "scan",
+          25
+        ],
+        [
+          "scan",
+          26
+        ],
+        [
+          "scan",
+          27
+        ],
+        [
+          "scan",
+          28
+        ],
+        [
+          "scan",
+          29
+        ],
+        [
+          "scan",
+          30
+        ],
+        [
+          "scan",
+          31
+        ],
+        [
+          "scan",
+          32
+        ],
+        [
+          "scan",
+          33
+        ],
+        [
+          "scan",
+          34
+        ],
+        [
+          "scan",
+          35
+        ],
+        [
+          "scan",
+          36
+        ],
+        [
+          "scan",
+          37
+        ],
+        [
+          "scan",
+          38
+        ],
+        [
+          "scan",
+          39
+        ],
+        [
+          "scan",
+          40
+        ],
+        [
+          "scan",
+          41
+        ],
+        [
+          "scan",
+          42
+        ],
+        [
+          "scan",
+          43
+        ],
+        [
+          "scan",
+          44
+        ],
+        [
+          "scan",
+          45
+        ],
+        [
+          "scan",
+          46
+        ],
+        [
+          "scan",
+          47
+        ],
+        [
+          "scan",
+          48
+        ],
+        [
+          "scan",
+          49
+        ],
+        [
+          "scan",
+          50
+        ],
+        [
+          "comm",
+          3,
+          1
+        ],
+        [
+          "comm",
+          6,
+          1
+        ],
+        [
+          "comm",
+          5,
+          1
+        ],
+        [
+          "comm",
+          1,
+          1
+        ],
+        [
+          "comm",
+          3,
+          1
+        ],
+        [
+          "comm",
+          1,
+          1
+        ],
+        [
+          "shield",
+          6
+        ],
+        [
+          "comm",
+          17,
+          1
+        ],
+        [
+          "shield",
+          5
+        ],
+        [
+          "comm",
+          20,
+          1
+        ],
+        [
+          "shield",
+          7
+        ],
+        [
+          "comm",
+          14,
+          1
+        ],
+        [
+          "comm",
+          15,
+          1
+        ],
+        [
+          "comm",
+          2,
+          1
+        ],
+        [
+          "shield",
+          3
+        ],
+        [
+          "comm",
+          35,
+          1
+        ],
+        [
+          "comm",
+          13,
+          1
+        ],
+        [
+          "shield",
+          14
+        ],
+        [
+          "shield",
+          20
+        ],
+        [
+          "comm",
+          13,
+          1
+        ],
+        [
+          "comm",
+          23,
+          1
+        ],
+        [
+          "comm",
+          27,
+          1
+        ],
+        [
+          "comm",
+          8,
+          1
+        ],
+        [
+          "comm",
+          9,
+          1
+        ],
+        [
+          "comm",
+          17,
+          1
+        ],
+        [
+          "comm",
+          21,
+          1
+        ],
+        [
+          "comm",
+          31,
+          1
+        ],
+        [
+          "comm",
+          33,
+          1
+        ]
+      ],
+      "p8_proposals": null,
+      "p8_planning_errors": null,
+      "elapsed_seconds": 4.042650901013985
+    },
+    {
+      "archive": "starnet-p8-mean-20260913.zip",
+      "archive_sha256": "067d232f5360e67114d1bf0f1937a574f71b743cd2049cf6d20372a45eb06c50",
+      "runner_sha256": "c6db222569a40a74c0340d8ffc3c59c38e120e68d768fcc1b23083891d8ab467",
+      "family": "three_sparse_components",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "259912adcb9cbaffbf69227a41638d124498017fe864a60ed3fcdc7b0b9f2cbb",
+      "offline_only": true,
+      "allow_offline_fallback": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "step",
+        "person": [
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "基于公开事实完成每次扫描与干预的最终选择。",
+            "experimental_policy_mode": "public_greedy",
+            "experimental_public_comm_shield_guard": false,
+            "experimental_p8_mode": "conservative"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 240,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "step",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "enable_public_comm_shield_guard": false,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "effective_p8_mode": "conservative",
+      "controller_type": "P8RuntimeController",
+      "model_sha256": "d40b1431af78e8161a9874eb3414d731ba6d10b6a79f0a3b7c1249fa3d3d43cb",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 185.7681499992931,
+      "steps": 83,
+      "actions": {
+        "scan": 50,
+        "comm": 30,
+        "cut": 0,
+        "shield": 3
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "forced_llm_failures": 83,
+      "llm_mode": "forced_offline_failure",
+      "llm_accepted": 0,
+      "llm_fallbacks": 83,
+      "remaining_budget": 0.0,
+      "stop_reason": "None",
+      "actions_sha256": "472c6ccafbb34728d8f36e730cb1c3f6b5fd8ff673ad267dee1ef673a05ba75d",
+      "action_sequence": [
+        [
+          "scan",
+          1
+        ],
+        [
+          "scan",
+          2
+        ],
+        [
+          "scan",
+          3
+        ],
+        [
+          "scan",
+          4
+        ],
+        [
+          "scan",
+          10
+        ],
+        [
+          "scan",
+          9
+        ],
+        [
+          "scan",
+          11
+        ],
+        [
+          "scan",
+          15
+        ],
+        [
+          "scan",
+          5
+        ],
+        [
+          "scan",
+          12
+        ],
+        [
+          "scan",
+          13
+        ],
+        [
+          "scan",
+          14
+        ],
+        [
+          "scan",
+          16
+        ],
+        [
+          "scan",
+          8
+        ],
+        [
+          "scan",
+          7
+        ],
+        [
+          "scan",
+          6
+        ],
+        [
+          "scan",
+          17
+        ],
+        [
+          "scan",
+          18
+        ],
+        [
+          "scan",
+          19
+        ],
+        [
+          "scan",
+          20
+        ],
+        [
+          "scan",
+          21
+        ],
+        [
+          "scan",
+          22
+        ],
+        [
+          "scan",
+          27
+        ],
+        [
+          "scan",
+          23
+        ],
+        [
+          "scan",
+          24
+        ],
+        [
+          "scan",
+          25
+        ],
+        [
+          "scan",
+          26
+        ],
+        [
+          "scan",
+          28
+        ],
+        [
+          "scan",
+          29
+        ],
+        [
+          "scan",
+          30
+        ],
+        [
+          "scan",
+          31
+        ],
+        [
+          "scan",
+          33
+        ],
+        [
+          "scan",
+          32
+        ],
+        [
+          "scan",
+          34
+        ],
+        [
+          "scan",
+          35
+        ],
+        [
+          "scan",
+          36
+        ],
+        [
+          "scan",
+          37
+        ],
+        [
+          "scan",
+          38
+        ],
+        [
+          "scan",
+          39
+        ],
+        [
+          "scan",
+          40
+        ],
+        [
+          "scan",
+          41
+        ],
+        [
+          "scan",
+          50
+        ],
+        [
+          "scan",
+          49
+        ],
+        [
+          "scan",
+          42
+        ],
+        [
+          "scan",
+          48
+        ],
+        [
+          "scan",
+          43
+        ],
+        [
+          "scan",
+          44
+        ],
+        [
+          "scan",
+          45
+        ],
+        [
+          "scan",
+          46
+        ],
+        [
+          "scan",
+          47
+        ],
+        [
+          "shield",
+          37
+        ],
+        [
+          "comm",
+          40,
+          1
+        ],
+        [
+          "comm",
+          41,
+          1
+        ],
+        [
+          "comm",
+          10,
+          1
+        ],
+        [
+          "comm",
+          11,
+          1
+        ],
+        [
+          "comm",
+          15,
+          1
+        ],
+        [
+          "comm",
+          4,
+          1
+        ],
+        [
+          "comm",
+          9,
+          1
+        ],
+        [
+          "comm",
+          18,
+          1
+        ],
+        [
+          "comm",
+          22,
+          1
+        ],
+        [
+          "comm",
+          24,
+          1
+        ],
+        [
+          "comm",
+          27,
+          1
+        ],
+        [
+          "comm",
+          29,
+          1
+        ],
+        [
+          "comm",
+          34,
+          1
+        ],
+        [
+          "comm",
+          42,
+          1
+        ],
+        [
+          "comm",
+          44,
+          1
+        ],
+        [
+          "comm",
+          46,
+          1
+        ],
+        [
+          "comm",
+          48,
+          1
+        ],
+        [
+          "comm",
+          49,
+          1
+        ],
+        [
+          "comm",
+          27,
+          1
+        ],
+        [
+          "comm",
+          9,
+          1
+        ],
+        [
+          "comm",
+          13,
+          1
+        ],
+        [
+          "comm",
+          5,
+          1
+        ],
+        [
+          "comm",
+          7,
+          1
+        ],
+        [
+          "comm",
+          8,
+          1
+        ],
+        [
+          "comm",
+          17,
+          1
+        ],
+        [
+          "comm",
+          20,
+          1
+        ],
+        [
+          "comm",
+          21,
+          1
+        ],
+        [
+          "comm",
+          30,
+          1
+        ],
+        [
+          "comm",
+          31,
+          1
+        ],
+        [
+          "comm",
+          33,
+          1
+        ],
+        [
+          "shield",
+          4
+        ],
+        [
+          "shield",
+          46
+        ]
+      ],
+      "p8_proposals": 2,
+      "p8_planning_errors": 0,
+      "elapsed_seconds": 25.905743018956855
+    },
+    {
+      "archive": "starnet-public-greedy-v9-optimized-20260908.zip",
+      "archive_sha256": "0b1ea60f7f5e52f3485328efbc7ec5fb592d657c94762c55ea3015a12c2de214",
+      "runner_sha256": "c6db222569a40a74c0340d8ffc3c59c38e120e68d768fcc1b23083891d8ab467",
+      "family": "ws_peace_majority",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "b780e56957304189c394c22f43c709f9c9b5d13c90746b7b5d3666a7508ad972",
+      "offline_only": true,
+      "allow_offline_fallback": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。",
+            "experimental_policy_mode": "public_greedy"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "effective_p8_mode": null,
+      "controller_type": "RuntimeController",
+      "model_sha256": "27cc32569a0954779d9a7375b01bb42264a631f716790a1cddd45f0e8a5db661",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 907.9251816428571,
+      "steps": 88,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "forced_llm_failures": 0,
+      "llm_mode": "not_requested_by_archive",
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "928898bd5efb3a39af75844be4374c595a4bd39c9f7fd8ca2d894150726dbb03",
+      "action_sequence": [
+        [
+          "scan",
+          1
+        ],
+        [
+          "scan",
+          2
+        ],
+        [
+          "scan",
+          3
+        ],
+        [
+          "scan",
+          4
+        ],
+        [
+          "scan",
+          5
+        ],
+        [
+          "scan",
+          6
+        ],
+        [
+          "scan",
+          7
+        ],
+        [
+          "scan",
+          8
+        ],
+        [
+          "scan",
+          9
+        ],
+        [
+          "scan",
+          10
+        ],
+        [
+          "scan",
+          11
+        ],
+        [
+          "scan",
+          12
+        ],
+        [
+          "scan",
+          13
+        ],
+        [
+          "scan",
+          14
+        ],
+        [
+          "scan",
+          15
+        ],
+        [
+          "scan",
+          16
+        ],
+        [
+          "scan",
+          17
+        ],
+        [
+          "scan",
+          18
+        ],
+        [
+          "scan",
+          19
+        ],
+        [
+          "scan",
+          20
+        ],
+        [
+          "scan",
+          21
+        ],
+        [
+          "scan",
+          22
+        ],
+        [
+          "scan",
+          23
+        ],
+        [
+          "scan",
+          24
+        ],
+        [
+          "scan",
+          25
+        ],
+        [
+          "scan",
+          26
+        ],
+        [
+          "scan",
+          27
+        ],
+        [
+          "scan",
+          28
+        ],
+        [
+          "scan",
+          29
+        ],
+        [
+          "scan",
+          30
+        ],
+        [
+          "scan",
+          31
+        ],
+        [
+          "scan",
+          32
+        ],
+        [
+          "scan",
+          33
+        ],
+        [
+          "scan",
+          34
+        ],
+        [
+          "scan",
+          35
+        ],
+        [
+          "scan",
+          36
+        ],
+        [
+          "scan",
+          37
+        ],
+        [
+          "scan",
+          38
+        ],
+        [
+          "scan",
+          39
+        ],
+        [
+          "scan",
+          40
+        ],
+        [
+          "scan",
+          41
+        ],
+        [
+          "scan",
+          42
+        ],
+        [
+          "scan",
+          43
+        ],
+        [
+          "scan",
+          44
+        ],
+        [
+          "scan",
+          45
+        ],
+        [
+          "scan",
+          46
+        ],
+        [
+          "scan",
+          47
+        ],
+        [
+          "scan",
+          48
+        ],
+        [
+          "scan",
+          49
+        ],
+        [
+          "scan",
+          50
+        ],
+        [
+          "comm",
+          3,
+          1
+        ],
+        [
+          "comm",
+          9,
+          1
+        ],
+        [
+          "comm",
+          10,
+          1
+        ],
+        [
+          "comm",
+          12,
+          1
+        ],
+        [
+          "comm",
+          19,
+          1
+        ],
+        [
+          "comm",
+          21,
+          1
+        ],
+        [
+          "comm",
+          25,
+          1
+        ],
+        [
+          "comm",
+          2,
+          1
+        ],
+        [
+          "comm",
+          32,
+          1
+        ],
+        [
+          "comm",
+          33,
+          1
+        ],
+        [
+          "comm",
+          39,
+          1
+        ],
+        [
+          "comm",
+          48,
+          1
+        ],
+        [
+          "comm",
+          5,
+          1
+        ],
+        [
+          "comm",
+          11,
+          1
+        ],
+        [
+          "comm",
+          3,
+          1
+        ],
+        [
+          "comm",
+          13,
+          1
+        ],
+        [
+          "comm",
+          15,
+          1
+        ],
+        [
+          "comm",
+          12,
+          1
+        ],
+        [
+          "comm",
+          16,
+          1
+        ],
+        [
+          "comm",
+          20,
+          1
+        ],
+        [
+          "comm",
+          23,
+          1
+        ],
+        [
+          "comm",
+          24,
+          1
+        ],
+        [
+          "comm",
+          2,
+          1
+        ],
+        [
+          "comm",
+          27,
+          1
+        ],
+        [
+          "comm",
+          28,
+          1
+        ],
+        [
+          "comm",
+          29,
+          1
+        ],
+        [
+          "comm",
+          30,
+          1
+        ],
+        [
+          "comm",
+          31,
+          1
+        ],
+        [
+          "comm",
+          34,
+          1
+        ],
+        [
+          "comm",
+          35,
+          1
+        ],
+        [
+          "comm",
+          37,
+          1
+        ],
+        [
+          "comm",
+          40,
+          1
+        ],
+        [
+          "comm",
+          41,
+          1
+        ],
+        [
+          "comm",
+          43,
+          1
+        ],
+        [
+          "comm",
+          44,
+          1
+        ],
+        [
+          "comm",
+          46,
+          1
+        ],
+        [
+          "comm",
+          47,
+          1
+        ]
+      ],
+      "p8_proposals": null,
+      "p8_planning_errors": null,
+      "elapsed_seconds": 9.312558931997046
+    },
+    {
+      "archive": "starnet-public-greedy-v9-optimized-20260908.zip",
+      "archive_sha256": "0b1ea60f7f5e52f3485328efbc7ec5fb592d657c94762c55ea3015a12c2de214",
+      "runner_sha256": "c6db222569a40a74c0340d8ffc3c59c38e120e68d768fcc1b23083891d8ab467",
+      "family": "sbm_negative_bridges",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "b87ad119087c8343fe82a77f7594e9e2b5ceb055f5f868b9aeb1be9aba43288f",
+      "offline_only": true,
+      "allow_offline_fallback": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。",
+            "experimental_policy_mode": "public_greedy"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "effective_p8_mode": null,
+      "controller_type": "RuntimeController",
+      "model_sha256": "27cc32569a0954779d9a7375b01bb42264a631f716790a1cddd45f0e8a5db661",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 563.7690441320756,
+      "steps": 85,
+      "actions": {
+        "scan": 50,
+        "comm": 32,
+        "cut": 0,
+        "shield": 2
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "forced_llm_failures": 0,
+      "llm_mode": "not_requested_by_archive",
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "869abfc30d79be621fed4580a5997b9f8e9417a198816f1d39eb481844308b77",
+      "action_sequence": [
+        [
+          "scan",
+          1
+        ],
+        [
+          "scan",
+          2
+        ],
+        [
+          "scan",
+          3
+        ],
+        [
+          "scan",
+          4
+        ],
+        [
+          "scan",
+          5
+        ],
+        [
+          "scan",
+          6
+        ],
+        [
+          "scan",
+          7
+        ],
+        [
+          "scan",
+          8
+        ],
+        [
+          "scan",
+          9
+        ],
+        [
+          "scan",
+          10
+        ],
+        [
+          "scan",
+          11
+        ],
+        [
+          "scan",
+          12
+        ],
+        [
+          "scan",
+          13
+        ],
+        [
+          "scan",
+          14
+        ],
+        [
+          "scan",
+          15
+        ],
+        [
+          "scan",
+          16
+        ],
+        [
+          "scan",
+          17
+        ],
+        [
+          "scan",
+          18
+        ],
+        [
+          "scan",
+          19
+        ],
+        [
+          "scan",
+          20
+        ],
+        [
+          "scan",
+          21
+        ],
+        [
+          "scan",
+          22
+        ],
+        [
+          "scan",
+          23
+        ],
+        [
+          "scan",
+          24
+        ],
+        [
+          "scan",
+          25
+        ],
+        [
+          "scan",
+          26
+        ],
+        [
+          "scan",
+          27
+        ],
+        [
+          "scan",
+          28
+        ],
+        [
+          "scan",
+          29
+        ],
+        [
+          "scan",
+          30
+        ],
+        [
+          "scan",
+          31
+        ],
+        [
+          "scan",
+          32
+        ],
+        [
+          "scan",
+          33
+        ],
+        [
+          "scan",
+          34
+        ],
+        [
+          "scan",
+          35
+        ],
+        [
+          "scan",
+          36
+        ],
+        [
+          "scan",
+          37
+        ],
+        [
+          "scan",
+          38
+        ],
+        [
+          "scan",
+          39
+        ],
+        [
+          "scan",
+          40
+        ],
+        [
+          "scan",
+          41
+        ],
+        [
+          "scan",
+          42
+        ],
+        [
+          "scan",
+          43
+        ],
+        [
+          "scan",
+          44
+        ],
+        [
+          "scan",
+          45
+        ],
+        [
+          "scan",
+          46
+        ],
+        [
+          "scan",
+          47
+        ],
+        [
+          "scan",
+          48
+        ],
+        [
+          "scan",
+          49
+        ],
+        [
+          "scan",
+          50
+        ],
+        [
+          "comm",
+          16,
+          1
+        ],
+        [
+          "comm",
+          20,
+          1
+        ],
+        [
+          "comm",
+          32,
+          1
+        ],
+        [
+          "comm",
+          37,
+          1
+        ],
+        [
+          "shield",
+          26
+        ],
+        [
+          "comm",
+          8,
+          1
+        ],
+        [
+          "comm",
+          11,
+          1
+        ],
+        [
+          "comm",
+          12,
+          1
+        ],
+        [
+          "comm",
+          39,
+          1
+        ],
+        [
+          "comm",
+          46,
+          1
+        ],
+        [
+          "comm",
+          7,
+          1
+        ],
+        [
+          "comm",
+          15,
+          1
+        ],
+        [
+          "comm",
+          2,
+          1
+        ],
+        [
+          "comm",
+          34,
+          1
+        ],
+        [
+          "comm",
+          36,
+          1
+        ],
+        [
+          "comm",
+          42,
+          1
+        ],
+        [
+          "comm",
+          45,
+          1
+        ],
+        [
+          "comm",
+          47,
+          1
+        ],
+        [
+          "comm",
+          20,
+          1
+        ],
+        [
+          "comm",
+          22,
+          1
+        ],
+        [
+          "comm",
+          25,
+          1
+        ],
+        [
+          "comm",
+          30,
+          1
+        ],
+        [
+          "comm",
+          35,
+          1
+        ],
+        [
+          "comm",
+          38,
+          1
+        ],
+        [
+          "comm",
+          3,
+          1
+        ],
+        [
+          "comm",
+          43,
+          1
+        ],
+        [
+          "comm",
+          44,
+          1
+        ],
+        [
+          "comm",
+          50,
+          1
+        ],
+        [
+          "comm",
+          9,
+          1
+        ],
+        [
+          "comm",
+          36,
+          1
+        ],
+        [
+          "comm",
+          23,
+          1
+        ],
+        [
+          "comm",
+          46,
+          1
+        ],
+        [
+          "shield",
+          12
+        ],
+        [
+          "comm",
+          35,
+          1
+        ]
+      ],
+      "p8_proposals": null,
+      "p8_planning_errors": null,
+      "elapsed_seconds": 7.268764644977637
+    },
+    {
+      "archive": "starnet-public-greedy-v9-optimized-20260908.zip",
+      "archive_sha256": "0b1ea60f7f5e52f3485328efbc7ec5fb592d657c94762c55ea3015a12c2de214",
+      "runner_sha256": "c6db222569a40a74c0340d8ffc3c59c38e120e68d768fcc1b23083891d8ab467",
+      "family": "three_sparse_components",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "259912adcb9cbaffbf69227a41638d124498017fe864a60ed3fcdc7b0b9f2cbb",
+      "offline_only": true,
+      "allow_offline_fallback": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。",
+            "experimental_policy_mode": "public_greedy"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "effective_p8_mode": null,
+      "controller_type": "RuntimeController",
+      "model_sha256": "27cc32569a0954779d9a7375b01bb42264a631f716790a1cddd45f0e8a5db661",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 177.9299667087125,
+      "steps": 85,
+      "actions": {
+        "scan": 50,
+        "comm": 32,
+        "cut": 0,
+        "shield": 2
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "forced_llm_failures": 0,
+      "llm_mode": "not_requested_by_archive",
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "744dc6606bf5103fc2e6431ae5cdecb6c5ef039c5c3b2253811281562edb27de",
+      "action_sequence": [
+        [
+          "scan",
+          1
+        ],
+        [
+          "scan",
+          2
+        ],
+        [
+          "scan",
+          3
+        ],
+        [
+          "scan",
+          4
+        ],
+        [
+          "scan",
+          5
+        ],
+        [
+          "scan",
+          6
+        ],
+        [
+          "scan",
+          7
+        ],
+        [
+          "scan",
+          8
+        ],
+        [
+          "scan",
+          9
+        ],
+        [
+          "scan",
+          10
+        ],
+        [
+          "scan",
+          11
+        ],
+        [
+          "scan",
+          12
+        ],
+        [
+          "scan",
+          13
+        ],
+        [
+          "scan",
+          14
+        ],
+        [
+          "scan",
+          15
+        ],
+        [
+          "scan",
+          16
+        ],
+        [
+          "scan",
+          17
+        ],
+        [
+          "scan",
+          18
+        ],
+        [
+          "scan",
+          19
+        ],
+        [
+          "scan",
+          20
+        ],
+        [
+          "scan",
+          21
+        ],
+        [
+          "scan",
+          22
+        ],
+        [
+          "scan",
+          23
+        ],
+        [
+          "scan",
+          24
+        ],
+        [
+          "scan",
+          25
+        ],
+        [
+          "scan",
+          26
+        ],
+        [
+          "scan",
+          27
+        ],
+        [
+          "scan",
+          28
+        ],
+        [
+          "scan",
+          29
+        ],
+        [
+          "scan",
+          30
+        ],
+        [
+          "scan",
+          31
+        ],
+        [
+          "scan",
+          32
+        ],
+        [
+          "scan",
+          33
+        ],
+        [
+          "scan",
+          34
+        ],
+        [
+          "scan",
+          35
+        ],
+        [
+          "scan",
+          36
+        ],
+        [
+          "scan",
+          37
+        ],
+        [
+          "scan",
+          38
+        ],
+        [
+          "scan",
+          39
+        ],
+        [
+          "scan",
+          40
+        ],
+        [
+          "scan",
+          41
+        ],
+        [
+          "scan",
+          42
+        ],
+        [
+          "scan",
+          43
+        ],
+        [
+          "scan",
+          44
+        ],
+        [
+          "scan",
+          45
+        ],
+        [
+          "scan",
+          46
+        ],
+        [
+          "scan",
+          47
+        ],
+        [
+          "scan",
+          48
+        ],
+        [
+          "scan",
+          49
+        ],
+        [
+          "scan",
+          50
+        ],
+        [
+          "comm",
+          37,
+          1
+        ],
+        [
+          "comm",
+          40,
+          1
+        ],
+        [
+          "comm",
+          41,
+          1
+        ],
+        [
+          "comm",
+          10,
+          1
+        ],
+        [
+          "comm",
+          11,
+          1
+        ],
+        [
+          "comm",
+          15,
+          1
+        ],
+        [
+          "comm",
+          4,
+          1
+        ],
+        [
+          "comm",
+          9,
+          1
+        ],
+        [
+          "comm",
+          18,
+          1
+        ],
+        [
+          "comm",
+          22,
+          1
+        ],
+        [
+          "comm",
+          24,
+          1
+        ],
+        [
+          "comm",
+          27,
+          1
+        ],
+        [
+          "comm",
+          29,
+          1
+        ],
+        [
+          "comm",
+          27,
+          1
+        ],
+        [
+          "comm",
+          9,
+          1
+        ],
+        [
+          "shield",
+          48
+        ],
+        [
+          "comm",
+          34,
+          1
+        ],
+        [
+          "comm",
+          39,
+          1
+        ],
+        [
+          "comm",
+          44,
+          1
+        ],
+        [
+          "comm",
+          46,
+          1
+        ],
+        [
+          "comm",
+          50,
+          1
+        ],
+        [
+          "comm",
+          37,
+          1
+        ],
+        [
+          "comm",
+          13,
+          1
+        ],
+        [
+          "comm",
+          5,
+          1
+        ],
+        [
+          "comm",
+          7,
+          1
+        ],
+        [
+          "comm",
+          8,
+          1
+        ],
+        [
+          "comm",
+          17,
+          1
+        ],
+        [
+          "comm",
+          20,
+          1
+        ],
+        [
+          "comm",
+          21,
+          1
+        ],
+        [
+          "comm",
+          30,
+          1
+        ],
+        [
+          "comm",
+          31,
+          1
+        ],
+        [
+          "comm",
+          33,
+          1
+        ],
+        [
+          "shield",
+          4
+        ],
+        [
+          "comm",
+          15,
+          1
+        ]
+      ],
+      "p8_proposals": null,
+      "p8_planning_errors": null,
+      "elapsed_seconds": 4.246037360979244
+    },
+    {
+      "archive": "starnet-public-greedy-v9-optimized-20260908.zip",
+      "archive_sha256": "0b1ea60f7f5e52f3485328efbc7ec5fb592d657c94762c55ea3015a12c2de214",
+      "runner_sha256": "c6db222569a40a74c0340d8ffc3c59c38e120e68d768fcc1b23083891d8ab467",
+      "family": "sbm_violent_cluster",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "c47914b819abf4774c3ea7ee832a8f3e4c6d87ea033dc6eb6aef1ab93ea3c7b8",
+      "offline_only": true,
+      "allow_offline_fallback": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。",
+            "experimental_policy_mode": "public_greedy"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "effective_p8_mode": null,
+      "controller_type": "RuntimeController",
+      "model_sha256": "27cc32569a0954779d9a7375b01bb42264a631f716790a1cddd45f0e8a5db661",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 312.5215108695652,
+      "steps": 73,
+      "actions": {
+        "scan": 50,
+        "comm": 12,
+        "cut": 0,
+        "shield": 10
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "forced_llm_failures": 0,
+      "llm_mode": "not_requested_by_archive",
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "8270578b66c8879c35cbfb83d14adbeab7e31787f5ba49da06493165e90e481a",
+      "action_sequence": [
+        [
+          "scan",
+          1
+        ],
+        [
+          "scan",
+          2
+        ],
+        [
+          "scan",
+          3
+        ],
+        [
+          "scan",
+          4
+        ],
+        [
+          "scan",
+          5
+        ],
+        [
+          "scan",
+          6
+        ],
+        [
+          "scan",
+          7
+        ],
+        [
+          "scan",
+          8
+        ],
+        [
+          "scan",
+          9
+        ],
+        [
+          "scan",
+          10
+        ],
+        [
+          "scan",
+          11
+        ],
+        [
+          "scan",
+          12
+        ],
+        [
+          "scan",
+          13
+        ],
+        [
+          "scan",
+          14
+        ],
+        [
+          "scan",
+          15
+        ],
+        [
+          "scan",
+          16
+        ],
+        [
+          "scan",
+          17
+        ],
+        [
+          "scan",
+          18
+        ],
+        [
+          "scan",
+          19
+        ],
+        [
+          "scan",
+          20
+        ],
+        [
+          "scan",
+          21
+        ],
+        [
+          "scan",
+          22
+        ],
+        [
+          "scan",
+          23
+        ],
+        [
+          "scan",
+          24
+        ],
+        [
+          "scan",
+          25
+        ],
+        [
+          "scan",
+          26
+        ],
+        [
+          "scan",
+          27
+        ],
+        [
+          "scan",
+          28
+        ],
+        [
+          "scan",
+          29
+        ],
+        [
+          "scan",
+          30
+        ],
+        [
+          "scan",
+          31
+        ],
+        [
+          "scan",
+          32
+        ],
+        [
+          "scan",
+          33
+        ],
+        [
+          "scan",
+          34
+        ],
+        [
+          "scan",
+          35
+        ],
+        [
+          "scan",
+          36
+        ],
+        [
+          "scan",
+          37
+        ],
+        [
+          "scan",
+          38
+        ],
+        [
+          "scan",
+          39
+        ],
+        [
+          "scan",
+          40
+        ],
+        [
+          "scan",
+          41
+        ],
+        [
+          "scan",
+          42
+        ],
+        [
+          "scan",
+          43
+        ],
+        [
+          "scan",
+          44
+        ],
+        [
+          "scan",
+          45
+        ],
+        [
+          "scan",
+          46
+        ],
+        [
+          "scan",
+          47
+        ],
+        [
+          "scan",
+          48
+        ],
+        [
+          "scan",
+          49
+        ],
+        [
+          "scan",
+          50
+        ],
+        [
+          "shield",
+          16
+        ],
+        [
+          "shield",
+          21
+        ],
+        [
+          "shield",
+          2
+        ],
+        [
+          "shield",
+          18
+        ],
+        [
+          "comm",
+          49,
+          1
+        ],
+        [
+          "comm",
+          6,
+          1
+        ],
+        [
+          "comm",
+          33,
+          1
+        ],
+        [
+          "comm",
+          45,
+          1
+        ],
+        [
+          "comm",
+          46,
+          1
+        ],
+        [
+          "comm",
+          48,
+          1
+        ],
+        [
+          "comm",
+          50,
+          1
+        ],
+        [
+          "shield",
+          3
+        ],
+        [
+          "shield",
+          1
+        ],
+        [
+          "shield",
+          22
+        ],
+        [
+          "shield",
+          5
+        ],
+        [
+          "shield",
+          23
+        ],
+        [
+          "shield",
+          14
+        ],
+        [
+          "comm",
+          27,
+          1
+        ],
+        [
+          "comm",
+          31,
+          1
+        ],
+        [
+          "comm",
+          36,
+          1
+        ],
+        [
+          "comm",
+          40,
+          1
+        ],
+        [
+          "comm",
+          47,
+          1
+        ]
+      ],
+      "p8_proposals": null,
+      "p8_planning_errors": null,
+      "elapsed_seconds": 3.736074283020571
+    },
+    {
+      "archive": "starnet-public-greedy-experimental-20260908.zip",
+      "archive_sha256": "8f981950058919555be2991e28c6cf5794654be96bee1d76788d8eafd9d8d6c5",
+      "runner_sha256": "c6db222569a40a74c0340d8ffc3c59c38e120e68d768fcc1b23083891d8ab467",
+      "family": "er_balanced",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "e274154be9f610faca235730fb68ded23d1af233daca5a0efd6db1c9ada66518",
+      "offline_only": true,
+      "allow_offline_fallback": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "experimental_policy_mode": "public_greedy",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "effective_p8_mode": null,
+      "controller_type": "RuntimeController",
+      "model_sha256": "bfaa87a67bc5f862756022a316fc826ebd23f7cea57f0c19175f40e76aa716e7",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 772.8890440328084,
+      "steps": 86,
+      "actions": {
+        "scan": 50,
+        "comm": 35,
+        "cut": 0,
+        "shield": 1
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "forced_llm_failures": 0,
+      "llm_mode": "not_requested_by_archive",
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 0.0,
+      "stop_reason": "None",
+      "actions_sha256": "ab06fdb89b80c51c0d5d52952f8ee279346ae7957d726fac6d70ad97e7567b36",
+      "action_sequence": [
+        [
+          "scan",
+          1
+        ],
+        [
+          "scan",
+          2
+        ],
+        [
+          "scan",
+          3
+        ],
+        [
+          "scan",
+          4
+        ],
+        [
+          "scan",
+          5
+        ],
+        [
+          "scan",
+          6
+        ],
+        [
+          "scan",
+          7
+        ],
+        [
+          "scan",
+          8
+        ],
+        [
+          "scan",
+          9
+        ],
+        [
+          "scan",
+          10
+        ],
+        [
+          "scan",
+          11
+        ],
+        [
+          "scan",
+          12
+        ],
+        [
+          "scan",
+          13
+        ],
+        [
+          "scan",
+          14
+        ],
+        [
+          "scan",
+          15
+        ],
+        [
+          "scan",
+          16
+        ],
+        [
+          "scan",
+          17
+        ],
+        [
+          "scan",
+          18
+        ],
+        [
+          "scan",
+          19
+        ],
+        [
+          "scan",
+          20
+        ],
+        [
+          "scan",
+          21
+        ],
+        [
+          "scan",
+          22
+        ],
+        [
+          "scan",
+          23
+        ],
+        [
+          "scan",
+          24
+        ],
+        [
+          "scan",
+          25
+        ],
+        [
+          "scan",
+          26
+        ],
+        [
+          "scan",
+          27
+        ],
+        [
+          "scan",
+          28
+        ],
+        [
+          "scan",
+          29
+        ],
+        [
+          "scan",
+          30
+        ],
+        [
+          "scan",
+          31
+        ],
+        [
+          "scan",
+          32
+        ],
+        [
+          "scan",
+          33
+        ],
+        [
+          "scan",
+          34
+        ],
+        [
+          "scan",
+          35
+        ],
+        [
+          "scan",
+          36
+        ],
+        [
+          "scan",
+          37
+        ],
+        [
+          "scan",
+          38
+        ],
+        [
+          "scan",
+          39
+        ],
+        [
+          "scan",
+          40
+        ],
+        [
+          "scan",
+          41
+        ],
+        [
+          "scan",
+          42
+        ],
+        [
+          "scan",
+          43
+        ],
+        [
+          "scan",
+          44
+        ],
+        [
+          "scan",
+          45
+        ],
+        [
+          "scan",
+          46
+        ],
+        [
+          "scan",
+          47
+        ],
+        [
+          "scan",
+          48
+        ],
+        [
+          "scan",
+          49
+        ],
+        [
+          "scan",
+          50
+        ],
+        [
+          "comm",
+          38,
+          1
+        ],
+        [
+          "comm",
+          47,
+          1
+        ],
+        [
+          "comm",
+          17,
+          1
+        ],
+        [
+          "comm",
+          5,
+          1
+        ],
+        [
+          "comm",
+          15,
+          1
+        ],
+        [
+          "comm",
+          39,
+          1
+        ],
+        [
+          "comm",
+          45,
+          1
+        ],
+        [
+          "comm",
+          7,
+          1
+        ],
+        [
+          "comm",
+          16,
+          1
+        ],
+        [
+          "comm",
+          28,
+          1
+        ],
+        [
+          "comm",
+          10,
+          1
+        ],
+        [
+          "comm",
+          19,
+          1
+        ],
+        [
+          "comm",
+          29,
+          1
+        ],
+        [
+          "comm",
+          37,
+          1
+        ],
+        [
+          "comm",
+          8,
+          1
+        ],
+        [
+          "comm",
+          46,
+          1
+        ],
+        [
+          "comm",
+          12,
+          1
+        ],
+        [
+          "comm",
+          23,
+          1
+        ],
+        [
+          "comm",
+          34,
+          1
+        ],
+        [
+          "comm",
+          39,
+          1
+        ],
+        [
+          "shield",
+          17
+        ],
+        [
+          "comm",
+          16,
+          1
+        ],
+        [
+          "comm",
+          20,
+          1
+        ],
+        [
+          "comm",
+          24,
+          1
+        ],
+        [
+          "comm",
+          25,
+          1
+        ],
+        [
+          "comm",
+          3,
+          1
+        ],
+        [
+          "comm",
+          9,
+          1
+        ],
+        [
+          "comm",
+          44,
+          1
+        ],
+        [
+          "comm",
+          49,
+          1
+        ],
+        [
+          "comm",
+          47,
+          1
+        ],
+        [
+          "comm",
+          11,
+          1
+        ],
+        [
+          "comm",
+          21,
+          1
+        ],
+        [
+          "comm",
+          15,
+          1
+        ],
+        [
+          "comm",
+          14,
+          1
+        ],
+        [
+          "comm",
+          40,
+          1
+        ],
+        [
+          "comm",
+          7,
+          1
+        ]
+      ],
+      "p8_proposals": null,
+      "p8_planning_errors": null,
+      "elapsed_seconds": 9.119701267918572
+    },
+    {
+      "archive": "starnet-public-greedy-experimental-20260908.zip",
+      "archive_sha256": "8f981950058919555be2991e28c6cf5794654be96bee1d76788d8eafd9d8d6c5",
+      "runner_sha256": "c6db222569a40a74c0340d8ffc3c59c38e120e68d768fcc1b23083891d8ab467",
+      "family": "ba_negative_hubs",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "616a1972473a1e1e24b0a9b73c9c270c0a47e5d39df5419310344a6b973a3067",
+      "offline_only": true,
+      "allow_offline_fallback": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "experimental_policy_mode": "public_greedy",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "effective_p8_mode": null,
+      "controller_type": "RuntimeController",
+      "model_sha256": "bfaa87a67bc5f862756022a316fc826ebd23f7cea57f0c19175f40e76aa716e7",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 524.6628048444445,
+      "steps": 79,
+      "actions": {
+        "scan": 50,
+        "comm": 22,
+        "cut": 0,
+        "shield": 6
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "forced_llm_failures": 0,
+      "llm_mode": "not_requested_by_archive",
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "a74b8c9b4469376161be0752b9217d6772f9695c1506e0eb067a5ae53882b1a2",
+      "action_sequence": [
+        [
+          "scan",
+          1
+        ],
+        [
+          "scan",
+          2
+        ],
+        [
+          "scan",
+          3
+        ],
+        [
+          "scan",
+          4
+        ],
+        [
+          "scan",
+          5
+        ],
+        [
+          "scan",
+          6
+        ],
+        [
+          "scan",
+          7
+        ],
+        [
+          "scan",
+          8
+        ],
+        [
+          "scan",
+          9
+        ],
+        [
+          "scan",
+          10
+        ],
+        [
+          "scan",
+          11
+        ],
+        [
+          "scan",
+          12
+        ],
+        [
+          "scan",
+          13
+        ],
+        [
+          "scan",
+          14
+        ],
+        [
+          "scan",
+          15
+        ],
+        [
+          "scan",
+          16
+        ],
+        [
+          "scan",
+          17
+        ],
+        [
+          "scan",
+          18
+        ],
+        [
+          "scan",
+          19
+        ],
+        [
+          "scan",
+          20
+        ],
+        [
+          "scan",
+          21
+        ],
+        [
+          "scan",
+          22
+        ],
+        [
+          "scan",
+          23
+        ],
+        [
+          "scan",
+          24
+        ],
+        [
+          "scan",
+          25
+        ],
+        [
+          "scan",
+          26
+        ],
+        [
+          "scan",
+          27
+        ],
+        [
+          "scan",
+          28
+        ],
+        [
+          "scan",
+          29
+        ],
+        [
+          "scan",
+          30
+        ],
+        [
+          "scan",
+          31
+        ],
+        [
+          "scan",
+          32
+        ],
+        [
+          "scan",
+          33
+        ],
+        [
+          "scan",
+          34
+        ],
+        [
+          "scan",
+          35
+        ],
+        [
+          "scan",
+          36
+        ],
+        [
+          "scan",
+          37
+        ],
+        [
+          "scan",
+          38
+        ],
+        [
+          "scan",
+          39
+        ],
+        [
+          "scan",
+          40
+        ],
+        [
+          "scan",
+          41
+        ],
+        [
+          "scan",
+          42
+        ],
+        [
+          "scan",
+          43
+        ],
+        [
+          "scan",
+          44
+        ],
+        [
+          "scan",
+          45
+        ],
+        [
+          "scan",
+          46
+        ],
+        [
+          "scan",
+          47
+        ],
+        [
+          "scan",
+          48
+        ],
+        [
+          "scan",
+          49
+        ],
+        [
+          "scan",
+          50
+        ],
+        [
+          "comm",
+          3,
+          1
+        ],
+        [
+          "comm",
+          6,
+          1
+        ],
+        [
+          "comm",
+          5,
+          1
+        ],
+        [
+          "comm",
+          1,
+          1
+        ],
+        [
+          "comm",
+          3,
+          1
+        ],
+        [
+          "comm",
+          1,
+          1
+        ],
+        [
+          "shield",
+          6
+        ],
+        [
+          "comm",
+          17,
+          1
+        ],
+        [
+          "comm",
+          14,
+          1
+        ],
+        [
+          "shield",
+          5
+        ],
+        [
+          "comm",
+          20,
+          1
+        ],
+        [
+          "comm",
+          15,
+          1
+        ],
+        [
+          "shield",
+          7
+        ],
+        [
+          "comm",
+          2,
+          1
+        ],
+        [
+          "comm",
+          35,
+          1
+        ],
+        [
+          "shield",
+          3
+        ],
+        [
+          "comm",
+          13,
+          1
+        ],
+        [
+          "shield",
+          14
+        ],
+        [
+          "shield",
+          20
+        ],
+        [
+          "comm",
+          23,
+          1
+        ],
+        [
+          "comm",
+          27,
+          1
+        ],
+        [
+          "comm",
+          13,
+          1
+        ],
+        [
+          "comm",
+          8,
+          1
+        ],
+        [
+          "comm",
+          9,
+          1
+        ],
+        [
+          "comm",
+          17,
+          1
+        ],
+        [
+          "comm",
+          1,
+          1
+        ],
+        [
+          "comm",
+          31,
+          1
+        ],
+        [
+          "comm",
+          4,
+          1
+        ]
+      ],
+      "p8_proposals": null,
+      "p8_planning_errors": null,
+      "elapsed_seconds": 3.5639071610057727
+    },
+    {
+      "archive": "starnet-public-greedy-experimental-20260908.zip",
+      "archive_sha256": "8f981950058919555be2991e28c6cf5794654be96bee1d76788d8eafd9d8d6c5",
+      "runner_sha256": "c6db222569a40a74c0340d8ffc3c59c38e120e68d768fcc1b23083891d8ab467",
+      "family": "ws_peace_majority",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "b780e56957304189c394c22f43c709f9c9b5d13c90746b7b5d3666a7508ad972",
+      "offline_only": true,
+      "allow_offline_fallback": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "experimental_policy_mode": "public_greedy",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "effective_p8_mode": null,
+      "controller_type": "RuntimeController",
+      "model_sha256": "bfaa87a67bc5f862756022a316fc826ebd23f7cea57f0c19175f40e76aa716e7",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 907.9251816428571,
+      "steps": 88,
+      "actions": {
+        "scan": 50,
+        "comm": 37,
+        "cut": 0,
+        "shield": 0
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "forced_llm_failures": 0,
+      "llm_mode": "not_requested_by_archive",
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "1a9bc9a41181152b879d138dc5703b71e369b40e0170e2228ad12877d37cf5c5",
+      "action_sequence": [
+        [
+          "scan",
+          1
+        ],
+        [
+          "scan",
+          2
+        ],
+        [
+          "scan",
+          3
+        ],
+        [
+          "scan",
+          4
+        ],
+        [
+          "scan",
+          5
+        ],
+        [
+          "scan",
+          6
+        ],
+        [
+          "scan",
+          7
+        ],
+        [
+          "scan",
+          8
+        ],
+        [
+          "scan",
+          9
+        ],
+        [
+          "scan",
+          10
+        ],
+        [
+          "scan",
+          11
+        ],
+        [
+          "scan",
+          12
+        ],
+        [
+          "scan",
+          13
+        ],
+        [
+          "scan",
+          14
+        ],
+        [
+          "scan",
+          15
+        ],
+        [
+          "scan",
+          16
+        ],
+        [
+          "scan",
+          17
+        ],
+        [
+          "scan",
+          18
+        ],
+        [
+          "scan",
+          19
+        ],
+        [
+          "scan",
+          20
+        ],
+        [
+          "scan",
+          21
+        ],
+        [
+          "scan",
+          22
+        ],
+        [
+          "scan",
+          23
+        ],
+        [
+          "scan",
+          24
+        ],
+        [
+          "scan",
+          25
+        ],
+        [
+          "scan",
+          26
+        ],
+        [
+          "scan",
+          27
+        ],
+        [
+          "scan",
+          28
+        ],
+        [
+          "scan",
+          29
+        ],
+        [
+          "scan",
+          30
+        ],
+        [
+          "scan",
+          31
+        ],
+        [
+          "scan",
+          32
+        ],
+        [
+          "scan",
+          33
+        ],
+        [
+          "scan",
+          34
+        ],
+        [
+          "scan",
+          35
+        ],
+        [
+          "scan",
+          36
+        ],
+        [
+          "scan",
+          37
+        ],
+        [
+          "scan",
+          38
+        ],
+        [
+          "scan",
+          39
+        ],
+        [
+          "scan",
+          40
+        ],
+        [
+          "scan",
+          41
+        ],
+        [
+          "scan",
+          42
+        ],
+        [
+          "scan",
+          43
+        ],
+        [
+          "scan",
+          44
+        ],
+        [
+          "scan",
+          45
+        ],
+        [
+          "scan",
+          46
+        ],
+        [
+          "scan",
+          47
+        ],
+        [
+          "scan",
+          48
+        ],
+        [
+          "scan",
+          49
+        ],
+        [
+          "scan",
+          50
+        ],
+        [
+          "comm",
+          3,
+          1
+        ],
+        [
+          "comm",
+          9,
+          1
+        ],
+        [
+          "comm",
+          2,
+          1
+        ],
+        [
+          "comm",
+          10,
+          1
+        ],
+        [
+          "comm",
+          12,
+          1
+        ],
+        [
+          "comm",
+          21,
+          1
+        ],
+        [
+          "comm",
+          25,
+          1
+        ],
+        [
+          "comm",
+          19,
+          1
+        ],
+        [
+          "comm",
+          48,
+          1
+        ],
+        [
+          "comm",
+          32,
+          1
+        ],
+        [
+          "comm",
+          33,
+          1
+        ],
+        [
+          "comm",
+          39,
+          1
+        ],
+        [
+          "comm",
+          5,
+          1
+        ],
+        [
+          "comm",
+          11,
+          1
+        ],
+        [
+          "comm",
+          3,
+          1
+        ],
+        [
+          "comm",
+          34,
+          1
+        ],
+        [
+          "comm",
+          13,
+          1
+        ],
+        [
+          "comm",
+          15,
+          1
+        ],
+        [
+          "comm",
+          16,
+          1
+        ],
+        [
+          "comm",
+          20,
+          1
+        ],
+        [
+          "comm",
+          12,
+          1
+        ],
+        [
+          "comm",
+          30,
+          1
+        ],
+        [
+          "comm",
+          47,
+          1
+        ],
+        [
+          "comm",
+          23,
+          1
+        ],
+        [
+          "comm",
+          24,
+          1
+        ],
+        [
+          "comm",
+          27,
+          1
+        ],
+        [
+          "comm",
+          2,
+          1
+        ],
+        [
+          "comm",
+          28,
+          1
+        ],
+        [
+          "comm",
+          29,
+          1
+        ],
+        [
+          "comm",
+          37,
+          1
+        ],
+        [
+          "comm",
+          31,
+          1
+        ],
+        [
+          "comm",
+          41,
+          1
+        ],
+        [
+          "comm",
+          35,
+          1
+        ],
+        [
+          "comm",
+          40,
+          1
+        ],
+        [
+          "comm",
+          44,
+          1
+        ],
+        [
+          "comm",
+          46,
+          1
+        ],
+        [
+          "comm",
+          43,
+          1
+        ]
+      ],
+      "p8_proposals": null,
+      "p8_planning_errors": null,
+      "elapsed_seconds": 6.250187889905646
+    },
+    {
+      "archive": "starnet-public-greedy-experimental-20260908.zip",
+      "archive_sha256": "8f981950058919555be2991e28c6cf5794654be96bee1d76788d8eafd9d8d6c5",
+      "runner_sha256": "c6db222569a40a74c0340d8ffc3c59c38e120e68d768fcc1b23083891d8ab467",
+      "family": "sbm_violent_cluster",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "c47914b819abf4774c3ea7ee832a8f3e4c6d87ea033dc6eb6aef1ab93ea3c7b8",
+      "offline_only": true,
+      "allow_offline_fallback": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "experimental_policy_mode": "public_greedy",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "effective_p8_mode": null,
+      "controller_type": "RuntimeController",
+      "model_sha256": "bfaa87a67bc5f862756022a316fc826ebd23f7cea57f0c19175f40e76aa716e7",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 288.9794570820513,
+      "steps": 74,
+      "actions": {
+        "scan": 50,
+        "comm": 15,
+        "cut": 0,
+        "shield": 9
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "forced_llm_failures": 0,
+      "llm_mode": "not_requested_by_archive",
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 0.0,
+      "stop_reason": "None",
+      "actions_sha256": "d2b6c7c5a5959c7c2dee873adb80d6d978fd68e5c2bf3ede48bbaab10e8e48a7",
+      "action_sequence": [
+        [
+          "scan",
+          1
+        ],
+        [
+          "scan",
+          2
+        ],
+        [
+          "scan",
+          3
+        ],
+        [
+          "scan",
+          4
+        ],
+        [
+          "scan",
+          5
+        ],
+        [
+          "scan",
+          6
+        ],
+        [
+          "scan",
+          7
+        ],
+        [
+          "scan",
+          8
+        ],
+        [
+          "scan",
+          9
+        ],
+        [
+          "scan",
+          10
+        ],
+        [
+          "scan",
+          11
+        ],
+        [
+          "scan",
+          12
+        ],
+        [
+          "scan",
+          13
+        ],
+        [
+          "scan",
+          14
+        ],
+        [
+          "scan",
+          15
+        ],
+        [
+          "scan",
+          16
+        ],
+        [
+          "scan",
+          17
+        ],
+        [
+          "scan",
+          18
+        ],
+        [
+          "scan",
+          19
+        ],
+        [
+          "scan",
+          20
+        ],
+        [
+          "scan",
+          21
+        ],
+        [
+          "scan",
+          22
+        ],
+        [
+          "scan",
+          23
+        ],
+        [
+          "scan",
+          24
+        ],
+        [
+          "scan",
+          25
+        ],
+        [
+          "scan",
+          26
+        ],
+        [
+          "scan",
+          27
+        ],
+        [
+          "scan",
+          28
+        ],
+        [
+          "scan",
+          29
+        ],
+        [
+          "scan",
+          30
+        ],
+        [
+          "scan",
+          31
+        ],
+        [
+          "scan",
+          32
+        ],
+        [
+          "scan",
+          33
+        ],
+        [
+          "scan",
+          34
+        ],
+        [
+          "scan",
+          35
+        ],
+        [
+          "scan",
+          36
+        ],
+        [
+          "scan",
+          37
+        ],
+        [
+          "scan",
+          38
+        ],
+        [
+          "scan",
+          39
+        ],
+        [
+          "scan",
+          40
+        ],
+        [
+          "scan",
+          41
+        ],
+        [
+          "scan",
+          42
+        ],
+        [
+          "scan",
+          43
+        ],
+        [
+          "scan",
+          44
+        ],
+        [
+          "scan",
+          45
+        ],
+        [
+          "scan",
+          46
+        ],
+        [
+          "scan",
+          47
+        ],
+        [
+          "scan",
+          48
+        ],
+        [
+          "scan",
+          49
+        ],
+        [
+          "scan",
+          50
+        ],
+        [
+          "shield",
+          16
+        ],
+        [
+          "comm",
+          2,
+          1
+        ],
+        [
+          "comm",
+          18,
+          1
+        ],
+        [
+          "shield",
+          21
+        ],
+        [
+          "shield",
+          3
+        ],
+        [
+          "comm",
+          49,
+          1
+        ],
+        [
+          "comm",
+          6,
+          1
+        ],
+        [
+          "shield",
+          22
+        ],
+        [
+          "shield",
+          18
+        ],
+        [
+          "shield",
+          23
+        ],
+        [
+          "comm",
+          33,
+          1
+        ],
+        [
+          "comm",
+          48,
+          1
+        ],
+        [
+          "comm",
+          50,
+          1
+        ],
+        [
+          "shield",
+          1
+        ],
+        [
+          "shield",
+          5
+        ],
+        [
+          "comm",
+          36,
+          1
+        ],
+        [
+          "comm",
+          31,
+          1
+        ],
+        [
+          "comm",
+          27,
+          1
+        ],
+        [
+          "comm",
+          40,
+          1
+        ],
+        [
+          "comm",
+          45,
+          1
+        ],
+        [
+          "comm",
+          46,
+          1
+        ],
+        [
+          "comm",
+          47,
+          1
+        ],
+        [
+          "shield",
+          14
+        ],
+        [
+          "comm",
+          49,
+          1
+        ]
+      ],
+      "p8_proposals": null,
+      "p8_planning_errors": null,
+      "elapsed_seconds": 3.0841706830542535
+    },
+    {
+      "archive": "starnet-public-greedy-experimental-20260908.zip",
+      "archive_sha256": "8f981950058919555be2991e28c6cf5794654be96bee1d76788d8eafd9d8d6c5",
+      "runner_sha256": "c6db222569a40a74c0340d8ffc3c59c38e120e68d768fcc1b23083891d8ab467",
+      "family": "sbm_negative_bridges",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "b87ad119087c8343fe82a77f7594e9e2b5ceb055f5f868b9aeb1be9aba43288f",
+      "offline_only": true,
+      "allow_offline_fallback": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "experimental_policy_mode": "public_greedy",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "effective_p8_mode": null,
+      "controller_type": "RuntimeController",
+      "model_sha256": "bfaa87a67bc5f862756022a316fc826ebd23f7cea57f0c19175f40e76aa716e7",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 560.5882091698113,
+      "steps": 85,
+      "actions": {
+        "scan": 50,
+        "comm": 32,
+        "cut": 0,
+        "shield": 2
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "forced_llm_failures": 0,
+      "llm_mode": "not_requested_by_archive",
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "ef90822ecc3bb385ab1a5ee80efbe7c9625dfdcb3a5c6caa78ba53b7ee627e0d",
+      "action_sequence": [
+        [
+          "scan",
+          1
+        ],
+        [
+          "scan",
+          2
+        ],
+        [
+          "scan",
+          3
+        ],
+        [
+          "scan",
+          4
+        ],
+        [
+          "scan",
+          5
+        ],
+        [
+          "scan",
+          6
+        ],
+        [
+          "scan",
+          7
+        ],
+        [
+          "scan",
+          8
+        ],
+        [
+          "scan",
+          9
+        ],
+        [
+          "scan",
+          10
+        ],
+        [
+          "scan",
+          11
+        ],
+        [
+          "scan",
+          12
+        ],
+        [
+          "scan",
+          13
+        ],
+        [
+          "scan",
+          14
+        ],
+        [
+          "scan",
+          15
+        ],
+        [
+          "scan",
+          16
+        ],
+        [
+          "scan",
+          17
+        ],
+        [
+          "scan",
+          18
+        ],
+        [
+          "scan",
+          19
+        ],
+        [
+          "scan",
+          20
+        ],
+        [
+          "scan",
+          21
+        ],
+        [
+          "scan",
+          22
+        ],
+        [
+          "scan",
+          23
+        ],
+        [
+          "scan",
+          24
+        ],
+        [
+          "scan",
+          25
+        ],
+        [
+          "scan",
+          26
+        ],
+        [
+          "scan",
+          27
+        ],
+        [
+          "scan",
+          28
+        ],
+        [
+          "scan",
+          29
+        ],
+        [
+          "scan",
+          30
+        ],
+        [
+          "scan",
+          31
+        ],
+        [
+          "scan",
+          32
+        ],
+        [
+          "scan",
+          33
+        ],
+        [
+          "scan",
+          34
+        ],
+        [
+          "scan",
+          35
+        ],
+        [
+          "scan",
+          36
+        ],
+        [
+          "scan",
+          37
+        ],
+        [
+          "scan",
+          38
+        ],
+        [
+          "scan",
+          39
+        ],
+        [
+          "scan",
+          40
+        ],
+        [
+          "scan",
+          41
+        ],
+        [
+          "scan",
+          42
+        ],
+        [
+          "scan",
+          43
+        ],
+        [
+          "scan",
+          44
+        ],
+        [
+          "scan",
+          45
+        ],
+        [
+          "scan",
+          46
+        ],
+        [
+          "scan",
+          47
+        ],
+        [
+          "scan",
+          48
+        ],
+        [
+          "scan",
+          49
+        ],
+        [
+          "scan",
+          50
+        ],
+        [
+          "comm",
+          16,
+          1
+        ],
+        [
+          "comm",
+          20,
+          1
+        ],
+        [
+          "comm",
+          37,
+          1
+        ],
+        [
+          "comm",
+          32,
+          1
+        ],
+        [
+          "shield",
+          26
+        ],
+        [
+          "comm",
+          8,
+          1
+        ],
+        [
+          "comm",
+          7,
+          1
+        ],
+        [
+          "comm",
+          11,
+          1
+        ],
+        [
+          "comm",
+          12,
+          1
+        ],
+        [
+          "comm",
+          39,
+          1
+        ],
+        [
+          "comm",
+          46,
+          1
+        ],
+        [
+          "comm",
+          15,
+          1
+        ],
+        [
+          "comm",
+          42,
+          1
+        ],
+        [
+          "comm",
+          20,
+          1
+        ],
+        [
+          "comm",
+          34,
+          1
+        ],
+        [
+          "comm",
+          2,
+          1
+        ],
+        [
+          "comm",
+          36,
+          1
+        ],
+        [
+          "comm",
+          45,
+          1
+        ],
+        [
+          "comm",
+          47,
+          1
+        ],
+        [
+          "comm",
+          22,
+          1
+        ],
+        [
+          "comm",
+          25,
+          1
+        ],
+        [
+          "comm",
+          30,
+          1
+        ],
+        [
+          "comm",
+          35,
+          1
+        ],
+        [
+          "comm",
+          38,
+          1
+        ],
+        [
+          "comm",
+          3,
+          1
+        ],
+        [
+          "comm",
+          9,
+          1
+        ],
+        [
+          "comm",
+          43,
+          1
+        ],
+        [
+          "comm",
+          44,
+          1
+        ],
+        [
+          "comm",
+          50,
+          1
+        ],
+        [
+          "comm",
+          23,
+          1
+        ],
+        [
+          "comm",
+          36,
+          1
+        ],
+        [
+          "comm",
+          46,
+          1
+        ],
+        [
+          "shield",
+          12
+        ],
+        [
+          "comm",
+          48,
+          1
+        ]
+      ],
+      "p8_proposals": null,
+      "p8_planning_errors": null,
+      "elapsed_seconds": 4.834149822010659
+    },
+    {
+      "archive": "starnet-public-greedy-experimental-20260908.zip",
+      "archive_sha256": "8f981950058919555be2991e28c6cf5794654be96bee1d76788d8eafd9d8d6c5",
+      "runner_sha256": "c6db222569a40a74c0340d8ffc3c59c38e120e68d768fcc1b23083891d8ab467",
+      "family": "three_sparse_components",
+      "repetition": 1,
+      "node_count": 50,
+      "seed_sha256": "259912adcb9cbaffbf69227a41638d124498017fe864a60ed3fcdc7b0b9f2cbb",
+      "offline_only": true,
+      "allow_offline_fallback": true,
+      "archive_config": {
+        "stage": "preliminary",
+        "policy_mode": "public_greedy",
+        "llm_schedule": "off",
+        "person": [
+          {
+            "role": "ScoutAnalystAgent",
+            "experimental_policy_mode": "public_greedy",
+            "character": "按赛制节点范围顺序完成全量扫描，只把环境公开响应写入黑板。",
+            "focus": "固定扫描与情报完整性。"
+          },
+          {
+            "role": "ExecutorAgent",
+            "character": "在每次公开环境调用前复核节点、预算、次数和 prompt_id，并记录真实反馈。",
+            "focus": "动作校验与反馈。"
+          },
+          {
+            "role": "CommanderAgent",
+            "character": "只可从当前状态版本的合法候选 ID 中选择，超时或非法输出由 Python 稳定回退。",
+            "focus": "受限决策。"
+          }
+        ]
+      },
+      "effective_policy_config": {
+        "shield_threshold": 0.55,
+        "cut_threshold": 0.2,
+        "enable_shield": true,
+        "enable_cut": true,
+        "enable_communicate": true,
+        "p0_exclusive": false,
+        "mixed_raw_roi": false,
+        "max_llm_calls": 0,
+        "stop_after_scan": false,
+        "max_steps": null,
+        "policy_mode": "public_greedy",
+        "cmg_cut_limit": 64,
+        "cmg_iteration_limit": 200,
+        "cmg_convergence_threshold": 1e-08,
+        "cmg_planning_seconds": 1.0,
+        "llm_schedule": "off",
+        "structure_depth": 2,
+        "structure_width": 4,
+        "structure_candidate_limit": 12,
+        "adaptive_initial_preliminary": 4,
+        "adaptive_initial_final": 8
+      },
+      "effective_p8_mode": null,
+      "controller_type": "RuntimeController",
+      "model_sha256": "bfaa87a67bc5f862756022a316fc826ebd23f7cea57f0c19175f40e76aa716e7",
+      "llm_model": "gpt-5.6-luna",
+      "status": "completed",
+      "score": 177.9299667087125,
+      "steps": 85,
+      "actions": {
+        "scan": 50,
+        "comm": 32,
+        "cut": 0,
+        "shield": 2
+      },
+      "action_failures": 0,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "forced_llm_failures": 0,
+      "llm_mode": "not_requested_by_archive",
+      "llm_accepted": null,
+      "llm_fallbacks": null,
+      "remaining_budget": 1.0,
+      "stop_reason": "StopReason.NO_VALID_ACTIONS",
+      "actions_sha256": "69eaf698d44cf4f7b681bdea75aa17b7aed9f5efbebe68dc9ab7816b787f6100",
+      "action_sequence": [
+        [
+          "scan",
+          1
+        ],
+        [
+          "scan",
+          2
+        ],
+        [
+          "scan",
+          3
+        ],
+        [
+          "scan",
+          4
+        ],
+        [
+          "scan",
+          5
+        ],
+        [
+          "scan",
+          6
+        ],
+        [
+          "scan",
+          7
+        ],
+        [
+          "scan",
+          8
+        ],
+        [
+          "scan",
+          9
+        ],
+        [
+          "scan",
+          10
+        ],
+        [
+          "scan",
+          11
+        ],
+        [
+          "scan",
+          12
+        ],
+        [
+          "scan",
+          13
+        ],
+        [
+          "scan",
+          14
+        ],
+        [
+          "scan",
+          15
+        ],
+        [
+          "scan",
+          16
+        ],
+        [
+          "scan",
+          17
+        ],
+        [
+          "scan",
+          18
+        ],
+        [
+          "scan",
+          19
+        ],
+        [
+          "scan",
+          20
+        ],
+        [
+          "scan",
+          21
+        ],
+        [
+          "scan",
+          22
+        ],
+        [
+          "scan",
+          23
+        ],
+        [
+          "scan",
+          24
+        ],
+        [
+          "scan",
+          25
+        ],
+        [
+          "scan",
+          26
+        ],
+        [
+          "scan",
+          27
+        ],
+        [
+          "scan",
+          28
+        ],
+        [
+          "scan",
+          29
+        ],
+        [
+          "scan",
+          30
+        ],
+        [
+          "scan",
+          31
+        ],
+        [
+          "scan",
+          32
+        ],
+        [
+          "scan",
+          33
+        ],
+        [
+          "scan",
+          34
+        ],
+        [
+          "scan",
+          35
+        ],
+        [
+          "scan",
+          36
+        ],
+        [
+          "scan",
+          37
+        ],
+        [
+          "scan",
+          38
+        ],
+        [
+          "scan",
+          39
+        ],
+        [
+          "scan",
+          40
+        ],
+        [
+          "scan",
+          41
+        ],
+        [
+          "scan",
+          42
+        ],
+        [
+          "scan",
+          43
+        ],
+        [
+          "scan",
+          44
+        ],
+        [
+          "scan",
+          45
+        ],
+        [
+          "scan",
+          46
+        ],
+        [
+          "scan",
+          47
+        ],
+        [
+          "scan",
+          48
+        ],
+        [
+          "scan",
+          49
+        ],
+        [
+          "scan",
+          50
+        ],
+        [
+          "comm",
+          37,
+          1
+        ],
+        [
+          "comm",
+          41,
+          1
+        ],
+        [
+          "comm",
+          40,
+          1
+        ],
+        [
+          "comm",
+          10,
+          1
+        ],
+        [
+          "comm",
+          11,
+          1
+        ],
+        [
+          "comm",
+          15,
+          1
+        ],
+        [
+          "comm",
+          4,
+          1
+        ],
+        [
+          "comm",
+          9,
+          1
+        ],
+        [
+          "comm",
+          22,
+          1
+        ],
+        [
+          "comm",
+          18,
+          1
+        ],
+        [
+          "comm",
+          24,
+          1
+        ],
+        [
+          "comm",
+          27,
+          1
+        ],
+        [
+          "comm",
+          29,
+          1
+        ],
+        [
+          "comm",
+          50,
+          1
+        ],
+        [
+          "comm",
+          27,
+          1
+        ],
+        [
+          "comm",
+          34,
+          1
+        ],
+        [
+          "shield",
+          48
+        ],
+        [
+          "comm",
+          44,
+          1
+        ],
+        [
+          "comm",
+          46,
+          1
+        ],
+        [
+          "comm",
+          39,
+          1
+        ],
+        [
+          "comm",
+          9,
+          1
+        ],
+        [
+          "comm",
+          37,
+          1
+        ],
+        [
+          "comm",
+          13,
+          1
+        ],
+        [
+          "comm",
+          5,
+          1
+        ],
+        [
+          "comm",
+          7,
+          1
+        ],
+        [
+          "comm",
+          8,
+          1
+        ],
+        [
+          "comm",
+          17,
+          1
+        ],
+        [
+          "comm",
+          20,
+          1
+        ],
+        [
+          "comm",
+          30,
+          1
+        ],
+        [
+          "comm",
+          21,
+          1
+        ],
+        [
+          "comm",
+          31,
+          1
+        ],
+        [
+          "comm",
+          33,
+          1
+        ],
+        [
+          "shield",
+          4
+        ],
+        [
+          "comm",
+          15,
+          1
+        ]
+      ],
+      "p8_proposals": null,
+      "p8_planning_errors": null,
+      "elapsed_seconds": 2.471654553897679
+    }
+  ],
+  "summary": [
+    {
+      "archive": "starnet-p8-mean-20260913.zip",
+      "official_score": 761.9467,
+      "complete": true,
+      "local_mean": 560.5051275353754,
+      "local_min": 185.7681499992931,
+      "local_max": 907.9251816428571,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "forced_llm_failures": 489,
+      "action_failures": 0
+    },
+    {
+      "archive": "starnet-public-greedy-v9-optimized-20260908.zip",
+      "official_score": 761.9467,
+      "complete": true,
+      "local_mean": 547.955666380274,
+      "local_min": 177.9299667087125,
+      "local_max": 907.9251816428571,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "forced_llm_failures": 0,
+      "action_failures": 0
+    },
+    {
+      "archive": "starnet-public-greedy-experimental-20260908.zip",
+      "official_score": 765.84,
+      "complete": true,
+      "local_mean": 538.8291105801142,
+      "local_min": 177.9299667087125,
+      "local_max": 907.9251816428571,
+      "llm_calls": 0,
+      "llm_transport_errors": 0,
+      "forced_llm_failures": 0,
+      "action_failures": 0
+    }
+  ]
+}

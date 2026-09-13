@@ -33,7 +33,7 @@ from starnet.experiments.seeds import SEED_SPECS, seed_payload
 
 ROOT = Path(__file__).resolve().parents[1]
 OFFICIAL = {
-    "starnet-p8-mean-20260913.zip": None,
+    "starnet-p8-mean-20260913.zip": 761.9467,
     # These locally built 2026-09-12 archives have no separate platform score
     # attached. Keeping them here permits the same paired local runner used
     # for the historical submission comparison.
@@ -153,6 +153,7 @@ def worker(job_path: Path) -> int:
                 else {"legacy_max_llm_calls": getattr(module, "MAX_LLM_CALLS", None)}
             )
             result["effective_p8_mode"] = getattr(model.controller, "p8_mode", None)
+            result["controller_type"] = type(model.controller).__name__
             result["model_sha256"] = digest((folder / "starnet_model.py").read_bytes())
             result["llm_model"] = os.getenv("SMP_LLM_MODEL", DEFAULT_MODEL)
             for step in range(1, 121):
@@ -182,6 +183,9 @@ def worker(job_path: Path) -> int:
                 "remaining_budget": env.get_remaining_budget(),
                 "stop_reason": str(controller.stop_reason),
                 "actions_sha256": digest(json.dumps(env.calls).encode()),
+                "action_sequence": env.calls,
+                "p8_proposals": getattr(controller, "p8_proposals", None),
+                "p8_planning_errors": getattr(controller, "p8_planning_errors", None),
             })
     except Exception as exc:
         result.update({"status": "error", "error_type": type(exc).__name__})

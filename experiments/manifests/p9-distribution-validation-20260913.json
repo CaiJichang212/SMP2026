@@ -1,0 +1,79 @@
+{
+  "experiment": "P9 resampled topology and joint public/response distribution validation",
+  "status": "development protocol registered; confirmation closed and ungenerated",
+  "purpose": "replace the legacy six-family equal-weight objective with independently resampled graphs and explicit shifts in public weights and hidden response heterogeneity",
+  "public_contract": {
+    "node_count": 50,
+    "initial_budget": 100.0,
+    "max_steps": 120,
+    "allowed_environment_api": "public API only",
+    "policy_visibility": "r, generator family, repetition and shift labels are environment-only and never passed to the policy"
+  },
+  "mechanism_gate": {
+    "status": "passed before development execution",
+    "evidence": "experiments/reports/p9-response-bounds-probe-20260913.json",
+    "communication_update": "the public custom-seed environment clips new_w to [-100,100] after every successful communication, including a first action from an initial value outside that interval",
+    "runner_requirement": "abort unless every bounded prediction error in the public probe is zero and at least one unbounded prediction error is nonzero"
+  },
+  "families": [
+    "er_resampled",
+    "ba_resampled",
+    "ws_resampled",
+    "sbm_resampled"
+  ],
+  "shift_strata": {
+    "centered_independent": "w scale 1.0 offset 0; r uniform independently in [0.2,1.5]",
+    "negative_persona_aligned": "w scale 1.25 offset -8; peace r high, neutral middle, violent low",
+    "positive_persona_inverse": "w scale 0.8 offset +8; peace r low, neutral middle, violent high",
+    "wide_degree_positive": "w scale 1.6 offset -2; r increases with initial degree plus bounded jitter",
+    "compressed_degree_negative": "w scale 0.6 offset +2; r decreases with initial degree plus bounded jitter",
+    "near_upper_bound": "mechanism stress only: map the shared base w sample monotonically into [80,100], retain persona, and draw r independently in [0.2,1.5]",
+    "saturated_hubs": "mechanism stress only: set the initial-degree top 20 percent to peace persona and w in [90,100], retain other base opinions, and make r increase with initial degree"
+  },
+  "pairing": "for a fixed family and repetition, strata share topology, ID permutation and base persona/opinion draws; each strategy and baseline sees the identical full seed within a pair",
+  "development": {
+    "repetitions": [901, 902],
+    "pairs_per_arm": 56,
+    "execution_order": "run the two boundary mechanism strata first (16 pairs per arm), then the other five fixed strata (40 pairs per arm)",
+    "status": "open"
+  },
+  "confirmation": {
+    "repetitions": [1001, 1002, 1003],
+    "unused_reserved_repetitions": [1004, 1005],
+    "pairs_per_arm": 84,
+    "status": "reserved; runner requires --confirm and seed_payload requires allow_confirmation",
+    "open_condition": "use only the independently frozen p9-bounded-release protocol after development completion; record source hash before generation"
+  },
+  "required_controls": [
+    "starnet-public-greedy-v9-optimized-20260908.zip",
+    "starnet-public-greedy-experimental-20260908.zip",
+    "starnet-p8-mean-20260913.zip"
+  ],
+  "estimands": {
+    "primary": "paired gain averaged equally across the four topology families and seven shifts; also report the original five distribution shifts separately from the two mechanism-stress shifts",
+    "shift_robustness": "paired mean gain reported separately for every shift stratum",
+    "topology_robustness": "paired mean gain reported separately for every topology family",
+    "behavioral_coverage": "fraction of pairs and post-scan decisions whose intervention differs from each control archive"
+  },
+  "development_selection_rule": [
+    "complete all 40 declared pairs for every arm and control",
+    "rank by primary paired mean against the official-best historical experimental control",
+    "require nonnegative paired mean in each of the seven shift strata against that control",
+    "report every topology mean and loss without retrospective exclusions",
+    "reject arms with action failures, budget violations, step violations or incomplete logs",
+    "use v9 and P8 comparisons for attribution; they do not replace the official-best control"
+  ],
+  "required_run_log": [
+    "seed SHA-256 and policy/archive SHA-256",
+    "ordered action attempts with kind, public targets, prompt_id, success and budget before/after",
+    "public communication response returned by the environment",
+    "final score, remaining budget, action counts, step count and stop reason",
+    "LLM attempts, accepted decisions, fallbacks and transport errors",
+    "P8/P9 proposals, selected proposal/baseline counts and planning error class counters when available",
+    "first intervention divergence from every control archive"
+  ],
+  "resource_gate": "every action validates public node/edge/prompt/budget constraints before dispatch; environment return is the only factual update",
+  "confirmation_gate": "preregister separately after development winner freeze; confirmation data must not tune candidates or thresholds",
+  "platform_score": null,
+  "production_enabled": false
+}

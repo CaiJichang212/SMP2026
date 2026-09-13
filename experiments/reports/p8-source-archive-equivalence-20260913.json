@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "archive": "starnet-p8-mean-20260913.zip",
+  "families": [
+    "er_balanced",
+    "ba_negative_hubs",
+    "ws_peace_majority",
+    "sbm_negative_bridges",
+    "sbm_violent_cluster",
+    "three_sparse_components"
+  ],
+  "ranker": "deterministic fallback after forced offline LLM exception",
+  "all_scores_equal": true,
+  "all_full_sequences_equal": true,
+  "all_intervention_sequences_equal": true,
+  "rows": [
+    {
+      "family": "er_balanced",
+      "score": 802.8062920839894,
+      "steps": 86,
+      "actions_sha256": "fa3065cb05fb6992367c5d0c971d049ed83db0a6ec31b90c9eb37aaed696e901",
+      "p8_mode": "conservative",
+      "p8_proposals": 0,
+      "p8_planning_errors": 0,
+      "p8_refresh_reasons": {
+        "baseline_selected": 36
+      },
+      "p8_last_planning_error": null,
+      "p8_selected_proposals": 0,
+      "p8_selected_baseline": 0,
+      "forced_llm_failures": 86,
+      "archive_score": 802.8062920839894,
+      "score_equal": true,
+      "full_sequence_equal": true,
+      "intervention_sequence_equal": true
+    },
+    {
+      "family": "ba_negative_hubs",
+      "score": 590.240586484472,
+      "steps": 77,
+      "actions_sha256": "c77f532e3eae9046f2c62f0ac4ab821fbecf9c915644ad3bd9be5fe341342b1b",
+      "p8_mode": "conservative",
+      "p8_proposals": 3,
+      "p8_planning_errors": 0,
+      "p8_refresh_reasons": {
+        "proposal_exposed": 3,
+        "baseline_selected": 24
+      },
+      "p8_last_planning_error": null,
+      "p8_selected_proposals": 3,
+      "p8_selected_baseline": 0,
+      "forced_llm_failures": 77,
+      "archive_score": 590.240586484472,
+      "score_equal": true,
+      "full_sequence_equal": true,
+      "intervention_sequence_equal": true
+    },
+    {
+      "family": "ws_peace_majority",
+      "score": 907.9251816428571,
+      "steps": 88,
+      "actions_sha256": "ca75cf93debf17a51f1f3aa7542b98711258b0ebaabd0ea1065cd8ff77d5dd47",
+      "p8_mode": "conservative",
+      "p8_proposals": 0,
+      "p8_planning_errors": 0,
+      "p8_refresh_reasons": {
+        "baseline_selected": 37,
+        "no_candidates": 1
+      },
+      "p8_last_planning_error": null,
+      "p8_selected_proposals": 0,
+      "p8_selected_baseline": 0,
+      "forced_llm_failures": 87,
+      "archive_score": 907.9251816428571,
+      "score_equal": true,
+      "full_sequence_equal": true,
+      "intervention_sequence_equal": true
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "score": 563.7690441320756,
+      "steps": 85,
+      "actions_sha256": "0126f7befff4337c2fde799ab30724427d53eb03efe121ac1c99170cebfc6456",
+      "p8_mode": "conservative",
+      "p8_proposals": 0,
+      "p8_planning_errors": 0,
+      "p8_refresh_reasons": {
+        "baseline_selected": 34,
+        "no_candidates": 1
+      },
+      "p8_last_planning_error": null,
+      "p8_selected_proposals": 0,
+      "p8_selected_baseline": 0,
+      "forced_llm_failures": 84,
+      "archive_score": 563.7690441320756,
+      "score_equal": true,
+      "full_sequence_equal": true,
+      "intervention_sequence_equal": true
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "score": 312.5215108695652,
+      "steps": 73,
+      "actions_sha256": "af29d67b7493990e60f63bb6e342e7b61481ef753cf5006a6eb289b1574aed97",
+      "p8_mode": "conservative",
+      "p8_proposals": 0,
+      "p8_planning_errors": 0,
+      "p8_refresh_reasons": {
+        "baseline_selected": 22,
+        "no_candidates": 1
+      },
+      "p8_last_planning_error": null,
+      "p8_selected_proposals": 0,
+      "p8_selected_baseline": 0,
+      "forced_llm_failures": 72,
+      "archive_score": 312.5215108695652,
+      "score_equal": true,
+      "full_sequence_equal": true,
+      "intervention_sequence_equal": true
+    },
+    {
+      "family": "three_sparse_components",
+      "score": 185.7681499992931,
+      "steps": 83,
+      "actions_sha256": "472c6ccafbb34728d8f36e730cb1c3f6b5fd8ff673ad267dee1ef673a05ba75d",
+      "p8_mode": "conservative",
+      "p8_proposals": 2,
+      "p8_planning_errors": 0,
+      "p8_refresh_reasons": {
+        "proposal_exposed": 2,
+        "baseline_selected": 31
+      },
+      "p8_last_planning_error": null,
+      "p8_selected_proposals": 2,
+      "p8_selected_baseline": 0,
+      "forced_llm_failures": 83,
+      "archive_score": 185.7681499992931,
+      "score_equal": true,
+      "full_sequence_equal": true,
+      "intervention_sequence_equal": true
+    }
+  ]
+}

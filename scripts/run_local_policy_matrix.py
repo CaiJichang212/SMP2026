@@ -253,7 +253,10 @@ class LocalPublicEnvironment:
         self.budget -= 2.0
         turn = 4 - left
         delta = self.prompts[prompt_id] * self._response_factors[node_id] * MARGINAL_MULTIPLIERS[turn]
-        node["w"] = float(node["w"]) + delta
+        # Public custom-seed probes establish per-action saturation. Initial
+        # scans may expose values outside this interval; clipping applies only
+        # after a successful communication update.
+        node["w"] = min(100.0, max(-100.0, float(node["w"]) + delta))
         node["comm_left"] = left - 1
         return {"status": "success", "new_w": node["w"]}
 
