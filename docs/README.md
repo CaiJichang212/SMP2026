@@ -7,8 +7,10 @@
   - [`赛方常见问题解答`](00_rules/SMP2026常见问题解答.docx)：评测机制、调用上限、沙盒修复和线上预装依赖版本。
 - [`01_architecture/`](01_architecture/)：研发架构、依赖兼容性与架构决策记录（ADR）。
   - [`评测环境 Python 3.9 兼容基线`](01_architecture/adr/004-evaluator-python39-compatibility.md)：研发/交付环境分离、FAQ 固定依赖和最终 ZIP 验证顺序。
+  - [`游说倾向边界`](01_architecture/adr/005-communication-opinion-bounds.md)：108 次公开返回验证的逐次截断机制，以及候选和实验环境的修正要求。
 - [`02_research/`](02_research/)：算法调研与策略路线。
 - [`03_experiments/`](03_experiments/)：可提交的实验结论与版本说明。
+  - [`P8 官方同分反馈与 P9 归因`](../experiments/reports/p9-official-feedback-attribution-20260913.md)：官方成绩、原样 ZIP 复放、候选覆盖瓶颈和下一轮实验判断。
   - [`V1 推荐方案`](03_experiments/v1-recommended-design.md)：本地机制探针、V0 问题分析与结算器驱动的响应感知 Greedy 设计。
   - [`V1.0 实验方案`](03_experiments/v1-experiment-protocol.md)：预注册的校准、门禁、配对主矩阵和当前 fail-closed 决策。
   - [`P0–P3 实验方案与本地结果（2026-09-06）`](03_experiments/p0-p3-experiment-plan-and-local-results-20260906.md)：三重复配对矩阵、此次本地回归与远端可用性门禁结论。

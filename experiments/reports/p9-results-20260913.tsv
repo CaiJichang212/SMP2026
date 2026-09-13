@@ -1,0 +1,7 @@
+experiment	source	cohort	metric	value	status	description
+official_baseline	067d232f5360e67114d1bf0f1937a574f71b743cd2049cf6d20372a45eb06c50	user_official_feedback	platform_score	761.9467	baseline	P8 submitted ZIP; no inferred score conversion
+depth2	p9-candidate-generation-results-20260913.md	22_families_501_503	mean_gain_vs_p8	0.149771963	reject	One development win; expansion 44 pairs all ties
+portfolio	p9-candidate-generation-results-20260913.md	22_families_501_503	mean_gain_vs_p8	0.134710444	reject	Two grid regressions; expansion mean negative
+coverage13	3d5295c	22_families_501	mean_gain_vs_p8	0.240363116	experimental_only	One win; not promoted or mixed into bound correction
+bounded_initial	05ad140	16_saturation_development_pairs	mean_gain_vs_p8	41.3797137	qualification_pending	16 wins; independent confirmation and final entry validation required
+bounded_confirmed	539e458	84_independent_confirmation_pairs	mean_gain_vs_p8	10.4140070514	qualified	24 wins, 60 ties, no losses; real LLM and final Python 3.9 ZIP passed

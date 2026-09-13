@@ -36,16 +36,19 @@ cannot import name 'TypeAlias' from 'typing' (/usr/local/lib/python3.9/typing.py
    `typing_extensions` 导入，并验证其固定版本提供该名称。
 4. `scripts/validate_submission.py` 必须以 Python 3.9 grammar 解析生成文件，并拒绝
    已知的 Python 3.10+ `typing` 导入。
-5. 提交前至少用 Python 3.9 直接导入最终 ZIP；测试必须针对 **ZIP 内文件**，不能只
-   验证 `src/` 或构建前模块。
+5. 提交前用 Python 3.9 验证最终 ZIP 的导入和实际规划执行；测试必须针对 **ZIP 内文件**，不能只
+   验证 `src/` 或构建前模块。记录真实框架、依赖版本、有效策略、规划异常和实际动作变化。
+   导入通过不能替代控制器执行验证，不得使用伪造的 CaseVO 作为运行时兼容证据。
 6. Python 3.9 导入测试可能生成 `__pycache__`。最终顺序必须是：完成动态测试，重新
    构建清理生成目录，再校验和打包。任何校验失败都不得继续上传。
 
 ## 实施结果
 
-`TypeAlias` 已改成普通别名，策略计算和候选排序不变。修复后的 ZIP 在 CPython
-3.9.25 与 `networkx==3.1` 下从 ZIP 根目录成功导入 `ParticipantSquadModel`；生成
-文件引用的全部 NetworkX 名称均存在于 3.1。完整证据见
+`TypeAlias` 已改成普通别名，策略计算和候选排序不变。此前 CPython
+3.9.25 与 `networkx==3.1` 的 ZIP 导入探针使用了临时空框架类，
+只能说明其余模块完成导入，**不能证明真实 CaseVO 或 P8 控制器执行兼容**。
+此前真实 CaseVO 端到端测试在现代研发环境执行；这两个结论不得合并。
+生成文件引用的全部 NetworkX 名称均存在于 3.1。原始修复记录见
 [`p8-python39-compatibility-20260913.md`](../../../experiments/reports/p8-python39-compatibility-20260913.md)。
 
 修复包：`artifacts/submission/starnet-p8-mean-20260913.zip`，SHA-256：

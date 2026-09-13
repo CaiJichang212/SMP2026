@@ -1,0 +1,1659 @@
+{
+  "hypotheses": [
+    "unbounded additive response",
+    "clip each communication to [-100,100]"
+  ],
+  "public_custom_seed_mechanism_probe": true,
+  "platform_score": null,
+  "runs": [
+    {
+      "factor": 0.2,
+      "prompt_id": 1,
+      "seed_sha256": "7911fcbfcf837e8a8847dbdf1ead13708b2c384f78e0d08777c48862486ebc50",
+      "observations": [
+        {
+          "node": 1,
+          "initial_w": -110.0,
+          "scanned_w": -110.0,
+          "turn": 1,
+          "previous_w": -110.0,
+          "response": {
+            "new_w": -100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -107.0,
+          "bounded_prediction": -100.0,
+          "unbounded_error": 7.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 1,
+          "initial_w": -110.0,
+          "scanned_w": -110.0,
+          "turn": 2,
+          "previous_w": -100.0,
+          "response": {
+            "new_w": -98.5,
+            "status": "success"
+          },
+          "unbounded_prediction": -98.5,
+          "bounded_prediction": -98.5,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 1,
+          "initial_w": -110.0,
+          "scanned_w": -110.0,
+          "turn": 3,
+          "previous_w": -98.5,
+          "response": {
+            "new_w": -97.75,
+            "status": "success"
+          },
+          "unbounded_prediction": -97.75,
+          "bounded_prediction": -97.75,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 2,
+          "initial_w": -100.0,
+          "scanned_w": -100.0,
+          "turn": 1,
+          "previous_w": -100.0,
+          "response": {
+            "new_w": -97.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -97.0,
+          "bounded_prediction": -97.0,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 2,
+          "initial_w": -100.0,
+          "scanned_w": -100.0,
+          "turn": 2,
+          "previous_w": -97.0,
+          "response": {
+            "new_w": -95.5,
+            "status": "success"
+          },
+          "unbounded_prediction": -95.5,
+          "bounded_prediction": -95.5,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 2,
+          "initial_w": -100.0,
+          "scanned_w": -100.0,
+          "turn": 3,
+          "previous_w": -95.5,
+          "response": {
+            "new_w": -94.75,
+            "status": "success"
+          },
+          "unbounded_prediction": -94.75,
+          "bounded_prediction": -94.75,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 3,
+          "initial_w": -99.0,
+          "scanned_w": -99.0,
+          "turn": 1,
+          "previous_w": -99.0,
+          "response": {
+            "new_w": -96.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -96.0,
+          "bounded_prediction": -96.0,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 3,
+          "initial_w": -99.0,
+          "scanned_w": -99.0,
+          "turn": 2,
+          "previous_w": -96.0,
+          "response": {
+            "new_w": -94.5,
+            "status": "success"
+          },
+          "unbounded_prediction": -94.5,
+          "bounded_prediction": -94.5,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 3,
+          "initial_w": -99.0,
+          "scanned_w": -99.0,
+          "turn": 3,
+          "previous_w": -94.5,
+          "response": {
+            "new_w": -93.75,
+            "status": "success"
+          },
+          "unbounded_prediction": -93.75,
+          "bounded_prediction": -93.75,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 4,
+          "initial_w": -90.0,
+          "scanned_w": -90.0,
+          "turn": 1,
+          "previous_w": -90.0,
+          "response": {
+            "new_w": -87.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -87.0,
+          "bounded_prediction": -87.0,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 4,
+          "initial_w": -90.0,
+          "scanned_w": -90.0,
+          "turn": 2,
+          "previous_w": -87.0,
+          "response": {
+            "new_w": -85.5,
+            "status": "success"
+          },
+          "unbounded_prediction": -85.5,
+          "bounded_prediction": -85.5,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 4,
+          "initial_w": -90.0,
+          "scanned_w": -90.0,
+          "turn": 3,
+          "previous_w": -85.5,
+          "response": {
+            "new_w": -84.75,
+            "status": "success"
+          },
+          "unbounded_prediction": -84.75,
+          "bounded_prediction": -84.75,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 5,
+          "initial_w": 0.0,
+          "scanned_w": 0.0,
+          "turn": 1,
+          "previous_w": 0.0,
+          "response": {
+            "new_w": 3.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 3.0,
+          "bounded_prediction": 3.0,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 5,
+          "initial_w": 0.0,
+          "scanned_w": 0.0,
+          "turn": 2,
+          "previous_w": 3.0,
+          "response": {
+            "new_w": 4.5,
+            "status": "success"
+          },
+          "unbounded_prediction": 4.5,
+          "bounded_prediction": 4.5,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 5,
+          "initial_w": 0.0,
+          "scanned_w": 0.0,
+          "turn": 3,
+          "previous_w": 4.5,
+          "response": {
+            "new_w": 5.25,
+            "status": "success"
+          },
+          "unbounded_prediction": 5.25,
+          "bounded_prediction": 5.25,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 6,
+          "initial_w": 90.0,
+          "scanned_w": 90.0,
+          "turn": 1,
+          "previous_w": 90.0,
+          "response": {
+            "new_w": 93.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 93.0,
+          "bounded_prediction": 93.0,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 6,
+          "initial_w": 90.0,
+          "scanned_w": 90.0,
+          "turn": 2,
+          "previous_w": 93.0,
+          "response": {
+            "new_w": 94.5,
+            "status": "success"
+          },
+          "unbounded_prediction": 94.5,
+          "bounded_prediction": 94.5,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 6,
+          "initial_w": 90.0,
+          "scanned_w": 90.0,
+          "turn": 3,
+          "previous_w": 94.5,
+          "response": {
+            "new_w": 95.25,
+            "status": "success"
+          },
+          "unbounded_prediction": 95.25,
+          "bounded_prediction": 95.25,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 7,
+          "initial_w": 99.0,
+          "scanned_w": 99.0,
+          "turn": 1,
+          "previous_w": 99.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 102.0,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -2.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 7,
+          "initial_w": 99.0,
+          "scanned_w": 99.0,
+          "turn": 2,
+          "previous_w": 100.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 101.5,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -1.5,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 7,
+          "initial_w": 99.0,
+          "scanned_w": 99.0,
+          "turn": 3,
+          "previous_w": 100.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 100.75,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -0.75,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 8,
+          "initial_w": 100.0,
+          "scanned_w": 100.0,
+          "turn": 1,
+          "previous_w": 100.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 103.0,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -3.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 8,
+          "initial_w": 100.0,
+          "scanned_w": 100.0,
+          "turn": 2,
+          "previous_w": 100.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 101.5,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -1.5,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 8,
+          "initial_w": 100.0,
+          "scanned_w": 100.0,
+          "turn": 3,
+          "previous_w": 100.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 100.75,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -0.75,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 9,
+          "initial_w": 110.0,
+          "scanned_w": 110.0,
+          "turn": 1,
+          "previous_w": 110.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 113.0,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -13.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 9,
+          "initial_w": 110.0,
+          "scanned_w": 110.0,
+          "turn": 2,
+          "previous_w": 100.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 101.5,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -1.5,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 9,
+          "initial_w": 110.0,
+          "scanned_w": 110.0,
+          "turn": 3,
+          "previous_w": 100.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 100.75,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -0.75,
+          "bounded_error": 0.0
+        }
+      ]
+    },
+    {
+      "factor": 0.2,
+      "prompt_id": 3,
+      "seed_sha256": "7911fcbfcf837e8a8847dbdf1ead13708b2c384f78e0d08777c48862486ebc50",
+      "observations": [
+        {
+          "node": 1,
+          "initial_w": -110.0,
+          "scanned_w": -110.0,
+          "turn": 1,
+          "previous_w": -110.0,
+          "response": {
+            "new_w": -100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -111.0,
+          "bounded_prediction": -100.0,
+          "unbounded_error": 11.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 1,
+          "initial_w": -110.0,
+          "scanned_w": -110.0,
+          "turn": 2,
+          "previous_w": -100.0,
+          "response": {
+            "new_w": -100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -100.5,
+          "bounded_prediction": -100.0,
+          "unbounded_error": 0.5,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 1,
+          "initial_w": -110.0,
+          "scanned_w": -110.0,
+          "turn": 3,
+          "previous_w": -100.0,
+          "response": {
+            "new_w": -100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -100.25,
+          "bounded_prediction": -100.0,
+          "unbounded_error": 0.25,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 2,
+          "initial_w": -100.0,
+          "scanned_w": -100.0,
+          "turn": 1,
+          "previous_w": -100.0,
+          "response": {
+            "new_w": -100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -101.0,
+          "bounded_prediction": -100.0,
+          "unbounded_error": 1.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 2,
+          "initial_w": -100.0,
+          "scanned_w": -100.0,
+          "turn": 2,
+          "previous_w": -100.0,
+          "response": {
+            "new_w": -100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -100.5,
+          "bounded_prediction": -100.0,
+          "unbounded_error": 0.5,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 2,
+          "initial_w": -100.0,
+          "scanned_w": -100.0,
+          "turn": 3,
+          "previous_w": -100.0,
+          "response": {
+            "new_w": -100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -100.25,
+          "bounded_prediction": -100.0,
+          "unbounded_error": 0.25,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 3,
+          "initial_w": -99.0,
+          "scanned_w": -99.0,
+          "turn": 1,
+          "previous_w": -99.0,
+          "response": {
+            "new_w": -100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -100.0,
+          "bounded_prediction": -100.0,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 3,
+          "initial_w": -99.0,
+          "scanned_w": -99.0,
+          "turn": 2,
+          "previous_w": -100.0,
+          "response": {
+            "new_w": -100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -100.5,
+          "bounded_prediction": -100.0,
+          "unbounded_error": 0.5,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 3,
+          "initial_w": -99.0,
+          "scanned_w": -99.0,
+          "turn": 3,
+          "previous_w": -100.0,
+          "response": {
+            "new_w": -100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -100.25,
+          "bounded_prediction": -100.0,
+          "unbounded_error": 0.25,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 4,
+          "initial_w": -90.0,
+          "scanned_w": -90.0,
+          "turn": 1,
+          "previous_w": -90.0,
+          "response": {
+            "new_w": -91.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -91.0,
+          "bounded_prediction": -91.0,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 4,
+          "initial_w": -90.0,
+          "scanned_w": -90.0,
+          "turn": 2,
+          "previous_w": -91.0,
+          "response": {
+            "new_w": -91.5,
+            "status": "success"
+          },
+          "unbounded_prediction": -91.5,
+          "bounded_prediction": -91.5,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 4,
+          "initial_w": -90.0,
+          "scanned_w": -90.0,
+          "turn": 3,
+          "previous_w": -91.5,
+          "response": {
+            "new_w": -91.75,
+            "status": "success"
+          },
+          "unbounded_prediction": -91.75,
+          "bounded_prediction": -91.75,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 5,
+          "initial_w": 0.0,
+          "scanned_w": 0.0,
+          "turn": 1,
+          "previous_w": 0.0,
+          "response": {
+            "new_w": -1.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -1.0,
+          "bounded_prediction": -1.0,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 5,
+          "initial_w": 0.0,
+          "scanned_w": 0.0,
+          "turn": 2,
+          "previous_w": -1.0,
+          "response": {
+            "new_w": -1.5,
+            "status": "success"
+          },
+          "unbounded_prediction": -1.5,
+          "bounded_prediction": -1.5,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 5,
+          "initial_w": 0.0,
+          "scanned_w": 0.0,
+          "turn": 3,
+          "previous_w": -1.5,
+          "response": {
+            "new_w": -1.75,
+            "status": "success"
+          },
+          "unbounded_prediction": -1.75,
+          "bounded_prediction": -1.75,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 6,
+          "initial_w": 90.0,
+          "scanned_w": 90.0,
+          "turn": 1,
+          "previous_w": 90.0,
+          "response": {
+            "new_w": 89.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 89.0,
+          "bounded_prediction": 89.0,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 6,
+          "initial_w": 90.0,
+          "scanned_w": 90.0,
+          "turn": 2,
+          "previous_w": 89.0,
+          "response": {
+            "new_w": 88.5,
+            "status": "success"
+          },
+          "unbounded_prediction": 88.5,
+          "bounded_prediction": 88.5,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 6,
+          "initial_w": 90.0,
+          "scanned_w": 90.0,
+          "turn": 3,
+          "previous_w": 88.5,
+          "response": {
+            "new_w": 88.25,
+            "status": "success"
+          },
+          "unbounded_prediction": 88.25,
+          "bounded_prediction": 88.25,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 7,
+          "initial_w": 99.0,
+          "scanned_w": 99.0,
+          "turn": 1,
+          "previous_w": 99.0,
+          "response": {
+            "new_w": 98.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 98.0,
+          "bounded_prediction": 98.0,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 7,
+          "initial_w": 99.0,
+          "scanned_w": 99.0,
+          "turn": 2,
+          "previous_w": 98.0,
+          "response": {
+            "new_w": 97.5,
+            "status": "success"
+          },
+          "unbounded_prediction": 97.5,
+          "bounded_prediction": 97.5,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 7,
+          "initial_w": 99.0,
+          "scanned_w": 99.0,
+          "turn": 3,
+          "previous_w": 97.5,
+          "response": {
+            "new_w": 97.25,
+            "status": "success"
+          },
+          "unbounded_prediction": 97.25,
+          "bounded_prediction": 97.25,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 8,
+          "initial_w": 100.0,
+          "scanned_w": 100.0,
+          "turn": 1,
+          "previous_w": 100.0,
+          "response": {
+            "new_w": 99.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 99.0,
+          "bounded_prediction": 99.0,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 8,
+          "initial_w": 100.0,
+          "scanned_w": 100.0,
+          "turn": 2,
+          "previous_w": 99.0,
+          "response": {
+            "new_w": 98.5,
+            "status": "success"
+          },
+          "unbounded_prediction": 98.5,
+          "bounded_prediction": 98.5,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 8,
+          "initial_w": 100.0,
+          "scanned_w": 100.0,
+          "turn": 3,
+          "previous_w": 98.5,
+          "response": {
+            "new_w": 98.25,
+            "status": "success"
+          },
+          "unbounded_prediction": 98.25,
+          "bounded_prediction": 98.25,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 9,
+          "initial_w": 110.0,
+          "scanned_w": 110.0,
+          "turn": 1,
+          "previous_w": 110.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 109.0,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -9.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 9,
+          "initial_w": 110.0,
+          "scanned_w": 110.0,
+          "turn": 2,
+          "previous_w": 100.0,
+          "response": {
+            "new_w": 99.5,
+            "status": "success"
+          },
+          "unbounded_prediction": 99.5,
+          "bounded_prediction": 99.5,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 9,
+          "initial_w": 110.0,
+          "scanned_w": 110.0,
+          "turn": 3,
+          "previous_w": 99.5,
+          "response": {
+            "new_w": 99.25,
+            "status": "success"
+          },
+          "unbounded_prediction": 99.25,
+          "bounded_prediction": 99.25,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        }
+      ]
+    },
+    {
+      "factor": 1.5,
+      "prompt_id": 1,
+      "seed_sha256": "c9e6471a8b4586edcb16b31f5b16579adfe3f460016677490e78f5f8564622b1",
+      "observations": [
+        {
+          "node": 1,
+          "initial_w": -110.0,
+          "scanned_w": -110.0,
+          "turn": 1,
+          "previous_w": -110.0,
+          "response": {
+            "new_w": -87.5,
+            "status": "success"
+          },
+          "unbounded_prediction": -87.5,
+          "bounded_prediction": -87.5,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 1,
+          "initial_w": -110.0,
+          "scanned_w": -110.0,
+          "turn": 2,
+          "previous_w": -87.5,
+          "response": {
+            "new_w": -76.25,
+            "status": "success"
+          },
+          "unbounded_prediction": -76.25,
+          "bounded_prediction": -76.25,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 1,
+          "initial_w": -110.0,
+          "scanned_w": -110.0,
+          "turn": 3,
+          "previous_w": -76.25,
+          "response": {
+            "new_w": -70.625,
+            "status": "success"
+          },
+          "unbounded_prediction": -70.625,
+          "bounded_prediction": -70.625,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 2,
+          "initial_w": -100.0,
+          "scanned_w": -100.0,
+          "turn": 1,
+          "previous_w": -100.0,
+          "response": {
+            "new_w": -77.5,
+            "status": "success"
+          },
+          "unbounded_prediction": -77.5,
+          "bounded_prediction": -77.5,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 2,
+          "initial_w": -100.0,
+          "scanned_w": -100.0,
+          "turn": 2,
+          "previous_w": -77.5,
+          "response": {
+            "new_w": -66.25,
+            "status": "success"
+          },
+          "unbounded_prediction": -66.25,
+          "bounded_prediction": -66.25,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 2,
+          "initial_w": -100.0,
+          "scanned_w": -100.0,
+          "turn": 3,
+          "previous_w": -66.25,
+          "response": {
+            "new_w": -60.625,
+            "status": "success"
+          },
+          "unbounded_prediction": -60.625,
+          "bounded_prediction": -60.625,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 3,
+          "initial_w": -99.0,
+          "scanned_w": -99.0,
+          "turn": 1,
+          "previous_w": -99.0,
+          "response": {
+            "new_w": -76.5,
+            "status": "success"
+          },
+          "unbounded_prediction": -76.5,
+          "bounded_prediction": -76.5,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 3,
+          "initial_w": -99.0,
+          "scanned_w": -99.0,
+          "turn": 2,
+          "previous_w": -76.5,
+          "response": {
+            "new_w": -65.25,
+            "status": "success"
+          },
+          "unbounded_prediction": -65.25,
+          "bounded_prediction": -65.25,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 3,
+          "initial_w": -99.0,
+          "scanned_w": -99.0,
+          "turn": 3,
+          "previous_w": -65.25,
+          "response": {
+            "new_w": -59.625,
+            "status": "success"
+          },
+          "unbounded_prediction": -59.625,
+          "bounded_prediction": -59.625,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 4,
+          "initial_w": -90.0,
+          "scanned_w": -90.0,
+          "turn": 1,
+          "previous_w": -90.0,
+          "response": {
+            "new_w": -67.5,
+            "status": "success"
+          },
+          "unbounded_prediction": -67.5,
+          "bounded_prediction": -67.5,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 4,
+          "initial_w": -90.0,
+          "scanned_w": -90.0,
+          "turn": 2,
+          "previous_w": -67.5,
+          "response": {
+            "new_w": -56.25,
+            "status": "success"
+          },
+          "unbounded_prediction": -56.25,
+          "bounded_prediction": -56.25,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 4,
+          "initial_w": -90.0,
+          "scanned_w": -90.0,
+          "turn": 3,
+          "previous_w": -56.25,
+          "response": {
+            "new_w": -50.625,
+            "status": "success"
+          },
+          "unbounded_prediction": -50.625,
+          "bounded_prediction": -50.625,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 5,
+          "initial_w": 0.0,
+          "scanned_w": 0.0,
+          "turn": 1,
+          "previous_w": 0.0,
+          "response": {
+            "new_w": 22.5,
+            "status": "success"
+          },
+          "unbounded_prediction": 22.5,
+          "bounded_prediction": 22.5,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 5,
+          "initial_w": 0.0,
+          "scanned_w": 0.0,
+          "turn": 2,
+          "previous_w": 22.5,
+          "response": {
+            "new_w": 33.75,
+            "status": "success"
+          },
+          "unbounded_prediction": 33.75,
+          "bounded_prediction": 33.75,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 5,
+          "initial_w": 0.0,
+          "scanned_w": 0.0,
+          "turn": 3,
+          "previous_w": 33.75,
+          "response": {
+            "new_w": 39.375,
+            "status": "success"
+          },
+          "unbounded_prediction": 39.375,
+          "bounded_prediction": 39.375,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 6,
+          "initial_w": 90.0,
+          "scanned_w": 90.0,
+          "turn": 1,
+          "previous_w": 90.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 112.5,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -12.5,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 6,
+          "initial_w": 90.0,
+          "scanned_w": 90.0,
+          "turn": 2,
+          "previous_w": 100.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 111.25,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -11.25,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 6,
+          "initial_w": 90.0,
+          "scanned_w": 90.0,
+          "turn": 3,
+          "previous_w": 100.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 105.625,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -5.625,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 7,
+          "initial_w": 99.0,
+          "scanned_w": 99.0,
+          "turn": 1,
+          "previous_w": 99.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 121.5,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -21.5,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 7,
+          "initial_w": 99.0,
+          "scanned_w": 99.0,
+          "turn": 2,
+          "previous_w": 100.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 111.25,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -11.25,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 7,
+          "initial_w": 99.0,
+          "scanned_w": 99.0,
+          "turn": 3,
+          "previous_w": 100.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 105.625,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -5.625,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 8,
+          "initial_w": 100.0,
+          "scanned_w": 100.0,
+          "turn": 1,
+          "previous_w": 100.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 122.5,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -22.5,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 8,
+          "initial_w": 100.0,
+          "scanned_w": 100.0,
+          "turn": 2,
+          "previous_w": 100.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 111.25,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -11.25,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 8,
+          "initial_w": 100.0,
+          "scanned_w": 100.0,
+          "turn": 3,
+          "previous_w": 100.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 105.625,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -5.625,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 9,
+          "initial_w": 110.0,
+          "scanned_w": 110.0,
+          "turn": 1,
+          "previous_w": 110.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 132.5,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -32.5,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 9,
+          "initial_w": 110.0,
+          "scanned_w": 110.0,
+          "turn": 2,
+          "previous_w": 100.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 111.25,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -11.25,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 9,
+          "initial_w": 110.0,
+          "scanned_w": 110.0,
+          "turn": 3,
+          "previous_w": 100.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 105.625,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -5.625,
+          "bounded_error": 0.0
+        }
+      ]
+    },
+    {
+      "factor": 1.5,
+      "prompt_id": 3,
+      "seed_sha256": "c9e6471a8b4586edcb16b31f5b16579adfe3f460016677490e78f5f8564622b1",
+      "observations": [
+        {
+          "node": 1,
+          "initial_w": -110.0,
+          "scanned_w": -110.0,
+          "turn": 1,
+          "previous_w": -110.0,
+          "response": {
+            "new_w": -100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -117.5,
+          "bounded_prediction": -100.0,
+          "unbounded_error": 17.5,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 1,
+          "initial_w": -110.0,
+          "scanned_w": -110.0,
+          "turn": 2,
+          "previous_w": -100.0,
+          "response": {
+            "new_w": -100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -103.75,
+          "bounded_prediction": -100.0,
+          "unbounded_error": 3.75,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 1,
+          "initial_w": -110.0,
+          "scanned_w": -110.0,
+          "turn": 3,
+          "previous_w": -100.0,
+          "response": {
+            "new_w": -100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -101.875,
+          "bounded_prediction": -100.0,
+          "unbounded_error": 1.875,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 2,
+          "initial_w": -100.0,
+          "scanned_w": -100.0,
+          "turn": 1,
+          "previous_w": -100.0,
+          "response": {
+            "new_w": -100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -107.5,
+          "bounded_prediction": -100.0,
+          "unbounded_error": 7.5,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 2,
+          "initial_w": -100.0,
+          "scanned_w": -100.0,
+          "turn": 2,
+          "previous_w": -100.0,
+          "response": {
+            "new_w": -100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -103.75,
+          "bounded_prediction": -100.0,
+          "unbounded_error": 3.75,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 2,
+          "initial_w": -100.0,
+          "scanned_w": -100.0,
+          "turn": 3,
+          "previous_w": -100.0,
+          "response": {
+            "new_w": -100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -101.875,
+          "bounded_prediction": -100.0,
+          "unbounded_error": 1.875,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 3,
+          "initial_w": -99.0,
+          "scanned_w": -99.0,
+          "turn": 1,
+          "previous_w": -99.0,
+          "response": {
+            "new_w": -100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -106.5,
+          "bounded_prediction": -100.0,
+          "unbounded_error": 6.5,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 3,
+          "initial_w": -99.0,
+          "scanned_w": -99.0,
+          "turn": 2,
+          "previous_w": -100.0,
+          "response": {
+            "new_w": -100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -103.75,
+          "bounded_prediction": -100.0,
+          "unbounded_error": 3.75,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 3,
+          "initial_w": -99.0,
+          "scanned_w": -99.0,
+          "turn": 3,
+          "previous_w": -100.0,
+          "response": {
+            "new_w": -100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -101.875,
+          "bounded_prediction": -100.0,
+          "unbounded_error": 1.875,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 4,
+          "initial_w": -90.0,
+          "scanned_w": -90.0,
+          "turn": 1,
+          "previous_w": -90.0,
+          "response": {
+            "new_w": -97.5,
+            "status": "success"
+          },
+          "unbounded_prediction": -97.5,
+          "bounded_prediction": -97.5,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 4,
+          "initial_w": -90.0,
+          "scanned_w": -90.0,
+          "turn": 2,
+          "previous_w": -97.5,
+          "response": {
+            "new_w": -100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -101.25,
+          "bounded_prediction": -100.0,
+          "unbounded_error": 1.25,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 4,
+          "initial_w": -90.0,
+          "scanned_w": -90.0,
+          "turn": 3,
+          "previous_w": -100.0,
+          "response": {
+            "new_w": -100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": -101.875,
+          "bounded_prediction": -100.0,
+          "unbounded_error": 1.875,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 5,
+          "initial_w": 0.0,
+          "scanned_w": 0.0,
+          "turn": 1,
+          "previous_w": 0.0,
+          "response": {
+            "new_w": -7.5,
+            "status": "success"
+          },
+          "unbounded_prediction": -7.5,
+          "bounded_prediction": -7.5,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 5,
+          "initial_w": 0.0,
+          "scanned_w": 0.0,
+          "turn": 2,
+          "previous_w": -7.5,
+          "response": {
+            "new_w": -11.25,
+            "status": "success"
+          },
+          "unbounded_prediction": -11.25,
+          "bounded_prediction": -11.25,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 5,
+          "initial_w": 0.0,
+          "scanned_w": 0.0,
+          "turn": 3,
+          "previous_w": -11.25,
+          "response": {
+            "new_w": -13.125,
+            "status": "success"
+          },
+          "unbounded_prediction": -13.125,
+          "bounded_prediction": -13.125,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 6,
+          "initial_w": 90.0,
+          "scanned_w": 90.0,
+          "turn": 1,
+          "previous_w": 90.0,
+          "response": {
+            "new_w": 82.5,
+            "status": "success"
+          },
+          "unbounded_prediction": 82.5,
+          "bounded_prediction": 82.5,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 6,
+          "initial_w": 90.0,
+          "scanned_w": 90.0,
+          "turn": 2,
+          "previous_w": 82.5,
+          "response": {
+            "new_w": 78.75,
+            "status": "success"
+          },
+          "unbounded_prediction": 78.75,
+          "bounded_prediction": 78.75,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 6,
+          "initial_w": 90.0,
+          "scanned_w": 90.0,
+          "turn": 3,
+          "previous_w": 78.75,
+          "response": {
+            "new_w": 76.875,
+            "status": "success"
+          },
+          "unbounded_prediction": 76.875,
+          "bounded_prediction": 76.875,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 7,
+          "initial_w": 99.0,
+          "scanned_w": 99.0,
+          "turn": 1,
+          "previous_w": 99.0,
+          "response": {
+            "new_w": 91.5,
+            "status": "success"
+          },
+          "unbounded_prediction": 91.5,
+          "bounded_prediction": 91.5,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 7,
+          "initial_w": 99.0,
+          "scanned_w": 99.0,
+          "turn": 2,
+          "previous_w": 91.5,
+          "response": {
+            "new_w": 87.75,
+            "status": "success"
+          },
+          "unbounded_prediction": 87.75,
+          "bounded_prediction": 87.75,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 7,
+          "initial_w": 99.0,
+          "scanned_w": 99.0,
+          "turn": 3,
+          "previous_w": 87.75,
+          "response": {
+            "new_w": 85.875,
+            "status": "success"
+          },
+          "unbounded_prediction": 85.875,
+          "bounded_prediction": 85.875,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 8,
+          "initial_w": 100.0,
+          "scanned_w": 100.0,
+          "turn": 1,
+          "previous_w": 100.0,
+          "response": {
+            "new_w": 92.5,
+            "status": "success"
+          },
+          "unbounded_prediction": 92.5,
+          "bounded_prediction": 92.5,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 8,
+          "initial_w": 100.0,
+          "scanned_w": 100.0,
+          "turn": 2,
+          "previous_w": 92.5,
+          "response": {
+            "new_w": 88.75,
+            "status": "success"
+          },
+          "unbounded_prediction": 88.75,
+          "bounded_prediction": 88.75,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 8,
+          "initial_w": 100.0,
+          "scanned_w": 100.0,
+          "turn": 3,
+          "previous_w": 88.75,
+          "response": {
+            "new_w": 86.875,
+            "status": "success"
+          },
+          "unbounded_prediction": 86.875,
+          "bounded_prediction": 86.875,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 9,
+          "initial_w": 110.0,
+          "scanned_w": 110.0,
+          "turn": 1,
+          "previous_w": 110.0,
+          "response": {
+            "new_w": 100.0,
+            "status": "success"
+          },
+          "unbounded_prediction": 102.5,
+          "bounded_prediction": 100.0,
+          "unbounded_error": -2.5,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 9,
+          "initial_w": 110.0,
+          "scanned_w": 110.0,
+          "turn": 2,
+          "previous_w": 100.0,
+          "response": {
+            "new_w": 96.25,
+            "status": "success"
+          },
+          "unbounded_prediction": 96.25,
+          "bounded_prediction": 96.25,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        },
+        {
+          "node": 9,
+          "initial_w": 110.0,
+          "scanned_w": 110.0,
+          "turn": 3,
+          "previous_w": 96.25,
+          "response": {
+            "new_w": 94.375,
+            "status": "success"
+          },
+          "unbounded_prediction": 94.375,
+          "bounded_prediction": 94.375,
+          "unbounded_error": 0.0,
+          "bounded_error": 0.0
+        }
+      ]
+    }
+  ],
+  "source_sha256": "2cc14495b2cb97e4753d2b9a33fdc43e43040f6f086a18c3bd9f1f2fa6368785"
+}

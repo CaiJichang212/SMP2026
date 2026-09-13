@@ -41,11 +41,16 @@ artifacts/submission/<name>.zip       最终上传文件
 - `runtime/`：环境适配、控制器状态机与运行轨迹。
 - `submission/`：提交配置、提示词和 `ParticipantSquadModel` 的开发态入口。
 
-2026-09-13 的初赛候选为 P8 `conservative`，通过独立预登记的本地平均分与图族占比
-压力测试后启用。110 对标准分布确认均分为 `588.4723 → 593.4001`（`+0.84%`），
-但仍有 7 个案例退步，不能承诺每个种子提高，也不能换算为官方成绩。
-资格记录与配置必须匹配，且只覆盖 50 节点/100 预算；其他情况回退原策略。
-详见 [P8 结果](experiments/reports/p8-results-20260913.md)。
+用户反馈已提交的 P8 `conservative` 官方得分仍为 **761.9467**。
+其原本地确认增益仅 `+0.84%`，不能换算为官方成绩或证明接近 >900。
+本轮复放发现候选覆盖很窄，并通过 108 次公开沙盒调用确认旧模拟器漏掉了
+游说后的 `[-100,100]` 截断。修正包为
+`artifacts/submission/starnet-p9-bounded-response-20260913.zip`：
+独立 84 对确认相对原 P8 为 24 胜/60 平/0 负，平均增益 +10.4140；
+真实 LLM 公开沙盒成对提高 17.09。新包尚无官方分数，不能据此认定 >900。
+资格与实际 ZIP 已验证，详见[交付报告](experiments/reports/p9-bounded-release-20260913.md)。
+详见 [同分归因与本轮实验](experiments/reports/p9-official-feedback-attribution-20260913.md)
+及[倾向边界机制](docs/01_architecture/adr/005-communication-opinion-bounds.md)。
 
 `SMP_Starter_Kit/team_submission/` 不是第二份需要维护的策略源码。构建脚本会复制
 `config.json` 与 `prompt/`，并将 `src/starnet` 的策略模块内联为单文件

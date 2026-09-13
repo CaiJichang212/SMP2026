@@ -722,7 +722,10 @@ def persuasion_candidates(
             continue
         if not is_legal_action(action, blackboard, budget):
             continue
-        response = _response(node_id, node.persona, turn, responses, profile, ledger)
+        response = bounded_response_delta(
+            node.w,
+            _response(node_id, node.persona, turn, responses, profile, ledger),
+        )
         coefficient = public_influence.get(node_id, 0.0)
         reason = "public component influence"
         if use_influence:
@@ -1758,6 +1761,23 @@ class CMGPlanningError(RuntimeError):
     """A fail-closed prediction or time-budget failure."""
 
 
+OPINION_MIN = -100.0
+OPINION_MAX = 100.0
+
+
+def bounded_response_delta(opinion: float, nominal_delta: float) -> float:
+    """Return the realized change after the public opinion bound is applied."""
+    opinion = float(opinion)
+    nominal_delta = float(nominal_delta)
+    if not math.isfinite(opinion) or not math.isfinite(nominal_delta):
+        raise CMGPlanningError("nonfinite_prediction")
+    proposed = opinion + nominal_delta
+    if OPINION_MIN <= proposed <= OPINION_MAX:
+        # Preserve the old arithmetic path exactly away from saturation.
+        return nominal_delta
+    return min(OPINION_MAX, max(OPINION_MIN, proposed)) - opinion
+
+
 @dataclass
 class ResponseLedger:
     """Online posterior keyed by ``persona × prompt × turn``.
@@ -1865,7 +1885,8 @@ class PredictiveState:
         if action.kind == "comm":
             if comm_delta is None or action.target_node_1 not in nodes:
                 raise CMGPlanningError("invalid_hypothesis")
-            nodes[action.target_node_1].w += comm_delta
+            node = nodes[action.target_node_1]
+            node.w += bounded_response_delta(node.w, comm_delta)
             if nodes[action.target_node_1].comm_left is not None:
                 nodes[action.target_node_1].comm_left = max(0, nodes[action.target_node_1].comm_left - 1)
         elif action.kind == "cut":
@@ -2035,6 +2056,7 @@ def choose_cmg_action(
         if time.monotonic() - started > planning_seconds:
             raise CMGPlanningError("planning_timeout")
         delta: float | None = None
+        realized_delta: float | None = None
         response_sigma = 0.0
         if action.kind == "comm":
             node = board.nodes[action.target_node_1]
@@ -2042,6 +2064,7 @@ def choose_cmg_action(
             if response is None:
                 raise CMGPlanningError("missing_response_prior")
             delta, response_sigma = response
+            realized_delta = bounded_response_delta(node.w, delta)
         after = predictor.score(state.apply(action, delta))
         residual = profile.residual_for(action.kind)
         response_score_sigma = 0.0
@@ -2063,7 +2086,9 @@ def choose_cmg_action(
             f"shield:{action.target_node_1}" if action.kind == "shield" else
             f"cut:{action.target_node_1}-{action.target_node_2}"
         )
-        scored.append(ScoredCandidate(candidate_id, action, before, after, gain, sigma, roi, delta))
+        scored.append(ScoredCandidate(
+            candidate_id, action, before, after, gain, sigma, roi, realized_delta,
+        ))
     positives = [item for item in scored if item.lcb_roi > 0.0]
     return min(positives, key=lambda item: (-item.lcb_roi, item.candidate_id)) if positives else None
 
@@ -2347,7 +2372,9 @@ class StructuralPlanner:
         response = self.ledger.predicted_delta(
             action.target_node_1, node.persona, action.prompt_id, self.profile, turn=turn
         )
-        return None if response is None else max(0.0, float(response[0]))
+        return None if response is None else bounded_response_delta(
+            node.w, max(0.0, float(response[0])),
+        )
 
     def _complete_persuasion(
         self, state: PredictiveState, budget: float, remaining_steps: int,
@@ -2757,6 +2784,7 @@ class ExperimentalPublicGreedyPlanner:
                 continue
             response = self.response_fn(node_id, node, turn)
             if math.isfinite(float(response)):
+                response = bounded_response_delta(node.w, response)
                 comm_rois[node_id] = public_influence.get(node_id, 0.0) * max(
                     0.0, float(response)
                 ) / action_cost(action)
@@ -2766,9 +2794,10 @@ class ExperimentalPublicGreedyPlanner:
             if node.comm_left is not None and node.comm_left > 0:
                 turn = 4 - node.comm_left
                 if turn in (1, 2, 3):
-                    hypotheses.append(
-                        (Action("comm", node_id, prompt_id=1), self.response_fn(node_id, node, turn), turn)
+                    response = bounded_response_delta(
+                        node.w, self.response_fn(node_id, node, turn),
                     )
+                    hypotheses.append((Action("comm", node_id, prompt_id=1), response, turn))
             hypotheses.append((Action("shield", node_id), None, None))
         hypotheses.extend(
             (Action("cut", left, target_node_2=right), None, None)
@@ -2879,6 +2908,23 @@ class BudgetPlan:
     actions: tuple[Action, ...]
 
 
+def _realized_responses(
+    state: PredictiveState,
+    responses: dict[tuple[int, int], float],
+) -> dict[tuple[int, int], float]:
+    """Apply each node's slots cumulatively against its remaining opinion space."""
+    realized: dict[tuple[int, int], float] = {}
+    for node_id, node in state.nodes.items():
+        if not node.comm_left:
+            continue
+        opinion = float(node.w)
+        for turn in range(4 - node.comm_left, 4):
+            delta = bounded_response_delta(opinion, responses[node_id, turn])
+            realized[node_id, turn] = delta
+            opinion += delta
+    return realized
+
+
 def _connected_structure_score(
     state: PredictiveState, action: Action, graph: nx.Graph,
     responses: dict[tuple[int, int], float], budget: float, steps: int,
@@ -2892,7 +2938,8 @@ def _connected_structure_score(
         return 0.0
     factor = len(degrees) / sum(degrees.values())
     score = sum(factor * degree * state.nodes[node_id].w for node_id, degree in degrees.items())
-    gains = [factor * degree * responses[node_id, turn]
+    realized = _realized_responses(state, responses)
+    gains = [factor * degree * realized[node_id, turn]
              for node_id, degree in degrees.items() if state.nodes[node_id].comm_left
              for turn in range(4 - state.nodes[node_id].comm_left, 4)]
     for gain in heapq.nlargest(min(int(budget // 2), steps), gains):
@@ -2930,7 +2977,7 @@ def communication_tail(
         coefficients.update({node_id: factor * (len(adjacency[node_id]) + 1) for node_id in component})
     score = sum(coefficients[node_id] * node.w for node_id, node in state.nodes.items())
     heap: list[tuple[float, str, int, int]] = []
-    gains: dict[tuple[int, int], float] = {}
+    nominal: dict[tuple[int, int], float] = {}
     for node_id, node in sorted(state.nodes.items()):
         if not node.comm_left:
             continue
@@ -2940,7 +2987,12 @@ def communication_tail(
             if not math.isfinite(delta) or delta < 0 or delta > previous + 1e-9:
                 raise ValueError("response must be finite, nonnegative and diminishing")
             previous = delta
-            gains[node_id, turn] = coefficients[node_id] * delta
+            nominal[node_id, turn] = delta
+    realized = _realized_responses(state, nominal)
+    gains = {key: coefficients[key[0]] * delta for key, delta in realized.items()}
+    for node_id, node in sorted(state.nodes.items()):
+        if not node.comm_left:
+            continue
         turn = 4 - node.comm_left
         heapq.heappush(heap, (-gains[node_id, turn], f"comm:{node_id}:{turn}", node_id, turn))
     slots = min(max(0, int(budget // 2)), max(0, remaining_steps))
@@ -3350,6 +3402,10 @@ def _rollout(
         raise ValueError("invalid P8 rollout resources")
     state = PredictiveState.from_blackboard(board)
     visible = dict(observed)
+    # A scenario's latent first-slot response drives its environment
+    # transitions. ``visible`` contains only realized public returns used by
+    # the simulated policy, which can differ when a bound censors an action.
+    latent_first: dict[int, float] = {}
     pending: Action | None = first_action
     for _ in range(remaining_steps):
         projected = _ProjectedBoard.from_state(state, board.node_count or len(board.nodes))
@@ -3368,13 +3424,18 @@ def _rollout(
             if node.comm_left is None:
                 raise ValueError("missing public communication count")
             turn = 4 - node.comm_left
-            first = visible.get(action.target_node_1)
+            node_id = action.target_node_1
+            public_first = visible.get(node_id)
+            first = latent_first.get(node_id)
             if first is None:
-                first = 15.0 * _scenario_factor(salt, action.target_node_1, scenario)
+                first = (float(public_first) if public_first is not None else
+                         15.0 * _scenario_factor(salt, node_id, scenario))
+                latent_first[node_id] = first
+            delta = bounded_response_delta(node.w, first * (0.5 ** (turn - 1)))
+            if public_first is None and turn == 1:
                 # The simulated policy learns this response only now, after
                 # the successful hypothetical action on its own path.
-                visible[action.target_node_1] = first
-            delta = first * (0.5 ** (turn - 1))
+                visible[node_id] = delta
         state = state.apply(action, delta)
         budget -= action_cost(action)
     score = float(_FAST_SETTLEMENT.score(state))
@@ -3512,15 +3573,16 @@ __all__ = ["EvaluationCache", "P8Decision", "P8Mode", "choose_p8_action", "publi
 # End inline: src/starnet/policy/p8_experiment.py
 
 # Begin inline: src/starnet/policy/p8_qualification.py
-"""Local mean-objective qualification, not per-family noninferiority.
+"""Qualification for the public-response-bound correction to conservative P8.
 
-New repetitions 701--705 passed the preregistered mean/composition criterion;
-the earlier 601--605 strict gate remains failed. Unqualified requests close.
+The separate 84-pair confirmation and entry evidence are sealed in the
+referenced report. Historical P8 qualification reports remain unchanged.
 """
 
 
 P8_CERTIFIED_MODE: str | None = "conservative"
-P8_GATE_REPORT_SHA256: str | None = "0594442f917eacbffe553bb7499b832d31a8b8fde12ba47c6479573ec464850c"
+P8_GATE_REPORT_SHA256: str | None = "a2a988f6288cb1217c5b69c8b2e4f893b060bd5cb7e1e10a2088d074a405f25a"
+P8_GATE_REPORT_RELATIVE_PATH = "experiments/reports/p9-bounded-release-result-20260913.json"
 
 
 def qualified_p8_mode(requested: object) -> str | None:

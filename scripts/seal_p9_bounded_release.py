@@ -28,15 +28,16 @@ def seed_sha(seed):
     return hashlib.sha256(json.dumps(seed, sort_keys=True).encode()).hexdigest()
 
 
-def historical_entry_runner():
+def historical_entry_runner(commit=LEGACY_ENTRY_RUNNER_COMMIT):
     source = subprocess.check_output(
-        ["git", "show", f"{LEGACY_ENTRY_RUNNER_COMMIT}:scripts/check_p9_bounded_entry.py"],
+        ["git", "show", f"{commit}:scripts/check_p9_bounded_entry.py"],
         cwd=ROOT,
     )
     return {
-        "commit": LEGACY_ENTRY_RUNNER_COMMIT,
+        "commit": commit,
         "sha256": hashlib.sha256(source).hexdigest(),
         "legacy_reports_omit_runner_hash": True,
+        "revision_association": "recorded after execution from session tool history; not a contemporaneous embedded hash",
     }
 
 
@@ -129,6 +130,7 @@ def seal(development, confirmation, real_entry, py39_entry, modern_entry):
     result["entry_runner_evidence"] = {
         "current_sha256": sha(ENTRY_RUNNER),
         "historical_execution_tool": historical_entry_runner(),
+        "interpreter_replay_tool": historical_entry_runner("63049c5"),
     }
     result["activation_metadata_note"] = "Report pointer/hash and the source-review manifest are updated after this seal. Strategy bodies must remain identical. The final ZIP is checked separately to avoid self-referential hashes."
     return result

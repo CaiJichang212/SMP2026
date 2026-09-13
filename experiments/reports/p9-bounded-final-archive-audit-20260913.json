@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "archive": "artifacts/submission/starnet-p9-bounded-response-20260913.zip",
+  "archive_sha256": "4df04b79f44d8bc7a21cad890bf6bc241531b976899cafbbdc5574bb6772f460",
+  "model_sha256": "a8559f83b061dc3a77ead4449f14d221b9e5fd763e0e7ef657be1a94ec26ddb2",
+  "sealed_report_sha256": "a2a988f6288cb1217c5b69c8b2e4f893b060bd5cb7e1e10a2088d074a405f25a",
+  "validated_commit": "539e458",
+  "only_qualification_metadata_changed": true
+}

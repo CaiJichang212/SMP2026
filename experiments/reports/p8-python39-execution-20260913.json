@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "purpose": "Reproduce P8 planning, real local CaseVO orchestration, and the exact corrected ZIP under CPython 3.9",
+  "platform_score": 761.9467,
+  "conclusion": "Covered Python 3.9 cases activate P8 and match Python 3.12 decisions; no general Python 3.9 or NetworkX 3.1 silent fallback was reproduced.",
+  "limitations": [
+    "The evaluator's hidden seeds and exact CaseVO installation are unavailable.",
+    "The successful CaseVO runs used the clean local CaseVO 0.3.19 checkout and typing_extensions 4.16.0.",
+    "Pinning typing_extensions 4.5.0 with the otherwise declared packages makes the current public resolver select a ChromaDB/Pydantic combination that fails before the P8 controller is constructed."
+  ],
+  "artifacts": {
+    "submission": "artifacts/submission/starnet-p8-mean-20260913.zip",
+    "submission_sha256": "067d232f5360e67114d1bf0f1937a574f71b743cd2049cf6d20372a45eb06c50",
+    "submission_model_sha256": "d40b1431af78e8161a9874eb3414d731ba6d10b6a79f0a3b7c1249fa3d3d43cb",
+    "p8_policy_sha256": "56709076b9c89d7934899f046c20198f569575b165871adfc9055e49269500b0",
+    "archive_runner_sha256": "c6db222569a40a74c0340d8ffc3c59c38e120e68d768fcc1b23083891d8ab467",
+    "casevo_git_commit": "d3b8d1f81fe0b3d41ff80908351bd5ebd6809155",
+    "casevo_git_tree": "a8d332f3dee00e2986ef53eae4dd458948b0a38d",
+    "casevo_worktree_clean": true
+  },
+  "python39": {
+    "version": "3.9.25",
+    "executable_sha256": "84c920f304e265c53096e42d83309c6f7b829988f937a7dd15c24eebcb63f59a"
+  },
+  "successful_casevo_environment": {
+    "packages": [
+      "Jinja2==3.1.2",
+      "chromadb==0.5.5",
+      "fastapi==0.128.8",
+      "mesa==2.3.2",
+      "networkx==3.1",
+      "numpy==1.24.3",
+      "pydantic==2.13.5",
+      "requests==2.29.0",
+      "scipy==1.11.1",
+      "typing_extensions==4.16.0"
+    ],
+    "package_identity_sha256": "58b537240a4088a7c2e0eff55088cb1b13464962838cb1b5b7f3dd0b6a1d5eef",
+    "package_identity_format": "UTF-8 newline-joined package strings in the displayed order, with a final newline"
+  },
+  "pure_policy_comparison": {
+    "python39_command": "PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 uv run --no-project --python 3.9 --with 'networkx==3.1' -- python -B scripts/run_p8_search.py --families er_balanced sbm_negative_bridges three_sparse_components watts_strogatz_mixed --repetitions 502 --variants conservative --output /tmp/p8-py39.json",
+    "python312_command": "PYTHONDONTWRITEBYTECODE=1 uv run python -B scripts/run_p8_search.py --families er_balanced sbm_negative_bridges three_sparse_components watts_strogatz_mixed --repetitions 502 --variants conservative --output /tmp/p8-py312.json",
+    "comparison": "byte-identical after deleting baseline.seconds and candidate.seconds",
+    "python39_normalized_sha256": "d2bd3040866a32ea46a690a1c885a587c0dd2bde5779180fdba83b50a8c8f88a",
+    "cases": [
+      {"family": "er_balanced", "repetition": 502, "score": 815.6096643062018, "delta": 0.0, "deviations": 1, "rollouts": 60, "failures": 0},
+      {"family": "sbm_negative_bridges", "repetition": 502, "score": 853.1104375408922, "delta": 11.959305501858807, "deviations": 1, "rollouts": 111, "failures": 0},
+      {"family": "three_sparse_components", "repetition": 502, "score": 389.0623633336279, "delta": 0.0, "deviations": 0, "rollouts": 118, "failures": 0},
+      {"family": "watts_strogatz_mixed", "repetition": 502, "score": 608.7115195080833, "delta": 0.0, "deviations": 0, "rollouts": 32, "failures": 0}
+    ],
+    "additional_case": {"family": "ba_negative_hubs", "repetition": 501, "score": 303.6875601323529, "baseline_score": 274.76497219117647, "delta": 28.92258794117646, "deviations": 2, "rollouts": 126, "failures": 0}
+  },
+  "real_local_casevo_controller": {
+    "command": "PYTHONPATH=src:../casevo/src PYTHONDONTWRITEBYTECODE=1 uv run --no-project --python 3.9 --with 'mesa==2.3.2' --with 'chromadb==0.5.5' --with 'networkx==3.1' --with 'Jinja2==3.1.2' --with 'requests==2.29.0' --with 'numpy==1.24.3' --with 'scipy==1.11.1' -- python -B scripts/run_p8_llm_trial.py --family ba_negative_hubs --repetition 501 --llm-mode mock --variant conservative --output /tmp/p8-controller-py39.json",
+    "result_sha256": "02bafe156a09c925e73bbddc0d964850f4100fb29dd2eca080cf983930a58bbf",
+    "result": {
+      "score": 303.6875601323529,
+      "baseline_score": 274.76497219117647,
+      "p8_proposals": 2,
+      "p8_planning_errors": 0,
+      "llm_calls": 75,
+      "llm_accepted": 75,
+      "llm_fallbacks": 0,
+      "action_failures": 0,
+      "steps": 75
+    },
+    "python312_result_equal": true
+  },
+  "unchanged_zip_replay": {
+    "command": "PYTHONPATH=src:../casevo/src PYTHONDONTWRITEBYTECODE=1 uv run --no-project --python 3.9 --with 'mesa==2.3.2' --with 'chromadb==0.5.5' --with 'networkx==3.1' --with 'Jinja2==3.1.2' --with 'requests==2.29.0' --with 'numpy==1.24.3' --with 'scipy==1.11.1' -- python -B scripts/compare_submission_archives.py --workers 1 --offline-only --allow-offline-fallback --archives starnet-p8-mean-20260913.zip --families ba_negative_hubs --result-dir /tmp/p8-archive-py39-raw --output /tmp/p8-archive-py39.json",
+    "normalized_row_sha256": "3beb4a4435cb34b1ee4608428bcad59971a8a85519de553dc512c45d4086e5b9",
+    "python312_normalized_row_sha256": "3beb4a4435cb34b1ee4608428bcad59971a8a85519de553dc512c45d4086e5b9",
+    "result": {
+      "controller_type": "P8RuntimeController",
+      "effective_p8_mode": "conservative",
+      "score": 590.240586484472,
+      "steps": 77,
+      "p8_proposals": 3,
+      "p8_planning_errors": 0,
+      "llm_fallbacks": 77,
+      "action_failures": 0,
+      "actions_sha256": "c77f532e3eae9046f2c62f0ac4ab821fbecf9c915644ad3bd9be5fe341342b1b"
+    }
+  },
+  "faq_typing_extensions_probe": {
+    "requested_packages": [
+      "Jinja2==3.1.2",
+      "chromadb==0.5.5",
+      "fastapi==0.103.2",
+      "mesa==2.3.2",
+      "networkx==3.1",
+      "numpy==1.24.3",
+      "pydantic==1.10.26",
+      "requests==2.29.0",
+      "scipy==1.11.1",
+      "typing_extensions==4.5.0"
+    ],
+    "package_identity_sha256": "05af2653f8348be52faae3d02718f454a30e3f6447629bd4d3ce387ea16c7273",
+    "command_difference": "Add --with 'typing_extensions==4.5.0' to the real local CaseVO controller command.",
+    "status": "failed_before_controller_construction",
+    "error_type": "AttributeError",
+    "error_location": "chromadb/types.py Collection.__getitem__",
+    "error_summary": "Collection object has no attribute model_fields",
+    "interpretation": "This public dependency resolution cannot validate the complete FAQ stack without the evaluator's additional transitive pins; it is not a P8 planning error."
+  }
+}
