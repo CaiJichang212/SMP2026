@@ -672,7 +672,9 @@ class ExperimentalPublicGreedyPlanner:
         observed_response_count: int = 0,
     ) -> list[Candidate]:
         state = PredictiveState.from_blackboard(board)
-        baseline = self.predictor.score(state)
+        prepare = getattr(self.predictor, "prepare", None)
+        prepared = prepare(state) if prepare is not None else None
+        baseline = prepared.score() if prepared is not None else self.predictor.score(state)
         structure_enabled = not self.conservative_structure or (
             observed_response_count >= self.min_observed_responses
             and not public_positive_graph_gate_closed(board)
@@ -727,7 +729,8 @@ class ExperimentalPublicGreedyPlanner:
             gain = (
                 public_influence.get(action.target_node_1, 0.0) * float(delta)
                 if action.kind == "comm"
-                else self.predictor.score(state.apply(action, delta)) - baseline
+                else (prepared.score_after(action) if prepared is not None
+                      else self.predictor.score(state.apply(action, delta))) - baseline
             )
             if not math.isfinite(gain) or gain <= 0.0:
                 continue

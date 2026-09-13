@@ -12,6 +12,32 @@ from starnet.policy.fast_settlement_experiment import FastComponentSettlement
 
 
 class FastSettlementExperimentTests(unittest.TestCase):
+    def test_prepared_structure_scores_match_copied_state(self):
+        from starnet.model.blackboard import Blackboard
+        from starnet.policy.actions import Action
+        from starnet.policy.cmg import PredictiveState, SettlementPredictor
+        from starnet.policy.calibration import CalibrationProfile
+        import random
+        rng = random.Random(20260913)
+        engine = FastComponentSettlement()
+        reference = SettlementPredictor(CalibrationProfile(gate_passed=False, model="component_degree_plus_one"))
+        for trial in range(100):
+            count = rng.randrange(2, 25)
+            board = Blackboard(count)
+            edges = {(left, right) for left in range(1, count + 1)
+                     for right in range(left + 1, count + 1) if rng.random() < .2}
+            for node in range(1, count + 1):
+                board.record_scan(node, {"w": rng.uniform(-40, 30), "persona": "中立", "comm_left": 3,
+                                         "neighbors": sorted(b if a == node else a for a, b in edges if node in (a, b))})
+            state = PredictiveState.from_blackboard(board)
+            prepared = engine.prepare(state)
+            self.assertEqual(prepared.score(), reference.score(state))
+            actions = [Action("shield", 1), Action("shield", count)]
+            actions += [Action("cut", a, target_node_2=b) for a, b in sorted(edges)[:2]]
+            for action in actions:
+                self.assertEqual(prepared.score_after(action), reference.score(state.apply(action)))
+            self.assertLessEqual(len(engine._action_cache), 16)
+
     def test_hundreds_of_random_states_match_exactly(self) -> None:
         rng = random.Random(20260913)
         reference = SettlementPredictor(

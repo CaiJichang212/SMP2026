@@ -7,9 +7,10 @@ from dataclasses import dataclass
 from typing import TypeAlias
 
 from starnet.policy.cmg import PredictiveState
+from starnet.policy.actions import Action
 
 
-TopologyKey: TypeAlias = tuple[tuple[int, ...], tuple[tuple[int, int], ...]]
+TopologyKey: TypeAlias = tuple[tuple[int, ...], frozenset[tuple[int, int]]]
 
 
 @dataclass(frozen=True)
@@ -31,6 +32,10 @@ class FastComponentSettlement:
             raise ValueError("max_topologies must be positive")
         self.max_topologies = max_topologies
         self._cache: OrderedDict[TopologyKey, tuple[_Component, ...]] = OrderedDict()
+        # Cache only topology coefficients, never opinions or live boards.
+        # A small parent-graph cap bounds the additional action-coefficient table.
+        self._action_cache: OrderedDict[TopologyKey, dict[Action, tuple[_Component, ...]]] = OrderedDict()
+        self.max_action_topologies = 16
         self.hits = 0
         self.misses = 0
 
@@ -38,11 +43,11 @@ class FastComponentSettlement:
     def topology_key(state: PredictiveState) -> TopologyKey:
         nodes = tuple(sorted(state.nodes))
         node_set = set(nodes)
-        edges = tuple(sorted(
-            (left, right) if left < right else (right, left)
+        edges = frozenset(
+            (left, right)
             for left, right in state.edges
             if left in node_set and right in node_set
-        ))
+        )
         return nodes, edges
 
     @staticmethod
@@ -83,10 +88,7 @@ class FastComponentSettlement:
             for component in ordered
         )
 
-    def score(self, state: PredictiveState) -> float:
-        if not state.nodes:
-            return 0.0
-        key = self.topology_key(state)
+    def _components(self, key: TopologyKey) -> tuple[_Component, ...]:
         components = self._cache.get(key)
         if components is None:
             self.misses += 1
@@ -98,17 +100,68 @@ class FastComponentSettlement:
             self.hits += 1
             self._cache.move_to_end(key)
 
+        return components
+
+    @staticmethod
+    def _weighted_score(components, nodes) -> float:
         def component_score(component: _Component) -> float:
             weighted = 0.0
             for node, factor in zip(component.nodes, component.factors):
-                weighted += factor * float(state.nodes[node].w)
+                weighted += factor * float(nodes[node].w)
             return component.size * weighted / component.denominator
 
         return sum(component_score(component) for component in components)
 
+    def score(self, state: PredictiveState) -> float:
+        if not state.nodes:
+            return 0.0
+        return self._weighted_score(self._components(self.topology_key(state)), state.nodes)
+
+    def prepare(self, state: PredictiveState):
+        """Reuse one topology key for a complete candidate-generation call."""
+        key = self.topology_key(state)
+        components = self._components(key)
+        table = self._action_cache.get(key)
+        if table is None:
+            table = {}
+            self._action_cache[key] = table
+            if len(self._action_cache) > self.max_action_topologies:
+                self._action_cache.popitem(last=False)
+        else:
+            self._action_cache.move_to_end(key)
+        return _PreparedSettlement(self, state.nodes, key, components, table)
+
     @property
     def cache_size(self) -> int:
         return len(self._cache)
+
+
+class _PreparedSettlement:
+    """Ephemeral opinion view; only topology-derived tables enter the cache."""
+
+    def __init__(self, predictor, nodes, key, components, table):
+        self.predictor = predictor
+        self.nodes = nodes
+        self.key = key
+        self.components = components
+        self.table = table
+
+    def score(self):
+        return self.predictor._weighted_score(self.components, self.nodes)
+
+    def score_after(self, action: Action):
+        if action not in self.table:
+            nodes, edges = self.key
+            if action.kind == "shield" and action.target_node_1 in self.nodes:
+                changed_nodes = tuple(node for node in nodes if node != action.target_node_1)
+                changed_edges = frozenset(edge for edge in edges if action.target_node_1 not in edge)
+            elif action.kind == "cut" and action.target_node_2 is not None:
+                edge = tuple(sorted((action.target_node_1, action.target_node_2)))
+                changed_nodes, changed_edges = nodes, edges.difference({edge})
+            else:
+                raise ValueError("prepared score requires a valid structural action")
+            self.table[action] = self.predictor._compile((changed_nodes, changed_edges))
+        return self.predictor._weighted_score(self.table[action], self.nodes)
 
 
 __all__ = ["FastComponentSettlement", "TopologyKey"]
