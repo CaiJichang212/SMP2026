@@ -67,6 +67,33 @@ class P10StructurePlanTests(unittest.TestCase):
         self.assertEqual(decision.actions, plan.structure_actions)
         self.assertEqual(decision.rollouts, 26)
 
+    def test_mean_audited_is_distinct_from_strict_without_changing_plan(self):
+        board = board_fixture()
+        baseline = Action("comm", 4, prompt_id=1)
+        structures = (Action("cut", 1, target_node_2=2), Action("cut", 3, target_node_2=4))
+        plan = FullStructurePlan(structures, (), 120.0, 100.0, 8, 20, 0.01)
+        ranked = [Candidate("baseline", baseline, 0, 1.0, 0.5, "test")]
+        deltas = (5.0, 5.0, 5.0, 5.0, -1.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, -1.0)
+
+        def rollout(_board, _budget, _observed, actions, _steps, *, scenario, salt):
+            return 100.0 + deltas[scenario] if actions == structures else 100.0
+
+        with patch("starnet.policy.p10_structure_plan_experiment._greedy_candidates",
+                   return_value=ranked), \
+             patch("starnet.policy.p10_structure_plan_experiment._rollout_prefix",
+                   side_effect=rollout):
+            strict = choose_full_plan(
+                board, 20.0, {}, remaining_steps=4, salt="b" * 64,
+                max_structures=2, beam_width=4, risk_mode="strict", proposed_plan=plan,
+            )
+            mean = choose_full_plan(
+                board, 20.0, {}, remaining_steps=4, salt="b" * 64,
+                max_structures=2, beam_width=4, risk_mode="mean_audited", proposed_plan=plan,
+            )
+        self.assertFalse(strict.accepted)
+        self.assertTrue(mean.accepted)
+        self.assertEqual(mean.actions, structures)
+
 
 if __name__ == "__main__":
     unittest.main()

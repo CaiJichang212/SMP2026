@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 import math
 import time
-from typing import Mapping, MutableMapping
+from typing import Literal, Mapping, MutableMapping
 
 from starnet.model.blackboard import Blackboard
 from starnet.policy.actions import Action, action_cost, is_legal_action
@@ -22,6 +22,7 @@ from starnet.policy.p9_prefix_experiment import _rollout_prefix
 
 
 PlanCache = MutableMapping[tuple[object, ...], float]
+RiskMode = Literal["strict", "mean_audited"]
 
 
 @dataclass(frozen=True)
@@ -197,13 +198,17 @@ def choose_full_plan(
     salt: str,
     max_structures: int,
     beam_width: int,
+    risk_mode: RiskMode = "strict",
+    proposed_plan: FullStructurePlan | None = None,
     evaluation_cache: PlanCache | None = None,
 ) -> FullPlanDecision:
+    if risk_mode not in ("strict", "mean_audited"):
+        raise ValueError("unknown P10 risk mode")
     ranked = _greedy_candidates(board, budget, observed)
     if not ranked or remaining_steps <= 0:
         return FullPlanDecision((), None, None, (), (), False, 0)
     baseline = ranked[0].action
-    plan = search_full_structure_plan(
+    plan = proposed_plan or search_full_structure_plan(
         board, budget, observed, remaining_steps=remaining_steps,
         max_structures=max_structures, beam_width=beam_width,
     )
@@ -238,10 +243,9 @@ def choose_full_plan(
         score(plan.structure_actions, scenario) - score(baseline_actions, scenario)
         for scenario in range(5, 13)
     )
-    accepted = (
-        sum(selection) > 1e-9 and min(selection) >= -1e-9
-        and sum(audit) > 1e-9 and min(audit) >= -1e-9
-    )
+    accepted = sum(selection) > 1e-9 and sum(audit) > 1e-9
+    if risk_mode == "strict":
+        accepted = accepted and min(selection) >= -1e-9 and min(audit) >= -1e-9
     return FullPlanDecision(
         plan.structure_actions if accepted else baseline_actions,
         baseline,
@@ -254,6 +258,6 @@ def choose_full_plan(
 
 
 __all__ = [
-    "FullPlanDecision", "FullStructurePlan", "PlanCache",
+    "FullPlanDecision", "FullStructurePlan", "PlanCache", "RiskMode",
     "choose_full_plan", "search_full_structure_plan",
 ]
