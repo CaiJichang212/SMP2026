@@ -1,0 +1,852 @@
+{
+  "config": {
+    "protocol_sha256": "456afd22ea2e8eaf9cbe5c00cd3a2bd70594f77210f70ea642115590da5563c8",
+    "runner_sha256": "8153fc32706cfddf7427bfa49067180f76e9fe3d1ca4919b59839e12b76fb843",
+    "response_report_sha256": "04dba8af28578257ab40641ad78fd895bef9ae7ddff9cef3e23ddc411d37ccac",
+    "source_sha256": {
+      "src/starnet/runtime/p10_controller_experiment.py": "825cf1ad1616b141ab5bd8613142e205a9209cbb732483738b319b287d1a32cb",
+      "src/starnet/policy/p10_structure_plan_experiment.py": "d64a27857007a89de052dbc1e82639c965ea3e1fd05cdc32d8e3de30793dcd70",
+      "src/starnet/policy/public_response_mixture.py": "ecf3f255b574b4f511a3b158c7be30aa8fe342c22b12506e1abeab74f76c8690",
+      "src/starnet/runtime/p8_controller.py": "89507fec9d971ad364355c5c7d2ab6482fd8d21fc8c1084ef3aa869e4676ddaf",
+      "src/starnet/policy/p8_experiment.py": "30326ab80cee936c6feb57ec01722eafa0994e2d171d606e6f439a3106f334ca"
+    },
+    "arms": [
+      "p9",
+      "plan_only",
+      "response_only",
+      "combined"
+    ],
+    "families": [
+      "er_balanced",
+      "ba_negative_hubs",
+      "ws_peace_majority",
+      "sbm_negative_bridges",
+      "sbm_violent_cluster",
+      "three_sparse_components"
+    ],
+    "repetition": 1,
+    "worker_limit": 1
+  },
+  "complete": true,
+  "raw_log": {
+    "path": "experiments/raw/p10-runtime-three-arm-20260914/full.json",
+    "sha256": "c09f3455dca1ef2bb0bebf70156260a500b4e0552924e20d9e19a211507b0998",
+    "committed": false
+  },
+  "existing_response_evidence": {
+    "cases": 18,
+    "report_sha256": "04dba8af28578257ab40641ad78fd895bef9ae7ddff9cef3e23ddc411d37ccac",
+    "legacy_gated_vs_fixed": {
+      "cases": 6,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0,
+      "win_tie_loss": [
+        0,
+        6,
+        0
+      ]
+    }
+  },
+  "metrics_vs_p9": {
+    "plan_only": {
+      "cases": 6,
+      "mean": 7.309729083811533,
+      "minimum": 0.0,
+      "maximum": 22.52684416669092,
+      "win_tie_loss": [
+        2,
+        4,
+        0
+      ]
+    },
+    "response_only": {
+      "cases": 6,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "maximum": 0.0,
+      "win_tie_loss": [
+        0,
+        6,
+        0
+      ]
+    },
+    "combined": {
+      "cases": 6,
+      "mean": 7.309729083811533,
+      "minimum": 0.0,
+      "maximum": 22.52684416669092,
+      "win_tie_loss": [
+        2,
+        4,
+        0
+      ]
+    }
+  },
+  "rows": [
+    {
+      "family": "er_balanced",
+      "repetition": 1,
+      "seed_sha256": "db6910b99174ab78acea7ed1794abe64d7552390a151e3fff03b0498d1480a99",
+      "first_divergence": {
+        "plan_only": null,
+        "response_only": null,
+        "combined": null
+      },
+      "arms": {
+        "p9": {
+          "score": 802.8062920839894,
+          "remaining_budget": 0.0,
+          "actions": {
+            "scan": 50,
+            "comm": 35,
+            "cut": 0,
+            "shield": 1
+          },
+          "action_attempts": 86,
+          "action_failures": 0,
+          "action_sha256": "cb7fab7e3e1a834ae40c42e954c5ff8babc67d2a82e138367527e207c85c1d5a",
+          "llm_calls": 86,
+          "llm_accepted": 86,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 0,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 0,
+          "p10_prefix_completed": 0,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 5.37537585303653
+        },
+        "plan_only": {
+          "score": 802.8062920839894,
+          "remaining_budget": 0.0,
+          "actions": {
+            "scan": 50,
+            "comm": 35,
+            "cut": 0,
+            "shield": 1
+          },
+          "action_attempts": 86,
+          "action_failures": 0,
+          "action_sha256": "cb7fab7e3e1a834ae40c42e954c5ff8babc67d2a82e138367527e207c85c1d5a",
+          "llm_calls": 86,
+          "llm_accepted": 86,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 1,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 0,
+          "p10_prefix_completed": 0,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 11.033254665904678
+        },
+        "response_only": {
+          "score": 802.8062920839894,
+          "remaining_budget": 0.0,
+          "actions": {
+            "scan": 50,
+            "comm": 35,
+            "cut": 0,
+            "shield": 1
+          },
+          "action_attempts": 86,
+          "action_failures": 0,
+          "action_sha256": "cb7fab7e3e1a834ae40c42e954c5ff8babc67d2a82e138367527e207c85c1d5a",
+          "llm_calls": 86,
+          "llm_accepted": 86,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 0,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 0,
+          "p10_prefix_completed": 0,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 4.962899203994311
+        },
+        "combined": {
+          "score": 802.8062920839894,
+          "remaining_budget": 0.0,
+          "actions": {
+            "scan": 50,
+            "comm": 35,
+            "cut": 0,
+            "shield": 1
+          },
+          "action_attempts": 86,
+          "action_failures": 0,
+          "action_sha256": "cb7fab7e3e1a834ae40c42e954c5ff8babc67d2a82e138367527e207c85c1d5a",
+          "llm_calls": 86,
+          "llm_accepted": 86,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 1,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 0,
+          "p10_prefix_completed": 0,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 11.052802699967287
+        }
+      }
+    },
+    {
+      "family": "ba_negative_hubs",
+      "repetition": 1,
+      "seed_sha256": "d4d32f4c15ff3dfc4448ec4a76a6497ec4e9400bf5e8dbde44bd230eea7d3d7d",
+      "first_divergence": {
+        "plan_only": {
+          "action_index": 52,
+          "candidate": [
+            "shield",
+            5
+          ],
+          "p9": [
+            "shield",
+            6
+          ]
+        },
+        "response_only": null,
+        "combined": {
+          "action_index": 52,
+          "candidate": [
+            "shield",
+            5
+          ],
+          "p9": [
+            "shield",
+            6
+          ]
+        }
+      },
+      "arms": {
+        "p9": {
+          "score": 590.240586484472,
+          "remaining_budget": 0.0,
+          "actions": {
+            "scan": 50,
+            "comm": 20,
+            "cut": 0,
+            "shield": 7
+          },
+          "action_attempts": 77,
+          "action_failures": 0,
+          "action_sha256": "769cdb48d2325b8371f19b23db3a32d703d32584103f9aadb7796afb707b0e72",
+          "llm_calls": 77,
+          "llm_accepted": 77,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 0,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 0,
+          "p10_prefix_completed": 0,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 5.783481749007478
+        },
+        "plan_only": {
+          "score": 612.767430651163,
+          "remaining_budget": 0.0,
+          "actions": {
+            "scan": 50,
+            "comm": 15,
+            "cut": 0,
+            "shield": 9
+          },
+          "action_attempts": 74,
+          "action_failures": 0,
+          "action_sha256": "8c56a869f102111d6a46d784645843fd7a98d7c976f7eb4d177af67cfd2cb2ca",
+          "llm_calls": 66,
+          "llm_accepted": 66,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 1,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 1,
+          "p10_prefix_completed": 1,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 5.390034944983199
+        },
+        "response_only": {
+          "score": 590.240586484472,
+          "remaining_budget": 0.0,
+          "actions": {
+            "scan": 50,
+            "comm": 20,
+            "cut": 0,
+            "shield": 7
+          },
+          "action_attempts": 77,
+          "action_failures": 0,
+          "action_sha256": "769cdb48d2325b8371f19b23db3a32d703d32584103f9aadb7796afb707b0e72",
+          "llm_calls": 77,
+          "llm_accepted": 77,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 0,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 0,
+          "p10_prefix_completed": 0,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 5.826625979971141
+        },
+        "combined": {
+          "score": 612.767430651163,
+          "remaining_budget": 0.0,
+          "actions": {
+            "scan": 50,
+            "comm": 15,
+            "cut": 0,
+            "shield": 9
+          },
+          "action_attempts": 74,
+          "action_failures": 0,
+          "action_sha256": "8c56a869f102111d6a46d784645843fd7a98d7c976f7eb4d177af67cfd2cb2ca",
+          "llm_calls": 66,
+          "llm_accepted": 66,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 1,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 1,
+          "p10_prefix_completed": 1,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 5.160754207987338
+        }
+      }
+    },
+    {
+      "family": "ws_peace_majority",
+      "repetition": 1,
+      "seed_sha256": "d95681ed6b14ae0eb757916839177740553368ecef01c8d596d4edd195be49c5",
+      "first_divergence": {
+        "plan_only": null,
+        "response_only": null,
+        "combined": null
+      },
+      "arms": {
+        "p9": {
+          "score": 907.9251816428571,
+          "remaining_budget": 1.0,
+          "actions": {
+            "scan": 50,
+            "comm": 37,
+            "cut": 0,
+            "shield": 0
+          },
+          "action_attempts": 87,
+          "action_failures": 0,
+          "action_sha256": "38ab3ebb5dda9de10a10b098d95bc0cdcef3f0279d4e88f76e4cc4ed8cbc6baa",
+          "llm_calls": 87,
+          "llm_accepted": 87,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 0,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 0,
+          "p10_prefix_completed": 0,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 2.0837498450418934
+        },
+        "plan_only": {
+          "score": 907.9251816428571,
+          "remaining_budget": 1.0,
+          "actions": {
+            "scan": 50,
+            "comm": 37,
+            "cut": 0,
+            "shield": 0
+          },
+          "action_attempts": 87,
+          "action_failures": 0,
+          "action_sha256": "38ab3ebb5dda9de10a10b098d95bc0cdcef3f0279d4e88f76e4cc4ed8cbc6baa",
+          "llm_calls": 87,
+          "llm_accepted": 87,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 1,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 0,
+          "p10_prefix_completed": 0,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 6.409277934930287
+        },
+        "response_only": {
+          "score": 907.9251816428571,
+          "remaining_budget": 1.0,
+          "actions": {
+            "scan": 50,
+            "comm": 37,
+            "cut": 0,
+            "shield": 0
+          },
+          "action_attempts": 87,
+          "action_failures": 0,
+          "action_sha256": "38ab3ebb5dda9de10a10b098d95bc0cdcef3f0279d4e88f76e4cc4ed8cbc6baa",
+          "llm_calls": 87,
+          "llm_accepted": 87,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 0,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 0,
+          "p10_prefix_completed": 0,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 2.092787053086795
+        },
+        "combined": {
+          "score": 907.9251816428571,
+          "remaining_budget": 1.0,
+          "actions": {
+            "scan": 50,
+            "comm": 37,
+            "cut": 0,
+            "shield": 0
+          },
+          "action_attempts": 87,
+          "action_failures": 0,
+          "action_sha256": "38ab3ebb5dda9de10a10b098d95bc0cdcef3f0279d4e88f76e4cc4ed8cbc6baa",
+          "llm_calls": 87,
+          "llm_accepted": 87,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 1,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 0,
+          "p10_prefix_completed": 0,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 6.635464206105098
+        }
+      }
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "repetition": 1,
+      "seed_sha256": "7a5900314354f8d5cd0799a0c13659a22d021fc1ba0f612340caec97f2516e1f",
+      "first_divergence": {
+        "plan_only": {
+          "action_index": 51,
+          "candidate": [
+            "shield",
+            2
+          ],
+          "p9": [
+            "comm",
+            16,
+            1
+          ]
+        },
+        "response_only": null,
+        "combined": {
+          "action_index": 51,
+          "candidate": [
+            "shield",
+            2
+          ],
+          "p9": [
+            "comm",
+            16,
+            1
+          ]
+        }
+      },
+      "arms": {
+        "p9": {
+          "score": 563.7690441320756,
+          "remaining_budget": 1.0,
+          "actions": {
+            "scan": 50,
+            "comm": 32,
+            "cut": 0,
+            "shield": 2
+          },
+          "action_attempts": 84,
+          "action_failures": 0,
+          "action_sha256": "c701e911bd4ee22e49aba00801db40a0ed96f3f9a47da418a411a39a53a82152",
+          "llm_calls": 84,
+          "llm_accepted": 84,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 0,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 0,
+          "p10_prefix_completed": 0,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 3.630092530976981
+        },
+        "plan_only": {
+          "score": 585.1005744682539,
+          "remaining_budget": 0.0,
+          "actions": {
+            "scan": 50,
+            "comm": 30,
+            "cut": 0,
+            "shield": 3
+          },
+          "action_attempts": 83,
+          "action_failures": 0,
+          "action_sha256": "38ea2662b54af0c7f4a5af3e28312aca78c9aac702ad0adba2ad951cf6c98dad",
+          "llm_calls": 81,
+          "llm_accepted": 81,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 1,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 1,
+          "p10_prefix_completed": 1,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 6.568513192003593
+        },
+        "response_only": {
+          "score": 563.7690441320756,
+          "remaining_budget": 1.0,
+          "actions": {
+            "scan": 50,
+            "comm": 32,
+            "cut": 0,
+            "shield": 2
+          },
+          "action_attempts": 84,
+          "action_failures": 0,
+          "action_sha256": "c701e911bd4ee22e49aba00801db40a0ed96f3f9a47da418a411a39a53a82152",
+          "llm_calls": 84,
+          "llm_accepted": 84,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 0,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 0,
+          "p10_prefix_completed": 0,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 3.6521556599764153
+        },
+        "combined": {
+          "score": 585.1005744682539,
+          "remaining_budget": 0.0,
+          "actions": {
+            "scan": 50,
+            "comm": 30,
+            "cut": 0,
+            "shield": 3
+          },
+          "action_attempts": 83,
+          "action_failures": 0,
+          "action_sha256": "38ea2662b54af0c7f4a5af3e28312aca78c9aac702ad0adba2ad951cf6c98dad",
+          "llm_calls": 81,
+          "llm_accepted": 81,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 1,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 1,
+          "p10_prefix_completed": 1,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 6.5085611320100725
+        }
+      }
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "repetition": 1,
+      "seed_sha256": "ca7e860b1442fb6b27183557ba445bcc32a08cffe713d7d17b3ef74fc91ca4ef",
+      "first_divergence": {
+        "plan_only": null,
+        "response_only": null,
+        "combined": null
+      },
+      "arms": {
+        "p9": {
+          "score": 312.5215108695652,
+          "remaining_budget": 1.0,
+          "actions": {
+            "scan": 50,
+            "comm": 12,
+            "cut": 0,
+            "shield": 10
+          },
+          "action_attempts": 72,
+          "action_failures": 0,
+          "action_sha256": "8ce932859abbd38d03954144b5e6dc035ff24f869c78f2f336f9fd8f0c249895",
+          "llm_calls": 72,
+          "llm_accepted": 72,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 0,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 0,
+          "p10_prefix_completed": 0,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 3.77847965399269
+        },
+        "plan_only": {
+          "score": 312.5215108695652,
+          "remaining_budget": 1.0,
+          "actions": {
+            "scan": 50,
+            "comm": 12,
+            "cut": 0,
+            "shield": 10
+          },
+          "action_attempts": 72,
+          "action_failures": 0,
+          "action_sha256": "8ce932859abbd38d03954144b5e6dc035ff24f869c78f2f336f9fd8f0c249895",
+          "llm_calls": 72,
+          "llm_accepted": 72,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 1,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 0,
+          "p10_prefix_completed": 0,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 7.692607900011353
+        },
+        "response_only": {
+          "score": 312.5215108695652,
+          "remaining_budget": 1.0,
+          "actions": {
+            "scan": 50,
+            "comm": 12,
+            "cut": 0,
+            "shield": 10
+          },
+          "action_attempts": 72,
+          "action_failures": 0,
+          "action_sha256": "8ce932859abbd38d03954144b5e6dc035ff24f869c78f2f336f9fd8f0c249895",
+          "llm_calls": 72,
+          "llm_accepted": 72,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 0,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 0,
+          "p10_prefix_completed": 0,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 3.572349922033027
+        },
+        "combined": {
+          "score": 312.5215108695652,
+          "remaining_budget": 1.0,
+          "actions": {
+            "scan": 50,
+            "comm": 12,
+            "cut": 0,
+            "shield": 10
+          },
+          "action_attempts": 72,
+          "action_failures": 0,
+          "action_sha256": "8ce932859abbd38d03954144b5e6dc035ff24f869c78f2f336f9fd8f0c249895",
+          "llm_calls": 72,
+          "llm_accepted": 72,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 1,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 0,
+          "p10_prefix_completed": 0,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 7.952940004994161
+        }
+      }
+    },
+    {
+      "family": "three_sparse_components",
+      "repetition": 1,
+      "seed_sha256": "e915b9c39819f63166c891ccf257bcdb5911d943a3c5d3f545b605b08437045f",
+      "first_divergence": {
+        "plan_only": null,
+        "response_only": null,
+        "combined": null
+      },
+      "arms": {
+        "p9": {
+          "score": 185.7681499992931,
+          "remaining_budget": 0.0,
+          "actions": {
+            "scan": 50,
+            "comm": 30,
+            "cut": 0,
+            "shield": 3
+          },
+          "action_attempts": 83,
+          "action_failures": 0,
+          "action_sha256": "91ca3be881f4a26b0813c95c1a374559d081aff7f8c4a21d2498d76caaf18551",
+          "llm_calls": 83,
+          "llm_accepted": 83,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 0,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 0,
+          "p10_prefix_completed": 0,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 9.109461104962975
+        },
+        "plan_only": {
+          "score": 185.7681499992931,
+          "remaining_budget": 0.0,
+          "actions": {
+            "scan": 50,
+            "comm": 30,
+            "cut": 0,
+            "shield": 3
+          },
+          "action_attempts": 83,
+          "action_failures": 0,
+          "action_sha256": "91ca3be881f4a26b0813c95c1a374559d081aff7f8c4a21d2498d76caaf18551",
+          "llm_calls": 83,
+          "llm_accepted": 83,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 1,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 0,
+          "p10_prefix_completed": 0,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 13.693006472080015
+        },
+        "response_only": {
+          "score": 185.7681499992931,
+          "remaining_budget": 0.0,
+          "actions": {
+            "scan": 50,
+            "comm": 30,
+            "cut": 0,
+            "shield": 3
+          },
+          "action_attempts": 83,
+          "action_failures": 0,
+          "action_sha256": "91ca3be881f4a26b0813c95c1a374559d081aff7f8c4a21d2498d76caaf18551",
+          "llm_calls": 83,
+          "llm_accepted": 83,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 0,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 0,
+          "p10_prefix_completed": 0,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 9.512559968978167
+        },
+        "combined": {
+          "score": 185.7681499992931,
+          "remaining_budget": 0.0,
+          "actions": {
+            "scan": 50,
+            "comm": 30,
+            "cut": 0,
+            "shield": 3
+          },
+          "action_attempts": 83,
+          "action_failures": 0,
+          "action_sha256": "91ca3be881f4a26b0813c95c1a374559d081aff7f8c4a21d2498d76caaf18551",
+          "llm_calls": 83,
+          "llm_accepted": 83,
+          "llm_fallbacks": 0,
+          "p8_planning_errors": 0,
+          "p10_searches": 1,
+          "p10_planning_errors": 0,
+          "p10_approved_plans": 0,
+          "p10_prefix_completed": 0,
+          "p10_prefix_failures": 0,
+          "response_switches": 0,
+          "response_disabled": false,
+          "response_disable_reason": null,
+          "response_activation": null,
+          "seconds": 12.052907668985426
+        }
+      }
+    }
+  ],
+  "confirmation_opened": false,
+  "production_enabled": false
+}

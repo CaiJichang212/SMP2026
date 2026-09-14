@@ -115,3 +115,42 @@ An optional experiment-local response ledger hook can supply P10's terminal
 persuasion estimator and receive successful, uncensored first public responses.
 The default is `None`, preserving P9 estimates. The hook does not silently
 alter the P9 fallback; a future combined arm requires its own preregistration.
+
+#### Plan, response and combined runtime arms
+
+The follow-up runtime protocol separated `plan_only`, `response_only`, and
+`combined` without changing P9. P10 stores the complete candidate map returned
+by P9 for deterministic fallback. Its LLM terminal comparison exposes only the
+new plan, the PG reference, and an existing P8 terminal proposal when present.
+P8 and P10 scores are equal-resource continuation gains relative to PG, and
+their displayed ROI divides by current total budget. Immediate candidate scores
+cannot numerically suppress a complete plan.
+
+The fixed mock ranker selects the largest terminal gain among PG, P8 and P10,
+rather than selecting P10 by identity. Invalid or missing model output rebuilds
+P9's deterministic fallback from the stored original candidate map. A valid
+model may select the original PG or P8 alternative to reject the new plan.
+
+The previously completed 18-case gated-ledger experiment gained +19.647184
+against the fixed estimator (`8/10/0`) and remained exactly equal on all six
+legacy-independent cases. The CaseVO comparison therefore used those six
+legacy repetition-1 seeds for four strictly paired runtime arms:
+
+| Runtime arm vs P9 | Cases | Mean delta | Win / tie / loss | Minimum |
+| --- | ---: | ---: | ---: | ---: |
+| plan_only | 6 | +7.309729 | 2 / 4 / 0 | 0 |
+| response_only | 6 | 0.000000 | 0 / 6 / 0 | 0 |
+| combined | 6 | +7.309729 | 2 / 4 / 0 | 0 |
+
+Every response-only action hash matched P9, and every combined action hash
+matched plan-only. The response gate stayed closed in all legacy-independent
+cases. This proves the initial combined plan used P9's original estimator and
+that an unactivated ledger does not change root search. Plan-only and combined
+selected P10 only for `ba_negative_hubs` (+22.526844) and
+`sbm_negative_bridges` (+21.331530); all other families retained P9.
+
+All 24 runtime sessions had zero action, P8-planning, P10-planning, prefix, or
+response-estimator failures and nonnegative remaining budget. Plan-only and
+combined searched exactly once per case; response-only and P9 never searched.
+Full action logs remain in ignored `experiments/raw/`; the committed compact
+report stores their SHA-256 identities and first divergences.
