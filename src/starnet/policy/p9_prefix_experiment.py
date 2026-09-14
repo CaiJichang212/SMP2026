@@ -18,6 +18,7 @@ from starnet.policy.p8_experiment import (
     _response_fn,
     _scenario_factor,
     _state_digest,
+    choose_p8_action,
 )
 
 
@@ -79,6 +80,7 @@ def _rollout_prefix(
         raise ValueError("invalid prefix rollout resources")
     state = PredictiveState.from_blackboard(board)
     visible = dict(observed)
+    latent_first: dict[int, float] = {}
     pending = list(prefix)
     for _ in range(remaining_steps):
         projected = _ProjectedBoard.from_state(state, board.node_count or len(board.nodes))
@@ -97,12 +99,16 @@ def _rollout_prefix(
             if node.comm_left is None:
                 raise ValueError("missing public communication count")
             turn = 4 - node.comm_left
-            first = visible.get(action.target_node_1)
+            node_id = action.target_node_1
+            public_first = visible.get(node_id)
+            first = latent_first.get(node_id)
             if first is None:
-                nominal_first = 15.0 * _scenario_factor(salt, action.target_node_1, scenario)
-                first = bounded_response_delta(node.w, nominal_first)
-                visible[action.target_node_1] = first
+                first = (float(public_first) if public_first is not None else
+                         15.0 * _scenario_factor(salt, node_id, scenario))
+                latent_first[node_id] = first
             delta = bounded_response_delta(node.w, first * (0.5 ** (turn - 1)))
+            if public_first is None and turn == 1:
+                visible[node_id] = delta
         state = state.apply(action, delta)
         budget -= action_cost(action)
     if pending:
@@ -130,13 +136,25 @@ def choose_prefix_action(
         raise ValueError("invalid prefix decision inputs")
     if any(not math.isfinite(float(value)) for value in observed.values()):
         raise ValueError("nonfinite public response")
-    ranked = _greedy_candidates(board, budget, observed)
-    if not ranked or remaining_steps == 0:
+    if remaining_steps == 0:
         return PrefixDecision((), None, (), (), (), (), False, 0)
-    baseline = ranked[0].action
+    fallback = choose_p8_action(
+        board,
+        budget,
+        observed,
+        remaining_steps=remaining_steps,
+        salt=salt,
+        mode="conservative",
+        evaluation_cache=evaluation_cache,
+    )
+    baseline = fallback.action
+    if baseline is None:
+        return PrefixDecision((), None, (), (), (), (), False, fallback.rollouts)
     proposed = structural_prefix(board, budget, observed, remaining_steps)
     if len(proposed) < 2:
-        return PrefixDecision((baseline,), baseline, proposed, (), (), (), False, 0)
+        return PrefixDecision(
+            (baseline,), baseline, proposed, (), (), (), False, fallback.rollouts,
+        )
 
     first = proposed[:1]
     chosen = first if mode == "first" else proposed
@@ -144,7 +162,7 @@ def choose_prefix_action(
     cache = evaluation_cache if evaluation_cache is not None else {}
     digest = _state_digest(board)
     observed_key = tuple(sorted((node, float(value)) for node, value in observed.items()))
-    rollouts = 0
+    rollouts = fallback.rollouts
 
     def score(sequence: tuple[Action, ...], scenario: int) -> float:
         nonlocal rollouts

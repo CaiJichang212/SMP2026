@@ -17,7 +17,7 @@ sys.path.insert(0, str(ROOT))
 
 from scripts.run_local_policy_matrix import LocalPublicEnvironment
 from scripts.run_p8_search import run_p8, seed_hash
-from starnet.experiments.p8_seeds import FAMILIES, seed_payload
+from starnet.experiments.p8_seeds import DEVELOPMENT_REPETITIONS, FAMILIES, seed_payload
 from starnet.model.blackboard import Blackboard
 from starnet.policy.actions import Action, is_legal_action
 from starnet.policy.p8_experiment import public_board_salt
@@ -113,6 +113,9 @@ def run_prefix(seed: dict[str, Any], mode: PrefixMode):
             break
     return {
         "score": env.evaluate(),
+        "actions": {kind: sum(call[0] == kind for call in env.calls)
+                    for kind in ("scan", "comm", "cut", "shield")},
+        "action_sequence": env.calls,
         "remaining_budget": env.get_remaining_budget(),
         "steps": steps,
         "failures": failures,
@@ -126,56 +129,101 @@ def run_prefix(seed: dict[str, Any], mode: PrefixMode):
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--families", nargs="+", choices=FAMILIES, default=list(FROZEN_FAMILIES))
-    parser.add_argument("--repetition", type=int, default=501)
+    parser.add_argument(
+        "--stage", choices=("diagnostic4-501", "old22-501", "old22-502-503"),
+        default="diagnostic4-501",
+    )
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    families = tuple(dict.fromkeys(args.families))
-    if args.repetition != 501 or any(family not in FROZEN_FAMILIES for family in families):
-        parser.error("This frozen development protocol permits only the four declared families at repetition 501")
+    families = FROZEN_FAMILIES if args.stage == "diagnostic4-501" else FAMILIES
+    repetitions = (501,) if args.stage != "old22-502-503" else (502, 503)
+    if not set(repetitions).issubset(DEVELOPMENT_REPETITIONS):
+        parser.error("P10 prefix stages use consumed P8 development repetitions only")
+    config = {
+        "schema_version": 1,
+        "protocol": "p10-structure-prefix-development-20260914",
+        "stage": args.stage,
+        "families": list(families),
+        "repetitions": list(repetitions),
+        "policy_sha256": hashlib.sha256(
+            (ROOT / "src/starnet/policy/p9_prefix_experiment.py").read_bytes()
+        ).hexdigest(),
+        "p8_policy_sha256": hashlib.sha256(
+            (ROOT / "src/starnet/policy/p8_experiment.py").read_bytes()
+        ).hexdigest(),
+    }
+    progress_path = args.output.with_suffix(".progress.json")
     rows = []
-    for family in families:
-        seed = seed_payload(family, args.repetition)
-        p8 = run_p8(seed, "conservative")
-        first = run_prefix(seed, "first")
-        full = run_prefix(seed, "full")
-        row = {
-            "family": family,
-            "repetition": args.repetition,
-            "seed_sha256": seed_hash(seed),
-            "p8": p8,
-            "first": first,
-            "full": full,
-            "first_minus_p8": first["score"] - p8["score"],
-            "full_minus_p8": full["score"] - p8["score"],
-            "full_minus_first": full["score"] - first["score"],
-        }
-        rows.append(row)
-        print(json.dumps({
-            "family": family,
-            "p8": p8["score"],
-            "first": first["score"],
-            "full": full["score"],
-            "full_minus_first": row["full_minus_first"],
-            "opportunities": full["collaborative_opportunities"],
-            "accepted": full["accepted_prefixes"],
-        }), flush=True)
+    if progress_path.exists():
+        progress = json.loads(progress_path.read_text(encoding="utf-8"))
+        if progress.get("config") != config:
+            parser.error("existing progress has a different P10 prefix configuration")
+        rows = list(progress.get("rows", []))
+    completed = {(row["family"], row["repetition"]) for row in rows}
+    for repetition in repetitions:
+        for family in families:
+            if (family, repetition) in completed:
+                continue
+            seed = seed_payload(family, repetition)
+            p9_bounded = run_p8(seed, "conservative")
+            first = run_prefix(seed, "first")
+            full = run_prefix(seed, "full")
+            row = {
+                "family": family,
+                "repetition": repetition,
+                "seed_sha256": seed_hash(seed),
+                "p9_bounded": p9_bounded,
+                "first": first,
+                "full": full,
+                "first_minus_p9_bounded": first["score"] - p9_bounded["score"],
+                "full_minus_p9_bounded": full["score"] - p9_bounded["score"],
+                "full_minus_first": full["score"] - first["score"],
+            }
+            rows.append(row)
+            completed.add((family, repetition))
+            progress_path.parent.mkdir(parents=True, exist_ok=True)
+            progress_path.write_text(json.dumps({"config": config, "rows": rows},
+                                                ensure_ascii=False, indent=2) + "\n",
+                                     encoding="utf-8")
+            print(json.dumps({
+                "family": family,
+                "repetition": repetition,
+                "p9_bounded": p9_bounded["score"],
+                "first": first["score"],
+                "full": full["score"],
+                "full_minus_p9_bounded": row["full_minus_p9_bounded"],
+                "full_minus_first": row["full_minus_first"],
+                "opportunities": full["collaborative_opportunities"],
+                "accepted": full["accepted_prefixes"],
+            }), flush=True)
     report = {
         "schema_version": 1,
-        "protocol": "p9-structure-prefix-development-20260913",
-        "policy_sha256": hashlib.sha256((ROOT / "src/starnet/policy/p9_prefix_experiment.py").read_bytes()).hexdigest(),
+        "protocol": "p10-structure-prefix-development-20260914",
+        "config": config,
         "families": list(families),
-        "repetition": args.repetition,
+        "repetitions": list(repetitions),
         "selection_scenarios": 5,
         "audit_scenarios": 8,
         "rows": rows,
         "summary": {
-            "first_minus_p8_mean": statistics.fmean(row["first_minus_p8"] for row in rows),
-            "full_minus_p8_mean": statistics.fmean(row["full_minus_p8"] for row in rows),
+            "first_minus_p9_bounded_mean": statistics.fmean(
+                row["first_minus_p9_bounded"] for row in rows
+            ),
+            "full_minus_p9_bounded_mean": statistics.fmean(
+                row["full_minus_p9_bounded"] for row in rows
+            ),
             "full_minus_first_mean": statistics.fmean(row["full_minus_first"] for row in rows),
             "collaborative_opportunities": sum(row["full"]["collaborative_opportunities"] for row in rows),
             "accepted_full_prefixes": sum(row["full"]["accepted_prefixes"] for row in rows),
+            "failures": sum(row[arm]["failures"] for row in rows
+                            for arm in ("p9_bounded", "first", "full")),
+            "win_tie_loss_vs_p9_bounded": [
+                sum(row["full_minus_p9_bounded"] > 1e-8 for row in rows),
+                sum(abs(row["full_minus_p9_bounded"]) <= 1e-8 for row in rows),
+                sum(row["full_minus_p9_bounded"] < -1e-8 for row in rows),
+            ],
         },
+        "new_holdout_opened": False,
         "production_promotion_allowed": False,
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)

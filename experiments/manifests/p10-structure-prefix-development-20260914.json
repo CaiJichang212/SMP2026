@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "experiment": "p10-structure-prefix-development-20260914",
+  "status": "preregistered",
+  "registered_before_results": true,
+  "purpose": "Test whether committing the complete two-action structural prefix recovers value lost when only its first action is evaluated and executed.",
+  "policy": {
+    "fallback": "Current bounded P8 conservative decision, including its own candidate domain and five-scenario gate.",
+    "candidate": "Consecutive cut/shield prefix from budget_plan depth=2 width=4; collaboration requires two distinct legal structure actions.",
+    "arms": ["bounded_p8", "prefix_first", "prefix_full"],
+    "selection": "Compare prefix arm with bounded-P8 fallback under scenarios 0-4; require positive mean and nonnegative minimum.",
+    "audit": "Require positive mean and nonnegative minimum under scenarios 5-12 without reselection.",
+    "execution": "Rejected/no-prefix decisions execute bounded-P8 fallback. Accepted full executes both structure actions with public legality checks before replanning.",
+    "prediction_safety": "Scenario latent first response drives only hypothetical environment transitions; visible contains only realized public returns; neither is written to Blackboard."
+  },
+  "stages": [
+    {
+      "name": "diagnostic4-501",
+      "families": ["ba_negative_hubs", "sbm_violent_cluster", "double_bridge_communities", "bipartite"],
+      "repetitions": [501],
+      "unlock": "Run first. Continue only if prefix_full has positive mean versus bounded_p8, no action failure, and at least one accepted two-action prefix."
+    },
+    {
+      "name": "old22-501",
+      "families": "all frozen P8 families",
+      "repetitions": [501],
+      "unlock": "Only after diagnostic4-501 passes. Continue only if the 22-family mean is positive and losses do not show broad instability."
+    },
+    {
+      "name": "old22-502-503",
+      "families": "all frozen P8 families",
+      "repetitions": [502, 503],
+      "unlock": "Only after old22-501 passes. These are consumed development seeds, not holdout confirmation."
+    }
+  ],
+  "stop_rule": "Stop and report failure if mean gain is nonpositive, there is no genuine two-action opportunity, action failures occur, or later consumed development repetitions show unstable losses.",
+  "new_holdout_opened": false,
+  "production_promotion_allowed": false,
+  "workers": 1
+}
