@@ -4,3 +4,7 @@ experiment	commit	metric	status	description
 2	1a74fed	287.390953545	keep_development	mean terminal gain using calibrated best on identical target schedules; 48/24/0
 3	741c915	1.000000000	boundary	tied best and one-informative-plus-one-zero retain safe known prompt evidence
 4	2351087	24.486711710	cost_evidence	single calibrated minus double calibrated mean terminal score; 72/0/0, selection unchanged
+5	07ac5f9	206.669429591	keep_development	252 full-cost P11 vs unchanged P9; 10-topology mean; base prompt1-best mean -56.511759
+6	50e41b1	39.3036	reject_screen	high-influence ID probe vs low P11; 36 pairs; minimum -22.4697 fails -10 gate
+7	2b94e59	4.750208	keep_screen	unknown-node prior times 0.9 vs low P11; 36 pairs; not qualified
+8	86a8e74	34.2151	keep_screen	low ID probe plus selected-prompt response anchor vs low P11; 36 pairs; not qualified
