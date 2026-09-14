@@ -107,6 +107,7 @@ def main() -> int:
     parser.add_argument("--llm-mode", choices=LLM_MODES, default="mock")
     parser.add_argument("--remote", action="store_true")
     parser.add_argument("--baseline-p9", action="store_true")
+    parser.add_argument("--strip-p11-config-field", action="store_true")
     parser.add_argument("--server-url", default="http://8.222.218.162:5000")
     parser.add_argument("--timeout", type=float, default=20.0)
     parser.add_argument("--output", type=Path, required=True)
@@ -176,6 +177,12 @@ def main() -> int:
             people = json.loads(
                 (ROOT / "src/starnet/submission/config.json").read_text(encoding="utf-8")
             )["person"]
+            if args.strip_p11_config_field:
+                people = copy.deepcopy(people)
+                for description in people:
+                    if isinstance(description, dict):
+                        description.pop("experimental_p11_mode", None)
+            report["p11_config_field_stripped"] = args.strip_p11_config_field
             model = module.ParticipantSquadModel(env, people, llm)
             controller = model.controller
             decisions = []
@@ -288,6 +295,7 @@ def main() -> int:
                 and (args.llm_mode != "real" or controller.llm_accepted > 0)
             )
             report["complete"] = True
+        os.chdir(previous_cwd)
         if args.baseline_p9:
             baseline_args = SimpleNamespace(**vars(args))
             if baseline_args.llm_mode == "mock":
