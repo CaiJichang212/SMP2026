@@ -1,0 +1,2852 @@
+{
+  "config": {
+    "protocol_sha256": "35dd5975fb66353357776f9b80b311d6af8212e39c2f0dc1227c6381e4361aee",
+    "runner_sha256": "38881975b106acce099c45908881667f7a80a694df32e4dc41324b1b5925c012",
+    "source_snapshot": {
+      "src/starnet/policy/prompt_calibration_experiment.py": "fe3b2731d483a392ed3593e02d2e65a82a287640afcc96808503b8a142f12d47",
+      "src/starnet/runtime/p11_prompt_controller_experiment.py": "98ae3471bd5eb9d024bd96ac678f19a6807877cccb45df53622b70a614880612",
+      "src/starnet/runtime/p11_probe_selector_experiment.py": "be1a83fa07eec2df64df6e2a5cdcbae966d873c2a71850c59a33b2fa2dbeeaa1"
+    },
+    "p9_archive_sha256": "4df04b79f44d8bc7a21cad890bf6bc241531b976899cafbbdc5574bb6772f460",
+    "families": [
+      "er_balanced",
+      "ba_negative_hubs",
+      "ws_peace_majority",
+      "sbm_negative_bridges",
+      "sbm_violent_cluster",
+      "three_sparse_components"
+    ],
+    "prompt_configs": 6,
+    "cases": 36,
+    "workers": 1,
+    "confirmation_opened": false
+  },
+  "complete": true,
+  "summary": {
+    "high_vs_low": {
+      "cases": 36,
+      "mean": 39.30360889971374,
+      "minimum": -22.469749143700938,
+      "maximum": 95.3589434171837,
+      "win_tie_loss": [
+        27,
+        1,
+        8
+      ]
+    },
+    "prompt1_best_high_vs_low": {
+      "cases": 12,
+      "mean": 42.04874877884762,
+      "minimum": -4.5728623031494635,
+      "maximum": 95.3589434171837,
+      "win_tie_loss": [
+        10,
+        1,
+        1
+      ]
+    },
+    "family_mean_high_vs_low": {
+      "er_balanced": -9.875643589238924,
+      "ba_negative_hubs": 94.89767127786405,
+      "ws_peace_majority": 5.975834285714124,
+      "sbm_negative_bridges": -0.7041040952380513,
+      "sbm_violent_cluster": 67.69398777238372,
+      "three_sparse_components": 77.83390774679751
+    },
+    "low_vs_p9": {
+      "cases": 36,
+      "mean": 140.78222504516359,
+      "minimum": -140.30272322539344,
+      "maximum": 657.3063371734376,
+      "win_tie_loss": [
+        22,
+        0,
+        14
+      ]
+    },
+    "high_vs_p9": {
+      "cases": 36,
+      "mean": 180.08583394487735,
+      "minimum": -66.07684565217394,
+      "maximum": 636.82513101202,
+      "win_tie_loss": [
+        24,
+        0,
+        12
+      ]
+    },
+    "different_probe_node_cases": 36,
+    "erased_persuasion": {
+      "low": {
+        "count": 42,
+        "budget": 84.0
+      },
+      "high": {
+        "count": 16,
+        "budget": 32.0
+      }
+    },
+    "failure_count": 0
+  },
+  "gate": {
+    "symmetric_mean_gt_1": true,
+    "prompt1_best_mean_gt_0": true,
+    "nonnegative_family_means_at_least_4": true,
+    "minimum_pair_at_least_minus_10": false,
+    "identity_and_resource_failures_zero": true
+  },
+  "development_gate_passed": false,
+  "raw_log": {
+    "path": "experiments/raw/p11-high-influence-probe-development-20260914.json",
+    "sha256": "0a16d268da46535ac0fba647162483130fe75518cf540917430af287f548f769",
+    "committed": false
+  },
+  "rows": [
+    {
+      "case_id": "er_balanced:15_10_-5",
+      "family": "er_balanced",
+      "prompt_values": [
+        15.0,
+        10.0,
+        -5.0
+      ],
+      "best_prompt_ids": [
+        1
+      ],
+      "prompt1_best": true,
+      "seed_sha256": "db6910b99174ab78acea7ed1794abe64d7552390a151e3fff03b0498d1480a99",
+      "paired": {
+        "high_vs_low": 1.3927666437007247,
+        "low_vs_p9": -51.00350968503915,
+        "high_vs_p9": -49.610743041338424
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          2
+        ],
+        "high": [
+          47
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 1,
+          "budget": 2.0,
+          "nodes": [
+            17
+          ]
+        },
+        "high": {
+          "count": 1,
+          "budget": 2.0,
+          "nodes": [
+            17
+          ]
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 47,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 25.553738
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 2,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 14.706875
+          }
+        }
+      }
+    },
+    {
+      "case_id": "er_balanced:15_-5_10",
+      "family": "er_balanced",
+      "prompt_values": [
+        15.0,
+        -5.0,
+        10.0
+      ],
+      "best_prompt_ids": [
+        1
+      ],
+      "prompt1_best": true,
+      "seed_sha256": "42316393c582a674afba5346ed8b666d6d2b9806468317f32457fa5ad3c32b02",
+      "paired": {
+        "high_vs_low": -4.5728623031494635,
+        "low_vs_p9": -52.378283779527465,
+        "high_vs_p9": -56.95114608267693
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          2
+        ],
+        "high": [
+          47
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 1,
+          "budget": 2.0,
+          "nodes": [
+            17
+          ]
+        },
+        "high": {
+          "count": 1,
+          "budget": 2.0,
+          "nodes": [
+            17
+          ]
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 47,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 25.553738
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 2,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 14.706875
+          }
+        }
+      }
+    },
+    {
+      "case_id": "er_balanced:10_15_-5",
+      "family": "er_balanced",
+      "prompt_values": [
+        10.0,
+        15.0,
+        -5.0
+      ],
+      "best_prompt_ids": [
+        2
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "dc0a8ff400889306443441007ebd05ff888d254ed089d8be19535850a8ed6a48",
+      "paired": {
+        "high_vs_low": -2.5843193208663706,
+        "low_vs_p9": 177.55646044619448,
+        "high_vs_p9": 174.9721411253281
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          2
+        ],
+        "high": [
+          47
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 1,
+          "budget": 2.0,
+          "nodes": [
+            17
+          ]
+        },
+        "high": {
+          "count": 1,
+          "budget": 2.0,
+          "nodes": [
+            17
+          ]
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 47,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 19.699853
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 2,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 9.955955
+          }
+        }
+      }
+    },
+    {
+      "case_id": "er_balanced:10_-5_15",
+      "family": "er_balanced",
+      "prompt_values": [
+        10.0,
+        -5.0,
+        15.0
+      ],
+      "best_prompt_ids": [
+        3
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "148f989ef62fbaaa7e4a84d5509b6658238702102322ad7711bf6efbf72f5f5b",
+      "paired": {
+        "high_vs_low": -10.538491249999993,
+        "low_vs_p9": 175.72342832021002,
+        "high_vs_p9": 165.18493707021003
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          2
+        ],
+        "high": [
+          47
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 1,
+          "budget": 2.0,
+          "nodes": [
+            17
+          ]
+        },
+        "high": {
+          "count": 1,
+          "budget": 2.0,
+          "nodes": [
+            17
+          ]
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 47,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 19.699853
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 2,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 9.955955
+          }
+        }
+      }
+    },
+    {
+      "case_id": "er_balanced:-5_15_10",
+      "family": "er_balanced",
+      "prompt_values": [
+        -5.0,
+        15.0,
+        10.0
+      ],
+      "best_prompt_ids": [
+        2
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "245b31d866737b90364ac5f7a0e76cefe790ab58268d6b2bec9b9466747db6be",
+      "paired": {
+        "high_vs_low": -20.481206161417504,
+        "low_vs_p9": 657.3063371734376,
+        "high_vs_p9": 636.82513101202
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          2
+        ],
+        "high": [
+          47
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 1,
+          "budget": 2.0,
+          "nodes": [
+            17
+          ]
+        },
+        "high": {
+          "count": 1,
+          "budget": 2.0,
+          "nodes": [
+            17
+          ]
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 47,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 2.138198
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 2,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": -4.296805
+          }
+        }
+      }
+    },
+    {
+      "case_id": "er_balanced:-5_10_15",
+      "family": "er_balanced",
+      "prompt_values": [
+        -5.0,
+        10.0,
+        15.0
+      ],
+      "best_prompt_ids": [
+        3
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "aca471faa33934bdba1cf148d4ce5a1d2a218921bea02fbcefc09154d5fa19bb",
+      "paired": {
+        "high_vs_low": -22.469749143700938,
+        "low_vs_p9": 656.8480791419415,
+        "high_vs_p9": 634.3783299982406
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          2
+        ],
+        "high": [
+          47
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 1,
+          "budget": 2.0,
+          "nodes": [
+            17
+          ]
+        },
+        "high": {
+          "count": 1,
+          "budget": 2.0,
+          "nodes": [
+            17
+          ]
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 47,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 2.138198
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 2,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": -4.296805
+          }
+        }
+      }
+    },
+    {
+      "case_id": "ba_negative_hubs:15_10_-5",
+      "family": "ba_negative_hubs",
+      "prompt_values": [
+        15.0,
+        10.0,
+        -5.0
+      ],
+      "best_prompt_ids": [
+        1
+      ],
+      "prompt1_best": true,
+      "seed_sha256": "d4d32f4c15ff3dfc4448ec4a76a6497ec4e9400bf5e8dbde44bd230eea7d3d7d",
+      "paired": {
+        "high_vs_low": 95.3589434171837,
+        "low_vs_p9": -104.12265614002763,
+        "high_vs_p9": -8.763712722843934
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          24
+        ],
+        "high": [
+          9
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 6,
+          "budget": 12.0,
+          "nodes": [
+            3,
+            5,
+            6,
+            14,
+            20
+          ]
+        },
+        "high": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 9,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 28.440359
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 24,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 21.502526
+          }
+        }
+      }
+    },
+    {
+      "case_id": "ba_negative_hubs:15_-5_10",
+      "family": "ba_negative_hubs",
+      "prompt_values": [
+        15.0,
+        -5.0,
+        10.0
+      ],
+      "best_prompt_ids": [
+        1
+      ],
+      "prompt1_best": true,
+      "seed_sha256": "f74001432584c1f35c8900dfb3aec16b18b71ea2a2aadc0eab74986be7494d34",
+      "paired": {
+        "high_vs_low": 95.11474051989694,
+        "low_vs_p9": -106.75139030669436,
+        "high_vs_p9": -11.63664978679742
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          24
+        ],
+        "high": [
+          9
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 6,
+          "budget": 12.0,
+          "nodes": [
+            3,
+            5,
+            6,
+            14,
+            20
+          ]
+        },
+        "high": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 9,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 28.440359
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 24,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 21.502526
+          }
+        }
+      }
+    },
+    {
+      "case_id": "ba_negative_hubs:10_15_-5",
+      "family": "ba_negative_hubs",
+      "prompt_values": [
+        10.0,
+        15.0,
+        -5.0
+      ],
+      "best_prompt_ids": [
+        2
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "60d690fa750725c27d13be375ea59ce1ff1ef4e940c7630dbfb8ed197f0f5bc7",
+      "paired": {
+        "high_vs_low": 95.19614148565904,
+        "low_vs_p9": 11.574484289610439,
+        "high_vs_p9": 106.77062577526948
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          24
+        ],
+        "high": [
+          9
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 6,
+          "budget": 12.0,
+          "nodes": [
+            3,
+            5,
+            6,
+            14,
+            20
+          ]
+        },
+        "high": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 9,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 25.769303999999998
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 24,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 14.333251
+          }
+        }
+      }
+    },
+    {
+      "case_id": "ba_negative_hubs:10_-5_15",
+      "family": "ba_negative_hubs",
+      "prompt_values": [
+        10.0,
+        -5.0,
+        15.0
+      ],
+      "best_prompt_ids": [
+        3
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "dcc45b10743c2347810a1600b77942f8f8075348ea83d1581042c580c5183b06",
+      "paired": {
+        "high_vs_low": 94.87053762260979,
+        "low_vs_p9": 8.069505400721596,
+        "high_vs_p9": 102.94004302333138
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          24
+        ],
+        "high": [
+          9
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 6,
+          "budget": 12.0,
+          "nodes": [
+            3,
+            5,
+            6,
+            14,
+            20
+          ]
+        },
+        "high": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 9,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 25.769303999999998
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 24,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 14.333251
+          }
+        }
+      }
+    },
+    {
+      "case_id": "ba_negative_hubs:-5_15_10",
+      "family": "ba_negative_hubs",
+      "prompt_values": [
+        -5.0,
+        15.0,
+        10.0
+      ],
+      "best_prompt_ids": [
+        2
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "dc3132116964b4c427a9166974b2186c619c7bba46ecc8a357ece57e100c6f01",
+      "paired": {
+        "high_vs_low": 94.46353279379849,
+        "low_vs_p9": 170.84337325956403,
+        "high_vs_p9": 265.3069060533625
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          24
+        ],
+        "high": [
+          9
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 6,
+          "budget": 12.0,
+          "nodes": [
+            3,
+            5,
+            6,
+            14,
+            20
+          ]
+        },
+        "high": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 9,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 17.756139
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 24,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": -7.174574000000001
+          }
+        }
+      }
+    },
+    {
+      "case_id": "ba_negative_hubs:-5_10_15",
+      "family": "ba_negative_hubs",
+      "prompt_values": [
+        -5.0,
+        10.0,
+        15.0
+      ],
+      "best_prompt_ids": [
+        3
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "d5ece6a0b348a063df34b79ac4d00990d024e19762840832b331fd0edf644b4a",
+      "paired": {
+        "high_vs_low": 94.38213182803634,
+        "low_vs_p9": 169.9671285373418,
+        "high_vs_p9": 264.34926036537814
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          24
+        ],
+        "high": [
+          9
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 6,
+          "budget": 12.0,
+          "nodes": [
+            3,
+            5,
+            6,
+            14,
+            20
+          ]
+        },
+        "high": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 9,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 17.756139
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 24,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": -7.174574000000001
+          }
+        }
+      }
+    },
+    {
+      "case_id": "ws_peace_majority:15_10_-5",
+      "family": "ws_peace_majority",
+      "prompt_values": [
+        15.0,
+        10.0,
+        -5.0
+      ],
+      "best_prompt_ids": [
+        1
+      ],
+      "prompt1_best": true,
+      "seed_sha256": "d95681ed6b14ae0eb757916839177740553368ecef01c8d596d4edd195be49c5",
+      "paired": {
+        "high_vs_low": 4.404475714285468,
+        "low_vs_p9": -20.159741785714232,
+        "high_vs_p9": -15.755266071428764
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          38
+        ],
+        "high": [
+          9
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 9,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 9.649496000000001
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 38,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 21.280860999999998
+          }
+        }
+      }
+    },
+    {
+      "case_id": "ws_peace_majority:15_-5_10",
+      "family": "ws_peace_majority",
+      "prompt_values": [
+        15.0,
+        -5.0,
+        10.0
+      ],
+      "best_prompt_ids": [
+        1
+      ],
+      "prompt1_best": true,
+      "seed_sha256": "0c2d3b23717c7bcaa2256b281230d30dd61f5a6408db513ea4f29bb7325799d0",
+      "paired": {
+        "high_vs_low": 5.236371428571374,
+        "low_vs_p9": -23.466486428571443,
+        "high_vs_p9": -18.23011500000007
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          38
+        ],
+        "high": [
+          9
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 9,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 9.649496000000001
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 38,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 21.280860999999998
+          }
+        }
+      }
+    },
+    {
+      "case_id": "ws_peace_majority:10_15_-5",
+      "family": "ws_peace_majority",
+      "prompt_values": [
+        10.0,
+        15.0,
+        -5.0
+      ],
+      "best_prompt_ids": [
+        2
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "a33a205da4dd5b04a62ccaf7db80c94a72d378600fe7be31c2be622eb359d142",
+      "paired": {
+        "high_vs_low": 4.959072857142928,
+        "low_vs_p9": 121.01839428571418,
+        "high_vs_p9": 125.97746714285711
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          38
+        ],
+        "high": [
+          9
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 9,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 7.082986
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 38,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 15.108270999999998
+          }
+        }
+      }
+    },
+    {
+      "case_id": "ws_peace_majority:10_-5_15",
+      "family": "ws_peace_majority",
+      "prompt_values": [
+        10.0,
+        -5.0,
+        15.0
+      ],
+      "best_prompt_ids": [
+        3
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "d279f92a0bec764996a8af43e7770c3fcfe5fe45b2688afacba7ab45bf72ee40",
+      "paired": {
+        "high_vs_low": 6.068267142856939,
+        "low_vs_p9": 116.60940142857157,
+        "high_vs_p9": 122.67766857142851
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          38
+        ],
+        "high": [
+          9
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 9,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 7.082986
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 38,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 15.108270999999998
+          }
+        }
+      }
+    },
+    {
+      "case_id": "ws_peace_majority:-5_15_10",
+      "family": "ws_peace_majority",
+      "prompt_values": [
+        -5.0,
+        15.0,
+        10.0
+      ],
+      "best_prompt_ids": [
+        2
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "41e915f0d38a60122bc1dafb32c1ccbcab12c87f504a7665b14fadb28fa061d7",
+      "paired": {
+        "high_vs_low": 7.454759999999851,
+        "low_vs_p9": 557.3746410714284,
+        "high_vs_p9": 564.8294010714283
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          38
+        ],
+        "high": [
+          9
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 9,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": -0.616544
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 38,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": -3.4094989999999994
+          }
+        }
+      }
+    },
+    {
+      "case_id": "ws_peace_majority:-5_10_15",
+      "family": "ws_peace_majority",
+      "prompt_values": [
+        -5.0,
+        10.0,
+        15.0
+      ],
+      "best_prompt_ids": [
+        3
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "94ebacd06aded82e73b35a4115376a862448926924fdbcb524b0d09d3ae9b16e",
+      "paired": {
+        "high_vs_low": 7.732058571428183,
+        "low_vs_p9": 556.2723928571429,
+        "high_vs_p9": 564.0044514285712
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          38
+        ],
+        "high": [
+          9
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 9,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": -0.616544
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 38,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": -3.4094989999999994
+          }
+        }
+      }
+    },
+    {
+      "case_id": "sbm_negative_bridges:15_10_-5",
+      "family": "sbm_negative_bridges",
+      "prompt_values": [
+        15.0,
+        10.0,
+        -5.0
+      ],
+      "best_prompt_ids": [
+        1
+      ],
+      "prompt1_best": true,
+      "seed_sha256": "7a5900314354f8d5cd0799a0c13659a22d021fc1ba0f612340caec97f2516e1f",
+      "paired": {
+        "high_vs_low": 0.7921171071428716,
+        "low_vs_p9": -30.35136889636135,
+        "high_vs_p9": -29.55925178921848
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          23
+        ],
+        "high": [
+          16
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 16,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 16.298907
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 23,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 12.956641999999999
+          }
+        }
+      }
+    },
+    {
+      "case_id": "sbm_negative_bridges:15_-5_10",
+      "family": "sbm_negative_bridges",
+      "prompt_values": [
+        15.0,
+        -5.0,
+        10.0
+      ],
+      "best_prompt_ids": [
+        1
+      ],
+      "prompt1_best": true,
+      "seed_sha256": "99ffec9fc3fa2b922e2dfe4352517d39ca61fcb78e211dcf624b58ac10368d65",
+      "paired": {
+        "high_vs_low": 0.0,
+        "low_vs_p9": -34.925802646361376,
+        "high_vs_p9": -34.925802646361376
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          23
+        ],
+        "high": [
+          16
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 16,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 16.298907
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 23,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 12.956641999999999
+          }
+        }
+      }
+    },
+    {
+      "case_id": "sbm_negative_bridges:10_15_-5",
+      "family": "sbm_negative_bridges",
+      "prompt_values": [
+        10.0,
+        15.0,
+        -5.0
+      ],
+      "best_prompt_ids": [
+        2
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "9abe48f31198e6243f0b94b5cbb10a2acbd70b91c45afb776918b42bb820c3e5",
+      "paired": {
+        "high_vs_low": 0.26403903571440424,
+        "low_vs_p9": 157.08004462250676,
+        "high_vs_p9": 157.34408365822117
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          23
+        ],
+        "high": [
+          16
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 16,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 12.820587
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 23,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 6.857397
+          }
+        }
+      }
+    },
+    {
+      "case_id": "sbm_negative_bridges:10_-5_15",
+      "family": "sbm_negative_bridges",
+      "prompt_values": [
+        10.0,
+        -5.0,
+        15.0
+      ],
+      "best_prompt_ids": [
+        3
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "e37f3012db85336a4f84fae64c431186028d8da4bc1882cc67a1a428607a2cac",
+      "paired": {
+        "high_vs_low": -0.792117107142758,
+        "low_vs_p9": 150.98079962250677,
+        "high_vs_p9": 150.188682515364
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          23
+        ],
+        "high": [
+          16
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 16,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 12.820587
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 23,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 6.857397
+          }
+        }
+      }
+    },
+    {
+      "case_id": "sbm_negative_bridges:-5_15_10",
+      "family": "sbm_negative_bridges",
+      "prompt_values": [
+        -5.0,
+        15.0,
+        10.0
+      ],
+      "best_prompt_ids": [
+        2
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "a29c569b2679f715043c4aeeb60e206dd227353163789672da3d9b5642b93d9c",
+      "paired": {
+        "high_vs_low": -2.1123122857143244,
+        "low_vs_p9": 572.1177607097807,
+        "high_vs_p9": 570.0054484240663
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          23
+        ],
+        "high": [
+          16
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 16,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 2.385627
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 23,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": -11.440338
+          }
+        }
+      }
+    },
+    {
+      "case_id": "sbm_negative_bridges:-5_10_15",
+      "family": "sbm_negative_bridges",
+      "prompt_values": [
+        -5.0,
+        10.0,
+        15.0
+      ],
+      "best_prompt_ids": [
+        3
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "b7ed45125ea245891352bac6e3d8408760dfedd642d8e53ccd406a6a0a0c5b9e",
+      "paired": {
+        "high_vs_low": -2.3763513214285013,
+        "low_vs_p9": 570.5929494597806,
+        "high_vs_p9": 568.2165981383521
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          23
+        ],
+        "high": [
+          16
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 16,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 2.385627
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 23,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": -11.440338
+          }
+        }
+      }
+    },
+    {
+      "case_id": "sbm_violent_cluster:15_10_-5",
+      "family": "sbm_violent_cluster",
+      "prompt_values": [
+        15.0,
+        10.0,
+        -5.0
+      ],
+      "best_prompt_ids": [
+        1
+      ],
+      "prompt1_best": true,
+      "seed_sha256": "ca7e860b1442fb6b27183557ba445bcc32a08cffe713d7d17b3ef74fc91ca4ef",
+      "paired": {
+        "high_vs_low": 81.57425359915979,
+        "low_vs_p9": -139.59137751220325,
+        "high_vs_p9": -58.01712391304346
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          39
+        ],
+        "high": [
+          49
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 1,
+          "budget": 2.0,
+          "nodes": [
+            18
+          ]
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 49,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 41.269363
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 39,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 10.541098999999999
+          }
+        }
+      }
+    },
+    {
+      "case_id": "sbm_violent_cluster:15_-5_10",
+      "family": "sbm_violent_cluster",
+      "prompt_values": [
+        15.0,
+        -5.0,
+        10.0
+      ],
+      "best_prompt_ids": [
+        1
+      ],
+      "prompt1_best": true,
+      "seed_sha256": "db70921e88e31027f4c6a704e22126e06f8ff625bc305b0f49b649eca02ba99e",
+      "paired": {
+        "high_vs_low": 74.22587757321949,
+        "low_vs_p9": -140.30272322539344,
+        "high_vs_p9": -66.07684565217394
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          39
+        ],
+        "high": [
+          49
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 1,
+          "budget": 2.0,
+          "nodes": [
+            18
+          ]
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 49,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 41.269363
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 39,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 10.541098999999999
+          }
+        }
+      }
+    },
+    {
+      "case_id": "sbm_violent_cluster:10_15_-5",
+      "family": "sbm_violent_cluster",
+      "prompt_values": [
+        10.0,
+        15.0,
+        -5.0
+      ],
+      "best_prompt_ids": [
+        2
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "df6f4a4e5567e9c1907e445c2c049b4362df21b3a7fe4e6efcb36cc7c6dde6fa",
+      "paired": {
+        "high_vs_low": 76.67533624853291,
+        "low_vs_p9": -57.35074168331556,
+        "high_vs_p9": 19.324594565217353
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          39
+        ],
+        "high": [
+          49
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 1,
+          "budget": 2.0,
+          "nodes": [
+            18
+          ]
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 49,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 35.090243
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 39,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 9.148314
+          }
+        }
+      }
+    },
+    {
+      "case_id": "sbm_violent_cluster:10_-5_15",
+      "family": "sbm_violent_cluster",
+      "prompt_values": [
+        10.0,
+        -5.0,
+        15.0
+      ],
+      "best_prompt_ids": [
+        3
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "9fedd0ec8b6a2456973fccd228225d3a3160b4ca992dd8dc424dbf716a1c9212",
+      "paired": {
+        "high_vs_low": 66.87750154727928,
+        "low_vs_p9": -58.2992026342358,
+        "high_vs_p9": 8.578298913043483
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          39
+        ],
+        "high": [
+          49
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 1,
+          "budget": 2.0,
+          "nodes": [
+            18
+          ]
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 49,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 35.090243
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 39,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 9.148314
+          }
+        }
+      }
+    },
+    {
+      "case_id": "sbm_violent_cluster:-5_15_10",
+      "family": "sbm_violent_cluster",
+      "prompt_values": [
+        -5.0,
+        15.0,
+        10.0
+      ],
+      "best_prompt_ids": [
+        2
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "7d69b9787baa66ebf55884265f3439a961b75796d4f1cbd618783ab98beb20a8",
+      "paired": {
+        "high_vs_low": 54.630208170712166,
+        "low_vs_p9": 238.21977638481832,
+        "high_vs_p9": 292.84998455553045
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          39
+        ],
+        "high": [
+          49
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 1,
+          "budget": 2.0,
+          "nodes": [
+            18
+          ]
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 49,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 16.552882999999998
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 39,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 4.969959
+          }
+        }
+      }
+    },
+    {
+      "case_id": "sbm_violent_cluster:-5_10_15",
+      "family": "sbm_violent_cluster",
+      "prompt_values": [
+        -5.0,
+        10.0,
+        15.0
+      ],
+      "best_prompt_ids": [
+        3
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "d631231f3d99c799acd98ad7fbaee5ddeb2c657c7d82f428c779752231e1faed",
+      "paired": {
+        "high_vs_low": 52.18074949539874,
+        "low_vs_p9": 237.98266114708827,
+        "high_vs_p9": 290.163410642487
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          39
+        ],
+        "high": [
+          49
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 1,
+          "budget": 2.0,
+          "nodes": [
+            18
+          ]
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 49,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 16.552882999999998
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 39,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 4.969959
+          }
+        }
+      }
+    },
+    {
+      "case_id": "three_sparse_components:15_10_-5",
+      "family": "three_sparse_components",
+      "prompt_values": [
+        15.0,
+        10.0,
+        -5.0
+      ],
+      "best_prompt_ids": [
+        1
+      ],
+      "prompt1_best": true,
+      "seed_sha256": "e915b9c39819f63166c891ccf257bcdb5911d943a3c5d3f545b605b08437045f",
+      "paired": {
+        "high_vs_low": 76.79118778223545,
+        "low_vs_p9": -116.94196052543509,
+        "high_vs_p9": -40.15077274319964
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          1
+        ],
+        "high": [
+          11
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 1,
+          "budget": 2.0,
+          "nodes": [
+            4
+          ]
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 11,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 10.001087
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 1,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 4.936233
+          }
+        }
+      }
+    },
+    {
+      "case_id": "three_sparse_components:15_-5_10",
+      "family": "three_sparse_components",
+      "prompt_values": [
+        15.0,
+        -5.0,
+        10.0
+      ],
+      "best_prompt_ids": [
+        1
+      ],
+      "prompt1_best": true,
+      "seed_sha256": "d620bab2b2f847df7b3605746781527076bd76bda4917f1fcaf9c21d9c4be624",
+      "paired": {
+        "high_vs_low": 74.267113863925,
+        "low_vs_p9": -118.21678342316235,
+        "high_vs_p9": -43.94966955923735
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          1
+        ],
+        "high": [
+          11
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 1,
+          "budget": 2.0,
+          "nodes": [
+            4
+          ]
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 11,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 10.001087
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 1,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 4.936233
+          }
+        }
+      }
+    },
+    {
+      "case_id": "three_sparse_components:10_15_-5",
+      "family": "three_sparse_components",
+      "prompt_values": [
+        10.0,
+        15.0,
+        -5.0
+      ],
+      "best_prompt_ids": [
+        2
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "54565a180802844ea9dcd3860b78fbaeb7d0720f977d74b779ca857cdfd5e1e8",
+      "paired": {
+        "high_vs_low": 75.10847183669514,
+        "low_vs_p9": 50.24985659840055,
+        "high_vs_p9": 125.3583284350957
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          1
+        ],
+        "high": [
+          11
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 1,
+          "budget": 2.0,
+          "nodes": [
+            4
+          ]
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 11,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 6.421682
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 1,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 3.155528
+          }
+        }
+      }
+    },
+    {
+      "case_id": "three_sparse_components:10_-5_15",
+      "family": "three_sparse_components",
+      "prompt_values": [
+        10.0,
+        -5.0,
+        15.0
+      ],
+      "best_prompt_ids": [
+        3
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "d8bba9cc3416d07f108f8b0fb486c2d99ead242db9ceabe470efba4bddd2bd3e",
+      "paired": {
+        "high_vs_low": 71.74303994561456,
+        "low_vs_p9": 48.55009273476417,
+        "high_vs_p9": 120.29313268037873
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          1
+        ],
+        "high": [
+          11
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 1,
+          "budget": 2.0,
+          "nodes": [
+            4
+          ]
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 11,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 6.421682
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 1,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 3.155528
+          }
+        }
+      }
+    },
+    {
+      "case_id": "three_sparse_components:-5_15_10",
+      "family": "three_sparse_components",
+      "prompt_values": [
+        -5.0,
+        15.0,
+        10.0
+      ],
+      "best_prompt_ids": [
+        2
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "73a3ef831551505c3c86c99e01b76f58c8d6f9d07d01b67e72214b0f93572b2d",
+      "paired": {
+        "high_vs_low": 84.91166943029967,
+        "low_vs_p9": 358.7547518861583,
+        "high_vs_p9": 443.666421316458
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          1
+        ],
+        "high": [
+          11
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 11,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": -4.316533
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 1,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": -2.186587
+          }
+        }
+      }
+    },
+    {
+      "case_id": "three_sparse_components:-5_10_15",
+      "family": "three_sparse_components",
+      "prompt_values": [
+        -5.0,
+        10.0,
+        15.0
+      ],
+      "best_prompt_ids": [
+        3
+      ],
+      "prompt1_best": false,
+      "seed_sha256": "e3743ad4d49158b944b1ebc3d7ebd2024c6d1a7c9cece6ef6bb54d66627c9ec1",
+      "paired": {
+        "high_vs_low": 84.18196362201523,
+        "low_vs_p9": 358.3298109202492,
+        "high_vs_p9": 442.51177454226445
+      },
+      "identified": {
+        "low": true,
+        "high": true
+      },
+      "probe_nodes": {
+        "low": [
+          1
+        ],
+        "high": [
+          11
+        ]
+      },
+      "erased_persuasion": {
+        "low": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        },
+        "high": {
+          "count": 0,
+          "budget": 0.0,
+          "nodes": []
+        }
+      },
+      "first_divergence": {
+        "action_index": 51,
+        "high": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 11,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": -4.316533
+          }
+        },
+        "low": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 1,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": -2.186587
+          }
+        }
+      }
+    }
+  ],
+  "production_enabled": false,
+  "confirmation_opened": false
+}
