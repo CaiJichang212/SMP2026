@@ -1,0 +1,22 @@
+{
+  "reason": "User requests reasonable CPU control to avoid making the server unresponsive",
+  "date": "2026-09-14",
+  "experiment": "P11 360-case confirmation",
+  "completed_cases_at_enforcement": 90,
+  "scope": "smp2026-p11-confirmation-20260914.scope",
+  "pids_at_enforcement": [3762928, 3762981, 3762984],
+  "cpu_quota_microseconds": 75000,
+  "cpu_period_microseconds": 100000,
+  "maximum_cpu_cores_total": 0.75,
+  "server_cpu_cores": 2,
+  "nice": 19,
+  "cpu_affinity": [1],
+  "memory_high_bytes": 1073741824,
+  "memory_constraint": "soft; preserve the ongoing experiment and checkpoints",
+  "measured_cpu_cores_over_four_seconds": 0.749,
+  "existing_worker_count": 2,
+  "worker_note": "The existing parent and both workers share one aggregate cap. No restart or extra worker was introduced.",
+  "future_policy": "One heavy task at a time, normally one worker, under the same total quota",
+  "strategy_or_gate_changed": false,
+  "analysis_note": "Wall-clock timings before and after this operational intervention are not directly comparable. P11/P9 policy selection uses fixed iteration/resource bounds, not elapsed-time tuning."
+}
