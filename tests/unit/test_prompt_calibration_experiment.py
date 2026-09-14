@@ -67,6 +67,7 @@ class PromptCalibrationTests(unittest.TestCase):
         self.assertFalse(ledger.confident)
         self.assertIsNone(ledger.calibrated_prompt_id)
         self.assertEqual(ledger.provisional_prompt_ids, (2,))
+        self.assertEqual(ledger.informative_node_ids, (2,))
         self.assertEqual(ledger.best_or_default(), 2)
 
     def test_clipped_or_conflicting_nodes_do_not_claim_confidence(self):

@@ -136,6 +136,15 @@ class PromptCalibrationLedger:
         return result
 
     @property
+    def informative_node_ids(self) -> tuple[int, ...]:
+        result = []
+        for node_id in self.node_rankings():
+            values = self._normalized[node_id].values()
+            if max(values) - min(values) > self.tie_tolerance:
+                result.append(node_id)
+        return tuple(sorted(result))
+
+    @property
     def provisional_prompt_ids(self) -> tuple[int, ...]:
         """Return prompt IDs not contradicted by any informative probe node."""
         sets = self._informative_best_sets()
