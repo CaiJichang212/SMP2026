@@ -23,6 +23,9 @@ from starnet.model.blackboard import Blackboard
 from starnet.policy.actions import Action, action_cost, is_legal_action
 from starnet.policy.cmg import PredictiveState
 from starnet.policy.fast_settlement_experiment import FastComponentSettlement
+from starnet.policy.prompt_calibration_experiment import (
+    PromptCalibrationLedger, select_prompt_probe_nodes,
+)
 
 
 PROTOCOL = ROOT / "experiments/manifests/p11-full-policy-validation-20260914.json"
@@ -104,6 +107,7 @@ def audit_episode(result, seed, arm, best_ids):
     hidden = {int(node["id"]): node for node in seed["nodes"]}
     prompts = {int(key): float(value) for key, value in seed["prompts"].items()}
     multipliers = {1: 1.0, 2: 0.5, 3: 0.25}
+    communications = []
     for index, record in enumerate(records, 1):
         if record["index"] != index or abs(record["budget_before"] - budget) > 1e-8:
             raise ValueError("nonsequential action or budget")
@@ -118,6 +122,7 @@ def audit_episode(result, seed, arm, best_ids):
             success = board.record_scan(action.target_node_1, response)
         elif action.kind == "comm":
             node = board.nodes[action.target_node_1]
+            before_w = node.w
             turn = 4 - int(node.comm_left or 0)
             expected = max(-100.0, min(100.0, node.w + prompts[action.prompt_id]
                            * float(hidden[action.target_node_1]["r"]) * multipliers[turn]))
@@ -129,6 +134,13 @@ def audit_episode(result, seed, arm, best_ids):
                     raise ValueError("known-ID mapping mismatch")
             elif action.prompt_id != 1 and arm != "p11":
                 raise ValueError("non-P11 arm changed prompt ID")
+            communications.append({
+                "node_id": action.target_node_1,
+                "prompt_id": action.prompt_id,
+                "turn": turn,
+                "before": before_w,
+                "new_w": float(response["new_w"]),
+            })
             success = board.record_communication(action.target_node_1, response)
         elif action.kind == "cut":
             success = board.record_cut(action.target_node_1, action.target_node_2, response)
@@ -143,6 +155,58 @@ def audit_episode(result, seed, arm, best_ids):
     if (abs(result["remaining_budget"] - budget) > 1e-8
             or abs(result["score"] - score) > 1e-8 or not math.isfinite(score)):
         raise ValueError("terminal state mismatch")
+    return communications
+
+
+def audit_p11_calibration(result, seed, best_ids):
+    communications = audit_episode(result, seed, "p11", best_ids)
+    attempts = result["p11_probe_attempts"]
+    successes = result["p11_probe_successes"]
+    if (result["p11_probe_failures"] != 0 or attempts != successes
+            or successes > len(communications)
+            or abs(result["p11_probe_budget"] - 2.0 * successes) > 1e-8):
+        raise ValueError("P11 probe accounting mismatch")
+    initial = Blackboard(node_count=50)
+    for node_id, response in sorted(_expected_scans(seed).items()):
+        initial.record_scan(node_id, response)
+    expected_nodes = select_prompt_probe_nodes(initial)
+    if tuple(result["p11_probe_nodes"]) != expected_nodes:
+        raise ValueError("P11 probe-node selection mismatch")
+    rebuilt = PromptCalibrationLedger()
+    for record in communications[:successes]:
+        rebuilt.observe_success(
+            record["node_id"], record["prompt_id"], record["turn"],
+            record["before"], record["new_w"],
+        )
+    reported = result["ledger"]
+    rebuilt_payload = {
+        "accepted": rebuilt.accepted,
+        "censored": rebuilt.censored,
+        "failures": rebuilt.failures,
+        "confident": rebuilt.confident,
+        "calibration_complete": rebuilt.calibration_complete,
+        "provisional_prompt_ids": list(rebuilt.provisional_prompt_ids),
+        "calibrated_prompt_ids": list(rebuilt.calibrated_prompt_ids),
+        "normalized_values": rebuilt.normalized_values(),
+    }
+    if json_digest(reported) != json_digest(rebuilt_payload):
+        raise ValueError("P11 ledger cannot be reconstructed from public probe actions")
+    selected = result["p11_selected_prompt_id"]
+    fallback = result["p11_fallback_to_p9"]
+    if fallback:
+        if selected is not None:
+            raise ValueError("P11 fallback retained a selected prompt")
+        expected_later_prompt = 1
+    else:
+        if selected != rebuilt.best_or_default():
+            raise ValueError("P11 selected prompt disagrees with rebuilt ledger")
+        expected_later_prompt = selected
+    later = communications[successes:]
+    if any(record["prompt_id"] != expected_later_prompt for record in later):
+        raise ValueError("post-probe communication used an unexpected prompt ID")
+    if result["p11_selected_prompt_dispatches"] != (0 if fallback else len(later)):
+        raise ValueError("selected-prompt dispatch accounting mismatch")
+    return selected in best_ids if selected is not None else False
 
 
 def source_snapshot_paths():
@@ -195,8 +259,11 @@ def analyze(raw, *, confirmation):
                 or row["topology_block"] != topology_block(case_id)
                 or set(row["arms"]) != set(ARMS)):
             raise ValueError("case metadata mismatch")
-        for arm in ARMS:
+        identified_best = audit_p11_calibration(row["arms"]["p11"], seed, best_ids)
+        for arm in ARMS[1:]:
             audit_episode(row["arms"][arm], seed, arm, best_ids)
+        if row["identified_best"] != identified_best:
+            raise ValueError("reported prompt identification is not independently reproducible")
         scores = {arm: row["arms"][arm]["score"] for arm in ARMS}
         expected_pairs = {"p11_vs_p9": scores["p11"] - scores["p9_no_probe"],
             "p11_signed_gap_to_known_id": scores["known_best_id_p9_reference"] - scores["p11"],
