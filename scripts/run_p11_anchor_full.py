@@ -19,9 +19,13 @@ from scripts.analyze_p11_full_policy_validation import (
     topology_block,
 )
 from scripts.run_p11_prior_discount_full import evaluate_gate, response_group, summarize
-from scripts.run_p11_response_anchor_search import run_arm
-from scripts.run_p11_full_policy_validation import json_digest
+from scripts.run_p11_full_policy_validation import json_digest, run_model
+from scripts.compare_submission_archives import CountingLLM
+from scripts.run_p9_distribution_validation import LoggedEnvironment
 from starnet.experiments.p11_validation_seeds import development_cases
+from starnet.runtime.p11_response_anchor_experiment import AnchoredPromptLearningController
+from starnet.runtime.stage import ContestStage
+from starnet.submission.starnet_model import ParticipantSquadModel
 
 
 PROTOCOL = ROOT / "experiments/manifests/p11-anchor-full-development-20260914.json"
@@ -47,6 +51,35 @@ def validate_control_audit(audit, control_path, analysis):
             or audit.get("resource_audit_passed") is not True
             or audit.get("calibration_audit_passed") is not True):
         raise ValueError("original-P11 control audit is incomplete or stale")
+
+
+def run_anchor(seed):
+    env = LoggedEnvironment(seed)
+    llm = CountingLLM(1.0, offline_only=True)
+    people = json.loads((ROOT / "src/starnet/submission/config.json").read_text())["person"]
+    model = ParticipantSquadModel(env, people, llm)
+    model.controller = AnchoredPromptLearningController(
+        env, llm_ranker=lambda payload: None,
+        stage=ContestStage.PRELIMINARY, config=model.controller.config,
+        p8_mode="conservative", max_probe_budget=12.0, max_probe_nodes=2,
+        require_stage_envelope=True,
+    )
+    controller = model.controller
+    result = run_model(model, env)
+    result["arm"] = "anchor"
+    result["anchor"] = {
+        "target": controller.p11_anchor_target,
+        "attempts": controller.p11_anchor_attempts,
+        "successes": controller.p11_anchor_successes,
+        "failures": controller.p11_anchor_failures,
+        "censored": controller.p11_anchor_censored,
+        "budget": controller.p11_anchor_budget,
+        "used": controller.p11_anchor_used,
+        "skip_reason": controller.p11_anchor_skip_reason,
+        "population_prior": controller.p11_anchor_population_prior,
+        "selected_observations": dict(controller.p11_selected_prompt_observations),
+    }
+    return result
 
 
 def main() -> int:
@@ -90,7 +123,7 @@ def main() -> int:
                 or original_row["prompt_values"] != list(values)
                 or original_row["amplitude"] != amplitude):
             raise RuntimeError("cached original-P11 control identity mismatch")
-        candidate = run_arm(seed, "anchor")
+        candidate = run_anchor(seed)
         best = max(values)
         best_ids = tuple(index for index, value in enumerate(values, 1) if value == best)
         audit_episode(candidate, seed, "p11", best_ids)
