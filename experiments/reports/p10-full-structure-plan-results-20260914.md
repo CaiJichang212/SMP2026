@@ -154,3 +154,45 @@ response-estimator failures and nonnegative remaining budget. Plan-only and
 combined searched exactly once per case; response-only and P9 never searched.
 Full action logs remain in ignored `experiments/raw/`; the committed compact
 report stores their SHA-256 identities and first divergences.
+
+#### Complete 18-case development selection
+
+The frozen combined-development protocol required all 18 consumed cases, so
+the six legacy rows above were reused by exact raw/source hash and extended
+with four resampled topology families under centered-independent,
+persona-aligned and persona-inverse responses. Each case ran P9, plan-only,
+response-only and combined through the same CaseVO path and terminal-gain mock
+ranker. Two workers ran different paired cases; all four arms of one case stayed
+together.
+
+| Arm vs P9 | Cases | Mean delta | Win / tie / loss | Minimum |
+| --- | ---: | ---: | ---: | ---: |
+| plan_only | 18 | +6.467053 | 8 / 7 / 3 | -18.197513 |
+| response_only | 18 | +20.157102 | 8 / 10 / 0 | 0 |
+| combined | 18 | +26.018476 | 13 / 4 / 1 | -18.197513 |
+
+The preregistered selection takes the highest positive mean and prefers a
+simpler arm only when means differ by less than one point. Combined exceeds
+response-only by +5.861374, so **combined is the development winner**. This is
+not a confirmation or production decision.
+
+| Response group | plan_only | response_only | combined |
+| --- | ---: | ---: | ---: |
+| legacy independent, 6 | +7.309729 | 0.000000 | +7.309729 |
+| centered independent, 4 | +4.408261 | 0.000000 | +4.408261 |
+| persona aligned, 4 | +14.291369 | +33.552403 | +48.642792 |
+| persona inverse, 4 | -0.562487 | +57.154555 | +53.067495 |
+
+The response gate activated in all eight aligned/inverse cases and in none of
+the ten independent cases. It was never disabled by an exception. Plan-only
+and combined each received 11 explicit plan approvals. Across 72 sessions,
+there were no action, P8-planning, P10-planning, prefix, response-estimator,
+budget, or step-limit failures; maximum action attempts were 87.
+
+All losses remain visible. Plan-only lost -18.197513 on ER centered-independent,
+-2.249946 on BA inverse, and -1.387069 on SBM aligned. Combined retained only
+the ER centered-independent loss of -18.197513; response-only had no losses.
+On inverse cases, combining plans reduced response-only's mean by 4.087060,
+while on aligned cases it added 15.090389. This interaction is why the selected
+combined arm requires a genuinely fresh, stratified confirmation rather than
+adding the two marginal means.

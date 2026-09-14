@@ -9,3 +9,6 @@ experiment	commit	metric	status	description
 7	7686bae	7.309729084	keep_development	plan_only versus P9; legacy six-family CaseVO terminal-gain ranker; 2/4/0
 8	7686bae	0.000000000	mechanism	response_only versus P9; legacy independent gate remained closed; 0/6/0
 9	7686bae	7.309729084	keep_development	combined equals plan_only on all six legacy cases; 2/4/0
+10	a6bdf04	6.467052725	development	plan_only versus P9 over complete consumed 18-case matrix; 8/7/3
+11	a6bdf04	20.157101689	keep_development	response_only versus P9 over complete consumed 18-case matrix; 8/10/0
+12	a6bdf04	26.018475900	selected_development	combined versus P9 over complete consumed 18-case matrix; 13/4/1
