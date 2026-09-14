@@ -1,0 +1,7442 @@
+{
+  "config": {
+    "protocol": "p10-full-structure-plan-development-20260914",
+    "families": [
+      "er_balanced",
+      "ba_negative_hubs",
+      "ws_peace_majority",
+      "sbm_negative_bridges",
+      "sbm_violent_cluster",
+      "three_sparse_components"
+    ],
+    "repetitions": [
+      501
+    ],
+    "variants": [
+      "beam4",
+      "beam6"
+    ],
+    "workers": 1,
+    "policy_sha256": "a5ca355adc3d289590416fe366f56c9a7228a1a72372ac3e05600ff0bfaa6345"
+  },
+  "summary": {
+    "beam4": {
+      "cases": 6,
+      "mean_delta": 0.8029763235294164,
+      "minimum_delta": 0.0,
+      "maximum_delta": 4.817857941176499,
+      "win_tie_loss": [
+        1,
+        5,
+        0
+      ],
+      "accepted_plans": 1,
+      "mean_seconds": 16.393048881184466,
+      "failures": 0
+    },
+    "beam6": {
+      "cases": 6,
+      "mean_delta": 0.8029763235294164,
+      "minimum_delta": 0.0,
+      "maximum_delta": 4.817857941176499,
+      "win_tie_loss": [
+        1,
+        5,
+        0
+      ],
+      "accepted_plans": 1,
+      "mean_seconds": 18.370220041639794,
+      "failures": 0
+    }
+  },
+  "rows": [
+    {
+      "family": "er_balanced",
+      "repetition": 501,
+      "shift_stratum": "standard",
+      "seed_sha256": "c37405ed01b3d931820009f2a83e5058f0a1aab4e604283cb12f6dec47d810e9",
+      "variant": "beam4",
+      "baseline": {
+        "score": 813.8961748272728,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "interventions": [
+          {
+            "kind": "comm",
+            "target_node_1": 17,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 38,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 15,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 39,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 45,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 17,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 28,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 10,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 19,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 37,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 8,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 39,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 12,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 46,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 10,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 24,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 25,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 33,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 34,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 49,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 45,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 8,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 14,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 18,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": null,
+        "seconds": 13.06229109596461
+      },
+      "candidate": {
+        "score": 813.8961748272728,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "interventions": [
+          {
+            "kind": "comm",
+            "target_node_1": 17,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 38,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 15,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 39,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 45,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 17,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 28,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 10,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 19,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 37,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 8,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 39,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 12,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 46,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 10,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 24,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 25,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 33,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 34,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 49,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 45,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 8,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 14,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 18,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": {
+          "accepted": false,
+          "rollouts": 26,
+          "baseline_action": {
+            "kind": "comm",
+            "target_node_1": 17,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          "selection_deltas": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "audit_deltas": [
+            0.0,
+            0.0,
+            0.0,
+            3.3420191622958555,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "structure_actions": [
+            {
+              "kind": "shield",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          ],
+          "persuasion_actions": [
+            {
+              "kind": "comm",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 38,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 15,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 39,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 45,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 47,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 7,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 28,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 10,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 19,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 37,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 8,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 12,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 23,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 46,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 24,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 33,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 34,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 49,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 14,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 18,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 36,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 40,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 44,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 48,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 9,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 38,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": 1
+            }
+          ],
+          "predicted_score": 686.004652327273,
+          "predicted_gain": 19.4662928445141,
+          "root_actions": 228,
+          "expanded_states": 5574,
+          "planning_seconds": 6.863911913940683
+        },
+        "seconds": 24.91913592000492
+      },
+      "delta": 0.0,
+      "first_divergence": null
+    },
+    {
+      "family": "er_balanced",
+      "repetition": 501,
+      "shift_stratum": "standard",
+      "seed_sha256": "c37405ed01b3d931820009f2a83e5058f0a1aab4e604283cb12f6dec47d810e9",
+      "variant": "beam6",
+      "baseline": {
+        "score": 813.8961748272728,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "interventions": [
+          {
+            "kind": "comm",
+            "target_node_1": 17,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 38,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 15,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 39,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 45,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 17,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 28,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 10,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 19,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 37,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 8,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 39,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 12,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 46,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 10,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 24,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 25,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 33,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 34,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 49,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 45,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 8,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 14,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 18,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": null,
+        "seconds": 13.06229109596461
+      },
+      "candidate": {
+        "score": 813.8961748272728,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "interventions": [
+          {
+            "kind": "comm",
+            "target_node_1": 17,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 38,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 15,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 39,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 45,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 17,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 28,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 10,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 19,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 37,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 8,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 39,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 12,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 46,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 10,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 24,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 25,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 33,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 34,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 49,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 45,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 8,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 14,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 18,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": {
+          "accepted": false,
+          "rollouts": 26,
+          "baseline_action": {
+            "kind": "comm",
+            "target_node_1": 17,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          "selection_deltas": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "audit_deltas": [
+            0.0,
+            0.0,
+            0.0,
+            3.3420191622958555,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "structure_actions": [
+            {
+              "kind": "shield",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          ],
+          "persuasion_actions": [
+            {
+              "kind": "comm",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 38,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 15,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 39,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 45,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 47,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 7,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 28,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 10,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 19,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 37,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 8,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 12,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 23,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 46,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 24,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 33,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 34,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 49,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 14,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 18,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 36,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 40,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 44,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 48,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 9,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 38,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": 1
+            }
+          ],
+          "predicted_score": 686.004652327273,
+          "predicted_gain": 19.4662928445141,
+          "root_actions": 228,
+          "expanded_states": 8680,
+          "planning_seconds": 10.203540198970586
+        },
+        "seconds": 27.884622256970033
+      },
+      "delta": 0.0,
+      "first_divergence": null
+    },
+    {
+      "family": "ba_negative_hubs",
+      "repetition": 501,
+      "shift_stratum": "standard",
+      "seed_sha256": "0065cacb1b5fc96a80267c2cbceb8f6efbb325f76c96829405f0edb734bafb73",
+      "variant": "beam4",
+      "baseline": {
+        "score": 303.6875601323529,
+        "remaining_budget": 1.0,
+        "steps": 75,
+        "actions": {
+          "scan": 50,
+          "comm": 17,
+          "cut": 0,
+          "shield": 8
+        },
+        "interventions": [
+          {
+            "kind": "comm",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 6,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 1,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 14,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 17,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 15,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 35,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 13,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 8,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 9,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 17,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 21,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 33,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 11,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 27,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 28,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": null,
+        "seconds": 10.304151872987859
+      },
+      "candidate": {
+        "score": 308.5054180735294,
+        "remaining_budget": 1.0,
+        "steps": 75,
+        "actions": {
+          "scan": 50,
+          "comm": 17,
+          "cut": 0,
+          "shield": 8
+        },
+        "interventions": [
+          {
+            "kind": "shield",
+            "target_node_1": 1,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 6,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 14,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 17,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 15,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 35,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 13,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 8,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 9,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 17,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 21,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 33,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 11,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 27,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 28,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 31,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": {
+          "accepted": true,
+          "rollouts": 26,
+          "baseline_action": {
+            "kind": "comm",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          "selection_deltas": [
+            42.74999999999994,
+            45.60997520116908,
+            48.75875471666507,
+            58.34399809632532,
+            36.330258311185446
+          ],
+          "audit_deltas": [
+            59.603190157565734,
+            24.76779491759038,
+            23.523624720529142,
+            72.49031340159752,
+            74.67792376434062,
+            14.472506943464111,
+            30.27405120707448,
+            54.5360222097475
+          ],
+          "structure_actions": [
+            {
+              "kind": "shield",
+              "target_node_1": 1,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 6,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 14,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          ],
+          "persuasion_actions": [
+            {
+              "kind": "comm",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 15,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 35,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 7,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 9,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 13,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 2,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 8,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 23,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 10,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 31,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 33,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 4,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 40,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 11,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 15,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 19,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": 1
+            }
+          ],
+          "predicted_score": 205.72963082692308,
+          "predicted_gain": 222.10992194138078,
+          "root_actions": 191,
+          "expanded_states": 4585,
+          "planning_seconds": 5.8150674239732325
+        },
+        "seconds": 14.272069928003475
+      },
+      "delta": 4.817857941176499,
+      "first_divergence": {
+        "intervention_index": 1,
+        "candidate": {
+          "kind": "shield",
+          "target_node_1": 1,
+          "target_node_2": null,
+          "prompt_id": null
+        },
+        "baseline": {
+          "kind": "comm",
+          "target_node_1": 3,
+          "target_node_2": null,
+          "prompt_id": 1
+        }
+      }
+    },
+    {
+      "family": "ba_negative_hubs",
+      "repetition": 501,
+      "shift_stratum": "standard",
+      "seed_sha256": "0065cacb1b5fc96a80267c2cbceb8f6efbb325f76c96829405f0edb734bafb73",
+      "variant": "beam6",
+      "baseline": {
+        "score": 303.6875601323529,
+        "remaining_budget": 1.0,
+        "steps": 75,
+        "actions": {
+          "scan": 50,
+          "comm": 17,
+          "cut": 0,
+          "shield": 8
+        },
+        "interventions": [
+          {
+            "kind": "comm",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 6,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 1,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 14,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 17,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 15,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 35,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 13,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 8,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 9,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 17,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 21,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 33,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 11,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 27,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 28,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": null,
+        "seconds": 10.304151872987859
+      },
+      "candidate": {
+        "score": 308.5054180735294,
+        "remaining_budget": 1.0,
+        "steps": 75,
+        "actions": {
+          "scan": 50,
+          "comm": 17,
+          "cut": 0,
+          "shield": 8
+        },
+        "interventions": [
+          {
+            "kind": "shield",
+            "target_node_1": 1,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 14,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 6,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 17,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 15,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 35,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 13,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 8,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 9,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 17,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 21,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 33,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 11,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 27,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 28,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 31,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": {
+          "accepted": true,
+          "rollouts": 26,
+          "baseline_action": {
+            "kind": "comm",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          "selection_deltas": [
+            57.0,
+            57.610169248032236,
+            66.42454297429941,
+            80.6283203779085,
+            53.21514780808968
+          ],
+          "audit_deltas": [
+            80.35456107627658,
+            29.559596637239338,
+            63.38874096176511,
+            76.92872819051502,
+            94.55442099786868,
+            45.98506455014257,
+            37.89432154065838,
+            81.38855294847258
+          ],
+          "structure_actions": [
+            {
+              "kind": "shield",
+              "target_node_1": 1,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 14,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 6,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          ],
+          "persuasion_actions": [
+            {
+              "kind": "comm",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 15,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 2,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 35,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 7,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 9,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 13,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 23,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 8,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 31,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 33,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 37,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 40,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 10,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 11,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 15,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 19,
+              "target_node_2": null,
+              "prompt_id": 1
+            }
+          ],
+          "predicted_score": 286.4530283353293,
+          "predicted_gain": 302.833319449787,
+          "root_actions": 191,
+          "expanded_states": 6739,
+          "planning_seconds": 8.030808563926257
+        },
+        "seconds": 13.755631241947412
+      },
+      "delta": 4.817857941176499,
+      "first_divergence": {
+        "intervention_index": 1,
+        "candidate": {
+          "kind": "shield",
+          "target_node_1": 1,
+          "target_node_2": null,
+          "prompt_id": null
+        },
+        "baseline": {
+          "kind": "comm",
+          "target_node_1": 3,
+          "target_node_2": null,
+          "prompt_id": 1
+        }
+      }
+    },
+    {
+      "family": "ws_peace_majority",
+      "repetition": 501,
+      "shift_stratum": "standard",
+      "seed_sha256": "63bf7ab0643e28716cfe465eb394876618c90e3913d177d8b0ae3227ed6fca8d",
+      "variant": "beam4",
+      "baseline": {
+        "score": 930.2503402857142,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "interventions": [
+          {
+            "kind": "comm",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 9,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 10,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 12,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 19,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 21,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 25,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 32,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 33,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 39,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 48,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 11,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 13,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 15,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 24,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 27,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 28,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 48,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 30,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 31,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 34,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 35,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 37,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 40,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 41,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 43,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 44,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 46,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 4,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": null,
+        "seconds": 2.8654349229764193
+      },
+      "candidate": {
+        "score": 930.2503402857142,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "interventions": [
+          {
+            "kind": "comm",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 9,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 10,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 12,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 19,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 21,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 25,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 32,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 33,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 39,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 48,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 11,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 13,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 15,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 24,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 27,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 28,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 48,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 30,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 31,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 34,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 35,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 37,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 40,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 41,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 43,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 44,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 46,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 4,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": {
+          "accepted": false,
+          "rollouts": 0,
+          "baseline_action": {
+            "kind": "comm",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          "selection_deltas": [],
+          "audit_deltas": [],
+          "structure_actions": [],
+          "persuasion_actions": [],
+          "predicted_score": null,
+          "predicted_gain": null,
+          "root_actions": 0,
+          "expanded_states": 0,
+          "planning_seconds": 0.0
+        },
+        "seconds": 8.573640441056341
+      },
+      "delta": 0.0,
+      "first_divergence": null
+    },
+    {
+      "family": "ws_peace_majority",
+      "repetition": 501,
+      "shift_stratum": "standard",
+      "seed_sha256": "63bf7ab0643e28716cfe465eb394876618c90e3913d177d8b0ae3227ed6fca8d",
+      "variant": "beam6",
+      "baseline": {
+        "score": 930.2503402857142,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "interventions": [
+          {
+            "kind": "comm",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 9,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 10,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 12,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 19,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 21,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 25,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 32,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 33,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 39,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 48,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 11,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 13,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 15,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 24,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 27,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 28,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 48,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 30,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 31,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 34,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 35,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 37,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 40,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 41,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 43,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 44,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 46,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 4,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": null,
+        "seconds": 2.8654349229764193
+      },
+      "candidate": {
+        "score": 930.2503402857142,
+        "remaining_budget": 1.0,
+        "steps": 87,
+        "actions": {
+          "scan": 50,
+          "comm": 37,
+          "cut": 0,
+          "shield": 0
+        },
+        "interventions": [
+          {
+            "kind": "comm",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 9,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 10,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 12,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 19,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 21,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 25,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 32,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 33,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 39,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 48,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 11,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 13,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 15,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 24,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 27,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 28,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 48,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 30,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 31,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 34,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 35,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 37,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 40,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 41,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 43,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 44,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 46,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 4,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": {
+          "accepted": false,
+          "rollouts": 0,
+          "baseline_action": {
+            "kind": "comm",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          "selection_deltas": [],
+          "audit_deltas": [],
+          "structure_actions": [],
+          "persuasion_actions": [],
+          "predicted_score": null,
+          "predicted_gain": null,
+          "root_actions": 0,
+          "expanded_states": 0,
+          "planning_seconds": 0.0
+        },
+        "seconds": 11.830950489034876
+      },
+      "delta": 0.0,
+      "first_divergence": null
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "repetition": 501,
+      "shift_stratum": "standard",
+      "seed_sha256": "be9a9f8407cc9c524d85a476b9502720b2ee5e9bd2355527b401436a2e475f3f",
+      "variant": "beam4",
+      "baseline": {
+        "score": 567.9017162004047,
+        "remaining_budget": 1.0,
+        "steps": 81,
+        "actions": {
+          "scan": 50,
+          "comm": 27,
+          "cut": 0,
+          "shield": 4
+        },
+        "interventions": [
+          {
+            "kind": "comm",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 26,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 25,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 30,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 37,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 11,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 12,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 32,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 8,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 34,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 36,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 39,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 42,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 45,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 46,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 15,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 50,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 22,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 35,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 38,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 44,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 9,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 39,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": null,
+        "seconds": 11.156374761019833
+      },
+      "candidate": {
+        "score": 567.9017162004047,
+        "remaining_budget": 1.0,
+        "steps": 81,
+        "actions": {
+          "scan": 50,
+          "comm": 27,
+          "cut": 0,
+          "shield": 4
+        },
+        "interventions": [
+          {
+            "kind": "comm",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 26,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 25,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 30,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 37,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 11,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 12,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 32,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 8,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 34,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 36,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 39,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 42,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 45,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 46,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 15,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 50,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 22,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 35,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 38,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 44,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 9,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 39,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": {
+          "accepted": false,
+          "rollouts": 26,
+          "baseline_action": {
+            "kind": "comm",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          "selection_deltas": [
+            9.176995639645611,
+            5.497958845605012,
+            12.256576573829761,
+            16.710651992458963,
+            -0.358571402351231
+          ],
+          "audit_deltas": [
+            1.4463162832039416,
+            -6.431341965158708,
+            3.5665908217457627,
+            14.588333452332904,
+            4.617756908882143,
+            6.936942097104236,
+            -16.652737020564814,
+            11.803086094146522
+          ],
+          "structure_actions": [
+            {
+              "kind": "shield",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 26,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 30,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          ],
+          "persuasion_actions": [
+            {
+              "kind": "comm",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 37,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 11,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 12,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 32,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 8,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 34,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 36,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 39,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 42,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 45,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 46,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 7,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 15,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 22,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 2,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 35,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 38,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 43,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 44,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 47,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 9,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 23,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 31,
+              "target_node_2": null,
+              "prompt_id": 1
+            }
+          ],
+          "predicted_score": 510.96258686821733,
+          "predicted_gain": 43.34965370550583,
+          "root_actions": 173,
+          "expanded_states": 4499,
+          "planning_seconds": 4.618135934928432
+        },
+        "seconds": 19.472173828049563
+      },
+      "delta": 0.0,
+      "first_divergence": null
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "repetition": 501,
+      "shift_stratum": "standard",
+      "seed_sha256": "be9a9f8407cc9c524d85a476b9502720b2ee5e9bd2355527b401436a2e475f3f",
+      "variant": "beam6",
+      "baseline": {
+        "score": 567.9017162004047,
+        "remaining_budget": 1.0,
+        "steps": 81,
+        "actions": {
+          "scan": 50,
+          "comm": 27,
+          "cut": 0,
+          "shield": 4
+        },
+        "interventions": [
+          {
+            "kind": "comm",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 26,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 25,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 30,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 37,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 11,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 12,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 32,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 8,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 34,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 36,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 39,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 42,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 45,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 46,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 15,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 50,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 22,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 35,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 38,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 44,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 9,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 39,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": null,
+        "seconds": 11.156374761019833
+      },
+      "candidate": {
+        "score": 567.9017162004047,
+        "remaining_budget": 1.0,
+        "steps": 81,
+        "actions": {
+          "scan": 50,
+          "comm": 27,
+          "cut": 0,
+          "shield": 4
+        },
+        "interventions": [
+          {
+            "kind": "comm",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 26,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 25,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 30,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 37,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 11,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 12,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 32,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 8,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 34,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 36,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 39,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 42,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 45,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 46,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 15,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 50,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 22,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 35,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 38,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 44,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 9,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 39,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 23,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": {
+          "accepted": false,
+          "rollouts": 26,
+          "baseline_action": {
+            "kind": "comm",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          "selection_deltas": [
+            9.176995639645611,
+            5.497958845605012,
+            12.256576573829761,
+            16.710651992458963,
+            -0.358571402351231
+          ],
+          "audit_deltas": [
+            1.4463162832039416,
+            -6.431341965158708,
+            3.5665908217457627,
+            14.588333452332904,
+            4.617756908882143,
+            6.936942097104236,
+            -16.652737020564814,
+            11.803086094146522
+          ],
+          "structure_actions": [
+            {
+              "kind": "shield",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 26,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 30,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          ],
+          "persuasion_actions": [
+            {
+              "kind": "comm",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 37,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 11,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 12,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 32,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 8,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 34,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 36,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 39,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 42,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 45,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 46,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 7,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 15,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 22,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 2,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 35,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 38,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 43,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 44,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 47,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 9,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 23,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 31,
+              "target_node_2": null,
+              "prompt_id": 1
+            }
+          ],
+          "predicted_score": 510.96258686821733,
+          "predicted_gain": 43.34965370550583,
+          "root_actions": 173,
+          "expanded_states": 6839,
+          "planning_seconds": 8.364686078042723
+        },
+        "seconds": 22.436708507011645
+      },
+      "delta": 0.0,
+      "first_divergence": null
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "repetition": 501,
+      "shift_stratum": "standard",
+      "seed_sha256": "1521ffc56052cb4f6db8983df71c8064cdcbc9f3d6d6d3f9cbcd2b6f60f7a3a5",
+      "variant": "beam4",
+      "baseline": {
+        "score": 199.13262254497351,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "interventions": [
+          {
+            "kind": "shield",
+            "target_node_1": 4,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 18,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 25,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 21,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 49,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 6,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 45,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 46,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 48,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 24,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 27,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 31,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 33,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 36,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 18,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 40,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 50,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 10,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 50,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": null,
+        "seconds": 7.4063751680077985
+      },
+      "candidate": {
+        "score": 199.13262254497351,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "interventions": [
+          {
+            "kind": "shield",
+            "target_node_1": 4,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 18,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 25,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 21,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 49,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 6,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 45,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 46,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 48,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 24,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 27,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 31,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 33,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 36,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 18,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 40,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 50,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 10,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 50,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": {
+          "accepted": false,
+          "rollouts": 26,
+          "baseline_action": {
+            "kind": "shield",
+            "target_node_1": 4,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          "selection_deltas": [
+            -3.1334693532323854,
+            13.235926068826615,
+            -16.07516058413887,
+            -32.62070934984388,
+            -3.077044017308509
+          ],
+          "audit_deltas": [
+            -14.676997443751162,
+            -11.290950518654057,
+            6.476642613029753,
+            -12.234349604866424,
+            7.8872275591712935,
+            -12.5712747388651,
+            -10.746550930188988,
+            4.538562177016672
+          ],
+          "structure_actions": [
+            {
+              "kind": "shield",
+              "target_node_1": 2,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          ],
+          "persuasion_actions": [
+            {
+              "kind": "comm",
+              "target_node_1": 49,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 6,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 14,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 18,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 33,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 45,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 46,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 48,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 10,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 23,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 24,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 31,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 36,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 40,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 44,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 47,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 13,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 26,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 28,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 30,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 32,
+              "target_node_2": null,
+              "prompt_id": 1
+            }
+          ],
+          "predicted_score": 156.6497500245902,
+          "predicted_gain": 106.72646713868416,
+          "root_actions": 174,
+          "expanded_states": 4599,
+          "planning_seconds": 5.703686122898944
+        },
+        "seconds": 15.338720455067232
+      },
+      "delta": 0.0,
+      "first_divergence": null
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "repetition": 501,
+      "shift_stratum": "standard",
+      "seed_sha256": "1521ffc56052cb4f6db8983df71c8064cdcbc9f3d6d6d3f9cbcd2b6f60f7a3a5",
+      "variant": "beam6",
+      "baseline": {
+        "score": 199.13262254497351,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "interventions": [
+          {
+            "kind": "shield",
+            "target_node_1": 4,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 18,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 25,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 21,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 49,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 6,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 45,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 46,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 48,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 24,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 27,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 31,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 33,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 36,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 18,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 40,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 50,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 10,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 50,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": null,
+        "seconds": 7.4063751680077985
+      },
+      "candidate": {
+        "score": 199.13262254497351,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "interventions": [
+          {
+            "kind": "shield",
+            "target_node_1": 4,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 18,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 25,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 21,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 49,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 6,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 45,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 46,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 48,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 24,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 27,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 31,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 33,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 36,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 18,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 40,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 50,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 10,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 50,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": {
+          "accepted": false,
+          "rollouts": 26,
+          "baseline_action": {
+            "kind": "shield",
+            "target_node_1": 4,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          "selection_deltas": [
+            10.587474536574177,
+            8.714586232068882,
+            7.229785174207279,
+            -2.4771267050921324,
+            -9.068887617400748
+          ],
+          "audit_deltas": [
+            8.515502186559786,
+            1.4906476446078045,
+            19.407934909584327,
+            -1.3156335304041988,
+            10.175873183546031,
+            13.759437030130897,
+            -2.7440049290670174,
+            31.551619320209795
+          ],
+          "structure_actions": [
+            {
+              "kind": "shield",
+              "target_node_1": 4,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 2,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 18,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          ],
+          "persuasion_actions": [
+            {
+              "kind": "comm",
+              "target_node_1": 49,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 6,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 45,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 46,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 48,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 31,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 33,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 36,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 40,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 47,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 10,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 24,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 26,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 28,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 30,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 32,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 37,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 38,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": 1
+            }
+          ],
+          "predicted_score": 186.69677893457944,
+          "predicted_gain": 136.7734960486734,
+          "root_actions": 174,
+          "expanded_states": 7073,
+          "planning_seconds": 8.330651215976104
+        },
+        "seconds": 18.505443129921332
+      },
+      "delta": 0.0,
+      "first_divergence": null
+    },
+    {
+      "family": "three_sparse_components",
+      "repetition": 501,
+      "shift_stratum": "standard",
+      "seed_sha256": "7b14509973f69852fc012f233cf9edb6b18da619e3cbb0060d19c53826178fe1",
+      "variant": "beam4",
+      "baseline": {
+        "score": 282.0115647335723,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "interventions": [
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 35,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 37,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 21,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 25,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 30,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 40,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 14,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 4,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 9,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 38,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 18,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 22,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 26,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 32,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 42,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 43,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 48,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 49,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 50,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 21,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 10,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 11,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 12,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 13,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 15,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 6,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": null,
+        "seconds": 7.087929185014218
+      },
+      "candidate": {
+        "score": 282.0115647335723,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "interventions": [
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 35,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 37,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 21,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 25,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 30,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 40,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 14,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 4,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 9,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 38,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 18,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 22,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 26,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 32,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 42,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 43,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 48,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 49,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 50,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 21,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 10,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 11,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 12,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 13,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 15,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 6,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": {
+          "accepted": false,
+          "rollouts": 26,
+          "baseline_action": {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          "selection_deltas": [
+            3.1939531823362017,
+            7.314969517309066,
+            -3.1851272486662765,
+            15.201694026648681,
+            -19.52348378876877
+          ],
+          "audit_deltas": [
+            1.994526579549472,
+            -1.4310906290805292,
+            4.254035536295987,
+            6.392278769340237,
+            -6.877343876027226,
+            1.1027649241434005,
+            6.489770630315434,
+            14.927035009445234
+          ],
+          "structure_actions": [
+            {
+              "kind": "cut",
+              "target_node_1": 7,
+              "target_node_2": 8,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 38,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          ],
+          "persuasion_actions": [
+            {
+              "kind": "comm",
+              "target_node_1": 35,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 47,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 2,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 30,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 37,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 40,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 14,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 4,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 9,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 18,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 22,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 26,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 32,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 42,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 43,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 48,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 49,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 10,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 11,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 12,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 13,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 15,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 6,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 23,
+              "target_node_2": null,
+              "prompt_id": 1
+            }
+          ],
+          "predicted_score": 290.64284252676356,
+          "predicted_gain": 16.4923196203913,
+          "root_actions": 118,
+          "expanded_states": 3103,
+          "planning_seconds": 3.4602522109635174
+        },
+        "seconds": 15.78255271492526
+      },
+      "delta": 0.0,
+      "first_divergence": null
+    },
+    {
+      "family": "three_sparse_components",
+      "repetition": 501,
+      "shift_stratum": "standard",
+      "seed_sha256": "7b14509973f69852fc012f233cf9edb6b18da619e3cbb0060d19c53826178fe1",
+      "variant": "beam6",
+      "baseline": {
+        "score": 282.0115647335723,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "interventions": [
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 35,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 37,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 21,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 25,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 30,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 40,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 14,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 4,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 9,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 38,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 18,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 22,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 26,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 32,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 42,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 43,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 48,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 49,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 50,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 21,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 10,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 11,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 12,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 13,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 15,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 6,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": null,
+        "seconds": 7.087929185014218
+      },
+      "candidate": {
+        "score": 282.0115647335723,
+        "remaining_budget": 0.0,
+        "steps": 86,
+        "actions": {
+          "scan": 50,
+          "comm": 35,
+          "cut": 0,
+          "shield": 1
+        },
+        "interventions": [
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 5,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 35,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 37,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 21,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 25,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 29,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 30,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 40,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 14,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 4,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 9,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 38,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 18,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 22,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 26,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 32,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 42,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 43,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 48,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 49,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 50,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 21,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 10,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 11,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 12,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 13,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 15,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 3,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 6,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "failures": 0,
+        "plan": {
+          "accepted": false,
+          "rollouts": 26,
+          "baseline_action": {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          "selection_deltas": [
+            3.1939531823362017,
+            7.314969517309066,
+            -3.1851272486662765,
+            15.201694026648681,
+            -19.52348378876877
+          ],
+          "audit_deltas": [
+            1.994526579549472,
+            -1.4310906290805292,
+            4.254035536295987,
+            6.392278769340237,
+            -6.877343876027226,
+            1.1027649241434005,
+            6.489770630315434,
+            14.927035009445234
+          ],
+          "structure_actions": [
+            {
+              "kind": "cut",
+              "target_node_1": 7,
+              "target_node_2": 8,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            {
+              "kind": "shield",
+              "target_node_1": 38,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          ],
+          "persuasion_actions": [
+            {
+              "kind": "comm",
+              "target_node_1": 35,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 47,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 2,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 30,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 37,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 40,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 14,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 4,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 9,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 18,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 22,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 26,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 32,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 42,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 43,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 48,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 49,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 10,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 11,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 12,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 13,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 15,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 6,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            {
+              "kind": "comm",
+              "target_node_1": 23,
+              "target_node_2": null,
+              "prompt_id": 1
+            }
+          ],
+          "predicted_score": 290.64284252676356,
+          "predicted_gain": 16.4923196203913,
+          "root_actions": 118,
+          "expanded_states": 4716,
+          "planning_seconds": 5.1388782860012725
+        },
+        "seconds": 15.807964624953456
+      },
+      "delta": 0.0,
+      "first_divergence": null
+    }
+  ],
+  "confirmation_opened": false,
+  "production_enabled": false
+}
