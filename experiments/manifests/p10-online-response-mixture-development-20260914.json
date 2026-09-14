@@ -1,0 +1,51 @@
+{
+  "experiment": "P10 online mixture over independent, persona-aligned and persona-inverse response models",
+  "registered_before_execution": true,
+  "scope": "pure experiment only; no runtime controller, submission source or qualification change",
+  "case_status": "all 18 cases were consumed previously; none is a new holdout",
+  "cases": {
+    "legacy": "the six SEED_SPECS families at repetition 1",
+    "correlation_axis": "four P9 resampled families at repetition 901 for centered_independent, negative_persona_aligned and positive_persona_inverse",
+    "caveat": "the existing aligned and inverse strata also use different public w transforms, so cross-stratum score differences do not isolate response correlation; comparisons between response estimators remain paired within each seed",
+    "total": 18
+  },
+  "latent_models": {
+    "independent": "all personas r ~ Uniform(0.2,1.5)",
+    "aligned": "peace r ~ Uniform(1.05,1.5), violent r ~ Uniform(0.2,0.65), neutral r ~ Uniform(0.2,1.5)",
+    "inverse": "peace r ~ Uniform(0.2,0.65), violent r ~ Uniform(1.05,1.5), neutral r ~ Uniform(0.2,1.5)"
+  },
+  "initial_model_weights": {
+    "independent": 0.5,
+    "aligned": 0.25,
+    "inverse": 0.25
+  },
+  "likelihood_update": "for each public uncapped first communication delta, infer r=delta/15 and add log(0.9*density_under_model + 0.1*density_under_independent); normalize with log-sum-exp",
+  "censoring": "a first response ending on an opinion bound, or starting outside [-100,100], is recorded as censored and excluded from likelihood updates",
+  "prediction": "an untried target uses 15 times the posterior-weighted conditional mean r and the published turn multiplier; a tried target always uses its own public first delta",
+  "initial_invariant": "for peace, neutral and violent, the initial mixture mean r is exactly 0.85, hence first-slot delta 12.75, identical to the fixed prior",
+  "blackboard_boundary": "posterior weights, likelihoods and censored observations remain in an experiment-local ledger; Blackboard receives only environment public facts",
+  "arms": [
+    "mixture__unrestricted",
+    "pooled__unrestricted",
+    "fixed__unrestricted",
+    "mixture__full_gate",
+    "pooled__full_gate",
+    "fixed__full_gate"
+  ],
+  "primary_contrasts": [
+    "mixture versus fixed within each structure mode",
+    "mixture versus pooled within each structure mode",
+    "unrestricted versus full_gate within each response estimator"
+  ],
+  "required_logs": [
+    "ordered public actions, responses, budgets and action-log hash",
+    "per-decision candidates and selected action",
+    "posterior model weights before each action",
+    "accepted uncapped and ignored censored first observations",
+    "first action and candidate-set divergence for every paired contrast",
+    "final score, failures and resource counts"
+  ],
+  "decision_rule": "report all cases and strata; identify actual score/action changes; no production promotion from consumed development cases",
+  "worker_limit": 1,
+  "production_enabled": false
+}
