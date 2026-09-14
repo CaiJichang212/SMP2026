@@ -8,9 +8,9 @@ the three metadata constants after all statistical and entry gates pass.
 from __future__ import annotations
 
 
-P11_CERTIFIED_MODE: str | None = None
-P11_GATE_REPORT_SHA256: str | None = None
-P11_GATE_REPORT_RELATIVE_PATH: str | None = None
+P11_CERTIFIED_MODE: str | None = "prompt_learning"
+P11_GATE_REPORT_SHA256: str | None = "438b8fe498e4ea2f649bf3e297cdc39972865cbf2233788a23c36bf325b9ceae"
+P11_GATE_REPORT_RELATIVE_PATH: str | None = "experiments/reports/p11-prompt-learning-activation-20260914.json"
 
 
 def qualified_p11_mode(requested: object) -> str | None:
