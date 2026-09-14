@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 import math
 import time
-from typing import Literal, Mapping, MutableMapping
+from typing import Callable, Literal, Mapping, MutableMapping
 
 from starnet.model.blackboard import Blackboard
 from starnet.policy.actions import Action, action_cost, is_legal_action
@@ -108,6 +108,7 @@ def search_full_structure_plan(
     remaining_steps: int,
     max_structures: int,
     beam_width: int,
+    response_estimator: Callable[[int, object, int], float] | None = None,
 ) -> FullStructurePlan | None:
     """Search all legal root structures and bounded deeper topology states."""
     if (max_structures <= 0 or beam_width <= 0 or remaining_steps <= 0
@@ -115,7 +116,7 @@ def search_full_structure_plan(
         raise ValueError("invalid full-plan search resources")
     started = time.perf_counter()
     initial = PredictiveState.from_blackboard(board)
-    response_fn = _response_fn(board, observed)
+    response_fn = response_estimator or _response_fn(board, observed)
     baseline = communication_tail(initial, budget, response_fn, remaining_steps)
     root = _legal_structures(initial, budget, ())
     beam = [(initial, (), budget)]

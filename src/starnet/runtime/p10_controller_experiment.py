@@ -26,12 +26,14 @@ def _action_name(action: Action) -> str:
 class P10RuntimeController(P8RuntimeController):
     """Search once, then execute an LLM-approved prefix one action per step."""
 
-    def __init__(self, *args, max_structures=12, beam_width=4, **kwargs):
+    def __init__(self, *args, max_structures=12, beam_width=4,
+                 response_estimator=None, **kwargs):
         super().__init__(*args, **kwargs)
         if max_structures <= 0 or beam_width <= 0:
             raise ValueError("invalid P10 search bounds")
         self.p10_max_structures = max_structures
         self.p10_beam_width = beam_width
+        self.p10_response_estimator = response_estimator
         self.p10_search_completed = False
         self.p10_searches = 0
         self.p10_planning_errors = 0
@@ -84,6 +86,7 @@ class P10RuntimeController(P8RuntimeController):
                 remaining_steps=max(0, self._safe_step_limit - self.action_attempts),
                 max_structures=self.p10_max_structures,
                 beam_width=self.p10_beam_width,
+                response_estimator=self._p10_response_fn(),
             )
             if plan is None:
                 return
@@ -183,6 +186,30 @@ class P10RuntimeController(P8RuntimeController):
                 self.p10_pending.clear()
                 self.p10_prefix_failures += 1
         return result
+
+    def _p10_response_fn(self):
+        estimator = self.p10_response_estimator
+        if estimator is None:
+            return None
+        predict = getattr(estimator, "predict", None)
+        if not callable(predict):
+            raise ValueError("P10 response estimator must expose predict")
+        return lambda node_id, node, turn: predict(
+            node_id, node.persona, turn, self.response_estimates, gated=True,
+        )
+
+    def _attempt_action(self, action: Action, candidate_id: str, budget: float) -> bool:
+        node = self.blackboard.nodes.get(action.target_node_1)
+        before = node.w if action.kind == "comm" and node is not None else None
+        persona = node.persona if node is not None else None
+        first_turn = bool(action.kind == "comm" and node is not None and node.comm_left == 3)
+        success = super()._attempt_action(action, candidate_id, budget)
+        observe = getattr(self.p10_response_estimator, "observe_first", None)
+        current = self.blackboard.nodes.get(action.target_node_1)
+        if (success and first_turn and callable(observe) and before is not None
+                and persona is not None and current is not None):
+            observe(persona, before, current.w)
+        return success
 
     def _action_from_last_step(self) -> Action | None:
         payload = self._last_step_action

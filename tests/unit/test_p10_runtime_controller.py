@@ -196,6 +196,31 @@ class P10RuntimeControllerTests(unittest.TestCase):
         self.assertEqual(controller.p10_prefix_failures, 1)
         self.assertEqual(controller.action_failures, 1)
 
+    def test_optional_response_hook_observes_only_successful_first_returns(self):
+        class Ledger:
+            def __init__(self):
+                self.observed = []
+
+            def predict(self, node_id, persona, turn, observed, *, gated):
+                return 12.75 * (0.5 ** (turn - 1))
+
+            def observe_first(self, persona, before, new_w):
+                self.observed.append((persona, before, new_w))
+
+        ledger = Ledger()
+        env = PrefixEnvironment()
+        controller = P10RuntimeController(
+            env, None, node_count=3, p8_mode="conservative", response_estimator=ledger,
+            config=PolicyConfig(policy_mode=PolicyMode.PUBLIC_GREEDY, max_llm_calls=0),
+        )
+        for node_id in (1, 2, 3):
+            apply_action_outcome(env, controller.blackboard, Action("scan", node_id),
+                                 env.get_remaining_budget())
+        self.assertIsNotNone(controller._p10_response_fn())
+        controller._attempt_action(Action("comm", 3, prompt_id=1), "test", env.get_remaining_budget())
+        controller._attempt_action(Action("comm", 3, prompt_id=1), "test", env.get_remaining_budget())
+        self.assertEqual(ledger.observed, [("和平", 10.0, 15.0)])
+
 
 if __name__ == "__main__":
     unittest.main()
