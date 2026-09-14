@@ -1,0 +1,57 @@
+{
+  "experiment": "P10 isolated runtime plan/response/combined development",
+  "date": "2026-09-14",
+  "objective": "separate full-prefix and gated-response effects under identical CaseVO orchestration",
+  "existing_response_evidence": {
+    "report": "experiments/reports/p10-gated-online-mixture-20260914.json",
+    "cases": 18,
+    "status": "previously consumed development data",
+    "required_gate": "minimum 4 uncensored first responses and aligned/inverse posterior at least 0.95",
+    "legacy_independent_expectation": "gated estimator remains exactly fixed-P9 on all six legacy cases"
+  },
+  "runtime_cases": {
+    "families": ["er_balanced", "ba_negative_hubs", "ws_peace_majority", "sbm_negative_bridges", "sbm_violent_cluster", "three_sparse_components"],
+    "repetition": 1,
+    "distribution": "legacy generator default",
+    "status": "previously consumed development data"
+  },
+  "arms": {
+    "p9": "qualified bounded P9 controller",
+    "plan_only": "one initial depth12-width4 mean-audited full-prefix proposal; original P9 after rejection/completion",
+    "response_only": "no plan search; P9 unchanged before response gate, gated-estimator public-greedy candidates after activation",
+    "combined": "the same initial plan proposal plus the same gated response switch after activation"
+  },
+  "llm_protocol": {
+    "ranker": "same deterministic mock ranker for every arm and seed",
+    "scan_choice": "first presented legal scan candidate",
+    "p10_plan_choice": "explicitly approve the P10 plan candidate when exposed",
+    "ordinary_action_choice": "first presented legal candidate",
+    "invalid_output": "must use the original P9 deterministic fallback and may never start P10"
+  },
+  "candidate_semantics": [
+    "P10 augments rather than replaces the candidates produced by super P9",
+    "when P8 and P10 are both exposed, report public-greedy reference zero and each continuation gain on that basis",
+    "LLM selection of any original P9 candidate rejects the P10 prefix",
+    "response gate activation pauses old-prior P8 rollout and uses only the gated estimator's public-greedy candidate set",
+    "plan search occurs once immediately after full scan and is never delayed to collect response probes"
+  ],
+  "error_policy": [
+    "predict, gate, or observe exceptions permanently disable the new estimator for that episode",
+    "successful public action facts remain recorded before estimator fallback",
+    "prefix action failure clears the remaining prefix and returns to P9 with actual remaining budget"
+  ],
+  "required_results": [
+    "all 24 runtime arm/case results complete under one worker",
+    "paired score and win/tie/loss for plan_only, response_only, and combined versus P9",
+    "plan approval/completion, response gate activation and estimator disable counters",
+    "action count, remaining budget, failure count and compact action hash",
+    "pre-gate equality and first divergence",
+    "raw action/payload logs remain ignored and compact audit is committed"
+  ],
+  "decision": [
+    "development only; no new confirmation is opened",
+    "do not combine gains from different seeds arithmetically",
+    "advance at most one runtime arm after the main agent freezes a separate confirmation protocol",
+    "no production, qualification, config, build, or official-score claim"
+  ]
+}
