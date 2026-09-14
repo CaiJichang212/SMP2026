@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+import re
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -64,6 +65,15 @@ class P11ReleaseEvidenceTests(unittest.TestCase):
 
     def test_qualification_normalization_allows_only_three_literal_values(self):
         source = (ROOT / "src/starnet/policy/p11_qualification.py").read_text()
+        # Exercise the same fixture before and after a real release activates
+        # metadata; a successful release must not turn replacements into no-ops.
+        for name in ("P11_CERTIFIED_MODE", "P11_GATE_REPORT_SHA256",
+                     "P11_GATE_REPORT_RELATIVE_PATH"):
+            source, count = re.subn(
+                rf"^{name}: str \| None = .+$",
+                f"{name}: str | None = None", source, flags=re.MULTILINE,
+            )
+            self.assertEqual(count, 1)
         changed = source.replace(
             "P11_CERTIFIED_MODE: str | None = None",
             'P11_CERTIFIED_MODE: str | None = "prompt_learning"',
@@ -99,14 +109,26 @@ class P11ReleaseEvidenceTests(unittest.TestCase):
         real = entry(model_hash, real=True)
         py39 = entry(model_hash, version="3.9.25", networkx="3.1")
         modern = entry(model_hash)
-        result = seal(
-            development, confirmation, real, py39, modern,
-            validated_commit="07ac5f9",
+        qualification = (ROOT / "src/starnet/policy/p11_qualification.py").read_bytes()
+        with patch("scripts.seal_p11_release.subprocess.check_output",
+                   return_value=qualification) as historical:
+            result = seal(
+                development, confirmation, real, py39, modern,
+                validated_commit="unit-test-fixture",
+            )
+        historical.assert_called_once_with(
+            ["git", "show", "unit-test-fixture:src/starnet/policy/p11_qualification.py"],
+            cwd=ROOT,
         )
         self.assertTrue(result["activation_seal_passed"])
         self.assertTrue(result["unreleased_entry_gate_passed"])
         self.assertFalse(result["release_gate_passed"])
         self.assertIn("final ZIP execution", result["release_gate_pending"])
+        with patch("scripts.seal_p11_release.subprocess.check_output",
+                   return_value=b"mismatched qualification source"):
+            with self.assertRaisesRegex(ValueError, "validated commit"):
+                seal(development, confirmation, real, py39, modern,
+                     validated_commit="unit-test-fixture")
         rejected = dict(confirmation, statistical_gate_passed=False)
         with self.assertRaisesRegex(ValueError, "confirmation"):
             seal(development, rejected, real, py39, modern,
