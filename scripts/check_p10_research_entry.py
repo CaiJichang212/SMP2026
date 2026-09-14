@@ -350,6 +350,7 @@ def main() -> int:
         "llm_mode": args.llm_mode,
         "environment": "public custom-seed sandbox" if args.remote else "corrected local simulator",
         "python_version": sys.version.split()[0],
+        "entry_runner_sha256": digest_bytes(Path(__file__).read_bytes()),
         "assembly": audit,
         "assembled_model_sha256": digest_bytes(assembled.encode("utf-8")),
         "complete": False,
