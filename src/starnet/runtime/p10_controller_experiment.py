@@ -177,14 +177,9 @@ class P10RuntimeController(P8RuntimeController):
                     + candidate.reason,
                     candidate.evidence_ids,
                 )
-            else:
-                display[candidate_id] = Candidate(
-                    candidate_id, candidate.action, candidate.priority,
-                    candidate.score, candidate.roi,
-                    "P9 ORIGINAL IMMEDIATE candidate; score is not numerically comparable "
-                    "to terminal continuation gains; " + candidate.reason,
-                    candidate.evidence_ids,
-                )
+        if not any(candidate.action == decision.baseline_action
+                   for candidate in display.values()):
+            return
         self.candidates = {identity: proposed, **display}
         self.p10_options = True
         # RuntimeController creates one combined LLM request. P8's specialized

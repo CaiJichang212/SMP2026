@@ -58,7 +58,7 @@
     "registered_before_restarted_complete_matrix": true,
     "excluded_checkpoint": "the interrupted first four-family run used a mock ranker that always selected P10 and is not part of results",
     "display_basis": "PG reference, P8 proposal and P10 proposal use equal-resource terminal continuation gain; their displayed ROI is gain divided by current total budget",
-    "ordinary_candidates": "retain original P9 candidate IDs/actions for valid LLM rejection and deterministic fallback, but label immediate scores as non-comparable to terminal continuation gains",
+    "ordinary_candidates": "retain the complete original P9 candidate map internally for invalid/unavailable deterministic fallback; expose only its PG reference in the terminal-gain LLM comparison so immediate scores cannot suppress complete plans",
     "mock_ranker": "select maximum terminal continuation gain among P10, P8 and PG-reference alternatives; never force P10 by identity",
     "combined_initial_invariant": "the response gate is closed at the initial full scan, so combined supplies no response override to root plan search and must propose the same plan as plan_only"
   }

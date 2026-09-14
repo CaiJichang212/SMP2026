@@ -181,7 +181,7 @@ def main() -> int:
     write_json(args.raw_output, raw)
     compact = {
         "config": config, "complete": raw["complete"],
-        "raw_log": {"path": str(args.raw_output.relative_to(ROOT)),
+        "raw_log": {"path": str(args.raw_output.resolve().relative_to(ROOT)),
                     "sha256": digest(args.raw_output), "committed": False},
         "existing_response_evidence": {
             "cases": 18, "report_sha256": digest(RESPONSE_REPORT),

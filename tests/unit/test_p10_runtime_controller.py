@@ -209,6 +209,11 @@ class P10RuntimeControllerTests(unittest.TestCase):
             )
             self.assertEqual(controller.candidates["pg:reference"].score, 0.0)
             self.assertIn("PG REFERENCE", controller.candidates["pg:reference"].reason)
+            self.assertTrue(all(
+                candidate.roi == candidate.score / env.get_remaining_budget()
+                if candidate.score else candidate.roi == 0.0
+                for candidate in controller.candidates.values()
+            ))
             controller._create_plan(env.get_remaining_budget())
         self.assertEqual(controller.queue, ["p8:proposal"])
         self.assertEqual(controller.p10_pending, [])
