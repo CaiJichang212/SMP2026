@@ -1,0 +1,27 @@
+{
+  "experiment": "P10 evidence-gated online response mixture",
+  "registered_before_execution": true,
+  "scope": "new experimental candidate; preserve prior soft-mixture results; no current P9 production activation",
+  "cases": "same 18 previously consumed cases as p10-online-response-mixture-development-20260914; no new seed or holdout",
+  "candidate": {
+    "minimum_uncensored_first_observations": 4,
+    "posterior_threshold": 0.95,
+    "eligible_models": ["aligned", "inverse"],
+    "before_gate": "untried targets use exactly 12.75 for their first slot",
+    "after_gate": "untried targets use the posterior-weighted conditional mean response",
+    "tried_target": "always use the target's own public first response with published turn decay",
+    "censoring": "responses at an opinion bound or starting outside [-100,100] do not update likelihood"
+  },
+  "comparators": ["soft mixture", "fixed 12.75"],
+  "structure_modes": ["unrestricted", "full_gate"],
+  "required_results": [
+    "paired final score and win/tie/loss by consumed response stratum",
+    "first selected-action and candidate-set divergence",
+    "gate activation action and posterior weights",
+    "number of pre-gate decisions protected from soft posterior movement",
+    "action failures, budget, public observation and action-log hashes"
+  ],
+  "interpretation": "measure whether the fixed warm-up removes transient independent-distribution losses while retaining genuine aligned/inverse terminal gain; consumed data cannot qualify production",
+  "module_boundary": "public response ledger lives in an independent starnet.policy module, has no environment or Blackboard access, and is injected into planners as a response callable",
+  "production_enabled": false
+}
