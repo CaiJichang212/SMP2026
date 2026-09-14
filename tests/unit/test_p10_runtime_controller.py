@@ -7,6 +7,7 @@ from starnet.policy.actions import Action
 from starnet.policy.candidates import Candidate
 from starnet.policy.config import PolicyConfig, PolicyMode
 from starnet.policy.p10_structure_plan_experiment import FullPlanDecision, FullStructurePlan
+from starnet.policy.public_response_mixture import PublicResponseMixtureLedger
 from starnet.runtime.controller import ControllerState
 from starnet.runtime.env_adapter import apply_action_outcome
 from starnet.runtime.p10_controller_experiment import P10RuntimeController
@@ -202,10 +203,54 @@ class P10RuntimeControllerTests(unittest.TestCase):
             self.assertEqual(len(controller.candidates), 3)
             self.assertIn("p8:proposal", controller.candidates)
             self.assertIn("pg:reference", controller.candidates)
+            self.assertAlmostEqual(
+                controller.candidates["p8:proposal"].roi,
+                controller.candidates["p8:proposal"].score / env.get_remaining_budget(),
+            )
+            self.assertEqual(controller.candidates["pg:reference"].score, 0.0)
+            self.assertIn("PG REFERENCE", controller.candidates["pg:reference"].reason)
             controller._create_plan(env.get_remaining_budget())
         self.assertEqual(controller.queue, ["p8:proposal"])
         self.assertEqual(controller.p10_pending, [])
         self.assertEqual(controller.p8_selected_proposals, 1)
+
+    def test_invalid_llm_uses_original_p8_fallback_even_when_p10_scores_higher(self):
+        def p8_refresh(controller, budget, phase):
+            controller.effective_policy_mode = PolicyMode.PUBLIC_GREEDY
+            controller.analysis = controller.analyst.analyze(controller.blackboard)
+            proposal = Candidate("p8:proposal", Action("shield", 1), 0, 3.0, 0.6,
+                                 "P8", ("p8:proposal",))
+            reference = Candidate("pg:reference", Action("comm", 3, prompt_id=1),
+                                  0, 0.0, 0.0, "PG", ("pg:reference",))
+            controller.candidates = {proposal.candidate_id: proposal,
+                                     reference.candidate_id: reference}
+            controller.p8_options = True
+
+        env, controller = self.controller(lambda payload: {"candidate_id": "invalid"})
+        plan, decision = plan_fixture()
+        with patch("starnet.runtime.p10_controller_experiment.P8RuntimeController._refresh_candidates",
+                   p8_refresh), \
+             patch("starnet.runtime.p10_controller_experiment.search_full_structure_plan",
+                   return_value=plan), \
+             patch("starnet.runtime.p10_controller_experiment.choose_full_plan",
+                   return_value=decision):
+            controller._refresh_candidates(env.get_remaining_budget(), "test")
+            controller._create_plan(env.get_remaining_budget())
+        self.assertEqual(controller.queue, ["p8:proposal"])
+        self.assertNotIn(controller.p10_plan_id, controller.queue)
+        self.assertEqual(controller.p10_pending, [])
+
+    def test_combined_initial_plan_uses_original_p9_estimator_before_gate(self):
+        env, controller = self.controller(None)
+        controller.p10_experiment_mode = "combined"
+        controller.p10_response_estimator = PublicResponseMixtureLedger()
+        with patch("starnet.runtime.p10_controller_experiment.P8RuntimeController._refresh_candidates",
+                   self.baseline_refresh), \
+             patch("starnet.runtime.p10_controller_experiment.search_full_structure_plan",
+                   return_value=None) as search:
+            controller._refresh_candidates(env.get_remaining_budget(), "test")
+        self.assertEqual(search.call_count, 1)
+        self.assertIsNone(search.call_args.kwargs["response_estimator"])
 
     def test_failed_middle_action_clears_prefix_after_debited_step(self):
         def approve(payload):
@@ -236,6 +281,9 @@ class P10RuntimeControllerTests(unittest.TestCase):
         class Ledger:
             def __init__(self):
                 self.observed = []
+
+            def gate_open(self):
+                return True
 
             def predict(self, node_id, persona, turn, observed, *, gated):
                 return 12.75 * (0.5 ** (turn - 1))

@@ -147,10 +147,11 @@ class P10RuntimeController(P8RuntimeController):
             plan.structure_actions[0],
             0,
             min(selection_mean, audit_mean),
-            min(selection_mean, audit_mean) / cost,
+            min(selection_mean, audit_mean) / max(budget, 0.5),
             "P10 COMPLETE PREFIX APPROVAL: selecting this candidate ID authorizes every "
             f"listed structure action in order, one validated action per host step; sequence=[{sequence}]; "
-            f"structure_cost={cost:.1f}; bounded-response assumptions: selection mean={selection_mean:.6f}, "
+            f"structure_cost={cost:.1f}; equal-resource terminal comparison uses current total "
+            f"budget={budget:.1f}; bounded-response assumptions: selection mean={selection_mean:.6f}, "
             f"minimum={min(decision.selection_deltas):.6f}; independent audit mean={audit_mean:.6f}, "
             f"minimum={min(decision.audit_deltas):.6f}; individual negative scenarios are permitted by "
             "the preregistered mean-audited development rule; all continuation gains use the public-greedy "
@@ -159,7 +160,32 @@ class P10RuntimeController(P8RuntimeController):
             (identity,),
         )
         self.p10_plan_id = identity
-        self.candidates = {identity: proposed, **self.p10_original_candidates}
+        display = {}
+        for candidate_id, candidate in self.p10_original_candidates.items():
+            if candidate.action == decision.baseline_action:
+                display[candidate_id] = Candidate(
+                    candidate_id, candidate.action, candidate.priority, 0.0, 0.0,
+                    "PG REFERENCE: equal-resource public-greedy continuation gain=0; "
+                    + candidate.reason,
+                    candidate.evidence_ids,
+                )
+            elif self.p10_original_p8_options and candidate_id.startswith("p8:"):
+                display[candidate_id] = Candidate(
+                    candidate_id, candidate.action, candidate.priority,
+                    candidate.score, candidate.score / max(budget, 0.5),
+                    "P8 equal-resource terminal continuation gain relative to PG; "
+                    + candidate.reason,
+                    candidate.evidence_ids,
+                )
+            else:
+                display[candidate_id] = Candidate(
+                    candidate_id, candidate.action, candidate.priority,
+                    candidate.score, candidate.roi,
+                    "P9 ORIGINAL IMMEDIATE candidate; score is not numerically comparable "
+                    "to terminal continuation gains; " + candidate.reason,
+                    candidate.evidence_ids,
+                )
+        self.candidates = {identity: proposed, **display}
         self.p10_options = True
         # RuntimeController creates one combined LLM request. P8's specialized
         # accounting is reproduced after the selected original ID is known.
@@ -228,7 +254,7 @@ class P10RuntimeController(P8RuntimeController):
 
     def _p10_response_fn(self):
         estimator = self.p10_response_estimator
-        if estimator is None:
+        if estimator is None or not self._response_gate_open():
             return None
         predict = getattr(estimator, "predict", None)
         if not callable(predict):

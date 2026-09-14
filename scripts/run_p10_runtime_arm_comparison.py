@@ -38,12 +38,16 @@ def json_digest(value) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
-def rank_first_with_plan(payload):
+def rank_terminal_then_first(payload):
     candidates = payload["candidates"]
-    item = next(
-        (candidate for candidate in candidates
-         if candidate["candidate_id"].startswith("p10-plan:")),
-        candidates[0],
+    terminal = [
+        candidate for candidate in candidates
+        if (candidate["candidate_id"].startswith(("p10-plan:", "p8:"))
+            or candidate["reason"].startswith("PG REFERENCE:"))
+    ]
+    item = (
+        max(terminal, key=lambda candidate: (candidate["score"], candidate["candidate_id"]))
+        if terminal else candidates[0]
     )
     return {
         "state_version": payload["state_version"], "mode": "single_action",
@@ -60,13 +64,13 @@ def run_arm(seed, arm):
     if arm == "p9":
         model = ParticipantSquadModel(env, people, llm)
         model.controller = P8RuntimeController(
-            env, llm_ranker=rank_first_with_plan,
+            env, llm_ranker=rank_terminal_then_first,
             stage=ContestStage.PRELIMINARY, config=model.controller.config,
             p8_mode="conservative",
         )
     else:
         model = P10TrialModel(env, people, llm, experiment_mode=arm)
-        model.controller.commander.llm_ranker = rank_first_with_plan
+        model.controller.commander.llm_ranker = rank_terminal_then_first
     while not model.controller.stopped:
         before = len(env.calls)
         model.step()
