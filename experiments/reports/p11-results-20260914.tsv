@@ -10,3 +10,5 @@ experiment	commit	metric	status	description
 8	86a8e74	34.2151	keep_screen	low ID probe plus selected-prompt response anchor vs low P11; 36 pairs; not qualified
 9	25f949a	-12.694049	reject_expanded	prior discount aborted at pair 43/252 on the preregistered -10 floor; metric is the rejecting pair, not a cohort mean
 10	f535d48	-47.081441	reject_expanded	response anchor aborted at pair 187/252 on the preregistered -10 floor; metric is the rejecting pair, not a cohort mean
+11	07ac5f9	211.863855346	keep_confirmation	360 fresh cases; core 288 mean and 12-block interval passed; prompt1-best mean -14.840817
+12	5c60537	1	qualified_release	P11 ZIP 5568d38f70974bcc9b3f6d78eb36dd23b81774801dc597cffa81b3bf9c8ec739; actual Python3.9/modern execution and metadata-only byte proof passed; official score pending
