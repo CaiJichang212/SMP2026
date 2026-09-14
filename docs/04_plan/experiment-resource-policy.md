@@ -6,7 +6,7 @@
 
 - 同时只运行一个计算任务；新矩阵默认 `--workers 1`。子 Agent 不自行启动并行重算。
 - 用 systemd 对整个任务进程树设置 `CPUQuota=75%`，即合计最多 0.75 核，约为本机总算力的 37.5%。这不是每个 worker 各 75%。
-- 设置 `Nice=19`，优先让出 CPU；当前机器可绑定 CPU 1，为其他工作留出 CPU 0。
+- 设置所有线程 `Nice=19`、任务组 `CPUWeight=10`，优先让出 CPU；当前机器可绑定 CPU 1，为其他工作留出 CPU 0。
 - 设置 `MemoryHigh=1G` 作为内存软约束，持续观察内存和 swap；不使用会直接杀死正在保存数据的进程的激进硬限额。
 - 保存可恢复进度；若需要暂停，先保留检查点。资源限额改变只影响实验速度，不用它调整策略参数或门槛。
 
@@ -14,7 +14,7 @@
 
 ```bash
 sudo -n systemd-run --unit=smp2026-<本次唯一任务名> --uid=ubuntu --wait --pipe --collect \
-  -p CPUQuota=75% -p MemoryHigh=1G -p Nice=19 -p CPUAffinity=1 \
+  -p CPUQuota=75% -p CPUWeight=10 -p MemoryHigh=1G -p Nice=19 -p CPUAffinity=1 \
   -p WorkingDirectory=/home/ubuntu/SMP2026casevo/SMP2026 \
   /home/ubuntu/.local/bin/uv run python <脚本与参数>
 ```
@@ -22,3 +22,7 @@ sudo -n systemd-run --unit=smp2026-<本次唯一任务名> --uid=ubuntu --wait -
 仅限制本任务，不能给整个用户会话或服务器的其他服务统一降速。当前进行中的 P11 确认
 为保留进度仍有两个 worker，它们已经移入同一个受限 scope，共享上述总配额。
 后续不要再另外启动一个同样配额的重任务，造成总用量叠加。
+
+迁移正在运行的进程时，既有内存页面可能仍记账在旧 cgroup。`MemoryHigh` 是软约束，
+不能把新 scope 的 `MemoryCurrent` 当作整个任务的 RSS；还需检查各进程 RSS 和全机
+available/swap。CPU 配额在迁移后立即对该任务组生效，本次四秒采样实测为 0.749 核。
