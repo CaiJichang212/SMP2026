@@ -58,6 +58,24 @@ def block_bootstrap(blocks: dict[str, float], draws=10000, seed=20260914):
     return [samples[int(0.025 * draws)], samples[int(0.975 * draws)]]
 
 
+def paired_metric(rows, key):
+    values = [row["paired"][key] for row in rows]
+    return {"cases": len(values), "mean": statistics.fmean(values),
+            "minimum": min(values), "maximum": max(values),
+            "win_tie_loss": [sum(value > 1e-8 for value in values),
+                             sum(abs(value) <= 1e-8 for value in values),
+                             sum(value < -1e-8 for value in values)]}
+
+
+def response_group(case_id: str) -> str:
+    parts = case_id.split(":")
+    if parts[0] == "legacy":
+        return "legacy_independent"
+    if parts[0] == "p9":
+        return parts[3]
+    return parts[2]
+
+
 def _expected_scans(seed):
     neighbors = {int(node["id"]): [] for node in seed["nodes"]}
     for left, right in seed["edges"]:
@@ -209,24 +227,70 @@ def analyze(raw, *, confirmation):
         and row["arms"][arm].get("p11_errors", 0) == 0
         for row in ordered for arm in ARMS
     )
+    calibration_pass = all(
+        row["arms"]["p11"]["p11_probe_failures"] == 0
+        and (0.0 <= row["arms"]["p11"]["p11_probe_budget"] <= 12.0)
+        and row["arms"]["p11"]["p11_probe_budget"] % 2.0 == 0.0
+        and (confirmation or row["arms"]["p11"]["p11_probe_budget"] in (6.0, 12.0))
+        and (confirmation or not row["arms"]["p11"]["ledger"]["censored"])
+        and not row["arms"]["p11"]["ledger"]["failures"]
+        for row in ordered
+    )
     base_prompt1 = [row for row in ordered
                     if row["amplitude"] in {"base", "core_medium"} and row["prompt1_best"]]
     result = {"cohort": "confirmation" if confirmation else "development",
         "cases": len(ordered), "topology_blocks": block_values,
         "primary": {"block_weighted_mean": primary_mean, "block_bootstrap_ci95": ci},
         "identification_passed": identification, "resource_audit_passed": resource_pass,
+        "calibration_audit_passed": calibration_pass,
         "exploration": {"prompt1_best_mean_cost": exploration_cost,
                         "allowed_cost": exploration_allowed,
                         "gate_passed": exploration_cost <= exploration_allowed},
         "known_id_signed_gap": {"p9_mean": p9_gap, "p11_mean": p11_gap,
             "gate_passed": p9_gap > 0.0 and p11_gap <= 0.4 * p9_gap},
         "base_prompt1_best_mean_gain": mean(base_prompt1) if base_prompt1 else None,
-        "by_amplitude": {amplitude: mean([row for row in ordered if row["amplitude"] == amplitude])
-                         for amplitude in sorted({row["amplitude"] for row in ordered})},
-        "by_best_prompt_id": {str(prompt_id): mean([row for row in unique
-                              if row["best_prompt_ids"] == [prompt_id]])
-                              for prompt_id in (1, 2, 3)}}
-    common = (resource_pass and identification and primary_mean > 0 and ci[0] > 0
+        "by_amplitude": {amplitude: paired_metric(
+            [row for row in ordered if row["amplitude"] == amplitude], "p11_vs_p9")
+            for amplitude in sorted({row["amplitude"] for row in ordered})},
+        "by_response_group": {group: paired_metric(
+            [row for row in ordered if response_group(row["case_id"]) == group], "p11_vs_p9")
+            for group in sorted({response_group(row["case_id"]) for row in ordered})},
+        "by_best_prompt_id": {str(prompt_id): paired_metric(
+            [row for row in unique if row["best_prompt_ids"] == [prompt_id]], "p11_vs_p9")
+            for prompt_id in (1, 2, 3)},
+        "decomposition": {
+            "fixed1_online_magnitude_vs_p9": paired_metric(ordered, "magnitude_vs_p9"),
+            "prompt_learning_beyond_magnitude": {
+                "cases": len(ordered),
+                "mean": statistics.fmean(
+                    row["arms"]["p11"]["score"]
+                    - row["arms"]["fixed1_online_magnitude_no_probe"]["score"]
+                    for row in ordered
+                ),
+            },
+        },
+        "probe": {
+            "mean_budget": statistics.fmean(
+                row["arms"]["p11"]["p11_probe_budget"] for row in ordered
+            ),
+            "budget_6_cases": sum(row["arms"]["p11"]["p11_probe_budget"] == 6.0
+                                  for row in ordered),
+            "budget_12_cases": sum(row["arms"]["p11"]["p11_probe_budget"] == 12.0
+                                   for row in ordered),
+            "fallback_cases": sum(row["arms"]["p11"]["p11_fallback_to_p9"]
+                                  for row in ordered),
+            "confident_cases": sum(row["arms"]["p11"]["ledger"]["confident"]
+                                   for row in ordered),
+        },
+        "losses_vs_p9": sorted(
+            ({"case_id": row["case_id"], "delta": row["paired"]["p11_vs_p9"],
+              "probe_budget": row["arms"]["p11"]["p11_probe_budget"],
+              "selected_prompt_id": row["arms"]["p11"]["p11_selected_prompt_id"]}
+             for row in ordered if row["paired"]["p11_vs_p9"] < -1e-8),
+            key=lambda item: item["delta"],
+        )}
+    common = (resource_pass and calibration_pass and identification
+              and primary_mean > 0 and ci[0] > 0
               and result["exploration"]["gate_passed"]
               and result["known_id_signed_gap"]["gate_passed"])
     if confirmation:
@@ -241,6 +305,13 @@ def analyze(raw, *, confirmation):
         common = (common and mean(full) > 0 and mean(stress) >= -1e-8
                   and sum(value > 1e-8 for value in family_means.values()) >= 2)
     result["gate_passed"] = common
+    result["protocol_sha256"] = config["protocol_sha256"]
+    result["source_snapshot"] = config["source_snapshot"]
+    result["selected_variant"] = "prompt_learning"
+    if confirmation:
+        result["statistical_gate_passed"] = common
+    else:
+        result["development_gate_passed"] = common
     return result
 
 
