@@ -162,7 +162,8 @@ def verify_p11_release() -> None:
     if (evidence.get("selected_variant") != P11_CERTIFIED_MODE
             or evidence.get("statistical_gate_passed") is not True
             or evidence.get("activation_seal_passed") is not True
-            or evidence.get("unreleased_entry_gate_passed") is not True):
+            or evidence.get("unreleased_entry_gate_passed") is not True
+            or evidence.get("release_gate_passed") is not False):
         raise SystemExit("P11 statistical evidence cannot replace its entry activation seal.")
     if not P11_RELEASE_MANIFEST.is_file():
         raise SystemExit("P11 independent source-review manifest is missing.")
