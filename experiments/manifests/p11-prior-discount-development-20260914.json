@@ -1,0 +1,27 @@
+{
+  "experiment": "P11 unknown-node empirical prior discount",
+  "date": "2026-09-14",
+  "motivation": "A consumed ER attribution showed that an overestimated cross-node empirical prior can persuade a node before shielding it and displace higher-value repeated persuasion; this single case does not determine the result",
+  "candidate": "multiply only the empirical selected-prompt prior transferred to unknown nodes by 0.9",
+  "control": "original frozen P11 prior multiplier 1.0",
+  "invariants": [
+    "same PromptCalibrationLedger, selected prompt ID and probe sequence",
+    "same probe budget and P9 conservative structure boundary",
+    "a node with its own observed selected-prompt response uses that response without discount",
+    "empirical mean and discounted prediction are logged separately",
+    "experimental subclass is not in INLINE, canonical entry, config or qualification"
+  ],
+  "development": {
+    "cases": "six consumed legacy repetition-1 graphs crossed with all six permutations of base [15,10,-5]",
+    "pairs": 36,
+    "workers": 1
+  },
+  "screen": {
+    "paired_mean_gain_over_original_p11": ">1",
+    "prompt1_best_group_mean_gain": ">0",
+    "nonnegative_family_means": ">=4 of 6",
+    "worst_pair_gain": ">=-10"
+  },
+  "interpretation": "development screen only; passing does not enable, qualify or open confirmation",
+  "production_enabled": false
+}
