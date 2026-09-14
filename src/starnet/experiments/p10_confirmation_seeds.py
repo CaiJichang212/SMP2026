@@ -12,6 +12,9 @@ from starnet.experiments.p9_distribution_seeds import _base_opinion, _graph
 FAMILIES = ("er_resampled", "ba_resampled", "ws_resampled", "sbm_resampled")
 STRATA = ("independent", "aligned_contaminated", "inverse_contaminated", "degree_correlated")
 CONFIRMATION_REPETITIONS = (1201, 1202, 1203)
+# Reserved by p10-guarded-combined-20260914; seed generation remains closed
+# until a guarded development winner is frozen.
+GUARDED_CONFIRMATION_REPETITIONS = (1301, 1302, 1303)
 
 
 def _rng(family: str, repetition: int, stream: str) -> random.Random:
@@ -92,4 +95,7 @@ def seed_payload(
     }
 
 
-__all__ = ["CONFIRMATION_REPETITIONS", "FAMILIES", "STRATA", "seed_payload"]
+__all__ = [
+    "CONFIRMATION_REPETITIONS", "FAMILIES", "GUARDED_CONFIRMATION_REPETITIONS",
+    "STRATA", "seed_payload",
+]
