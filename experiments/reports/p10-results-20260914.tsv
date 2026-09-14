@@ -2,3 +2,5 @@ experiment	commit	metric	status	description
 0	8435f87	0.000000000	baseline	qualified bounded P9 conservative
 1	333aa68	0.802976324	keep_development	beam4 full structural prefix; six P8-501 development seeds; 1/5/0
 2	333aa68	0.802976324	reject_complexity	beam6 ties beam4 on every seed with higher mean runtime
+3	69b2421	3.777558463	keep_development	depth12 width4 strict; two consumed cohorts; 2/10/0
+4	69b2421	7.508684291	keep_development	depth12 width4 mean-audited; two consumed cohorts; 6/6/0
