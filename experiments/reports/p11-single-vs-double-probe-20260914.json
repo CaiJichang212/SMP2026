@@ -1,0 +1,5983 @@
+{
+  "config": {
+    "protocol_sha256": "3098659347e4ce13bbce394ae874cee5658dd27fc329ee1b5b4c1ca991830c49",
+    "runner_sha256": "130265b9cd1f07c5e6d8f557402d049d270999afd5dd0912c557e97be8011518",
+    "ledger_sha256": "a462e75c3c1bf6d1c6585e63ce5247c5ad5981aadcac206abbe1a93f7c33cec1",
+    "families": [
+      "er_balanced",
+      "ba_negative_hubs",
+      "ws_peace_majority",
+      "sbm_negative_bridges",
+      "sbm_violent_cluster",
+      "three_sparse_components"
+    ],
+    "prompt_configs": [
+      "base_15_10_-5",
+      "base_15_-5_10",
+      "base_10_15_-5",
+      "base_10_-5_15",
+      "base_-5_15_10",
+      "base_-5_10_15",
+      "wide_24_7_-12",
+      "wide_-12_24_7",
+      "wide_7_-12_24",
+      "close_6_5_4",
+      "close_4_6_5",
+      "close_5_4_6"
+    ],
+    "cases": 72,
+    "workers": 1
+  },
+  "complete": true,
+  "accuracy": {
+    "single_calibrated": 1.0,
+    "double_calibrated": 1.0
+  },
+  "comparisons": {
+    "single_calibrated_vs_fixed": {
+      "cases": 72,
+      "mean": 305.233892813076,
+      "minimum": 0.0,
+      "maximum": 1376.9975683734942,
+      "win_tie_loss": [
+        48,
+        24,
+        0
+      ],
+      "losses": []
+    },
+    "double_calibrated_vs_fixed": {
+      "cases": 72,
+      "mean": 287.3909535448672,
+      "minimum": 0.0,
+      "maximum": 1312.512703915663,
+      "win_tie_loss": [
+        48,
+        24,
+        0
+      ],
+      "losses": []
+    },
+    "single_vs_double_calibrated": {
+      "cases": 72,
+      "mean": 24.4867117100705,
+      "minimum": 2.657878313253029,
+      "maximum": 60.45624197121589,
+      "win_tie_loss": [
+        72,
+        0,
+        0
+      ],
+      "losses": []
+    }
+  },
+  "rows": [
+    {
+      "family": "er_balanced",
+      "prompt_config": "base_15_10_-5",
+      "seed_sha256": "db6910b99174ab78acea7ed1794abe64d7552390a151e3fff03b0498d1480a99",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": 706.7595110837439,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 706.7595110837439,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 685.0368528325124,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 685.0368528325124,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "er_balanced",
+      "prompt_config": "base_15_-5_10",
+      "seed_sha256": "42316393c582a674afba5346ed8b666d6d2b9806468317f32457fa5ad3c32b02",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": 705.4430615763546,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 705.4430615763546,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 682.8122660098522,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 682.8122660098522,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "er_balanced",
+      "prompt_config": "base_10_15_-5",
+      "seed_sha256": "dc0a8ff400889306443441007ebd05ff888d254ed089d8be19535850a8ed6a48",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": 705.8818780788179,
+          "prompt_id": 2,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 515.4526514778324,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 683.5537949507392,
+          "prompt_id": 2,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 501.87901662561575,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "er_balanced",
+      "prompt_config": "base_10_-5_15",
+      "seed_sha256": "148f989ef62fbaaa7e4a84d5509b6658238702102322ad7711bf6efbf72f5f5b",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": 704.1266120689656,
+          "prompt_id": 3,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 513.6973854679802,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 680.5876791871922,
+          "prompt_id": 3,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 498.91290086206897,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "er_balanced",
+      "prompt_config": "base_-5_15_10",
+      "seed_sha256": "245b31d866737b90364ac5f7a0e76cefe790ab58268d6b2bec9b9466747db6be",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": 701.9325295566505,
+          "prompt_id": 2,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -59.78437684729061,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 676.8800344827588,
+          "prompt_id": 2,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -49.81907881773397,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "er_balanced",
+      "prompt_config": "base_-5_10_15",
+      "seed_sha256": "aca471faa33934bdba1cf148d4ce5a1d2a218921bea02fbcefc09154d5fa19bb",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": 701.4937130541872,
+          "prompt_id": 3,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -60.223193349753664,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 676.138505541872,
+          "prompt_id": 3,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -50.56060775862066,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "er_balanced",
+      "prompt_config": "wide_24_7_-12",
+      "seed_sha256": "927294ffd09e40543e19dbacc3680e7c9300b0138bddf533a8f4090836c6c031",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": 1051.550674876847,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 1051.550674876847,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 1015.462486945813,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 1015.462486945813,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "er_balanced",
+      "prompt_config": "wide_-12_24_7",
+      "seed_sha256": "8b0da36128f1d7de7261762cbdaf1b85e2c98b6686f9ed7e57f3941c6bf8c287",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": 1043.5642145320196,
+          "prompt_id": 2,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -327.526216995074,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 1001.9666602216749,
+          "prompt_id": 2,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -306.09174371921193,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "er_balanced",
+      "prompt_config": "wide_7_-12_24",
+      "seed_sha256": "3dca48d779bdbe62ab15305b5066e581d5e59b8bf67ff95b18af2ec86bc72808",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": 1045.4072438423643,
+          "prompt_id": 3,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 397.9478733990147,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 1005.0810817733992,
+          "prompt_id": 3,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 387.3868354679802,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "er_balanced",
+      "prompt_config": "close_6_5_4",
+      "seed_sha256": "6c5cb6a59b41e030799d04042da69ee9c1d43e2d1dd005b6608c8819393725d0",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": 360.7396610837438,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 360.7396610837438,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 352.534937684729,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 352.534937684729,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "er_balanced",
+      "prompt_config": "close_4_6_5",
+      "seed_sha256": "511b79ba6e04dcb9f5b935446cda88e83a7c356b85dd3d28d71aa7d9a2869fb8",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": 360.3008445812808,
+          "prompt_id": 2,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 284.1291539408866,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 351.79340874384224,
+          "prompt_id": 2,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 279.123497413793,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "er_balanced",
+      "prompt_config": "close_5_4_6",
+      "seed_sha256": "90af6f462b2bde1198e15495ffcca1ee4328946d1880053c8568737d1729605f",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": 360.38860788177345,
+          "prompt_id": 3,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 322.30276256157634,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "d6093249edc1ae9d7521977709b2d71377e9a024f20bc14ee49e2c09e6ce8414",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 351.9417145320196,
+          "prompt_id": 3,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 315.60675886699505,
+          "prompt_id": 1,
+          "probe_nodes": [
+            2,
+            1
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "cfcb85d9489d168f5f863ee50233dabe0e349d000748b3bdc0d936bb6b71aae0",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ba_negative_hubs",
+      "prompt_config": "base_15_10_-5",
+      "seed_sha256": "d4d32f4c15ff3dfc4448ec4a76a6497ec4e9400bf5e8dbde44bd230eea7d3d7d",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": 324.2186826054217,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 324.2186826054217,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 313.3163030873493,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 313.3163030873493,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ba_negative_hubs",
+      "prompt_config": "base_15_-5_10",
+      "seed_sha256": "f74001432584c1f35c8900dfb3aec16b18b71ea2a2aadc0eab74986be7494d34",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": 320.9795523343373,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 320.9795523343373,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 306.8839100150602,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 306.8839100150602,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ba_negative_hubs",
+      "prompt_config": "base_10_15_-5",
+      "seed_sha256": "60d690fa750725c27d13be375ea59ce1ff1ef4e940c7630dbfb8ed197f0f5bc7",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": 322.0592624246987,
+          "prompt_id": 2,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 130.80960015060245,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 309.02804103915656,
+          "prompt_id": 2,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 126.73460993975903,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ba_negative_hubs",
+      "prompt_config": "base_10_-5_15",
+      "seed_sha256": "dcc45b10743c2347810a1600b77942f8f8075348ea83d1581042c580c5183b06",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": 317.74042206325294,
+          "prompt_id": 3,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 126.49075978915663,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 300.45151694277104,
+          "prompt_id": 3,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 118.15808584337348,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ba_negative_hubs",
+      "prompt_config": "base_-5_15_10",
+      "seed_sha256": "dc3132116964b4c427a9166974b2186c619c7bba46ecc8a357ece57e100c6f01",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": 312.3418716114457,
+          "prompt_id": 2,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -452.6567774849396,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 289.7308618222891,
+          "prompt_id": 2,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -439.4428625753009,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ba_negative_hubs",
+      "prompt_config": "base_-5_10_15",
+      "seed_sha256": "d5ece6a0b348a063df34b79ac4d00990d024e19762840832b331fd0edf644b4a",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": 311.26216152108424,
+          "prompt_id": 3,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -453.7364875753011,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 287.5867307981928,
+          "prompt_id": 3,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -441.5869935993974,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ba_negative_hubs",
+      "prompt_config": "wide_24_7_-12",
+      "seed_sha256": "9769d5ba5a6e6ba36252e5c2d4d3ba2c80b56876c44da7b77642be6304fe841b",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": 673.434741114458,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 673.434741114458,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 651.3074817771086,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 651.3074817771086,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ba_negative_hubs",
+      "prompt_config": "wide_-12_24_7",
+      "seed_sha256": "790e458305548c7cc1c54581865582570aad233190942715946036de600e78aa",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": 653.7840174698796,
+          "prompt_id": 2,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -723.2135509036148,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 612.2842971385544,
+          "prompt_id": 2,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -700.2284067771086,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ba_negative_hubs",
+      "prompt_config": "wide_7_-12_24",
+      "seed_sha256": "f981fa056835aff30bde82963acdde88d3168f75a46ce3095e7124817db1d024",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": 658.3187998493976,
+          "prompt_id": 3,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 8.069948117469869,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 621.2896474397593,
+          "prompt_id": 3,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 1.4919817018071693,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ba_negative_hubs",
+      "prompt_config": "close_6_5_4",
+      "seed_sha256": "912a52cc12fa57524e8197e3a775f772fa1f9976c0f0426d4302c34b4ef7dbf9",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": -28.02056415662648,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -28.02056415662648,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": -30.67844246987951,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -30.67844246987951,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ba_negative_hubs",
+      "prompt_config": "close_4_6_5",
+      "seed_sha256": "2df4586a40ba00c22dd11efc3e065ed92890e3ad98df382923a2e3f8790c7c47",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": -29.100274246987922,
+          "prompt_id": 2,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -105.60013915662648,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": -32.822573493975916,
+          "prompt_id": 2,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -105.73994593373492,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ba_negative_hubs",
+      "prompt_config": "close_5_4_6",
+      "seed_sha256": "623a7900ebaed499478a83fa8ad99c275ff4c9ae053cf3d2b5260c5532fe7aea",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": -28.884332228915635,
+          "prompt_id": 3,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -67.13426468373494,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "1c67d55239667c235479021ee6875a544f5f90ee000e9bd7f5e7bbb1ca915139",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": -32.393747289156614,
+          "prompt_id": 3,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -68.85243350903619,
+          "prompt_id": 1,
+          "probe_nodes": [
+            24,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "aa953ea7aefb5781ca1bcf2774988c10b0774c8f12b244d361b08a9bb74824f4",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ws_peace_majority",
+      "prompt_config": "base_15_10_-5",
+      "seed_sha256": "d95681ed6b14ae0eb757916839177740553368ecef01c8d596d4edd195be49c5",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": 889.5555944999999,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 889.5555944999999,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 872.5032768214285,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 872.5032768214285,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ws_peace_majority",
+      "prompt_config": "base_15_-5_10",
+      "seed_sha256": "0c2d3b23717c7bcaa2256b281230d30dd61f5a6408db513ea4f29bb7325799d0",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": 886.2488498571427,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 886.2488498571427,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 865.2683027142855,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 865.2683027142855,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ws_peace_majority",
+      "prompt_config": "base_10_15_-5",
+      "seed_sha256": "a33a205da4dd5b04a62ccaf7db80c94a72d378600fe7be31c2be622eb359d142",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": 887.3510980714282,
+          "prompt_id": 2,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 752.5325423571429,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 867.6799607499996,
+          "prompt_id": 2,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 745.0925600357142,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ws_peace_majority",
+      "prompt_config": "base_10_-5_15",
+      "seed_sha256": "d279f92a0bec764996a8af43e7770c3fcfe5fe45b2688afacba7ab45bf72ee40",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": 882.9421052142857,
+          "prompt_id": 3,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 748.1235495,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 858.0333286071427,
+          "prompt_id": 3,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 735.4459278928571,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ws_peace_majority",
+      "prompt_config": "base_-5_15_10",
+      "seed_sha256": "41e915f0d38a60122bc1dafb32c1ccbcab12c87f504a7665b14fadb28fa061d7",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": 877.4308641428569,
+          "prompt_id": 2,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 338.1566412857143,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 845.975038428571,
+          "prompt_id": 2,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 355.62543557142857,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ws_peace_majority",
+      "prompt_config": "base_-5_10_15",
+      "seed_sha256": "94ebacd06aded82e73b35a4115376a862448926924fdbcb524b0d09d3ae9b16e",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": 876.3286159285714,
+          "prompt_id": 3,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 337.0543930714285,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 843.5633803928571,
+          "prompt_id": 3,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 353.2137775357142,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ws_peace_majority",
+      "prompt_config": "wide_24_7_-12",
+      "seed_sha256": "131edd06a81d73aa1aa410b18458a41c740a27ca2fd6ca300e8a30f8a612a23f",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": 1137.2993365714285,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 1137.2993365714285,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 1104.2542250714282,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 1104.2542250714282,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ws_peace_majority",
+      "prompt_config": "wide_-12_24_7",
+      "seed_sha256": "ccaeb40e9ddcc6a51517c73f8690755b3576deea5c121c1e803803ba35386add",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": 1117.2384190714283,
+          "prompt_id": 2,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 146.5448179285714,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 1060.362048821428,
+          "prompt_id": 2,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 177.73276367857142,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ws_peace_majority",
+      "prompt_config": "wide_7_-12_24",
+      "seed_sha256": "70c22e21e7dec59d9d643e38d3511b4dfdbf385f0b91c28de367bab5ef9a289e",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": 1121.8678615714284,
+          "prompt_id": 3,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 663.4847721428572,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 1070.4910125714282,
+          "prompt_id": 3,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 653.6938501428571,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ws_peace_majority",
+      "prompt_config": "close_6_5_4",
+      "seed_sha256": "98f2c816215952254fc7ca136c02d0e5a6ddab09d62ea415fb65b4ff8a3ae68b",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": 638.7255574285715,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 638.7255574285715,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 633.9996860714286,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 633.9996860714286,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ws_peace_majority",
+      "prompt_config": "close_4_6_5",
+      "seed_sha256": "b8f72ce731206ca72c5f7676ba488e2cb71abb1d24b742bf182a3c85327cf40c",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": 637.6233092142858,
+          "prompt_id": 2,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 583.6958869285713,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 631.5880280357143,
+          "prompt_id": 2,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 582.5530677500001,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "ws_peace_majority",
+      "prompt_config": "close_5_4_6",
+      "seed_sha256": "f44cf068a2affab99257e7ff1c0105efcca82595832ab2213db58a208045c7db",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": 637.8437588571429,
+          "prompt_id": 3,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 610.8800477142858,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "063eb5da4c020c8528f408aee2870f19d9b915bf8bd59c90db466cf2b768bd81",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 632.0703596428572,
+          "prompt_id": 3,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 607.5528795000001,
+          "prompt_id": 1,
+          "probe_nodes": [
+            38,
+            50
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "b5935da6783a7f8b1d9202e0a32c8b67cf1bcdc08b1d88a094b92952ff878d56",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "prompt_config": "base_15_10_-5",
+      "seed_sha256": "7a5900314354f8d5cd0799a0c13659a22d021fc1ba0f612340caec97f2516e1f",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": 518.9716824550849,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 518.9716824550849,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 491.7906225398305,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 491.7906225398305,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "prompt_config": "base_15_-5_10",
+      "seed_sha256": "99ffec9fc3fa2b922e2dfe4352517d39ca61fcb78e211dcf624b58ac10368d65",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": 514.3972487050848,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 514.3972487050848,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 486.7728965864407,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 486.7728965864407,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "prompt_config": "base_10_15_-5",
+      "seed_sha256": "9abe48f31198e6243f0b94b5cbb10a2acbd70b91c45afb776918b42bb820c3e5",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": 515.9220599550848,
+          "prompt_id": 2,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 334.261444870339,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 488.4454719042373,
+          "prompt_id": 2,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 316.5840304635593,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "prompt_config": "base_10_-5_15",
+      "seed_sha256": "e37f3012db85336a4f84fae64c431186028d8da4bc1882cc67a1a428607a2cac",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": 509.8228149550849,
+          "prompt_id": 3,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 328.162199870339,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 481.75517063305085,
+          "prompt_id": 3,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 309.8937291923729,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "prompt_config": "base_-5_15_10",
+      "seed_sha256": "a29c569b2679f715043c4aeeb60e206dd227353163789672da3d9b5642b93d9c",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": 502.19875870508486,
+          "prompt_id": 2,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -224.44370163389837,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 473.3922940440679,
+          "prompt_id": 2,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -214.05347171864412,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "prompt_config": "base_-5_10_15",
+      "seed_sha256": "b7ed45125ea245891352bac6e3d8408760dfedd642d8e53ccd406a6a0a0c5b9e",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": 500.6739474550849,
+          "prompt_id": 3,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -225.96851288389837,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 471.71971872627125,
+          "prompt_id": 3,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -215.72604703644072,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "prompt_config": "wide_24_7_-12",
+      "seed_sha256": "2070389da1117fa9047fd471a6db4b42c5bbd2c3bba04e5f115f0218b9f95189",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": 852.974921357627,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 852.974921357627,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 808.8350635949149,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 808.8350635949149,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "prompt_config": "wide_-12_24_7",
+      "seed_sha256": "5302a668e696be46224dbba52005f33864cce4db82766c795da959e8ebaca15d",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": 825.223356607627,
+          "prompt_id": 2,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -482.7330720025424,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 778.3941928110168,
+          "prompt_id": 2,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -459.0081855618645,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "prompt_config": "wide_7_-12_24",
+      "seed_sha256": "e635f5193f401f2eb5332829700c3a4e4e44fc2abd1f5b333b3317c337907465",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": 831.627563857627,
+          "prompt_id": 3,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 213.9814725694915,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 785.4190091457625,
+          "prompt_id": 3,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 201.09010824745758,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "prompt_config": "close_6_5_4",
+      "seed_sha256": "53c165027c5f27749eb03ea652e0cc48a6095b43df208ce3f0cb9954af38f682",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": 180.69897205254242,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 180.69897205254242,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 170.06297059491527,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 170.06297059491527,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "prompt_config": "close_4_6_5",
+      "seed_sha256": "16f10dee7ca23842a6cabe9c15ece630f931215a87d0088e9a8da8e4f3291c46",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": 179.17416080254242,
+          "prompt_id": 2,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 106.50991476864407,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 168.39039527711864,
+          "prompt_id": 2,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 99.64581870084741,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_negative_bridges",
+      "prompt_config": "close_5_4_6",
+      "seed_sha256": "a110db4898bbabf4a451264a335b160357918ad08fd10e1461c9d24ac025eea1",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": 179.47912305254243,
+          "prompt_id": 3,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 143.1470000355932,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "4c94b3fe877a11f021576523d799ff77359fae525b3187e00f22e60aaf044f80",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 168.724910340678,
+          "prompt_id": 3,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 134.35262205254242,
+          "prompt_id": 1,
+          "probe_nodes": [
+            23,
+            5
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "3bcedea87fbc8be96133d0c0073167ae65da238908f29a393ed5a0dfb6a35faa",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "prompt_config": "base_15_10_-5",
+      "seed_sha256": "ca7e860b1442fb6b27183557ba445bcc32a08cffe713d7d17b3ef74fc91ca4ef",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": 138.79881325503356,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 138.79881325503356,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 121.37295335570464,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 121.37295335570464,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "prompt_config": "base_15_-5_10",
+      "seed_sha256": "db70921e88e31027f4c6a704e22126e06f8ff625bc305b0f49b649eca02ba99e",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": 138.09774697986578,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 138.09774697986578,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 119.33414882550329,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 119.33414882550329,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "prompt_config": "base_10_15_-5",
+      "seed_sha256": "df6f4a4e5567e9c1907e445c2c049b4362df21b3a7fe4e6efcb36cc7c6dde6fa",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": 138.33143573825504,
+          "prompt_id": 2,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -41.83385453020122,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 120.01375033557039,
+          "prompt_id": 2,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -52.11335620805365,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "prompt_config": "base_10_-5_15",
+      "seed_sha256": "9fedd0ec8b6a2456973fccd228225d3a3160b4ca992dd8dc424dbf716a1c9212",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": 137.39668070469799,
+          "prompt_id": 3,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -42.768609563758275,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 117.29534429530192,
+          "prompt_id": 3,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -54.83176224832201,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "prompt_config": "base_-5_15_10",
+      "seed_sha256": "7d69b9787baa66ebf55884265f3439a961b75796d4f1cbd618783ab98beb20a8",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": 136.2282369127517,
+          "prompt_id": 2,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -584.4329241610735,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 113.89733674496637,
+          "prompt_id": 2,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -574.6110894295301,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "prompt_config": "base_-5_10_15",
+      "seed_sha256": "d631231f3d99c799acd98ad7fbaee5ddeb2c657c7d82f428c779752231e1faed",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": 135.99454815436243,
+          "prompt_id": 3,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -584.6666129194628,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 113.21773523489925,
+          "prompt_id": 3,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -575.2906909395972,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "prompt_config": "wide_24_7_-12",
+      "seed_sha256": "ce96bf3ac8aca994fd740b5bcdeb77ea8927dbdad6b6a96a65ea809808502211",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": 464.1713040268456,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 464.1713040268456,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 434.32791208053686,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 434.32791208053686,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "prompt_config": "wide_-12_24_7",
+      "seed_sha256": "a0aac16055dc771e792fb3b9a2edfe9a1c1fe0dbb2391addc4e6ba04791998e2",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": 459.918168624161,
+          "prompt_id": 2,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -837.2719213087247,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 421.9591645973154,
+          "prompt_id": 2,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -817.3560025167782,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "prompt_config": "wide_7_-12_24",
+      "seed_sha256": "84c5acd98b8cd1a2d52cb2be87f2cce6ee3b2e588b0d35b5f51c7a11be3d86a3",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": 460.89966140939595,
+          "prompt_id": 3,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -151.66232550335565,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 424.8134909395973,
+          "prompt_id": 3,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -160.41867130872478,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "prompt_config": "close_6_5_4",
+      "seed_sha256": "da6b900e6580b7c001d507484e0d47932d9be1f80872b0d1b28b082171c6019d",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": -187.2280060402685,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -187.2280060402685,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": -193.48488959731543,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -193.48488959731543,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "prompt_config": "close_4_6_5",
+      "seed_sha256": "539e47e7f539e88255e1fa165830543049f7934413f7b1b1539b8890793d6d9a",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": -187.46169479865776,
+          "prompt_id": 2,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -259.52781090604014,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": -194.16449110738262,
+          "prompt_id": 2,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -263.0153337248321,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "prompt_config": "close_5_4_6",
+      "seed_sha256": "42ab5f507df2375ec6d6bada63f264c106887dce71644da14ca5c4b501703e2e",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": -187.41495704697988,
+          "prompt_id": 3,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -223.44801510067128,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "3a3c08af118d49f3162332f0372288df0c2bdde9b1752c9e431e11820cce0e55",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": -194.02857080536918,
+          "prompt_id": 3,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -228.45399211409398,
+          "prompt_id": 1,
+          "probe_nodes": [
+            39,
+            35
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "913143cbde5161ee18ab66186e46139925eb97a6a25560d04882a5fc7e420272",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "three_sparse_components",
+      "prompt_config": "base_15_10_-5",
+      "seed_sha256": "e915b9c39819f63166c891ccf257bcdb5911d943a3c5d3f545b605b08437045f",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": 141.026033901011,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 141.026033901011,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 114.10919533029148,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 114.10919533029148,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "three_sparse_components",
+      "prompt_config": "base_15_-5_10",
+      "seed_sha256": "d620bab2b2f847df7b3605746781527076bd76bda4917f1fcaf9c21d9c4be624",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": 139.9920761590755,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 139.9920761590755,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 110.76692339480763,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 110.76692339480763,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "three_sparse_components",
+      "prompt_config": "base_10_15_-5",
+      "seed_sha256": "54565a180802844ea9dcd3860b78fbaeb7d0720f977d74b779ca857cdfd5e1e8",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": 140.33672873972068,
+          "prompt_id": 2,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -17.983330871552916,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 111.8810140399689,
+          "prompt_id": 2,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -33.619575725150916,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "three_sparse_components",
+      "prompt_config": "base_10_-5_15",
+      "seed_sha256": "d8bba9cc3416d07f108f8b0fb486c2d99ead242db9ceabe470efba4bddd2bd3e",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": 138.95811841714004,
+          "prompt_id": 3,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -19.36194119413355,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 107.42465145932375,
+          "prompt_id": 3,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -38.07593830579607,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "three_sparse_components",
+      "prompt_config": "base_-5_15_10",
+      "seed_sha256": "73a3ef831551505c3c86c99e01b76f58c8d6f9d07d01b67e72214b0f93572b2d",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": 137.23485551391423,
+          "prompt_id": 2,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -496.0453829311803,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 101.85419823351731,
+          "prompt_id": 2,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -480.148160826962,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "three_sparse_components",
+      "prompt_config": "base_-5_10_15",
+      "seed_sha256": "e3743ad4d49158b944b1ebc3d7ebd2024c6d1a7c9cece6ef6bb54d66627c9ec1",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": 136.89020293326908,
+          "prompt_id": 3,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -496.3900355118255,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 100.74010758835601,
+          "prompt_id": 3,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -481.2622514721233,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "three_sparse_components",
+      "prompt_config": "wide_24_7_-12",
+      "seed_sha256": "d845ae420f6ab6990eb3dc2d3de3bff47448e5a3419ffd79ba2a899fa3fa0c0f",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": 427.5875430722714,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": 427.5875430722714,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 381.1350738752491,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": 381.1350738752491,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "three_sparse_components",
+      "prompt_config": "wide_-12_24_7",
+      "seed_sha256": "6d8e7cb014fd2a5da94615fd40c2b4992e0252df839a82dd2a5e9f96eb9bffd8",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": 421.3148661045295,
+          "prompt_id": 2,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -718.589563096641,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 360.8586241333136,
+          "prompt_id": 2,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -686.745622175549,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "three_sparse_components",
+      "prompt_config": "wide_7_-12_24",
+      "seed_sha256": "efa1c0137f0bc56a7a7c469e2f6e05a8bba158fce0c6ec25097acfb8112bd332",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": 422.76240694323917,
+          "prompt_id": 3,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -115.52579573509131,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": 365.537804842991,
+          "prompt_id": 3,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -129.16420035841637,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "three_sparse_components",
+      "prompt_config": "close_6_5_4",
+      "seed_sha256": "277e51ca9caecda603bb42db2d399077c646a435d89f754b483b30bbb903fa58",
+      "true_best_prompt_id": 1,
+      "arms": {
+        "single_calibrated": {
+          "score": -146.50050249605567,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -146.50050249605567,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": -156.03613702111775,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -156.03613702111775,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 1,
+          "provisional_prompt_ids": [
+            1
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "three_sparse_components",
+      "prompt_config": "close_4_6_5",
+      "seed_sha256": "652821f0c63fa9d1b262ca2e0c98b476c9bc3384561b7886652b6639c371321c",
+      "true_best_prompt_id": 2,
+      "arms": {
+        "single_calibrated": {
+          "score": -146.84515507670085,
+          "prompt_id": 2,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -210.1731789212104,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": -157.15022766627902,
+          "prompt_id": 2,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -215.35046357232704,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 2,
+          "provisional_prompt_ids": [
+            2
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    },
+    {
+      "family": "three_sparse_components",
+      "prompt_config": "close_5_4_6",
+      "seed_sha256": "8d6348c287380798bf76a8072c8c47acf2eccb12b8a31a065621dbcf0fc735f0",
+      "true_best_prompt_id": 3,
+      "arms": {
+        "single_calibrated": {
+          "score": -146.7762245605718,
+          "prompt_id": 3,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "single_fixed": {
+          "score": -178.44023648282658,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1
+          ],
+          "probe_budget": 6.0,
+          "continuation_actions": 34,
+          "continuation_target_sha256": "7cc70b11fd8dc05c067833522b45ea96e97496d0887bfeb0c39f1dbe65930acc",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_calibrated": {
+          "score": -156.92740953724677,
+          "prompt_id": 3,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        },
+        "double_fixed": {
+          "score": -186.02752749027067,
+          "prompt_id": 1,
+          "probe_nodes": [
+            1,
+            14
+          ],
+          "probe_budget": 12.0,
+          "continuation_actions": 31,
+          "continuation_target_sha256": "bfdce1204b9c1624615afeee385a50049a88c86818a640d8e344bba266dee60f",
+          "calibrated_prompt_id": 3,
+          "provisional_prompt_ids": [
+            3
+          ],
+          "confident": true,
+          "calibration_complete": true,
+          "censored": [],
+          "failures": []
+        }
+      }
+    }
+  ],
+  "changes_runtime_selection": false,
+  "production_enabled": false,
+  "platform_score": null
+}

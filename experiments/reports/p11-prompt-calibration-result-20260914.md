@@ -55,3 +55,23 @@ spot when prompt values are hidden and their ordering changes. A runtime still
 needs to schedule the six probe actions one per host step, preserve failed-call
 semantics, expose the calibrated prompt in legal candidates, and validate on a
 separate prompt-order holdout before production.
+
+## Ledger boundary review
+
+A tied best set no longer discards known information. With hidden strengths
+`[-5,15,15]`, two informative nodes produce calibrated best IDs `{2,3}` and
+`best_or_default()` deterministically chooses 2 instead of the known harmful
+default 1. When one complete node has zero response to all prompts and another
+is informative, the zero node does not contradict the informative ranking:
+`confident` remains false, but the provisional winner is used. Conflicting
+informative rankings still fail closed to the default.
+
+An additional preregistered cost comparison used the same 72 unclipped cases.
+Single-node and two-node calibration both identified 72/72 winners. Relative to
+equal-probe-cost fixed-prompt controls, their mean gains were +305.233893 and
++287.390954. Single-node calibration beat two-node calibration in all 72 cases
+by +24.486712 on average (range +2.657878 to +60.456242), reflecting three
+additional continuation actions. This deterministic no-clip result measures
+exploration cost; it does not remove the second-node value after an
+uninformative, clipped or conflicting first probe and does not directly change
+the runtime selection rule.
