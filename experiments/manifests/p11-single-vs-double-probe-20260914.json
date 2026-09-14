@@ -1,0 +1,29 @@
+{
+  "experiment": "P11 single-node versus two-node prompt probe cost",
+  "date": "2026-09-14",
+  "source_cases": "the same 72 consumed, unclipped prompt-permutation cases from P11 development",
+  "arms": {
+    "single_calibrated": "one complete node, prompt 1/2/3, 6 budget, required_complete_nodes=1",
+    "single_fixed": "same one-node probe state and continuation targets, then prompt 1",
+    "double_calibrated": "two complete nodes, prompt 1/2/3 on each, 12 budget, required_complete_nodes=2",
+    "double_fixed": "same two-node probe state and continuation targets, then prompt 1"
+  },
+  "comparisons": [
+    "single_calibrated versus single_fixed isolates prompt identification at equal cost",
+    "double_calibrated versus double_fixed isolates prompt identification at equal cost",
+    "single_calibrated versus double_calibrated measures net exploration-cost difference but also reflects one-node versus verified evidence"
+  ],
+  "controls": {
+    "continuation": "within each probe-count pair, target schedule is identical and fixed before prompt-ID execution",
+    "prompt_configs": "all six permutations of [15,10,-5], three wide rotations and three close rotations",
+    "families": "six legacy repetition-1 graphs",
+    "workers": 1
+  },
+  "required_reporting": [
+    "identification/confidence/tie/censor/failure counts",
+    "probe budget and continuation action count",
+    "paired terminal means and complete loss lists for all three comparisons",
+    "results remain development evidence and do not change the selected runtime probe count"
+  ],
+  "production_enabled": false
+}
