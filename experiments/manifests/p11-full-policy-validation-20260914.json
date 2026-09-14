@@ -6,7 +6,7 @@
     "p11": "actual prompt-learning runtime; complete prompt 1/2/3 probe on the first public low-impact node, stop after one node when provisional_prompt_ids is nonempty, otherwise probe at most one second node; then use best_or_default; total probe cost 6 or at most 12",
     "p9_no_probe": "unchanged starnet-p9-bounded-response-20260913.zip; no calibration actions or matched probe cost",
     "fixed1_online_magnitude_no_probe": "diagnostic arm; no dedicated calibration probes and never changes prompt ID from 1, but updates population response magnitude from ordinary public prompt-1 returns under the experimental planner",
-    "oracle_no_probe": "diagnostic deployable upper bound if the best ID were known: run the actual P9 controller and map each legal prompt-1 environment dispatch to the true best prompt ID; subsequent public feedback may change P9 target selection, while prompt strengths and response factors remain hidden from the controller"
+    "known_best_id_p9_reference": "diagnostic deployable reference if the best ID were known: run the actual P9 controller and map each legal prompt-1 environment dispatch to the true best prompt ID; subsequent public feedback may change P9 target selection, while prompt strengths and response factors remain hidden from the controller; this is not a mathematical upper bound or an optimal-policy oracle"
   },
   "development": {
     "case_status": "all graph/response seeds were consumed previously; prompt maps are an explicit new factor, not a holdout",
@@ -38,15 +38,16 @@
     "status": "reserved and generator-closed until development winner and canonical runtime/source hashes are frozen; do not use P10 1201-1203 or guarded 1301-1303"
   },
   "primary_estimand": "P11 minus unchanged P9, averaged first across the six prompt permutations within graph/amplitude blocks and then equally across graph/repetition blocks; permutation siblings remain together in bootstrap resampling",
+  "mock_scope": "matrix constructs the real CaseVO model/controller but injects a strict valid controller ranker for deterministic paired choices, bypassing Prompt transport; separate real-entry checks must cover Prompt and AgentBase routing",
   "bootstrap_blocks": "development has 10 topology blocks (six legacy plus four P9 family/repetition graphs); confirmation has 12 fresh family/repetition graph blocks; response-stratum, amplitude, permutation and edge siblings sharing topology/opinions always move together",
   "number_symmetry": "each unique amplitude family represents every best prompt ID equally; report per-best-ID means but do not require every group to be nonnegative",
   "exploration_cost_gate": "on unique-best cases where prompt 1 is already best, mean P9-minus-P11 cost must be no greater than max(5 terminal units, 25 percent of P9 mean oracle regret where prompt 1 is not best)",
-  "oracle_regret_gate": "on unique-best cases, P11 mean oracle regret must be at most 40 percent of P9 mean oracle regret",
+  "known_id_gap_gate": "on unique-best cases, P11 mean signed gap to the known-best-ID P9 reference must be at most 40 percent of P9 mean signed gap; if the P9 mean gap is nonpositive the gate fails instead of dividing by a negative denominator",
   "development_gate": [
     "all 252 cases complete with zero action, planning, calibration, resource or identity failures",
     "unique-best prompt identification is correct whenever the public probe is informative and uncensored",
     "permutation-symmetric mean P11-minus-P9 is positive and graph-block bootstrap 95 percent lower endpoint is strictly positive",
-    "exploration cost and oracle regret gates pass",
+    "exploration cost and known-best-ID signed-gap gates pass",
     "standard base-amplitude prompt-1-best degradation is reported explicitly",
     "edge behavior is not inferred from unique-best development and requires the reserved confirmation"
   ],
@@ -55,7 +56,7 @@
     "the 288 core cases have positive permutation-symmetric mean P11-minus-P9 and a 12-graph-block bootstrap 95 percent lower endpoint strictly positive",
     "the complete prespecified 336 core-plus-edge case mean P11-minus-P9 including tie, zero, all-negative and clipping diagnostics is positive",
     "the separate 24-case degree-correlated stress queue mean P11-minus-P9 is nonnegative",
-    "exploration cost and oracle regret gates pass on unique-best core cases",
+    "exploration cost and known-best-ID signed-gap gates pass on unique-best core cases",
     "report each edge-regime mean and loss list without requiring every tie/zero/negative/clip group to be nonnegative",
     "at least two topology-family core means are positive and prompt-ID identification remains numbering symmetric",
     "canonical runtime/source/archive hashes and real-entry validation pass"
@@ -65,7 +66,7 @@
     "probe node IDs, prompt sequence, success/failure/censor records and normalized values",
     "selected, calibrated, provisional and true best prompt IDs",
     "probe budget and first post-probe action",
-    "P11/P9/oracle scores, action hashes and oracle regret",
+    "P11/P9/known-best-ID-reference scores, action hashes and signed gaps",
     "fixed1 online-magnitude score to separate prompt identification from empirical response and candidate changes",
     "runtime, ledger, runner, archive and seed hashes"
   ],
