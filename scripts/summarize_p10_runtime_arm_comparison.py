@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from scripts.run_p10_runtime_arm_comparison import (
-    ARMS, PROTOCOL, RESPONSE_REPORT, digest, metric, write_json,
+    ARMS, PROTOCOL, RESPONSE_REPORT, ROOT, SOURCE_PATHS, digest, metric, write_json,
 )
 from starnet.experiments.seeds import SEED_SPECS
 
@@ -28,6 +28,9 @@ def main() -> int:
     if (raw.get("complete") is not True or len(rows) != 6
             or config.get("protocol_sha256") != digest(PROTOCOL)
             or config.get("response_report_sha256") != digest(RESPONSE_REPORT)
+            or config.get("source_sha256") != {
+                relative: digest(ROOT / relative) for relative in SOURCE_PATHS
+            }
             or config.get("arms") != list(ARMS)
             or {row.get("family") for row in rows} != set(SEED_SPECS)):
         raise ValueError("raw P10 runtime cohort is incomplete or has stale identity")

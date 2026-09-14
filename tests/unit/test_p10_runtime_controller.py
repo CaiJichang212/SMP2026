@@ -245,6 +245,33 @@ class P10RuntimeControllerTests(unittest.TestCase):
         self.assertNotIn(controller.p10_plan_id, controller.queue)
         self.assertEqual(controller.p10_pending, [])
 
+    def test_immediate_candidate_is_hidden_from_terminal_comparison_but_kept_for_fallback(self):
+        def ordinary_refresh(controller, budget, phase):
+            controller.effective_policy_mode = PolicyMode.PUBLIC_GREEDY
+            controller.analysis = controller.analyst.analyze(controller.blackboard)
+            reference = Candidate("pg:reference", Action("comm", 3, prompt_id=1),
+                                  0, 1.0, 0.5, "immediate PG", ("pg:reference",))
+            immediate = Candidate("shield:1", Action("shield", 1),
+                                  0, 100.0, 20.0, "high immediate ROI", ("shield:1",))
+            controller.candidates = {reference.candidate_id: reference,
+                                     immediate.candidate_id: immediate}
+            controller.p8_options = False
+
+        env, controller = self.controller(lambda payload: {"candidate_id": "invalid"})
+        plan, decision = plan_fixture()
+        with patch("starnet.runtime.p10_controller_experiment.P8RuntimeController._refresh_candidates",
+                   ordinary_refresh), \
+             patch("starnet.runtime.p10_controller_experiment.search_full_structure_plan",
+                   return_value=plan), \
+             patch("starnet.runtime.p10_controller_experiment.choose_full_plan",
+                   return_value=decision):
+            controller._refresh_candidates(env.get_remaining_budget(), "test")
+            self.assertNotIn("shield:1", controller.candidates)
+            self.assertIn("shield:1", controller.p10_original_candidates)
+            controller._create_plan(env.get_remaining_budget())
+        self.assertEqual(controller.queue, ["shield:1"])
+        self.assertNotIn(controller.p10_plan_id, controller.queue)
+
     def test_combined_initial_plan_uses_original_p9_estimator_before_gate(self):
         env, controller = self.controller(None)
         controller.p10_experiment_mode = "combined"

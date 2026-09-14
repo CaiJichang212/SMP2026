@@ -224,8 +224,8 @@ class P10RuntimeController(P8RuntimeController):
             requested = select_deterministic_batch(
                 options, budget, MAX_BATCH_ACTIONS, config=self.config,
             )[:1]
-            validation = self._valid_queue(requested, budget)
             self.candidates = dict(self.p10_original_candidates)
+            validation = self._valid_queue(requested, budget)
             self.queue = list(validation.candidate_ids)
             self._last_step_selected_ids = list(self.queue)
             self.p10_baseline_choices += 1

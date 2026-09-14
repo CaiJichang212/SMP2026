@@ -26,6 +26,13 @@ from starnet.submission.starnet_model import ParticipantSquadModel
 PROTOCOL = ROOT / "experiments/manifests/p10-runtime-three-arm-development-20260914.json"
 RESPONSE_REPORT = ROOT / "experiments/reports/p10-gated-online-mixture-20260914.json"
 ARMS = ("p9", "plan_only", "response_only", "combined")
+SOURCE_PATHS = (
+    "src/starnet/runtime/p10_controller_experiment.py",
+    "src/starnet/policy/p10_structure_plan_experiment.py",
+    "src/starnet/policy/public_response_mixture.py",
+    "src/starnet/runtime/p8_controller.py",
+    "src/starnet/policy/p8_experiment.py",
+)
 
 
 def digest(path: Path) -> str:
@@ -147,6 +154,7 @@ def main() -> int:
         "protocol_sha256": digest(PROTOCOL),
         "runner_sha256": digest(Path(__file__)),
         "response_report_sha256": digest(RESPONSE_REPORT),
+        "source_sha256": {relative: digest(ROOT / relative) for relative in SOURCE_PATHS},
         "arms": list(ARMS), "families": list(SEED_SPECS),
         "repetition": 1, "worker_limit": 1,
     }
