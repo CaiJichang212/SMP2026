@@ -33,6 +33,7 @@ from starnet.experiments.seeds import SEED_SPECS, seed_payload
 
 ROOT = Path(__file__).resolve().parents[1]
 OFFICIAL = {
+    "starnet-p9-bounded-response-20260913.zip": 761.9467,
     "starnet-p8-mean-20260913.zip": 761.9467,
     # These locally built 2026-09-12 archives have no separate platform score
     # attached. Keeping them here permits the same paired local runner used

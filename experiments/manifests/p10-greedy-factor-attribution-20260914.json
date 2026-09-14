@@ -1,0 +1,74 @@
+{
+  "experiment": "P10 fast greedy attribution of historical-experimental versus P9 policy factors",
+  "registered_before_execution": true,
+  "official_feedback": {
+    "archive": "starnet-p9-bounded-response-20260913.zip",
+    "archive_sha256": "4df04b79f44d8bc7a21cad890bf6bc241531b976899cafbbdc5574bb6772f460",
+    "score": 761.9467,
+    "historical_best_archive": "starnet-public-greedy-experimental-20260908.zip",
+    "historical_best_score": 765.84
+  },
+  "scope": "development-only mechanism attribution; no production imports, qualification changes or score projection",
+  "case_status": "all cases were consumed by prior archive or bounded-response experiments; none is a new holdout",
+  "cases": {
+    "legacy_six": "SEED_SPECS, repetition 1",
+    "largest_consumed_p9_losses": [
+      ["ba_resampled", 902, "saturated_hubs"],
+      ["ba_resampled", 901, "saturated_hubs"],
+      ["ba_resampled", 1003, "saturated_hubs"],
+      ["ba_resampled", 1002, "saturated_hubs"],
+      ["ba_resampled", 1001, "saturated_hubs"],
+      ["ba_resampled", 902, "compressed_degree_negative"],
+      ["ba_resampled", 1002, "wide_degree_positive"],
+      ["ba_resampled", 1001, "compressed_degree_negative"],
+      ["sbm_resampled", 1001, "saturated_hubs"],
+      ["ba_resampled", 1003, "wide_degree_positive"],
+      ["ba_resampled", 1001, "wide_degree_positive"],
+      ["sbm_resampled", 901, "positive_persona_inverse"]
+    ],
+    "total": 18
+  },
+  "factors": {
+    "response_estimator": {
+      "pooled": "untried targets use the shrinkage mean of public first responses, matching historical experimental behavior",
+      "fixed": "untried targets retain the fixed 12.75 first-slot population prior; tried targets use their own public response"
+    },
+    "structure_mode": {
+      "unrestricted": "all legal strictly positive predicted-gain shield/cut actions remain candidates",
+      "direction_roi": "apply public sign/persona direction and communication-ROI filters while forcing the positive-graph gate open",
+      "full_gate": "apply direction/ROI filters and the actual positive-graph structure closure"
+    }
+  },
+  "arms": [
+    "pooled__unrestricted",
+    "fixed__unrestricted",
+    "pooled__direction_roi",
+    "fixed__direction_roi",
+    "pooled__full_gate",
+    "fixed__full_gate",
+    "hybrid__full_gate"
+  ],
+  "hybrid_definition": "use pooled responses when the positive-graph gate is closed and fixed responses otherwise, matching the current public-greedy base planner",
+  "interpretation": {
+    "response_factor": "normally changes scores and ordering without directly enumerating a different structure set; at an opinion bound it may remove zero-gain communication candidates",
+    "direction_roi_factor": "can remove shield/cut candidates and therefore changes the available structural action set",
+    "positive_graph_factor": "can remove every shield/cut candidate when the public positive-graph condition closes"
+  },
+  "required_logs": [
+    "ordered actions, budgets, public responses and final score",
+    "per-decision selected action and candidate IDs partitioned by comm/cut/shield",
+    "positive-graph gate state",
+    "candidate additions/removals by action kind between paired arms",
+    "first selected-action divergence and whether it is ranking-only or candidate-set-changing",
+    "source, runner and seed hashes; action failures and resource limits"
+  ],
+  "analysis": [
+    "report each case and each factor contrast without exclusions",
+    "pooling contrast within each fixed structure mode",
+    "direction/ROI contrast against unrestricted within each fixed response estimator",
+    "positive-gate contrast against direction/ROI within each fixed response estimator",
+    "do not promote a production change from these consumed cases"
+  ],
+  "worker_limit": 1,
+  "production_enabled": false
+}
