@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "experiment": "p11-high-influence-probe-development-20260914",
+  "status": "preregistered",
+  "registered_before_results": true,
+  "purpose": "Test whether a publicly influential calibration node reduces P11 opportunity cost relative to the frozen low-degree selector.",
+  "cohort": {
+    "status": "consumed development only",
+    "families": ["er_balanced", "ba_negative_hubs", "ws_peace_majority", "sbm_negative_bridges", "sbm_violent_cluster", "three_sparse_components"],
+    "repetition": 1,
+    "prompt_values": "all six permutations of [15,10,-5]",
+    "pairs": 36
+  },
+  "arms": {
+    "low": "Frozen P11 low-degree selector, one complete informative node, prompt sequence 1/2/3, cost 6.",
+    "high": "Independent subclass preselects one node by descending public component influence, then distance from opinion bounds and ID; all other P11 behavior is frozen.",
+    "p9_no_probe": "Unchanged P9 ZIP without prompt probes."
+  },
+  "shared_eligibility": "Scanned live peace/neutral node, comm_left=3, opinion strictly inside [-60,60].",
+  "selection_coupling": "Report first action divergence and communications later erased by shielding; do not interpret high-low as probe damage alone because learned magnitude can reorder communication and structure actions.",
+  "gate": [
+    "high-minus-low symmetric mean greater than 1 terminal unit",
+    "high-minus-low mean in prompt-1-best cases greater than 0",
+    "at least four of six family means are nonnegative",
+    "minimum paired high-minus-low delta is at least -10",
+    "all 36 cases have equal probe cost 6, correct prompt identification, and zero action/planning/runtime failures"
+  ],
+  "decision": "Passing is development screening only. Do not combine with the separately tested 0.9 unknown-prior discount and do not open repetitions 1401-1403.",
+  "production_enabled": false,
+  "new_holdout_opened": false,
+  "workers": 1
+}
