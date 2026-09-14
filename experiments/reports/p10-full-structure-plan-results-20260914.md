@@ -85,3 +85,33 @@ accepted legacy negative-bridge plan had selection/audit minima -24.558884 and
 development gains were positive, but this small consumed sample does not bound
 future downside. A future confirmation must preserve the mean objective while
 reporting the full loss tail and action legality.
+
+#### Isolated CaseVO runtime trial
+
+`P10RuntimeController` is an experiment-only subclass and is absent from the
+submission build and configuration. It searches exactly once after the full
+scan. A P10 candidate reason contains the complete structure sequence, total
+cost, selection and audit means and minima, and states that selecting its ID
+approves the whole prefix. The baseline remains a separate selectable ID.
+
+After explicit LLM approval, the controller queues one prefix action at a time.
+Every host step revalidates the current action against public state and budget,
+and advances the prefix only after a successful environment return. A failed
+middle action clears the remainder and returns to P9 with the environment's
+actual debited budget. When the prefix completes, P9 replans persuasion from
+the observed responses. Missing or invalid LLM output and an explicit baseline
+choice cannot start the prefix.
+
+On the consumed `ba_negative_hubs/501` seed, the mock CaseVO commander approved
+the nine-shield prefix and reproduced `303.687560 -> 326.491418`, a
+`+22.803857` gain. All nine prefix actions succeeded, the controller searched
+once, and no action or planning error occurred. The same runtime with the mock
+commander selecting the P9 baseline reproduced `303.687560` exactly, with zero
+approved or completed prefixes. The plan payload reported structure cost 45,
+selection mean/minimum `70.439829/56.279610`, and audit mean/minimum
+`71.356061/41.243251`.
+
+An optional experiment-local response ledger hook can supply P10's terminal
+persuasion estimator and receive successful, uncensored first public responses.
+The default is `None`, preserving P9 estimates. The hook does not silently
+alter the P9 fallback; a future combined arm requires its own preregistration.

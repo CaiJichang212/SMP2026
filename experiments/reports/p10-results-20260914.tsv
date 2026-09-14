@@ -4,3 +4,5 @@ experiment	commit	metric	status	description
 2	333aa68	0.802976324	reject_complexity	beam6 ties beam4 on every seed with higher mean runtime
 3	69b2421	3.777558463	keep_development	depth12 width4 strict; two consumed cohorts; 2/10/0
 4	69b2421	7.508684291	keep_development	depth12 width4 mean-audited; two consumed cohorts; 6/6/0
+5	5fceb20	22.803857395	mechanism	CaseVO mock explicitly approved nine-action P10 prefix on consumed BA-501 seed
+6	5fceb20	0.000000000	fallback	CaseVO mock selected P9 baseline on the same seed; no prefix action executed

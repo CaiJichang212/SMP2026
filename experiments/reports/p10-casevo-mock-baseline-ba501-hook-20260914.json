@@ -1,0 +1,7229 @@
+{
+  "family": "ba_negative_hubs",
+  "repetition": 501,
+  "baseline": {
+    "score": 303.6875601323529,
+    "remaining_budget": 1.0,
+    "steps": 75,
+    "actions": {
+      "scan": 50,
+      "comm": 17,
+      "cut": 0,
+      "shield": 8
+    },
+    "interventions": [
+      {
+        "kind": "comm",
+        "target_node_1": 3,
+        "target_node_2": null,
+        "prompt_id": 1
+      },
+      {
+        "kind": "shield",
+        "target_node_1": 3,
+        "target_node_2": null,
+        "prompt_id": null
+      },
+      {
+        "kind": "shield",
+        "target_node_1": 6,
+        "target_node_2": null,
+        "prompt_id": null
+      },
+      {
+        "kind": "shield",
+        "target_node_1": 1,
+        "target_node_2": null,
+        "prompt_id": null
+      },
+      {
+        "kind": "shield",
+        "target_node_1": 5,
+        "target_node_2": null,
+        "prompt_id": null
+      },
+      {
+        "kind": "shield",
+        "target_node_1": 14,
+        "target_node_2": null,
+        "prompt_id": null
+      },
+      {
+        "kind": "comm",
+        "target_node_1": 17,
+        "target_node_2": null,
+        "prompt_id": 1
+      },
+      {
+        "kind": "shield",
+        "target_node_1": 20,
+        "target_node_2": null,
+        "prompt_id": null
+      },
+      {
+        "kind": "shield",
+        "target_node_1": 7,
+        "target_node_2": null,
+        "prompt_id": null
+      },
+      {
+        "kind": "comm",
+        "target_node_1": 15,
+        "target_node_2": null,
+        "prompt_id": 1
+      },
+      {
+        "kind": "comm",
+        "target_node_1": 2,
+        "target_node_2": null,
+        "prompt_id": 1
+      },
+      {
+        "kind": "comm",
+        "target_node_1": 35,
+        "target_node_2": null,
+        "prompt_id": 1
+      },
+      {
+        "kind": "comm",
+        "target_node_1": 2,
+        "target_node_2": null,
+        "prompt_id": 1
+      },
+      {
+        "kind": "comm",
+        "target_node_1": 13,
+        "target_node_2": null,
+        "prompt_id": 1
+      },
+      {
+        "kind": "comm",
+        "target_node_1": 23,
+        "target_node_2": null,
+        "prompt_id": 1
+      },
+      {
+        "kind": "comm",
+        "target_node_1": 8,
+        "target_node_2": null,
+        "prompt_id": 1
+      },
+      {
+        "kind": "comm",
+        "target_node_1": 9,
+        "target_node_2": null,
+        "prompt_id": 1
+      },
+      {
+        "kind": "shield",
+        "target_node_1": 17,
+        "target_node_2": null,
+        "prompt_id": null
+      },
+      {
+        "kind": "comm",
+        "target_node_1": 23,
+        "target_node_2": null,
+        "prompt_id": 1
+      },
+      {
+        "kind": "comm",
+        "target_node_1": 21,
+        "target_node_2": null,
+        "prompt_id": 1
+      },
+      {
+        "kind": "comm",
+        "target_node_1": 33,
+        "target_node_2": null,
+        "prompt_id": 1
+      },
+      {
+        "kind": "comm",
+        "target_node_1": 11,
+        "target_node_2": null,
+        "prompt_id": 1
+      },
+      {
+        "kind": "comm",
+        "target_node_1": 27,
+        "target_node_2": null,
+        "prompt_id": 1
+      },
+      {
+        "kind": "comm",
+        "target_node_1": 28,
+        "target_node_2": null,
+        "prompt_id": 1
+      },
+      {
+        "kind": "comm",
+        "target_node_1": 29,
+        "target_node_2": null,
+        "prompt_id": 1
+      }
+    ],
+    "failures": 0,
+    "plan": null,
+    "seconds": 6.474585948977619
+  },
+  "candidate": {
+    "score": 303.6875601323529,
+    "actions": {
+      "scan": 50,
+      "comm": 17,
+      "cut": 0,
+      "shield": 8
+    },
+    "remaining_budget": 1.0,
+    "llm_mode": "mock-baseline",
+    "llm_model": null,
+    "llm_calls": 75,
+    "llm_accepted": 75,
+    "llm_fallbacks": 0,
+    "transport_errors": 0,
+    "action_failures": 0,
+    "p8_planning_errors": 0,
+    "p10_searches": 1,
+    "p10_planning_errors": 0,
+    "p10_approved_plans": 0,
+    "p10_baseline_choices": 1,
+    "p10_prefix_successes": 0,
+    "p10_prefix_failures": 0,
+    "p10_prefix_completed": 0,
+    "action_attempts": 75,
+    "payloads": [
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 0,
+        "mode": "single_action",
+        "budget": 100.0,
+        "llm_calls": 1,
+        "graph": {
+          "node_count": 0,
+          "edge_count": 0,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:1",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 1,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 1.0,
+            "roi": 2.0,
+            "reason": "public frontier links 0",
+            "evidence_ids": [
+              "scan:1"
+            ]
+          },
+          {
+            "candidate_id": "scan:2",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 2,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 1.0,
+            "roi": 2.0,
+            "reason": "public frontier links 0",
+            "evidence_ids": [
+              "scan:2"
+            ]
+          },
+          {
+            "candidate_id": "scan:3",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 1.0,
+            "roi": 2.0,
+            "reason": "public frontier links 0",
+            "evidence_ids": [
+              "scan:3"
+            ]
+          },
+          {
+            "candidate_id": "scan:4",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 4,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 1.0,
+            "roi": 2.0,
+            "reason": "public frontier links 0",
+            "evidence_ids": [
+              "scan:4"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:1",
+          "scan:2",
+          "scan:3",
+          "scan:4"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 1,
+        "mode": "single_action",
+        "budget": 99.5,
+        "llm_calls": 2,
+        "graph": {
+          "node_count": 1,
+          "edge_count": 0,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:2",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 2,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 2.0,
+            "roi": 4.0,
+            "reason": "public frontier links 1",
+            "evidence_ids": [
+              "scan:2"
+            ]
+          },
+          {
+            "candidate_id": "scan:3",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 2.0,
+            "roi": 4.0,
+            "reason": "public frontier links 1",
+            "evidence_ids": [
+              "scan:3"
+            ]
+          },
+          {
+            "candidate_id": "scan:4",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 4,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 2.0,
+            "roi": 4.0,
+            "reason": "public frontier links 1",
+            "evidence_ids": [
+              "scan:4"
+            ]
+          },
+          {
+            "candidate_id": "scan:5",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 2.0,
+            "roi": 4.0,
+            "reason": "public frontier links 1",
+            "evidence_ids": [
+              "scan:5"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:2",
+          "scan:3",
+          "scan:4",
+          "scan:5"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 2,
+        "mode": "single_action",
+        "budget": 99.0,
+        "llm_calls": 3,
+        "graph": {
+          "node_count": 2,
+          "edge_count": 1,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:3",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 2.0,
+            "roi": 4.0,
+            "reason": "public frontier links 1",
+            "evidence_ids": [
+              "scan:3"
+            ]
+          },
+          {
+            "candidate_id": "scan:4",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 4,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 2.0,
+            "roi": 4.0,
+            "reason": "public frontier links 1",
+            "evidence_ids": [
+              "scan:4"
+            ]
+          },
+          {
+            "candidate_id": "scan:5",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 2.0,
+            "roi": 4.0,
+            "reason": "public frontier links 1",
+            "evidence_ids": [
+              "scan:5"
+            ]
+          },
+          {
+            "candidate_id": "scan:11",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 11,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 2.0,
+            "roi": 4.0,
+            "reason": "public frontier links 1",
+            "evidence_ids": [
+              "scan:11"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:3",
+          "scan:4",
+          "scan:5",
+          "scan:11"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 3,
+        "mode": "single_action",
+        "budget": 98.5,
+        "llm_calls": 4,
+        "graph": {
+          "node_count": 3,
+          "edge_count": 2,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:5",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 3.0,
+            "roi": 6.0,
+            "reason": "public frontier links 2",
+            "evidence_ids": [
+              "scan:5"
+            ]
+          },
+          {
+            "candidate_id": "scan:11",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 11,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 3.0,
+            "roi": 6.0,
+            "reason": "public frontier links 2",
+            "evidence_ids": [
+              "scan:11"
+            ]
+          },
+          {
+            "candidate_id": "scan:19",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 19,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 3.0,
+            "roi": 6.0,
+            "reason": "public frontier links 2",
+            "evidence_ids": [
+              "scan:19"
+            ]
+          },
+          {
+            "candidate_id": "scan:25",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 3.0,
+            "roi": 6.0,
+            "reason": "public frontier links 2",
+            "evidence_ids": [
+              "scan:25"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:5",
+          "scan:11",
+          "scan:19",
+          "scan:25"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 4,
+        "mode": "single_action",
+        "budget": 98.0,
+        "llm_calls": 5,
+        "graph": {
+          "node_count": 4,
+          "edge_count": 4,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:4",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 4,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 3.0,
+            "roi": 6.0,
+            "reason": "public frontier links 2",
+            "evidence_ids": [
+              "scan:4"
+            ]
+          },
+          {
+            "candidate_id": "scan:6",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 6,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 3.0,
+            "roi": 6.0,
+            "reason": "public frontier links 2",
+            "evidence_ids": [
+              "scan:6"
+            ]
+          },
+          {
+            "candidate_id": "scan:7",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 7,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 3.0,
+            "roi": 6.0,
+            "reason": "public frontier links 2",
+            "evidence_ids": [
+              "scan:7"
+            ]
+          },
+          {
+            "candidate_id": "scan:8",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 8,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 3.0,
+            "roi": 6.0,
+            "reason": "public frontier links 2",
+            "evidence_ids": [
+              "scan:8"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:4",
+          "scan:6",
+          "scan:7",
+          "scan:8"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 5,
+        "mode": "single_action",
+        "budget": 97.5,
+        "llm_calls": 6,
+        "graph": {
+          "node_count": 5,
+          "edge_count": 6,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:6",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 6,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:6"
+            ]
+          },
+          {
+            "candidate_id": "scan:7",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 7,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 3.0,
+            "roi": 6.0,
+            "reason": "public frontier links 2",
+            "evidence_ids": [
+              "scan:7"
+            ]
+          },
+          {
+            "candidate_id": "scan:8",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 8,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 3.0,
+            "roi": 6.0,
+            "reason": "public frontier links 2",
+            "evidence_ids": [
+              "scan:8"
+            ]
+          },
+          {
+            "candidate_id": "scan:9",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 9,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 3.0,
+            "roi": 6.0,
+            "reason": "public frontier links 2",
+            "evidence_ids": [
+              "scan:9"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:6",
+          "scan:7",
+          "scan:8",
+          "scan:9"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 6,
+        "mode": "single_action",
+        "budget": 97.0,
+        "llm_calls": 7,
+        "graph": {
+          "node_count": 6,
+          "edge_count": 9,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:7",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 7,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:7"
+            ]
+          },
+          {
+            "candidate_id": "scan:8",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 8,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:8"
+            ]
+          },
+          {
+            "candidate_id": "scan:13",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 13,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:13"
+            ]
+          },
+          {
+            "candidate_id": "scan:25",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:25"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:7",
+          "scan:8",
+          "scan:13",
+          "scan:25"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 7,
+        "mode": "single_action",
+        "budget": 96.5,
+        "llm_calls": 8,
+        "graph": {
+          "node_count": 7,
+          "edge_count": 12,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:8",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 8,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:8"
+            ]
+          },
+          {
+            "candidate_id": "scan:9",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 9,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:9"
+            ]
+          },
+          {
+            "candidate_id": "scan:13",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 13,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:13"
+            ]
+          },
+          {
+            "candidate_id": "scan:19",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 19,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:19"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:8",
+          "scan:9",
+          "scan:13",
+          "scan:19"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 8,
+        "mode": "single_action",
+        "budget": 96.0,
+        "llm_calls": 9,
+        "graph": {
+          "node_count": 8,
+          "edge_count": 15,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:9",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 9,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:9"
+            ]
+          },
+          {
+            "candidate_id": "scan:11",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 11,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:11"
+            ]
+          },
+          {
+            "candidate_id": "scan:13",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 13,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:13"
+            ]
+          },
+          {
+            "candidate_id": "scan:19",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 19,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:19"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:9",
+          "scan:11",
+          "scan:13",
+          "scan:19"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 9,
+        "mode": "single_action",
+        "budget": 95.5,
+        "llm_calls": 10,
+        "graph": {
+          "node_count": 9,
+          "edge_count": 18,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:10",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 10,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:10"
+            ]
+          },
+          {
+            "candidate_id": "scan:11",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 11,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:11"
+            ]
+          },
+          {
+            "candidate_id": "scan:12",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 12,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:12"
+            ]
+          },
+          {
+            "candidate_id": "scan:13",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 13,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:13"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:10",
+          "scan:11",
+          "scan:12",
+          "scan:13"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 10,
+        "mode": "single_action",
+        "budget": 95.0,
+        "llm_calls": 11,
+        "graph": {
+          "node_count": 10,
+          "edge_count": 21,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:11",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 11,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:11"
+            ]
+          },
+          {
+            "candidate_id": "scan:12",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 12,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:12"
+            ]
+          },
+          {
+            "candidate_id": "scan:13",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 13,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:13"
+            ]
+          },
+          {
+            "candidate_id": "scan:17",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:17"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:11",
+          "scan:12",
+          "scan:13",
+          "scan:17"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 11,
+        "mode": "single_action",
+        "budget": 94.5,
+        "llm_calls": 12,
+        "graph": {
+          "node_count": 11,
+          "edge_count": 24,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:12",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 12,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:12"
+            ]
+          },
+          {
+            "candidate_id": "scan:13",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 13,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:13"
+            ]
+          },
+          {
+            "candidate_id": "scan:16",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:16"
+            ]
+          },
+          {
+            "candidate_id": "scan:17",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:17"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:12",
+          "scan:13",
+          "scan:16",
+          "scan:17"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 12,
+        "mode": "single_action",
+        "budget": 94.0,
+        "llm_calls": 13,
+        "graph": {
+          "node_count": 12,
+          "edge_count": 27,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:13",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 13,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:13"
+            ]
+          },
+          {
+            "candidate_id": "scan:14",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 14,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:14"
+            ]
+          },
+          {
+            "candidate_id": "scan:16",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:16"
+            ]
+          },
+          {
+            "candidate_id": "scan:17",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:17"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:13",
+          "scan:14",
+          "scan:16",
+          "scan:17"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 13,
+        "mode": "single_action",
+        "budget": 93.5,
+        "llm_calls": 14,
+        "graph": {
+          "node_count": 13,
+          "edge_count": 30,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:14",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 14,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:14"
+            ]
+          },
+          {
+            "candidate_id": "scan:15",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 15,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:15"
+            ]
+          },
+          {
+            "candidate_id": "scan:16",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:16"
+            ]
+          },
+          {
+            "candidate_id": "scan:17",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:17"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:14",
+          "scan:15",
+          "scan:16",
+          "scan:17"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 14,
+        "mode": "single_action",
+        "budget": 93.0,
+        "llm_calls": 15,
+        "graph": {
+          "node_count": 14,
+          "edge_count": 33,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:15",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 15,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:15"
+            ]
+          },
+          {
+            "candidate_id": "scan:16",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:16"
+            ]
+          },
+          {
+            "candidate_id": "scan:17",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:17"
+            ]
+          },
+          {
+            "candidate_id": "scan:18",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 18,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:18"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:15",
+          "scan:16",
+          "scan:17",
+          "scan:18"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 15,
+        "mode": "single_action",
+        "budget": 92.5,
+        "llm_calls": 16,
+        "graph": {
+          "node_count": 15,
+          "edge_count": 36,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:16",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:16"
+            ]
+          },
+          {
+            "candidate_id": "scan:17",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:17"
+            ]
+          },
+          {
+            "candidate_id": "scan:18",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 18,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:18"
+            ]
+          },
+          {
+            "candidate_id": "scan:19",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 19,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:19"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:16",
+          "scan:17",
+          "scan:18",
+          "scan:19"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 16,
+        "mode": "single_action",
+        "budget": 92.0,
+        "llm_calls": 17,
+        "graph": {
+          "node_count": 16,
+          "edge_count": 39,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:17",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:17"
+            ]
+          },
+          {
+            "candidate_id": "scan:18",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 18,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:18"
+            ]
+          },
+          {
+            "candidate_id": "scan:19",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 19,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:19"
+            ]
+          },
+          {
+            "candidate_id": "scan:20",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:20"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:17",
+          "scan:18",
+          "scan:19",
+          "scan:20"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 17,
+        "mode": "single_action",
+        "budget": 91.5,
+        "llm_calls": 18,
+        "graph": {
+          "node_count": 17,
+          "edge_count": 42,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:18",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 18,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:18"
+            ]
+          },
+          {
+            "candidate_id": "scan:19",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 19,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:19"
+            ]
+          },
+          {
+            "candidate_id": "scan:20",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:20"
+            ]
+          },
+          {
+            "candidate_id": "scan:21",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:21"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:18",
+          "scan:19",
+          "scan:20",
+          "scan:21"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 18,
+        "mode": "single_action",
+        "budget": 91.0,
+        "llm_calls": 19,
+        "graph": {
+          "node_count": 18,
+          "edge_count": 45,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:19",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 19,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:19"
+            ]
+          },
+          {
+            "candidate_id": "scan:20",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:20"
+            ]
+          },
+          {
+            "candidate_id": "scan:21",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:21"
+            ]
+          },
+          {
+            "candidate_id": "scan:22",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 22,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:22"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:19",
+          "scan:20",
+          "scan:21",
+          "scan:22"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 19,
+        "mode": "single_action",
+        "budget": 90.5,
+        "llm_calls": 20,
+        "graph": {
+          "node_count": 19,
+          "edge_count": 48,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:20",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:20"
+            ]
+          },
+          {
+            "candidate_id": "scan:21",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:21"
+            ]
+          },
+          {
+            "candidate_id": "scan:22",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 22,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:22"
+            ]
+          },
+          {
+            "candidate_id": "scan:24",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 24,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:24"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:20",
+          "scan:21",
+          "scan:22",
+          "scan:24"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 20,
+        "mode": "single_action",
+        "budget": 90.0,
+        "llm_calls": 21,
+        "graph": {
+          "node_count": 20,
+          "edge_count": 51,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:21",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:21"
+            ]
+          },
+          {
+            "candidate_id": "scan:22",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 22,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:22"
+            ]
+          },
+          {
+            "candidate_id": "scan:24",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 24,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:24"
+            ]
+          },
+          {
+            "candidate_id": "scan:25",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:25"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:21",
+          "scan:22",
+          "scan:24",
+          "scan:25"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 21,
+        "mode": "single_action",
+        "budget": 89.5,
+        "llm_calls": 22,
+        "graph": {
+          "node_count": 21,
+          "edge_count": 54,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:22",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 22,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:22"
+            ]
+          },
+          {
+            "candidate_id": "scan:23",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 23,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:23"
+            ]
+          },
+          {
+            "candidate_id": "scan:24",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 24,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:24"
+            ]
+          },
+          {
+            "candidate_id": "scan:25",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:25"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:22",
+          "scan:23",
+          "scan:24",
+          "scan:25"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 22,
+        "mode": "single_action",
+        "budget": 89.0,
+        "llm_calls": 23,
+        "graph": {
+          "node_count": 22,
+          "edge_count": 57,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:23",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 23,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:23"
+            ]
+          },
+          {
+            "candidate_id": "scan:24",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 24,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:24"
+            ]
+          },
+          {
+            "candidate_id": "scan:25",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:25"
+            ]
+          },
+          {
+            "candidate_id": "scan:26",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 26,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:26"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:23",
+          "scan:24",
+          "scan:25",
+          "scan:26"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 23,
+        "mode": "single_action",
+        "budget": 88.5,
+        "llm_calls": 24,
+        "graph": {
+          "node_count": 23,
+          "edge_count": 60,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:24",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 24,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:24"
+            ]
+          },
+          {
+            "candidate_id": "scan:25",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:25"
+            ]
+          },
+          {
+            "candidate_id": "scan:26",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 26,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:26"
+            ]
+          },
+          {
+            "candidate_id": "scan:27",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:27"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:24",
+          "scan:25",
+          "scan:26",
+          "scan:27"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 24,
+        "mode": "single_action",
+        "budget": 88.0,
+        "llm_calls": 25,
+        "graph": {
+          "node_count": 24,
+          "edge_count": 63,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:25",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:25"
+            ]
+          },
+          {
+            "candidate_id": "scan:26",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 26,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:26"
+            ]
+          },
+          {
+            "candidate_id": "scan:27",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:27"
+            ]
+          },
+          {
+            "candidate_id": "scan:28",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 28,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:28"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:25",
+          "scan:26",
+          "scan:27",
+          "scan:28"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 25,
+        "mode": "single_action",
+        "budget": 87.5,
+        "llm_calls": 26,
+        "graph": {
+          "node_count": 25,
+          "edge_count": 66,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:26",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 26,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:26"
+            ]
+          },
+          {
+            "candidate_id": "scan:27",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:27"
+            ]
+          },
+          {
+            "candidate_id": "scan:28",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 28,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:28"
+            ]
+          },
+          {
+            "candidate_id": "scan:31",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 31,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:31"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:26",
+          "scan:27",
+          "scan:28",
+          "scan:31"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 26,
+        "mode": "single_action",
+        "budget": 87.0,
+        "llm_calls": 27,
+        "graph": {
+          "node_count": 26,
+          "edge_count": 69,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:27",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:27"
+            ]
+          },
+          {
+            "candidate_id": "scan:28",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 28,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:28"
+            ]
+          },
+          {
+            "candidate_id": "scan:29",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:29"
+            ]
+          },
+          {
+            "candidate_id": "scan:31",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 31,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:31"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:27",
+          "scan:28",
+          "scan:29",
+          "scan:31"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 27,
+        "mode": "single_action",
+        "budget": 86.5,
+        "llm_calls": 28,
+        "graph": {
+          "node_count": 27,
+          "edge_count": 72,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:28",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 28,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:28"
+            ]
+          },
+          {
+            "candidate_id": "scan:29",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:29"
+            ]
+          },
+          {
+            "candidate_id": "scan:30",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 30,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:30"
+            ]
+          },
+          {
+            "candidate_id": "scan:31",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 31,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:31"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:28",
+          "scan:29",
+          "scan:30",
+          "scan:31"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 28,
+        "mode": "single_action",
+        "budget": 86.0,
+        "llm_calls": 29,
+        "graph": {
+          "node_count": 28,
+          "edge_count": 75,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:29",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:29"
+            ]
+          },
+          {
+            "candidate_id": "scan:30",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 30,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:30"
+            ]
+          },
+          {
+            "candidate_id": "scan:31",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 31,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:31"
+            ]
+          },
+          {
+            "candidate_id": "scan:32",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 32,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:32"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:29",
+          "scan:30",
+          "scan:31",
+          "scan:32"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 29,
+        "mode": "single_action",
+        "budget": 85.5,
+        "llm_calls": 30,
+        "graph": {
+          "node_count": 29,
+          "edge_count": 78,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:30",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 30,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:30"
+            ]
+          },
+          {
+            "candidate_id": "scan:31",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 31,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:31"
+            ]
+          },
+          {
+            "candidate_id": "scan:32",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 32,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:32"
+            ]
+          },
+          {
+            "candidate_id": "scan:33",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 33,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:33"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:30",
+          "scan:31",
+          "scan:32",
+          "scan:33"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 30,
+        "mode": "single_action",
+        "budget": 85.0,
+        "llm_calls": 31,
+        "graph": {
+          "node_count": 30,
+          "edge_count": 81,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:31",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 31,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:31"
+            ]
+          },
+          {
+            "candidate_id": "scan:32",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 32,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:32"
+            ]
+          },
+          {
+            "candidate_id": "scan:33",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 33,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:33"
+            ]
+          },
+          {
+            "candidate_id": "scan:34",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 34,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:34"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:31",
+          "scan:32",
+          "scan:33",
+          "scan:34"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 31,
+        "mode": "single_action",
+        "budget": 84.5,
+        "llm_calls": 32,
+        "graph": {
+          "node_count": 31,
+          "edge_count": 84,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:32",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 32,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:32"
+            ]
+          },
+          {
+            "candidate_id": "scan:33",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 33,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:33"
+            ]
+          },
+          {
+            "candidate_id": "scan:34",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 34,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:34"
+            ]
+          },
+          {
+            "candidate_id": "scan:36",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 36,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:36"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:32",
+          "scan:33",
+          "scan:34",
+          "scan:36"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 32,
+        "mode": "single_action",
+        "budget": 84.0,
+        "llm_calls": 33,
+        "graph": {
+          "node_count": 32,
+          "edge_count": 87,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:33",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 33,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:33"
+            ]
+          },
+          {
+            "candidate_id": "scan:34",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 34,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:34"
+            ]
+          },
+          {
+            "candidate_id": "scan:36",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 36,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:36"
+            ]
+          },
+          {
+            "candidate_id": "scan:37",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 37,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:37"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:33",
+          "scan:34",
+          "scan:36",
+          "scan:37"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 33,
+        "mode": "single_action",
+        "budget": 83.5,
+        "llm_calls": 34,
+        "graph": {
+          "node_count": 33,
+          "edge_count": 90,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:34",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 34,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:34"
+            ]
+          },
+          {
+            "candidate_id": "scan:35",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 35,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:35"
+            ]
+          },
+          {
+            "candidate_id": "scan:36",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 36,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:36"
+            ]
+          },
+          {
+            "candidate_id": "scan:37",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 37,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:37"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:34",
+          "scan:35",
+          "scan:36",
+          "scan:37"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 34,
+        "mode": "single_action",
+        "budget": 83.0,
+        "llm_calls": 35,
+        "graph": {
+          "node_count": 34,
+          "edge_count": 93,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:35",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 35,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:35"
+            ]
+          },
+          {
+            "candidate_id": "scan:36",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 36,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:36"
+            ]
+          },
+          {
+            "candidate_id": "scan:37",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 37,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:37"
+            ]
+          },
+          {
+            "candidate_id": "scan:38",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 38,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:38"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:35",
+          "scan:36",
+          "scan:37",
+          "scan:38"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 35,
+        "mode": "single_action",
+        "budget": 82.5,
+        "llm_calls": 36,
+        "graph": {
+          "node_count": 35,
+          "edge_count": 96,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:36",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 36,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:36"
+            ]
+          },
+          {
+            "candidate_id": "scan:37",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 37,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:37"
+            ]
+          },
+          {
+            "candidate_id": "scan:38",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 38,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:38"
+            ]
+          },
+          {
+            "candidate_id": "scan:39",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 39,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:39"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:36",
+          "scan:37",
+          "scan:38",
+          "scan:39"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 36,
+        "mode": "single_action",
+        "budget": 82.0,
+        "llm_calls": 37,
+        "graph": {
+          "node_count": 36,
+          "edge_count": 99,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:37",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 37,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:37"
+            ]
+          },
+          {
+            "candidate_id": "scan:38",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 38,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:38"
+            ]
+          },
+          {
+            "candidate_id": "scan:39",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 39,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:39"
+            ]
+          },
+          {
+            "candidate_id": "scan:40",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 40,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:40"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:37",
+          "scan:38",
+          "scan:39",
+          "scan:40"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 37,
+        "mode": "single_action",
+        "budget": 81.5,
+        "llm_calls": 38,
+        "graph": {
+          "node_count": 37,
+          "edge_count": 102,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:38",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 38,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:38"
+            ]
+          },
+          {
+            "candidate_id": "scan:39",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 39,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:39"
+            ]
+          },
+          {
+            "candidate_id": "scan:40",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 40,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:40"
+            ]
+          },
+          {
+            "candidate_id": "scan:41",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 41,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:41"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:38",
+          "scan:39",
+          "scan:40",
+          "scan:41"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 38,
+        "mode": "single_action",
+        "budget": 81.0,
+        "llm_calls": 39,
+        "graph": {
+          "node_count": 38,
+          "edge_count": 105,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:39",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 39,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:39"
+            ]
+          },
+          {
+            "candidate_id": "scan:40",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 40,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:40"
+            ]
+          },
+          {
+            "candidate_id": "scan:41",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 41,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:41"
+            ]
+          },
+          {
+            "candidate_id": "scan:42",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 42,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:42"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:39",
+          "scan:40",
+          "scan:41",
+          "scan:42"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 39,
+        "mode": "single_action",
+        "budget": 80.5,
+        "llm_calls": 40,
+        "graph": {
+          "node_count": 39,
+          "edge_count": 108,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:40",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 40,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:40"
+            ]
+          },
+          {
+            "candidate_id": "scan:41",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 41,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:41"
+            ]
+          },
+          {
+            "candidate_id": "scan:42",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 42,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:42"
+            ]
+          },
+          {
+            "candidate_id": "scan:43",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 43,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:43"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:40",
+          "scan:41",
+          "scan:42",
+          "scan:43"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 40,
+        "mode": "single_action",
+        "budget": 80.0,
+        "llm_calls": 41,
+        "graph": {
+          "node_count": 40,
+          "edge_count": 111,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:41",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 41,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:41"
+            ]
+          },
+          {
+            "candidate_id": "scan:42",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 42,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:42"
+            ]
+          },
+          {
+            "candidate_id": "scan:43",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 43,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:43"
+            ]
+          },
+          {
+            "candidate_id": "scan:44",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 44,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:44"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:41",
+          "scan:42",
+          "scan:43",
+          "scan:44"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 41,
+        "mode": "single_action",
+        "budget": 79.5,
+        "llm_calls": 42,
+        "graph": {
+          "node_count": 41,
+          "edge_count": 114,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:42",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 42,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:42"
+            ]
+          },
+          {
+            "candidate_id": "scan:43",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 43,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:43"
+            ]
+          },
+          {
+            "candidate_id": "scan:44",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 44,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:44"
+            ]
+          },
+          {
+            "candidate_id": "scan:45",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 45,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:45"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:42",
+          "scan:43",
+          "scan:44",
+          "scan:45"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 42,
+        "mode": "single_action",
+        "budget": 79.0,
+        "llm_calls": 43,
+        "graph": {
+          "node_count": 42,
+          "edge_count": 117,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:43",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 43,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:43"
+            ]
+          },
+          {
+            "candidate_id": "scan:44",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 44,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:44"
+            ]
+          },
+          {
+            "candidate_id": "scan:45",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 45,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:45"
+            ]
+          },
+          {
+            "candidate_id": "scan:46",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 46,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:46"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:43",
+          "scan:44",
+          "scan:45",
+          "scan:46"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 43,
+        "mode": "single_action",
+        "budget": 78.5,
+        "llm_calls": 44,
+        "graph": {
+          "node_count": 43,
+          "edge_count": 120,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:44",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 44,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:44"
+            ]
+          },
+          {
+            "candidate_id": "scan:45",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 45,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:45"
+            ]
+          },
+          {
+            "candidate_id": "scan:46",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 46,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:46"
+            ]
+          },
+          {
+            "candidate_id": "scan:47",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 47,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:47"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:44",
+          "scan:45",
+          "scan:46",
+          "scan:47"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 44,
+        "mode": "single_action",
+        "budget": 78.0,
+        "llm_calls": 45,
+        "graph": {
+          "node_count": 44,
+          "edge_count": 123,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:45",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 45,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:45"
+            ]
+          },
+          {
+            "candidate_id": "scan:46",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 46,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:46"
+            ]
+          },
+          {
+            "candidate_id": "scan:47",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 47,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:47"
+            ]
+          },
+          {
+            "candidate_id": "scan:49",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 49,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:49"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:45",
+          "scan:46",
+          "scan:47",
+          "scan:49"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 45,
+        "mode": "single_action",
+        "budget": 77.5,
+        "llm_calls": 46,
+        "graph": {
+          "node_count": 45,
+          "edge_count": 126,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:46",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 46,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:46"
+            ]
+          },
+          {
+            "candidate_id": "scan:47",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 47,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:47"
+            ]
+          },
+          {
+            "candidate_id": "scan:48",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 48,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:48"
+            ]
+          },
+          {
+            "candidate_id": "scan:49",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 49,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:49"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:46",
+          "scan:47",
+          "scan:48",
+          "scan:49"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 46,
+        "mode": "single_action",
+        "budget": 77.0,
+        "llm_calls": 47,
+        "graph": {
+          "node_count": 46,
+          "edge_count": 129,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:47",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 47,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:47"
+            ]
+          },
+          {
+            "candidate_id": "scan:48",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 48,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:48"
+            ]
+          },
+          {
+            "candidate_id": "scan:49",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 49,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:49"
+            ]
+          },
+          {
+            "candidate_id": "scan:50",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:50"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:47",
+          "scan:48",
+          "scan:49",
+          "scan:50"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 47,
+        "mode": "single_action",
+        "budget": 76.5,
+        "llm_calls": 48,
+        "graph": {
+          "node_count": 47,
+          "edge_count": 132,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:48",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 48,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:48"
+            ]
+          },
+          {
+            "candidate_id": "scan:49",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 49,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:49"
+            ]
+          },
+          {
+            "candidate_id": "scan:50",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:50"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:48",
+          "scan:49",
+          "scan:50"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 48,
+        "mode": "single_action",
+        "budget": 76.0,
+        "llm_calls": 49,
+        "graph": {
+          "node_count": 48,
+          "edge_count": 135,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:49",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 49,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:49"
+            ]
+          },
+          {
+            "candidate_id": "scan:50",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:50"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:49",
+          "scan:50"
+        ]
+      },
+      {
+        "stage": "SCAN_ALL",
+        "state_version": 49,
+        "mode": "single_action",
+        "budget": 75.5,
+        "llm_calls": 50,
+        "graph": {
+          "node_count": 49,
+          "edge_count": 138,
+          "community_count": 0,
+          "negative_nodes": [],
+          "positive_nodes": []
+        },
+        "candidates": [
+          {
+            "candidate_id": "scan:50",
+            "action": {
+              "kind": "scan",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 0.5,
+            "priority": 0,
+            "score": 4.0,
+            "roi": 8.0,
+            "reason": "public frontier links 3",
+            "evidence_ids": [
+              "scan:50"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "scan:50"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 50,
+        "mode": "single_action",
+        "budget": 75.0,
+        "llm_calls": 51,
+        "graph": {
+          "node_count": 50,
+          "edge_count": 141,
+          "community_count": 5,
+          "negative_nodes": [
+            1,
+            2,
+            3,
+            5,
+            6,
+            7,
+            8,
+            9,
+            12,
+            13,
+            14,
+            17,
+            20,
+            21,
+            23,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            40,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            22,
+            23,
+            24,
+            25,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "p10-plan:9b969463581fd3f5",
+            "action": {
+              "kind": "shield",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 5.0,
+            "priority": 0,
+            "score": 70.43982935985967,
+            "roi": 1.5653295413302148,
+            "reason": "P10 COMPLETE PREFIX APPROVAL: selecting this candidate ID authorizes every listed structure action in order, one validated action per host step; sequence=[shield:3,shield:1,shield:5,shield:7,shield:17,shield:20,shield:6,shield:14,shield:31]; structure_cost=45.0; bounded-response assumptions: selection mean=70.439829, minimum=56.279610; independent audit mean=71.356061, minimum=41.243251; individual negative scenarios are permitted by the preregistered mean-audited development rule; after the prefix, P9 replans persuasion from actual public responses",
+            "evidence_ids": [
+              "p10-plan:9b969463581fd3f5"
+            ]
+          },
+          {
+            "candidate_id": "comm:3:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 0.0,
+            "roi": 0.0,
+            "reason": "P9 bounded baseline; selecting this ID rejects the complete P10 prefix",
+            "evidence_ids": [
+              "public-score:comm:3:1"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "p10-plan:9b969463581fd3f5",
+          "comm:3:1"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 51,
+        "mode": "single_action",
+        "budget": 73.0,
+        "llm_calls": 52,
+        "graph": {
+          "node_count": 50,
+          "edge_count": 141,
+          "community_count": 5,
+          "negative_nodes": [
+            1,
+            2,
+            3,
+            5,
+            6,
+            7,
+            8,
+            9,
+            12,
+            13,
+            14,
+            17,
+            20,
+            21,
+            23,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            40,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            22,
+            23,
+            24,
+            25,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "p8:shield:3:None:51",
+            "action": {
+              "kind": "shield",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 5.0,
+            "priority": 0,
+            "score": 24.33977841142583,
+            "roi": 4.8679556822851655,
+            "reason": "P8 assumed-response continuation advantage; selection mean=24.339778; selection minimum=14.250000; mode=conservative; additional audit scenarios=0, audit mean=0.000000, minimum=0.000000; baseline alternative has relative advantage zero",
+            "evidence_ids": [
+              "p8:shield:3:None:51"
+            ]
+          },
+          {
+            "candidate_id": "shield:6",
+            "action": {
+              "kind": "shield",
+              "target_node_1": 6,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 5.0,
+            "priority": 0,
+            "score": 0.0,
+            "roi": 0.0,
+            "reason": "Current public_greedy baseline; relative continuation advantage zero",
+            "evidence_ids": [
+              "public-score:shield:6"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "p8:shield:3:None:51",
+          "shield:6"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 52,
+        "mode": "single_action",
+        "budget": 68.0,
+        "llm_calls": 53,
+        "graph": {
+          "node_count": 49,
+          "edge_count": 120,
+          "community_count": 5,
+          "negative_nodes": [
+            1,
+            2,
+            5,
+            6,
+            7,
+            8,
+            9,
+            12,
+            13,
+            14,
+            17,
+            20,
+            21,
+            23,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            40,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            22,
+            23,
+            24,
+            25,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "shield:6",
+            "action": {
+              "kind": "shield",
+              "target_node_1": 6,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 5.0,
+            "priority": 0,
+            "score": 113.8480221978312,
+            "roi": 22.76960443956624,
+            "reason": "public terminal gain 113.848022",
+            "evidence_ids": [
+              "public-score:shield:6"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "shield:6"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 53,
+        "mode": "single_action",
+        "budget": 63.0,
+        "llm_calls": 54,
+        "graph": {
+          "node_count": 48,
+          "edge_count": 103,
+          "community_count": 6,
+          "negative_nodes": [
+            1,
+            2,
+            5,
+            7,
+            8,
+            9,
+            12,
+            13,
+            14,
+            17,
+            20,
+            21,
+            23,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            22,
+            23,
+            24,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "shield:1",
+            "action": {
+              "kind": "shield",
+              "target_node_1": 1,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 5.0,
+            "priority": 0,
+            "score": 92.02576922362209,
+            "roi": 18.405153844724417,
+            "reason": "public terminal gain 92.025769",
+            "evidence_ids": [
+              "public-score:shield:1"
+            ]
+          },
+          {
+            "candidate_id": "comm:5:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 36.14173228346456,
+            "roi": 18.07086614173228,
+            "reason": "public terminal gain 36.141732",
+            "evidence_ids": [
+              "public-score:comm:5:1"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "shield:1",
+          "comm:5:1"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 54,
+        "mode": "single_action",
+        "budget": 58.0,
+        "llm_calls": 55,
+        "graph": {
+          "node_count": 47,
+          "edge_count": 90,
+          "community_count": 9,
+          "negative_nodes": [
+            2,
+            5,
+            7,
+            8,
+            9,
+            12,
+            13,
+            14,
+            17,
+            20,
+            21,
+            23,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            22,
+            23,
+            24,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "p8:shield:5:None:54",
+            "action": {
+              "kind": "shield",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 5.0,
+            "priority": 0,
+            "score": 16.043081843559037,
+            "roi": 3.2086163687118074,
+            "reason": "P8 assumed-response continuation advantage; selection mean=16.043082; selection minimum=2.983855; mode=conservative; additional audit scenarios=0, audit mean=0.000000, minimum=0.000000; baseline alternative has relative advantage zero",
+            "evidence_ids": [
+              "p8:shield:5:None:54"
+            ]
+          },
+          {
+            "candidate_id": "comm:5:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 0.0,
+            "roi": 0.0,
+            "reason": "Current public_greedy baseline; relative continuation advantage zero",
+            "evidence_ids": [
+              "public-score:comm:5:1"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "p8:shield:5:None:54",
+          "comm:5:1"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 55,
+        "mode": "single_action",
+        "budget": 53.0,
+        "llm_calls": 56,
+        "graph": {
+          "node_count": 46,
+          "edge_count": 77,
+          "community_count": 8,
+          "negative_nodes": [
+            2,
+            7,
+            8,
+            9,
+            12,
+            13,
+            14,
+            17,
+            20,
+            21,
+            23,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            22,
+            23,
+            24,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "shield:14",
+            "action": {
+              "kind": "shield",
+              "target_node_1": 14,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 5.0,
+            "priority": 0,
+            "score": 79.39658850637505,
+            "roi": 15.87931770127501,
+            "reason": "public terminal gain 79.396589",
+            "evidence_ids": [
+              "public-score:shield:14"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "shield:14"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 56,
+        "mode": "single_action",
+        "budget": 48.0,
+        "llm_calls": 57,
+        "graph": {
+          "node_count": 45,
+          "edge_count": 70,
+          "community_count": 9,
+          "negative_nodes": [
+            2,
+            7,
+            8,
+            9,
+            12,
+            13,
+            17,
+            20,
+            21,
+            23,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            22,
+            23,
+            24,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "comm:17:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 26.96311475409836,
+            "roi": 13.48155737704918,
+            "reason": "public terminal gain 26.963115",
+            "evidence_ids": [
+              "public-score:comm:17:1"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "comm:17:1"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 57,
+        "mode": "single_action",
+        "budget": 46.0,
+        "llm_calls": 58,
+        "graph": {
+          "node_count": 45,
+          "edge_count": 70,
+          "community_count": 9,
+          "negative_nodes": [
+            2,
+            7,
+            8,
+            9,
+            12,
+            13,
+            17,
+            20,
+            21,
+            23,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            22,
+            23,
+            24,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "shield:20",
+            "action": {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 5.0,
+            "priority": 0,
+            "score": 67.67538461627568,
+            "roi": 13.535076923255136,
+            "reason": "public terminal gain 67.675385",
+            "evidence_ids": [
+              "public-score:shield:20"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "shield:20"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 58,
+        "mode": "single_action",
+        "budget": 41.0,
+        "llm_calls": 59,
+        "graph": {
+          "node_count": 44,
+          "edge_count": 63,
+          "community_count": 9,
+          "negative_nodes": [
+            2,
+            7,
+            8,
+            9,
+            12,
+            13,
+            17,
+            21,
+            23,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            22,
+            23,
+            24,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "shield:7",
+            "action": {
+              "kind": "shield",
+              "target_node_1": 7,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 5.0,
+            "priority": 0,
+            "score": 63.4084854107629,
+            "roi": 12.68169708215258,
+            "reason": "public terminal gain 63.408485",
+            "evidence_ids": [
+              "public-score:shield:7"
+            ]
+          },
+          {
+            "candidate_id": "comm:15:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 15,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 25.04191616766467,
+            "roi": 12.520958083832335,
+            "reason": "public terminal gain 25.041916",
+            "evidence_ids": [
+              "public-score:comm:15:1"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "shield:7",
+          "comm:15:1"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 59,
+        "mode": "single_action",
+        "budget": 36.0,
+        "llm_calls": 60,
+        "graph": {
+          "node_count": 43,
+          "edge_count": 57,
+          "community_count": 9,
+          "negative_nodes": [
+            2,
+            8,
+            9,
+            12,
+            13,
+            17,
+            21,
+            23,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            22,
+            23,
+            24,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "comm:15:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 15,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 26.49350649350649,
+            "roi": 13.246753246753245,
+            "reason": "public terminal gain 26.493506",
+            "evidence_ids": [
+              "public-score:comm:15:1"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "comm:15:1"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 60,
+        "mode": "single_action",
+        "budget": 34.0,
+        "llm_calls": 61,
+        "graph": {
+          "node_count": 43,
+          "edge_count": 57,
+          "community_count": 9,
+          "negative_nodes": [
+            2,
+            8,
+            9,
+            12,
+            13,
+            17,
+            21,
+            23,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            22,
+            23,
+            24,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "comm:2:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 2,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 23.18181818181818,
+            "roi": 11.59090909090909,
+            "reason": "public terminal gain 23.181818",
+            "evidence_ids": [
+              "public-score:comm:2:1"
+            ]
+          },
+          {
+            "candidate_id": "comm:35:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 35,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 23.18181818181818,
+            "roi": 11.59090909090909,
+            "reason": "public terminal gain 23.181818",
+            "evidence_ids": [
+              "public-score:comm:35:1"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "comm:2:1",
+          "comm:35:1"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 61,
+        "mode": "single_action",
+        "budget": 32.0,
+        "llm_calls": 62,
+        "graph": {
+          "node_count": 43,
+          "edge_count": 57,
+          "community_count": 9,
+          "negative_nodes": [
+            8,
+            9,
+            12,
+            13,
+            17,
+            21,
+            23,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            22,
+            23,
+            24,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "comm:35:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 35,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 23.18181818181818,
+            "roi": 11.59090909090909,
+            "reason": "public terminal gain 23.181818",
+            "evidence_ids": [
+              "public-score:comm:35:1"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "comm:35:1"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 62,
+        "mode": "single_action",
+        "budget": 30.0,
+        "llm_calls": 63,
+        "graph": {
+          "node_count": 43,
+          "edge_count": 57,
+          "community_count": 9,
+          "negative_nodes": [
+            8,
+            9,
+            12,
+            13,
+            17,
+            21,
+            23,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            22,
+            23,
+            24,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "comm:2:2",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 2,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 19.98624545454545,
+            "roi": 9.993122727272725,
+            "reason": "public terminal gain 19.986245",
+            "evidence_ids": [
+              "public-score:comm:2:2"
+            ]
+          },
+          {
+            "candidate_id": "comm:13:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 13,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 19.87012987012987,
+            "roi": 9.935064935064934,
+            "reason": "public terminal gain 19.870130",
+            "evidence_ids": [
+              "public-score:comm:13:1"
+            ]
+          },
+          {
+            "candidate_id": "comm:23:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 23,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 19.87012987012987,
+            "roi": 9.935064935064934,
+            "reason": "public terminal gain 19.870130",
+            "evidence_ids": [
+              "public-score:comm:23:1"
+            ]
+          },
+          {
+            "candidate_id": "comm:8:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 8,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 19.87012987012987,
+            "roi": 9.935064935064934,
+            "reason": "public terminal gain 19.870130",
+            "evidence_ids": [
+              "public-score:comm:8:1"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "comm:2:2",
+          "comm:13:1",
+          "comm:23:1",
+          "comm:8:1"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 63,
+        "mode": "single_action",
+        "budget": 28.0,
+        "llm_calls": 64,
+        "graph": {
+          "node_count": 43,
+          "edge_count": 57,
+          "community_count": 9,
+          "negative_nodes": [
+            8,
+            9,
+            12,
+            13,
+            17,
+            21,
+            23,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            22,
+            23,
+            24,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "comm:13:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 13,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 19.87012987012987,
+            "roi": 9.935064935064934,
+            "reason": "public terminal gain 19.870130",
+            "evidence_ids": [
+              "public-score:comm:13:1"
+            ]
+          },
+          {
+            "candidate_id": "comm:23:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 23,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 19.87012987012987,
+            "roi": 9.935064935064934,
+            "reason": "public terminal gain 19.870130",
+            "evidence_ids": [
+              "public-score:comm:23:1"
+            ]
+          },
+          {
+            "candidate_id": "comm:8:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 8,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 19.87012987012987,
+            "roi": 9.935064935064934,
+            "reason": "public terminal gain 19.870130",
+            "evidence_ids": [
+              "public-score:comm:8:1"
+            ]
+          },
+          {
+            "candidate_id": "comm:9:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 9,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 19.87012987012987,
+            "roi": 9.935064935064934,
+            "reason": "public terminal gain 19.870130",
+            "evidence_ids": [
+              "public-score:comm:9:1"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "comm:13:1",
+          "comm:23:1",
+          "comm:8:1",
+          "comm:9:1"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 64,
+        "mode": "single_action",
+        "budget": 26.0,
+        "llm_calls": 65,
+        "graph": {
+          "node_count": 43,
+          "edge_count": 57,
+          "community_count": 9,
+          "negative_nodes": [
+            8,
+            9,
+            12,
+            13,
+            17,
+            21,
+            23,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            22,
+            23,
+            24,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "comm:23:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 23,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 19.87012987012987,
+            "roi": 9.935064935064934,
+            "reason": "public terminal gain 19.870130",
+            "evidence_ids": [
+              "public-score:comm:23:1"
+            ]
+          },
+          {
+            "candidate_id": "comm:8:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 8,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 19.87012987012987,
+            "roi": 9.935064935064934,
+            "reason": "public terminal gain 19.870130",
+            "evidence_ids": [
+              "public-score:comm:8:1"
+            ]
+          },
+          {
+            "candidate_id": "comm:9:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 9,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 19.87012987012987,
+            "roi": 9.935064935064934,
+            "reason": "public terminal gain 19.870130",
+            "evidence_ids": [
+              "public-score:comm:9:1"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "comm:23:1",
+          "comm:8:1",
+          "comm:9:1"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 65,
+        "mode": "single_action",
+        "budget": 24.0,
+        "llm_calls": 66,
+        "graph": {
+          "node_count": 43,
+          "edge_count": 57,
+          "community_count": 9,
+          "negative_nodes": [
+            8,
+            9,
+            12,
+            13,
+            17,
+            21,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            22,
+            23,
+            24,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "comm:8:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 8,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 19.87012987012987,
+            "roi": 9.935064935064934,
+            "reason": "public terminal gain 19.870130",
+            "evidence_ids": [
+              "public-score:comm:8:1"
+            ]
+          },
+          {
+            "candidate_id": "comm:9:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 9,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 19.87012987012987,
+            "roi": 9.935064935064934,
+            "reason": "public terminal gain 19.870130",
+            "evidence_ids": [
+              "public-score:comm:9:1"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "comm:8:1",
+          "comm:9:1"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 66,
+        "mode": "single_action",
+        "budget": 22.0,
+        "llm_calls": 67,
+        "graph": {
+          "node_count": 43,
+          "edge_count": 57,
+          "community_count": 9,
+          "negative_nodes": [
+            9,
+            12,
+            13,
+            17,
+            21,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            22,
+            23,
+            24,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "comm:9:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 9,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 19.87012987012987,
+            "roi": 9.935064935064934,
+            "reason": "public terminal gain 19.870130",
+            "evidence_ids": [
+              "public-score:comm:9:1"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "comm:9:1"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 67,
+        "mode": "single_action",
+        "budget": 20.0,
+        "llm_calls": 68,
+        "graph": {
+          "node_count": 43,
+          "edge_count": 57,
+          "community_count": 9,
+          "negative_nodes": [
+            9,
+            12,
+            13,
+            17,
+            21,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            22,
+            23,
+            24,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "shield:17",
+            "action": {
+              "kind": "shield",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "cost": 5.0,
+            "priority": 0,
+            "score": 48.145778686783814,
+            "roi": 9.629155737356763,
+            "reason": "public terminal gain 48.145779",
+            "evidence_ids": [
+              "public-score:shield:17"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "shield:17"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 68,
+        "mode": "single_action",
+        "budget": 15.0,
+        "llm_calls": 69,
+        "graph": {
+          "node_count": 42,
+          "edge_count": 49,
+          "community_count": 10,
+          "negative_nodes": [
+            9,
+            12,
+            13,
+            21,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            23,
+            24,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "comm:23:2",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 23,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 18.438112720588236,
+            "roi": 9.219056360294118,
+            "reason": "public terminal gain 18.438113",
+            "evidence_ids": [
+              "public-score:comm:23:2"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "comm:23:2"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 69,
+        "mode": "single_action",
+        "budget": 13.0,
+        "llm_calls": 70,
+        "graph": {
+          "node_count": 42,
+          "edge_count": 49,
+          "community_count": 10,
+          "negative_nodes": [
+            9,
+            12,
+            13,
+            21,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            23,
+            24,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "comm:21:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 17.8125,
+            "roi": 8.90625,
+            "reason": "public terminal gain 17.812500",
+            "evidence_ids": [
+              "public-score:comm:21:1"
+            ]
+          },
+          {
+            "candidate_id": "comm:33:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 33,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 17.8125,
+            "roi": 8.90625,
+            "reason": "public terminal gain 17.812500",
+            "evidence_ids": [
+              "public-score:comm:33:1"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "comm:21:1",
+          "comm:33:1"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 70,
+        "mode": "single_action",
+        "budget": 11.0,
+        "llm_calls": 71,
+        "graph": {
+          "node_count": 42,
+          "edge_count": 49,
+          "community_count": 10,
+          "negative_nodes": [
+            9,
+            12,
+            13,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            23,
+            24,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "comm:33:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 33,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 17.8125,
+            "roi": 8.90625,
+            "reason": "public terminal gain 17.812500",
+            "evidence_ids": [
+              "public-score:comm:33:1"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "comm:33:1"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 71,
+        "mode": "single_action",
+        "budget": 9.0,
+        "llm_calls": 72,
+        "graph": {
+          "node_count": 42,
+          "edge_count": 49,
+          "community_count": 10,
+          "negative_nodes": [
+            9,
+            12,
+            13,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            23,
+            24,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "comm:11:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 11,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 14.25,
+            "roi": 7.125,
+            "reason": "public terminal gain 14.250000",
+            "evidence_ids": [
+              "public-score:comm:11:1"
+            ]
+          },
+          {
+            "candidate_id": "comm:27:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 14.25,
+            "roi": 7.125,
+            "reason": "public terminal gain 14.250000",
+            "evidence_ids": [
+              "public-score:comm:27:1"
+            ]
+          },
+          {
+            "candidate_id": "comm:28:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 28,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 14.25,
+            "roi": 7.125,
+            "reason": "public terminal gain 14.250000",
+            "evidence_ids": [
+              "public-score:comm:28:1"
+            ]
+          },
+          {
+            "candidate_id": "comm:29:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 14.25,
+            "roi": 7.125,
+            "reason": "public terminal gain 14.250000",
+            "evidence_ids": [
+              "public-score:comm:29:1"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "comm:11:1",
+          "comm:27:1",
+          "comm:28:1",
+          "comm:29:1"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 72,
+        "mode": "single_action",
+        "budget": 7.0,
+        "llm_calls": 73,
+        "graph": {
+          "node_count": 42,
+          "edge_count": 49,
+          "community_count": 10,
+          "negative_nodes": [
+            9,
+            12,
+            13,
+            27,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            23,
+            24,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "comm:27:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 14.25,
+            "roi": 7.125,
+            "reason": "public terminal gain 14.250000",
+            "evidence_ids": [
+              "public-score:comm:27:1"
+            ]
+          },
+          {
+            "candidate_id": "comm:28:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 28,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 14.25,
+            "roi": 7.125,
+            "reason": "public terminal gain 14.250000",
+            "evidence_ids": [
+              "public-score:comm:28:1"
+            ]
+          },
+          {
+            "candidate_id": "comm:29:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 14.25,
+            "roi": 7.125,
+            "reason": "public terminal gain 14.250000",
+            "evidence_ids": [
+              "public-score:comm:29:1"
+            ]
+          },
+          {
+            "candidate_id": "comm:31:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 31,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 14.25,
+            "roi": 7.125,
+            "reason": "public terminal gain 14.250000",
+            "evidence_ids": [
+              "public-score:comm:31:1"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "comm:27:1",
+          "comm:28:1",
+          "comm:29:1",
+          "comm:31:1"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 73,
+        "mode": "single_action",
+        "budget": 5.0,
+        "llm_calls": 74,
+        "graph": {
+          "node_count": 42,
+          "edge_count": 49,
+          "community_count": 10,
+          "negative_nodes": [
+            9,
+            12,
+            13,
+            28,
+            30,
+            31,
+            32,
+            36,
+            39,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            23,
+            24,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "comm:28:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 28,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 14.25,
+            "roi": 7.125,
+            "reason": "public terminal gain 14.250000",
+            "evidence_ids": [
+              "public-score:comm:28:1"
+            ]
+          },
+          {
+            "candidate_id": "comm:29:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 14.25,
+            "roi": 7.125,
+            "reason": "public terminal gain 14.250000",
+            "evidence_ids": [
+              "public-score:comm:29:1"
+            ]
+          },
+          {
+            "candidate_id": "comm:31:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 31,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 14.25,
+            "roi": 7.125,
+            "reason": "public terminal gain 14.250000",
+            "evidence_ids": [
+              "public-score:comm:31:1"
+            ]
+          },
+          {
+            "candidate_id": "comm:4:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 4,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 14.25,
+            "roi": 7.125,
+            "reason": "public terminal gain 14.250000",
+            "evidence_ids": [
+              "public-score:comm:4:1"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "comm:28:1",
+          "comm:29:1",
+          "comm:31:1",
+          "comm:4:1"
+        ]
+      },
+      {
+        "stage": "PLAN_BATCH",
+        "state_version": 74,
+        "mode": "single_action",
+        "budget": 3.0,
+        "llm_calls": 75,
+        "graph": {
+          "node_count": 42,
+          "edge_count": 49,
+          "community_count": 10,
+          "negative_nodes": [
+            9,
+            12,
+            13,
+            30,
+            31,
+            32,
+            36,
+            39,
+            46,
+            48
+          ],
+          "positive_nodes": [
+            4,
+            8,
+            10,
+            11,
+            15,
+            16,
+            18,
+            19,
+            23,
+            24,
+            26,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+          ]
+        },
+        "candidates": [
+          {
+            "candidate_id": "comm:29:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 14.25,
+            "roi": 7.125,
+            "reason": "public terminal gain 14.250000",
+            "evidence_ids": [
+              "public-score:comm:29:1"
+            ]
+          },
+          {
+            "candidate_id": "comm:31:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 31,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 14.25,
+            "roi": 7.125,
+            "reason": "public terminal gain 14.250000",
+            "evidence_ids": [
+              "public-score:comm:31:1"
+            ]
+          },
+          {
+            "candidate_id": "comm:4:1",
+            "action": {
+              "kind": "comm",
+              "target_node_1": 4,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "cost": 2.0,
+            "priority": 0,
+            "score": 14.25,
+            "roi": 7.125,
+            "reason": "public terminal gain 14.250000",
+            "evidence_ids": [
+              "public-score:comm:4:1"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "comm:29:1",
+          "comm:31:1",
+          "comm:4:1"
+        ]
+      }
+    ]
+  },
+  "delta": 0.0,
+  "evaluation": "local CaseVO orchestration development trial",
+  "confirmation_opened": false,
+  "production_enabled": false
+}
