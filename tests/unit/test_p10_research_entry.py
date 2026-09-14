@@ -21,6 +21,7 @@ class P10ResearchEntryTests(unittest.TestCase):
             self.assertTrue(audit["python39_ast_passed"])
             self.assertIn(f"experiment_mode='{variant}'", source)
             self.assertIn("stage=ContestStage.PRELIMINARY", source)
+            self.assertIn("require_stage_envelope=True", source)
             hashes.add(hash(source))
         self.assertEqual(len(hashes), len(VARIANTS))
 

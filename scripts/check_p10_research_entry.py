@@ -20,12 +20,22 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from scripts.build_submission import INLINE_MODULES, strip_project_imports
-from scripts.compare_submission_archives import CountingLLM
+from scripts.compare_submission_archives import CountingLLM, extract_submission
 from scripts.run_baseline_openai import load_local_env
 from scripts.run_local_policy_matrix import LocalPublicEnvironment
 from scripts.run_p7_remote_probe import PairedEnvironment
 from scripts.submission_loader_compat import LOADER_COMPAT_PREAMBLE
-from starnet.experiments.p8_seeds import DEVELOPMENT_REPETITIONS, FAMILIES, seed_payload
+from starnet.experiments.p8_seeds import (
+    DEVELOPMENT_REPETITIONS as P8_REPETITIONS,
+    FAMILIES as P8_FAMILIES,
+    seed_payload as p8_seed_payload,
+)
+from starnet.experiments.p9_distribution_seeds import (
+    DEVELOPMENT_REPETITIONS as P9_REPETITIONS,
+    FAMILIES as P9_FAMILIES,
+    SHIFT_STRATA as P9_SHIFTS,
+    seed_payload as p9_seed_payload,
+)
 
 
 EXPERIMENT_MODULES = (
@@ -36,6 +46,7 @@ EXPERIMENT_MODULES = (
 )
 VARIANTS = ("plan_only", "response_only", "combined")
 LLM_MODES = ("real", "mock-plan", "mock-baseline", "unavailable")
+P9_ARCHIVE = ROOT / "artifacts/submission/starnet-p9-bounded-response-20260913.zip"
 
 
 def digest_bytes(value: bytes) -> str:
@@ -94,7 +105,7 @@ class ParticipantSquadModel(_P10CanonicalParticipantSquadModel):
             max_structures=12,
             beam_width=4,
             experiment_mode={variant!r},
-            require_stage_envelope=False,
+            require_stage_envelope=True,
         )
 
 # End isolated P10 research entry\n'''
@@ -195,13 +206,106 @@ def _mixture_payload(controller):
     }
 
 
+def _first_divergence(left, right):
+    for index in range(max(len(left), len(right))):
+        candidate = left[index] if index < len(left) else None
+        baseline = right[index] if index < len(right) else None
+        if candidate != baseline:
+            return {"action_index": index + 1, "candidate": candidate, "baseline_p9": baseline}
+    return None
+
+
+def _run_p9_baseline(seed, args):
+    if not P9_ARCHIVE.is_file():
+        raise FileNotFoundError(P9_ARCHIVE)
+    previous_cwd = Path.cwd()
+    with TemporaryDirectory(prefix="p10-research-p9-control-") as directory:
+        folder = Path(directory)
+        config = extract_submission(P9_ARCHIVE, folder)
+        os.chdir(folder)
+        try:
+            entry = folder / "starnet_model.py"
+            module_name = f"p10_research_p9_control_{os.getpid()}"
+            spec = importlib.util.spec_from_file_location(module_name, entry)
+            if spec is None or spec.loader is None:
+                raise RuntimeError("cannot load P9 baseline entry")
+            module = importlib.util.module_from_spec(spec)
+            sys.modules[module_name] = module
+            spec.loader.exec_module(module)
+            llm = CountingLLM(args.timeout, offline_only=args.llm_mode != "real")
+            env = (PairedEnvironment(seed, args.server_url, args.timeout)
+                   if args.remote else LocalPublicEnvironment(seed))
+            model = module.ParticipantSquadModel(env, config["person"], llm)
+            decisions = []
+            if args.llm_mode.startswith("mock-"):
+                def rank(payload):
+                    item = payload["candidates"][0]
+                    decisions.append({
+                        "state_version": payload["state_version"],
+                        "candidate_ids": [candidate["candidate_id"]
+                                          for candidate in payload["candidates"]],
+                        "selected_candidate_id": item["candidate_id"],
+                    })
+                    return {
+                        "state_version": payload["state_version"], "mode": "single_action",
+                        "candidate_id": item["candidate_id"], "reason_code": "p9_entry_control",
+                        "evidence_ids": [item["evidence_ids"][0]],
+                    }
+                model.controller.commander.llm_ranker = rank
+            maximum = 0
+            for host_calls in range(1, 121):
+                calls = env.shadow.calls if args.remote else env.calls
+                before = len(calls)
+                status = model.step()
+                maximum = max(maximum, len(calls) - before)
+                if maximum > 1:
+                    raise RuntimeError("P9 baseline issued multiple actions in one host step")
+                if status or model.controller.stopped:
+                    break
+                if args.llm_mode == "real" and llm.errors >= 3:
+                    raise RuntimeError("three P9 baseline LLM transport failures")
+            if not model.controller.stopped and host_calls >= 120:
+                raise RuntimeError("P9 baseline reached host-call cap without stopping")
+            calls = env.shadow.calls if args.remote else env.calls
+            controller = model.controller
+            return {
+                "archive": P9_ARCHIVE.name,
+                "archive_sha256": digest_bytes(P9_ARCHIVE.read_bytes()),
+                "model_sha256": digest_bytes(entry.read_bytes()),
+                "framework_model_module": module.ModelBase.__module__,
+                "controller_type": type(controller).__name__,
+                "score": env.evaluate(),
+                "local_replay_score": env.local_score if args.remote else env.evaluate(),
+                "public_response_error": env.response_error if args.remote else None,
+                "remaining_budget": env.get_remaining_budget(),
+                "host_calls": host_calls,
+                "one_step_one_action": maximum <= 1,
+                "max_actions_per_step": maximum,
+                "actions_sha256": digest_json(calls),
+                "action_sequence": calls,
+                "llm_calls": controller.llm_calls,
+                "llm_accepted": controller.llm_accepted,
+                "llm_fallbacks": controller.llm_fallbacks,
+                "transport_errors": llm.errors,
+                "action_failures": controller.action_failures,
+                "p8_planning_errors": getattr(controller, "p8_planning_errors", None),
+                "p8_mode": getattr(controller, "p8_mode", None),
+                "mock_decisions": decisions,
+            }
+        finally:
+            os.chdir(previous_cwd)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--variant", choices=VARIANTS, default="combined")
-    parser.add_argument("--family", choices=FAMILIES, default="ba_negative_hubs")
-    parser.add_argument("--repetition", type=int, choices=DEVELOPMENT_REPETITIONS, default=501)
+    parser.add_argument("--dataset", choices=("p8", "p9"), default="p8")
+    parser.add_argument("--family")
+    parser.add_argument("--repetition", type=int)
+    parser.add_argument("--shift", choices=P9_SHIFTS)
     parser.add_argument("--llm-mode", choices=LLM_MODES, default="mock-plan")
     parser.add_argument("--remote", action="store_true")
+    parser.add_argument("--baseline-p9", action="store_true")
     parser.add_argument("--server-url", default="http://8.222.218.162:5000")
     parser.add_argument("--timeout", type=float, default=20.0)
     parser.add_argument("--output", type=Path, required=True)
@@ -211,12 +315,26 @@ def main() -> int:
     if args.llm_mode == "real":
         load_local_env(ROOT / ".env")
 
+    if args.dataset == "p8":
+        family = args.family or "ba_negative_hubs"
+        repetition = args.repetition or 501
+        if family not in P8_FAMILIES or repetition not in P8_REPETITIONS or args.shift is not None:
+            parser.error("P8 dataset permits registered families and repetitions 501-503 without --shift")
+        seed = p8_seed_payload(family, repetition)
+        shift = None
+    else:
+        family = args.family or "ba_resampled"
+        repetition = args.repetition or 901
+        shift = args.shift or "negative_persona_aligned"
+        if family not in P9_FAMILIES or repetition not in P9_REPETITIONS:
+            parser.error("P9 dataset permits only registered families and consumed repetitions 901-902")
+        seed = p9_seed_payload(family, repetition, shift)
+
     source_hash_before = {
         relative: digest_bytes((ROOT / relative).read_bytes())
         for relative in (*INLINE_MODULES, *EXPERIMENT_MODULES)
     }
     assembled, audit = assemble_research_entry(args.variant)
-    seed = seed_payload(args.family, args.repetition)
     report = {
         "schema_version": 1,
         "purpose": "Unqualified temporary P10 research entry validation",
@@ -224,8 +342,10 @@ def main() -> int:
         "qualification_modified": False,
         "canonical_build_modified": False,
         "variant": args.variant,
-        "family": args.family,
-        "repetition": args.repetition,
+        "dataset": args.dataset,
+        "family": family,
+        "repetition": repetition,
+        "shift": shift,
         "seed_sha256": digest_json(seed),
         "llm_mode": args.llm_mode,
         "environment": "public custom-seed sandbox" if args.remote else "corrected local simulator",
@@ -353,6 +473,16 @@ def main() -> int:
                 "seconds": time.monotonic() - started,
             }
             report["result"] = result
+            if args.baseline_p9:
+                baseline = _run_p9_baseline(seed, args)
+                report["baseline_p9"] = baseline
+                report["paired"] = {
+                    "score_delta": result["score"] - baseline["score"],
+                    "local_replay_delta": result["local_replay_score"] - baseline["local_replay_score"],
+                    "first_divergence": _first_divergence(
+                        result["action_sequence"], baseline["action_sequence"],
+                    ),
+                }
             plan_required = args.variant in ("plan_only", "combined")
             report["entry_gate_passed"] = (
                 controller.p10_experiment_mode == args.variant
