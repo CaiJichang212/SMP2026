@@ -13,7 +13,9 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from scripts.analyze_p11_full_policy_validation import topology_block
-from scripts.p11_reference_cache import reuse_known_best_result, reuse_prompt1_result
+from scripts.p11_reference_cache import (
+    reuse_known_best_result, reuse_prompt1_result, seed_without_prompts,
+)
 from scripts.run_p11_full_policy_validation import (
     PROTOCOL, P9_ARCHIVE, digest, json_digest, metric, run_archive, run_source,
     source_snapshot, write_json,
@@ -39,6 +41,7 @@ def run_group(job):
     known_cache = {}
     rows = []
     for case_id, amplitude, values, seed in group_cases:
+        state_hash = seed_without_prompts(seed)
         best = max(values)
         best_ids = tuple(index for index, value in enumerate(values, 1) if value == best)
         prompt1 = float(values[0])
@@ -46,27 +49,29 @@ def run_group(job):
         p11["reference_cache"] = {"kind": "not_cacheable_p11_execution",
                                   "source_case_id": case_id}
 
-        if prompt1 not in prompt1_cache:
+        prompt1_key = (state_hash, prompt1)
+        if prompt1_key not in prompt1_cache:
             p9 = _fresh(run_archive(seed), case_id)
-            prompt1_cache[prompt1] = (case_id, seed, p9)
+            prompt1_cache[prompt1_key] = (case_id, seed, p9)
         else:
-            source_id, source_seed, source_result = prompt1_cache[prompt1]
+            source_id, source_seed, source_result = prompt1_cache[prompt1_key]
             p9 = reuse_prompt1_result(source_result, source_seed, seed,
                                       source_case_id=source_id)
 
-        if prompt1 not in magnitude_cache:
+        if prompt1_key not in magnitude_cache:
             magnitude = _fresh(run_source(seed, "fixed1_online_magnitude_no_probe"), case_id)
-            magnitude_cache[prompt1] = (case_id, seed, magnitude)
+            magnitude_cache[prompt1_key] = (case_id, seed, magnitude)
         else:
-            source_id, source_seed, source_result = magnitude_cache[prompt1]
+            source_id, source_seed, source_result = magnitude_cache[prompt1_key]
             magnitude = reuse_prompt1_result(source_result, source_seed, seed,
                                               source_case_id=source_id)
 
-        if best not in known_cache:
+        known_key = (state_hash, best)
+        if known_key not in known_cache:
             known = _fresh(run_archive(seed, known_prompt_id=best_ids[0]), case_id)
-            known_cache[best] = (case_id, seed, best_ids[0], known)
+            known_cache[known_key] = (case_id, seed, best_ids[0], known)
         else:
-            source_id, source_seed, source_prompt, source_result = known_cache[best]
+            source_id, source_seed, source_prompt, source_result = known_cache[known_key]
             known = reuse_known_best_result(
                 source_result, source_seed, seed, source_prompt_id=source_prompt,
                 target_prompt_id=best_ids[0], source_case_id=source_id,
@@ -93,7 +98,9 @@ def grouped(cases):
     groups = {}
     for case in cases:
         case_id, amplitude, _, _ = case
-        groups.setdefault((topology_block(case_id), amplitude), []).append(case)
+        groups.setdefault(
+            (topology_block(case_id), amplitude, seed_without_prompts(case[3])), [],
+        ).append(case)
     return [groups[key] for key in sorted(groups)]
 
 
