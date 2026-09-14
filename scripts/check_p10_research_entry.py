@@ -88,7 +88,7 @@ class ParticipantSquadModel(_P10CanonicalParticipantSquadModel):
         self.controller = P10RuntimeController(
             host_env,
             llm_ranker=self.commander_agent.rank_candidates,
-            stage=self.controller.stage,
+            stage=ContestStage.PRELIMINARY,
             config=self.controller.config,
             p8_mode="conservative",
             max_structures=12,

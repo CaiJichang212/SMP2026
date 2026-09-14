@@ -20,6 +20,7 @@ class P10ResearchEntryTests(unittest.TestCase):
             self.assertEqual(audit["residual_starnet_imports"], [])
             self.assertTrue(audit["python39_ast_passed"])
             self.assertIn(f"experiment_mode='{variant}'", source)
+            self.assertIn("stage=ContestStage.PRELIMINARY", source)
             hashes.add(hash(source))
         self.assertEqual(len(hashes), len(VARIANTS))
 
