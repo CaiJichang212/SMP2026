@@ -28,6 +28,7 @@ class PromptLearningRuntimeController(P8RuntimeController):
         require_stage_envelope=False,
         **kwargs,
     ):
+        kwargs.setdefault("p8_mode", "conservative")
         super().__init__(
             *args, require_stage_envelope=require_stage_envelope, **kwargs,
         )
@@ -61,7 +62,9 @@ class PromptLearningRuntimeController(P8RuntimeController):
         self.p11_fallback_to_p9 = False
         self.p11_response_switches = 0
         self.p11_errors = 0
+        self.p11_planning_errors = 0
         self.p11_last_error: str | None = None
+        self.p11_selected_prompt_dispatches = 0
 
     def _refresh_candidates(self, budget: float, phase: str) -> None:
         if (not self.p11_enabled
@@ -88,6 +91,7 @@ class PromptLearningRuntimeController(P8RuntimeController):
             self._refresh_learned_candidates(budget)
         except Exception as exc:
             self.p11_errors += 1
+            self.p11_planning_errors += 1
             self.p11_last_error = type(exc).__name__
             self.p11_fallback_to_p9 = True
             super()._refresh_candidates(budget, phase)
@@ -141,19 +145,6 @@ class PromptLearningRuntimeController(P8RuntimeController):
             and abs(statistics.fmean(ordered)) > self.p11_prompt_ledger.tie_tolerance
         )
 
-    def _node_supports_selected_prompt(self, node_id: int, prompt_id: int) -> bool:
-        values = self.p11_prompt_ledger.normalized_values().get(node_id, {})
-        if prompt_id not in values or len(values) != 3:
-            return False
-        if node_id in self.p11_prompt_ledger.informative_node_ids:
-            return True
-        ordered = tuple(float(values[item]) for item in (1, 2, 3))
-        spread = max(ordered) - min(ordered)
-        return (
-            spread <= self.p11_prompt_ledger.tie_tolerance
-            and abs(statistics.fmean(ordered)) > self.p11_prompt_ledger.tie_tolerance
-        )
-
     def _finish_calibration(self, *, use_learned: bool) -> None:
         self.p11_calibration_finished = True
         self.p11_current_probe = None
@@ -166,7 +157,7 @@ class PromptLearningRuntimeController(P8RuntimeController):
         selected = [
             float(values[node_id][prompt_id])
             for node_id in rankings
-            if self._node_supports_selected_prompt(node_id, prompt_id)
+            if prompt_id in values.get(node_id, {})
         ]
         if not selected or any(not math.isfinite(value) for value in selected):
             self.p11_fallback_to_p9 = True
@@ -263,7 +254,18 @@ class PromptLearningRuntimeController(P8RuntimeController):
             and action.prompt_id == self.p11_selected_prompt_id
             and action.target_node_1 not in self.p11_selected_prompt_observations
         )
+        response_missing = object()
+        old_p9_response = self.response_estimates.get(
+            action.target_node_1, response_missing,
+        )
+        if selected_observation:
+            self.p11_selected_prompt_dispatches += 1
         success = super()._attempt_action(action, candidate_id, budget)
+        if action.kind == "comm" and action.prompt_id != 1:
+            if old_p9_response is response_missing:
+                self.response_estimates.pop(action.target_node_1, None)
+            else:
+                self.response_estimates[action.target_node_1] = old_p9_response
         if expected is None:
             if selected_observation and success and before is not None and turn in (1, 2, 3):
                 current = self.blackboard.nodes.get(action.target_node_1)

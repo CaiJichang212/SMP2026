@@ -9,7 +9,7 @@
     "probe_sequence": [1, 2, 3],
     "early_stop": "After one complete uncensored node, stop when PromptCalibrationLedger has a provisional best set or all three normalized values are equal and nonzero; the latter gives tied-prompt magnitude without strict ordering. Use a second node only after all-zero, clipping, incomplete evidence, or probe failure. Preserve provisional/confident distinction.",
     "limits": {"maximum_probe_nodes": 2, "maximum_successful_probe_budget": 12.0, "maximum_prompt_attempts": 6},
-    "prediction": "Use the public normalized first-slot response of the selected prompt directly as the population prior; never divide by a presumed prompt strength and never use P8's hard-coded 15 scenarios.",
+    "prediction": "Average one public normalized first-slot response for the selected prompt from every complete uncensored probe node, including an all-zero node; use later selected-prompt first-equivalent responses once per node to update that population prior. Never divide by a presumed prompt strength and never use P8's hard-coded 15 scenarios.",
     "actions": "Every probe and later action is a Python-generated legal candidate selected by the injected LLM; at most one environment action per host step.",
     "fallback": "Probe failure, clipping without usable evidence, conflict, or estimator error falls back to original P9. Prompt histories from IDs 2/3 are never pooled into a prompt-1 first-response estimate.",
     "all_negative": "If the empirically best prompt prior is nonpositive, generate no communication candidate; select a positive exact structural action or stop."

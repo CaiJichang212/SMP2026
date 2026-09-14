@@ -1,6 +1,7 @@
 """Runtime semantics for public-feedback prompt learning."""
 
 import unittest
+from unittest.mock import patch
 
 from starnet.policy.config import PolicyConfig, PolicyMode
 from starnet.runtime.p11_prompt_controller_experiment import PromptLearningRuntimeController
@@ -95,8 +96,31 @@ class PromptLearningRuntimeTests(unittest.TestCase):
         self.assertEqual(env.calls[-1][0], "comm")
         self.assertEqual(env.calls[-1][2], 2)
         target = env.calls[-1][1]
+        self.assertNotIn(target, controller.response_estimates)
         self.assertEqual(controller.p11_selected_prompt_observations[target], 7.5)
         self.assertEqual(controller.p11_selected_prompt_prior, 11.25)
+
+    def test_selected_nondefault_history_never_pollutes_p9_fallback(self):
+        env, controller = self.controller((-5.0, 15.0, 10.0))
+        self.drive_calibration(env, controller)
+        controller.step()
+        selected_target = env.calls[-1][1]
+        self.assertNotIn(selected_target, controller.response_estimates)
+        with patch.object(controller, "_refresh_learned_candidates",
+                          side_effect=ValueError("forced")):
+            controller._refresh_candidates(env.get_remaining_budget(), "test")
+        self.assertTrue(controller.p11_fallback_to_p9)
+        self.assertNotIn(selected_target, controller.response_estimates)
+        self.assertTrue(all(node_id in controller.p11_probe_nodes
+                            for node_id in controller.response_estimates))
+
+    def test_default_constructor_uses_conservative_p9_fallback(self):
+        env = PromptEnvironment((-5.0, 15.0, 10.0))
+        controller = PromptLearningRuntimeController(
+            env, valid_first, node_count=3,
+            config=PolicyConfig(policy_mode=PolicyMode.PUBLIC_GREEDY, max_llm_calls=20),
+        )
+        self.assertEqual(controller.p8_mode, "conservative")
 
     def test_invalid_llm_output_still_uses_legal_probe_fallback(self):
         env, controller = self.controller((-5.0, 15.0, 10.0), ranker=lambda _: {"bad": True})
@@ -127,7 +151,7 @@ class PromptLearningRuntimeTests(unittest.TestCase):
         self.drive_calibration(env, controller)
         self.assertEqual(controller.p11_probe_budget, 12.0)
         self.assertEqual(controller.p11_selected_prompt_id, 2)
-        self.assertEqual(controller.p11_selected_prompt_prior, 15.0)
+        self.assertEqual(controller.p11_selected_prompt_prior, 7.5)
         self.assertFalse(controller.p11_prompt_ledger.confident)
 
     def test_all_negative_best_generates_no_communication(self):
