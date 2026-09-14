@@ -171,6 +171,42 @@ class P10RuntimeControllerTests(unittest.TestCase):
         self.assertEqual(controller.p10_baseline_choices, 1)
         self.assertEqual(controller.p10_pending, [])
 
+    def test_p10_preserves_p8_proposal_and_pg_reference_candidates(self):
+        def choose_p8(payload):
+            item = next(candidate for candidate in payload["candidates"]
+                        if candidate["candidate_id"].startswith("p8:"))
+            return {"state_version": payload["state_version"], "mode": "single_action",
+                    "candidate_id": item["candidate_id"], "reason_code": "choose_p8",
+                    "evidence_ids": [item["evidence_ids"][0]]}
+
+        def p8_refresh(controller, budget, phase):
+            controller.effective_policy_mode = PolicyMode.PUBLIC_GREEDY
+            controller.analysis = controller.analyst.analyze(controller.blackboard)
+            proposal = Candidate("p8:proposal", Action("shield", 1), 0, 3.0, 0.6,
+                                 "P8 PG-reference gain", ("p8:proposal",))
+            reference = Candidate("pg:reference", Action("comm", 3, prompt_id=1),
+                                  0, 0.0, 0.0, "PG=0", ("pg:reference",))
+            controller.candidates = {proposal.candidate_id: proposal,
+                                     reference.candidate_id: reference}
+            controller.p8_options = True
+
+        env, controller = self.controller(choose_p8)
+        plan, decision = plan_fixture()
+        with patch("starnet.runtime.p10_controller_experiment.P8RuntimeController._refresh_candidates",
+                   p8_refresh), \
+             patch("starnet.runtime.p10_controller_experiment.search_full_structure_plan",
+                   return_value=plan), \
+             patch("starnet.runtime.p10_controller_experiment.choose_full_plan",
+                   return_value=decision):
+            controller._refresh_candidates(env.get_remaining_budget(), "test")
+            self.assertEqual(len(controller.candidates), 3)
+            self.assertIn("p8:proposal", controller.candidates)
+            self.assertIn("pg:reference", controller.candidates)
+            controller._create_plan(env.get_remaining_budget())
+        self.assertEqual(controller.queue, ["p8:proposal"])
+        self.assertEqual(controller.p10_pending, [])
+        self.assertEqual(controller.p8_selected_proposals, 1)
+
     def test_failed_middle_action_clears_prefix_after_debited_step(self):
         def approve(payload):
             item = next((candidate for candidate in payload["candidates"]
@@ -211,6 +247,7 @@ class P10RuntimeControllerTests(unittest.TestCase):
         env = PrefixEnvironment()
         controller = P10RuntimeController(
             env, None, node_count=3, p8_mode="conservative", response_estimator=ledger,
+            experiment_mode="combined",
             config=PolicyConfig(policy_mode=PolicyMode.PUBLIC_GREEDY, max_llm_calls=0),
         )
         for node_id in (1, 2, 3):
@@ -220,6 +257,95 @@ class P10RuntimeControllerTests(unittest.TestCase):
         controller._attempt_action(Action("comm", 3, prompt_id=1), "test", env.get_remaining_budget())
         controller._attempt_action(Action("comm", 3, prompt_id=1), "test", env.get_remaining_budget())
         self.assertEqual(ledger.observed, [("和平", 10.0, 15.0)])
+
+    def test_response_gate_pauses_p8_and_response_only_never_searches_plan(self):
+        class Ledger:
+            def gate_open(self):
+                return True
+
+            def predict(self, node_id, persona, turn, observed, *, gated):
+                return 12.75 * (0.5 ** (turn - 1))
+
+            def observe_first(self, persona, before, new_w):
+                return True
+
+        env, controller = self.controller(None)
+        controller.p10_experiment_mode = "response_only"
+        controller.p10_response_estimator = Ledger()
+        response = Candidate("response", Action("comm", 3, prompt_id=1),
+                             0, 5.0, 2.5, "gated", ("response",))
+        with patch("starnet.runtime.p10_controller_experiment.P8RuntimeController._refresh_candidates",
+                   side_effect=AssertionError("P8 must be paused")), \
+             patch("starnet.runtime.p10_controller_experiment.ExperimentalPublicGreedyPlanner.candidates",
+                   return_value=[response]), \
+             patch("starnet.runtime.p10_controller_experiment.search_full_structure_plan") as search:
+            controller._refresh_candidates(env.get_remaining_budget(), "test")
+        self.assertEqual(controller.candidates, {"response": response})
+        self.assertEqual(controller.p10_response_switches, 1)
+        self.assertEqual(controller.p10_searches, 0)
+        search.assert_not_called()
+
+    def test_response_prediction_error_disables_estimator_and_keeps_p9_candidates(self):
+        class BrokenLedger:
+            def gate_open(self):
+                return True
+
+            def predict(self, *args, **kwargs):
+                raise TimeoutError
+
+        env, controller = self.controller(None)
+        controller.p10_experiment_mode = "response_only"
+        controller.p10_response_estimator = BrokenLedger()
+        with patch("starnet.runtime.p10_controller_experiment.P8RuntimeController._refresh_candidates",
+                   self.baseline_refresh):
+            controller._refresh_candidates(env.get_remaining_budget(), "test")
+        self.assertTrue(controller.p10_response_disabled)
+        self.assertEqual(controller.p10_response_disable_reason, "TimeoutError")
+        self.assertEqual(set(controller.candidates), {"baseline"})
+
+    def test_stage_envelope_that_disables_p8_also_disables_both_p10_paths(self):
+        env = PrefixEnvironment()
+        controller = P10RuntimeController(
+            env, None, node_count=3, p8_mode="conservative",
+            require_stage_envelope=True, experiment_mode="combined",
+            config=PolicyConfig(policy_mode=PolicyMode.PUBLIC_GREEDY, max_llm_calls=0),
+        )
+        for node_id in (1, 2, 3):
+            apply_action_outcome(env, controller.blackboard, Action("scan", node_id),
+                                 env.get_remaining_budget())
+        with patch("starnet.runtime.p10_controller_experiment.search_full_structure_plan") as search:
+            controller._refresh_candidates(env.get_remaining_budget(), "test")
+        search.assert_not_called()
+        self.assertIsNone(controller.p8_mode)
+        self.assertEqual(controller.p10_searches, 0)
+        self.assertEqual(controller.p10_response_switches, 0)
+
+    def test_observe_error_disables_estimator_after_public_fact_is_recorded(self):
+        class BrokenObserve:
+            def gate_open(self):
+                return False
+
+            def predict(self, *args, **kwargs):
+                return 12.75
+
+            def observe_first(self, *args):
+                raise RuntimeError
+
+        env = PrefixEnvironment()
+        controller = P10RuntimeController(
+            env, None, node_count=3, p8_mode="conservative",
+            experiment_mode="response_only", response_estimator=BrokenObserve(),
+            config=PolicyConfig(policy_mode=PolicyMode.PUBLIC_GREEDY, max_llm_calls=0),
+        )
+        for node_id in (1, 2, 3):
+            apply_action_outcome(env, controller.blackboard, Action("scan", node_id),
+                                 env.get_remaining_budget())
+        controller._attempt_action(Action("comm", 3, prompt_id=1), "test",
+                                   env.get_remaining_budget())
+        self.assertEqual(controller.blackboard.nodes[3].w, 15.0)
+        self.assertEqual(controller.blackboard.nodes[3].comm_left, 2)
+        self.assertTrue(controller.p10_response_disabled)
+        self.assertEqual(controller.p10_response_disable_reason, "RuntimeError")
 
 
 if __name__ == "__main__":

@@ -4,9 +4,10 @@ from __future__ import annotations
 
 import hashlib
 import statistics
+from typing import Literal
 
 from starnet.policy.actions import Action, action_cost, is_legal_action
-from starnet.policy.candidates import Candidate
+from starnet.policy.candidates import Candidate, select_deterministic_batch
 from starnet.policy.config import PolicyMode
 from starnet.policy.p10_structure_plan_experiment import (
     FullPlanDecision,
@@ -14,10 +15,17 @@ from starnet.policy.p10_structure_plan_experiment import (
     choose_full_plan,
     search_full_structure_plan,
 )
+from starnet.policy.p8_experiment import public_board_salt
 from starnet.runtime.p8_controller import P8RuntimeController
+from starnet.runtime.controller import MAX_BATCH_ACTIONS, RuntimeController
+from starnet.policy.public_response_mixture import PublicResponseMixtureLedger
+from starnet.policy.structural import ExperimentalPublicGreedyPlanner
 
 
-def _action_name(action: Action) -> str:
+P10ExperimentMode = Literal["plan_only", "response_only", "combined"]
+
+
+def _p10_action_name(action: Action) -> str:
     if action.kind == "cut":
         return f"cut:{action.target_node_1}-{action.target_node_2}"
     return f"{action.kind}:{action.target_node_1}"
@@ -27,20 +35,31 @@ class P10RuntimeController(P8RuntimeController):
     """Search once, then execute an LLM-approved prefix one action per step."""
 
     def __init__(self, *args, max_structures=12, beam_width=4,
-                 response_estimator=None, **kwargs):
+                 response_estimator=None, experiment_mode: P10ExperimentMode = "plan_only",
+                 **kwargs):
         super().__init__(*args, **kwargs)
-        if max_structures <= 0 or beam_width <= 0:
+        if (max_structures <= 0 or beam_width <= 0
+                or experiment_mode not in ("plan_only", "response_only", "combined")):
             raise ValueError("invalid P10 search bounds")
+        self.p10_experiment_mode = experiment_mode
         self.p10_max_structures = max_structures
         self.p10_beam_width = beam_width
-        self.p10_response_estimator = response_estimator
+        self.p10_response_estimator = (
+            response_estimator
+            if response_estimator is not None or experiment_mode == "plan_only"
+            else PublicResponseMixtureLedger()
+        )
+        self.p10_response_disabled = False
+        self.p10_response_disable_reason = None
+        self.p10_response_switches = 0
         self.p10_search_completed = False
         self.p10_searches = 0
         self.p10_planning_errors = 0
         self.p10_last_planning_error = None
         self.p10_options = False
         self.p10_plan_id = None
-        self.p10_baseline_id = None
+        self.p10_original_candidates: dict[str, Candidate] = {}
+        self.p10_original_p8_options = False
         self.p10_plan: FullStructurePlan | None = None
         self.p10_decision: FullPlanDecision | None = None
         self.p10_pending: list[Action] = []
@@ -54,7 +73,7 @@ class P10RuntimeController(P8RuntimeController):
         if self.p10_pending:
             action = self.p10_pending[0]
             if is_legal_action(action, self.blackboard, budget):
-                identity = f"p10-prefix:{self.p10_prefix_successes}:{_action_name(action)}"
+                identity = f"p10-prefix:{self.p10_prefix_successes}:{_p10_action_name(action)}"
                 self.analysis = self.analyst.analyze(self.blackboard)
                 self.candidates = {
                     identity: Candidate(
@@ -68,18 +87,26 @@ class P10RuntimeController(P8RuntimeController):
             self.p10_pending.clear()
             self.p10_prefix_failures += 1
 
+        if self._response_mode_enabled() and self._response_gate_open():
+            if self._refresh_response_candidates(budget, phase):
+                return
+
         super()._refresh_candidates(budget, phase)
         self.p10_options = False
-        if (self.p10_search_completed
-                or self.effective_policy_mode is not PolicyMode.PUBLIC_GREEDY
-                or len(self.blackboard.scanned_ids) != self.node_count
+        if not self._plan_mode_enabled() or self.p10_search_completed:
+            return
+        if len(self.blackboard.scanned_ids) != self.node_count:
+            return
+        # The single search opportunity is consumed at the first complete
+        # public snapshot, even if P9 currently has no candidate. It is never
+        # delayed to collect communications as implicit probes.
+        self.p10_search_completed = True
+        if (self.effective_policy_mode is not PolicyMode.PUBLIC_GREEDY
                 or not self.candidates):
             return
-        self.p10_search_completed = True
         self.p10_searches += 1
         try:
             if self.p8_salt is None:
-                from starnet.policy.p8_experiment import public_board_salt
                 self.p8_salt = public_board_salt(self.blackboard)
             plan = search_full_structure_plan(
                 self.blackboard, budget, self.response_estimates,
@@ -105,15 +132,12 @@ class P10RuntimeController(P8RuntimeController):
         self.p10_decision = decision
         if not decision.accepted:
             return
-        baseline = next(
-            (candidate for candidate in self.candidates.values()
-             if candidate.action == decision.baseline_action),
-            None,
-        )
-        if baseline is None or not plan.structure_actions:
+        if not plan.structure_actions:
             return
-        sequence = ",".join(_action_name(action) for action in plan.structure_actions)
-        material = "|".join(_action_name(action) for action in plan.structure_actions)
+        self.p10_original_candidates = dict(self.candidates)
+        self.p10_original_p8_options = self.p8_options
+        sequence = ",".join(_p10_action_name(action) for action in plan.structure_actions)
+        material = "|".join(_p10_action_name(action) for action in plan.structure_actions)
         identity = "p10-plan:" + hashlib.sha256(material.encode("ascii")).hexdigest()[:16]
         selection_mean = statistics.fmean(decision.selection_deltas)
         audit_mean = statistics.fmean(decision.audit_deltas)
@@ -129,20 +153,16 @@ class P10RuntimeController(P8RuntimeController):
             f"structure_cost={cost:.1f}; bounded-response assumptions: selection mean={selection_mean:.6f}, "
             f"minimum={min(decision.selection_deltas):.6f}; independent audit mean={audit_mean:.6f}, "
             f"minimum={min(decision.audit_deltas):.6f}; individual negative scenarios are permitted by "
-            "the preregistered mean-audited development rule; after the prefix, P9 replans persuasion "
-            "from actual public responses",
+            "the preregistered mean-audited development rule; all continuation gains use the public-greedy "
+            "reference (PG=0), not an assumption that P9 gain is zero; after the prefix, P9 replans "
+            "persuasion from actual public responses",
             (identity,),
         )
-        fallback = Candidate(
-            baseline.candidate_id, baseline.action, 0, 0.0, 0.0,
-            "P9 bounded baseline; selecting this ID rejects the complete P10 prefix",
-            baseline.evidence_ids,
-        )
         self.p10_plan_id = identity
-        self.p10_baseline_id = fallback.candidate_id
-        self.candidates = {identity: proposed, fallback.candidate_id: fallback}
+        self.candidates = {identity: proposed, **self.p10_original_candidates}
         self.p10_options = True
-        # P10 supersedes the P8 two-option presentation for this one decision.
+        # RuntimeController creates one combined LLM request. P8's specialized
+        # accounting is reproduced after the selected original ID is known.
         self.p8_options = False
 
     def _llm_candidate_options(self, candidates):
@@ -158,19 +178,38 @@ class P10RuntimeController(P8RuntimeController):
             super()._create_plan(budget)
             return
         accepted_before = self.llm_accepted
-        super()._create_plan(budget)
+        RuntimeController._create_plan(self, budget)
         selected = self.queue[0] if self.queue else None
-        explicitly_approved = (
-            self.llm_accepted > accepted_before and selected == self.p10_plan_id
-        )
+        llm_accepted = self.llm_accepted > accepted_before
+        explicitly_approved = llm_accepted and selected == self.p10_plan_id
         if explicitly_approved and self.p10_plan is not None:
             self.p10_pending = list(self.p10_plan.structure_actions)
             self.p10_approved_plans += 1
-        else:
+        elif llm_accepted and selected in self.p10_original_candidates:
             self.p10_baseline_choices += 1
-            self.queue = [self.p10_baseline_id] if self.p10_baseline_id else []
+            self.candidates = dict(self.p10_original_candidates)
+            if selected.startswith("p8:"):
+                self.p8_selected_proposals += 1
+            elif self.p10_original_p8_options:
+                self.p8_selected_baseline += 1
+        else:
+            # Reconstruct P9's deterministic fallback on the original option
+            # set. The P10 plan must never enter an invalid-output fallback.
+            original = list(self.p10_original_candidates.values())
+            options = (
+                original if self.p10_original_p8_options
+                else RuntimeController._llm_candidate_options(self, original)
+            )
+            requested = select_deterministic_batch(
+                options, budget, MAX_BATCH_ACTIONS, config=self.config,
+            )[:1]
+            validation = self._valid_queue(requested, budget)
+            self.candidates = dict(self.p10_original_candidates)
+            self.queue = list(validation.candidate_ids)
             self._last_step_selected_ids = list(self.queue)
+            self.p10_baseline_choices += 1
         self.p10_options = False
+        self.p8_options = False
 
     def _execute_next(self, budget: float) -> int:
         prefix_active = bool(self.p10_pending)
@@ -194,9 +233,77 @@ class P10RuntimeController(P8RuntimeController):
         predict = getattr(estimator, "predict", None)
         if not callable(predict):
             raise ValueError("P10 response estimator must expose predict")
-        return lambda node_id, node, turn: predict(
-            node_id, node.persona, turn, self.response_estimates, gated=True,
+        def estimate(node_id, node, turn):
+            try:
+                return predict(
+                    node_id, node.persona, turn, self.response_estimates, gated=True,
+                )
+            except Exception as exc:
+                self._disable_response(type(exc).__name__)
+                raise
+        return estimate
+
+    def _plan_mode_enabled(self) -> bool:
+        return (
+            self.p10_experiment_mode in ("plan_only", "combined")
+            and self._p10_envelope_open()
         )
+
+    def _response_mode_enabled(self) -> bool:
+        return (
+            self.p10_experiment_mode in ("response_only", "combined")
+            and self.p10_response_estimator is not None
+            and not self.p10_response_disabled
+            and self._p10_envelope_open()
+        )
+
+    def _p10_envelope_open(self) -> bool:
+        return (
+            self.p8_mode is not None
+            and not (self.require_stage_envelope and self.blackboard.nonexistent_ids)
+        )
+
+    def _disable_response(self, reason: str) -> None:
+        self.p10_response_disabled = True
+        self.p10_response_disable_reason = reason
+
+    def _response_gate_open(self) -> bool:
+        if not self._response_mode_enabled():
+            return False
+        try:
+            return bool(self.p10_response_estimator.gate_open())
+        except Exception as exc:
+            self._disable_response(type(exc).__name__)
+            return False
+
+    def _refresh_response_candidates(self, budget: float, phase: str) -> bool:
+        try:
+            response_fn = self._p10_response_fn()
+            if response_fn is None:
+                return False
+            self.effective_policy_mode = PolicyMode.PUBLIC_GREEDY
+            self.analysis = self.analyst.analyze(self.blackboard)
+            planner = ExperimentalPublicGreedyPlanner(
+                response_fn,
+                candidate_limit=max(24, self.config.structure_candidate_limit),
+                min_observed_responses=0,
+                structure_roi_margin=1.0,
+                defer_comm_if_shieldable=self.config.enable_public_comm_shield_guard,
+            )
+            candidates = planner.candidates(
+                self.blackboard, budget, self.failed_actions,
+                observed_response_count=len(self.response_estimates),
+            )
+        except Exception as exc:
+            self._disable_response(type(exc).__name__)
+            return False
+        self.candidates = {candidate.candidate_id: candidate for candidate in candidates}
+        self.structural_planner = None
+        self.structural_plans = {}
+        self.p8_options = False
+        self.p10_options = False
+        self.p10_response_switches += 1
+        return True
 
     def _attempt_action(self, action: Action, candidate_id: str, budget: float) -> bool:
         node = self.blackboard.nodes.get(action.target_node_1)
@@ -208,7 +315,10 @@ class P10RuntimeController(P8RuntimeController):
         current = self.blackboard.nodes.get(action.target_node_1)
         if (success and first_turn and callable(observe) and before is not None
                 and persona is not None and current is not None):
-            observe(persona, before, current.w)
+            try:
+                observe(persona, before, current.w)
+            except Exception as exc:
+                self._disable_response(type(exc).__name__)
         return success
 
     def _action_from_last_step(self) -> Action | None:
@@ -216,4 +326,4 @@ class P10RuntimeController(P8RuntimeController):
         return Action(**payload) if isinstance(payload, dict) else None
 
 
-__all__ = ["P10RuntimeController"]
+__all__ = ["P10ExperimentMode", "P10RuntimeController"]

@@ -22,7 +22,7 @@ from starnet.submission.starnet_model import ParticipantSquadModel
 
 
 class P10TrialModel(ParticipantSquadModel):
-    def __init__(self, host_env, person_list, llm):
+    def __init__(self, host_env, person_list, llm, *, experiment_mode="plan_only"):
         super().__init__(host_env, person_list, llm)
         self.controller = P10RuntimeController(
             host_env,
@@ -32,15 +32,16 @@ class P10TrialModel(ParticipantSquadModel):
             p8_mode="conservative",
             max_structures=12,
             beam_width=4,
+            experiment_mode=experiment_mode,
         )
 
 
-def run_trial(seed, *, llm_mode="mock-plan", timeout=20):
+def run_trial(seed, *, llm_mode="mock-plan", timeout=20, experiment_mode="plan_only"):
     real = llm_mode == "real"
     llm = CountingLLM(timeout, offline_only=not real)
     env = LocalPublicEnvironment(seed)
     people = json.loads((ROOT / "src/starnet/submission/config.json").read_text())["person"]
-    model = P10TrialModel(env, people, llm)
+    model = P10TrialModel(env, people, llm, experiment_mode=experiment_mode)
     payloads = []
     if llm_mode in {"mock-plan", "mock-baseline"}:
         def rank(payload):
@@ -93,6 +94,18 @@ def run_trial(seed, *, llm_mode="mock-plan", timeout=20):
         "p10_prefix_successes": controller.p10_prefix_successes,
         "p10_prefix_failures": controller.p10_prefix_failures,
         "p10_prefix_completed": controller.p10_prefix_completed,
+        "p10_experiment_mode": controller.p10_experiment_mode,
+        "p10_response_switches": controller.p10_response_switches,
+        "p10_response_disabled": controller.p10_response_disabled,
+        "p10_response_disable_reason": controller.p10_response_disable_reason,
+        "p10_response_gate_open": (
+            controller.p10_response_estimator.gate_open()
+            if controller.p10_response_estimator is not None
+            and not controller.p10_response_disabled else False
+        ),
+        "p10_response_activation": getattr(
+            controller.p10_response_estimator, "activation", None,
+        ),
         "action_attempts": controller.action_attempts,
         "payloads": payloads,
     }
@@ -104,13 +117,16 @@ def main() -> int:
     parser.add_argument("--repetition", type=int, choices=DEVELOPMENT_REPETITIONS, default=501)
     parser.add_argument("--llm-mode", choices=("real", "mock-plan", "mock-baseline", "unavailable"),
                         default="mock-plan")
+    parser.add_argument("--experiment-mode", choices=("plan_only", "response_only", "combined"),
+                        default="plan_only")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     if args.llm_mode == "real":
         load_local_env(ROOT / ".env")
     seed = seed_payload(args.family, args.repetition)
     baseline = run_policy(seed, None)
-    candidate = run_trial(seed, llm_mode=args.llm_mode)
+    candidate = run_trial(seed, llm_mode=args.llm_mode,
+                          experiment_mode=args.experiment_mode)
     report = {
         "family": args.family, "repetition": args.repetition,
         "baseline": baseline, "candidate": candidate,
