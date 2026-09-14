@@ -136,10 +136,26 @@ def resolve_log_dir(path: Path, invocation_cwd: Path) -> Path:
 def make_runner_controller(original, fallback_type, env, ranker, *, initial_budget, node_count, stage, config):
     """Preserve a qualified submission controller when adapting local limits."""
     mode = getattr(original, "p8_mode", None)
+    p11_mode = getattr(original, "p11_experiment_mode", None)
+    keep_p11 = (
+        p11_mode == "prompt_learning"
+        and mode == "conservative"
+        and node_count == 50
+        and initial_budget == 100.0
+        and not config.enable_public_comm_shield_guard
+    )
     keep_p8 = (mode in ("conservative", "audited") and node_count == 50
                and initial_budget == 100.0 and not config.enable_public_comm_shield_guard)
-    controller_type = type(original) if keep_p8 else fallback_type
-    extras = {"p8_mode": mode, "require_stage_envelope": True} if keep_p8 else {}
+    controller_type = type(original) if keep_p11 or keep_p8 else fallback_type
+    if keep_p11:
+        extras = {
+            "p8_mode": mode,
+            "require_stage_envelope": True,
+            "max_probe_budget": float(getattr(original, "p11_max_probe_budget", 12.0)),
+            "max_probe_nodes": int(getattr(original, "p11_max_probe_nodes", 2)),
+        }
+    else:
+        extras = {"p8_mode": mode, "require_stage_envelope": True} if keep_p8 else {}
     return controller_type(env, ranker, initial_budget=initial_budget, node_count=node_count,
                            stage=stage, config=config, **extras)
 

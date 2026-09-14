@@ -37,6 +37,27 @@ class BaselineRunnerTests(unittest.TestCase):
         self.assertIs(type(fallback), Base)
         self.assertNotIn("p8_mode", fallback.options)
 
+    def test_runner_keeps_p11_parameters_but_constructs_fresh_ledger(self):
+        class Base:
+            def __init__(self, *args, **kwargs):
+                self.options = kwargs
+        class PromptLearning(Base):
+            p8_mode = "conservative"
+            p11_experiment_mode = "prompt_learning"
+            p11_max_probe_budget = 6.0
+            p11_max_probe_nodes = 1
+            p11_prompt_ledger = object()
+        config = PolicyConfig(policy_mode=PolicyMode.PUBLIC_GREEDY)
+        kept = make_runner_controller(
+            PromptLearning(), Base, None, None, initial_budget=100.0,
+            node_count=50, stage="preliminary", config=config,
+        )
+        self.assertIsInstance(kept, PromptLearning)
+        self.assertEqual(kept.options["p8_mode"], "conservative")
+        self.assertEqual(kept.options["max_probe_budget"], 6.0)
+        self.assertEqual(kept.options["max_probe_nodes"], 1)
+        self.assertNotIn("prompt_ledger", kept.options)
+
     def test_seed_budget_requires_numeric_max_budget(self) -> None:
         self.assertEqual(seed_budget({"global_setting": {"max_budget": 20}}), 20.0)
         self.assertIsNone(seed_budget({"global_setting": {"max_budget": "20"}}))

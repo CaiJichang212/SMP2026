@@ -25,8 +25,10 @@ ModelBase = _starnet_runtime.ModelBase
 from starnet.runtime.controller import RuntimeController
 from starnet.runtime.stage import ContestStage
 from starnet.policy.config import DEFAULT_POLICY_CONFIG, PolicyConfig, PolicyMode
-from starnet.policy.p8_qualification import qualified_p8_mode
+from starnet.policy.p8_qualification import P8_CERTIFIED_MODE, qualified_p8_mode
+from starnet.policy.p11_qualification import P11_CERTIFIED_MODE, qualified_p11_mode
 from starnet.runtime.p8_controller import P8RuntimeController
+from starnet.runtime.p11_prompt_controller_experiment import PromptLearningRuntimeController
 
 
 def _runtime_config_for_descriptions(
@@ -116,9 +118,35 @@ class ParticipantSquadModel(ModelBase):
 
         runtime_config = _runtime_config_for_descriptions(descriptions, commander_description)
 
+        requested_p11 = commander_description.get(
+            "experimental_p11_mode", P11_CERTIFIED_MODE,
+        )
+        p11_mode = qualified_p11_mode(requested_p11)
+        certified_p8_mode = qualified_p8_mode(P8_CERTIFIED_MODE)
+        if p11_mode is not None and certified_p8_mode is None:
+            p11_mode = None
+        if p11_mode is not None and runtime_config.policy_mode is not PolicyMode.PUBLIC_GREEDY:
+            runtime_config = PolicyConfig(
+                enable_shield=True, enable_cut=True, enable_communicate=True,
+                p0_exclusive=False, max_llm_calls=240,
+                policy_mode=PolicyMode.PUBLIC_GREEDY,
+            )
         p8_mode = qualified_p8_mode(commander_description.get("experimental_p8_mode"))
-        controller_type = P8RuntimeController if p8_mode is not None else RuntimeController
-        controller_options = {"p8_mode": p8_mode, "require_stage_envelope": True} if p8_mode is not None else {}
+        if p11_mode is not None:
+            p8_mode = certified_p8_mode
+            controller_type = PromptLearningRuntimeController
+            controller_options = {
+                "p8_mode": p8_mode,
+                "require_stage_envelope": True,
+                "max_probe_budget": 12.0,
+                "max_probe_nodes": 2,
+            }
+        else:
+            controller_type = P8RuntimeController if p8_mode is not None else RuntimeController
+            controller_options = (
+                {"p8_mode": p8_mode, "require_stage_envelope": True}
+                if p8_mode is not None else {}
+            )
         self.controller = controller_type(
             host_env,
             llm_ranker=self.commander_agent.rank_candidates,

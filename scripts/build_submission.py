@@ -43,7 +43,21 @@ INLINE_MODULES = (
     "src/starnet/runtime/stage.py",
     "src/starnet/runtime/controller.py",
     "src/starnet/runtime/p8_controller.py",
+    "src/starnet/policy/prompt_calibration_experiment.py",
+    "src/starnet/policy/p11_qualification.py",
+    "src/starnet/runtime/p11_prompt_controller_experiment.py",
     "src/starnet/submission/starnet_model.py",
+)
+P11_ADDITIVE_MODULES = {
+    "src/starnet/policy/prompt_calibration_experiment.py",
+    "src/starnet/policy/p11_qualification.py",
+    "src/starnet/runtime/p11_prompt_controller_experiment.py",
+}
+P11_DISABLED_COMPATIBILITY = (
+    PROJECT_ROOT / "experiments/manifests/p11-disabled-p9-compatibility-20260914.json"
+)
+P11_RELEASE_MANIFEST = (
+    PROJECT_ROOT / "experiments/manifests/p11-release-sources-20260914.json"
 )
 
 
@@ -85,14 +99,83 @@ def verify_p8_release() -> None:
     if not manifest_path.is_file():
         raise SystemExit("P8 运行源码审阅清单缺失。")
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    expected_paths = set(INLINE_MODULES) | {"src/starnet/submission/config.json"}
+    expected_paths = set(INLINE_MODULES) - P11_ADDITIVE_MODULES
+    expected_paths.add("src/starnet/submission/config.json")
     expected_paths.update(str(path.relative_to(PROJECT_ROOT)) for path in (SOURCE_DIR / "prompt").rglob("*") if path.is_file())
     if (manifest.get("gate_report_sha256") != P8_GATE_REPORT_SHA256
             or set(manifest.get("files", {})) != expected_paths):
         raise SystemExit("P8 运行源码审阅清单与当前构建不一致。")
+    allowed_shell_changes = {
+        "src/starnet/submission/starnet_model.py",
+        "src/starnet/submission/config.json",
+    }
+    changed_shell = set()
     for relative, digest in manifest["files"].items():
         if hashlib.sha256((PROJECT_ROOT / relative).read_bytes()).hexdigest() != digest:
+            if relative in allowed_shell_changes:
+                changed_shell.add(relative)
+                continue
             raise SystemExit(f"P8 已审阅运行源码发生变化: {relative}；请验证后更新资格记录。")
+    if not changed_shell:
+        return
+    from starnet.policy.p11_qualification import (
+        P11_CERTIFIED_MODE, qualified_p11_mode,
+    )
+    commander = next((person for person in config.get("person", [])
+                      if isinstance(person, dict) and person.get("role") == "CommanderAgent"), {})
+    requested_p11 = commander.get("experimental_p11_mode", P11_CERTIFIED_MODE)
+    if qualified_p11_mode(requested_p11) is not None:
+        return
+    if not P11_DISABLED_COMPATIBILITY.is_file():
+        raise SystemExit("P11 未启用接线缺少独立 P9 兼容审阅清单。")
+    compatibility = json.loads(P11_DISABLED_COMPATIBILITY.read_text(encoding="utf-8"))
+    current_paths = set(INLINE_MODULES) | {"src/starnet/submission/config.json"}
+    current_paths.update(str(path.relative_to(PROJECT_ROOT))
+                         for path in (SOURCE_DIR / "prompt").rglob("*") if path.is_file())
+    if (compatibility.get("p9_gate_report_sha256") != P8_GATE_REPORT_SHA256
+            or compatibility.get("p9_source_manifest_sha256") != hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+            or compatibility.get("p11_qualification_default") != "disabled"
+            or set(compatibility.get("files", {})) != current_paths):
+        raise SystemExit("P11 disabled/P9 compatibility identity mismatch.")
+    for relative, expected in compatibility["files"].items():
+        if hashlib.sha256((PROJECT_ROOT / relative).read_bytes()).hexdigest() != expected:
+            raise SystemExit(f"P11 disabled/P9 compatibility source changed: {relative}")
+
+
+def verify_p11_release() -> None:
+    """Verify the independent P11 activation seal without reusing P9 evidence."""
+    from starnet.policy.p11_qualification import (
+        P11_CERTIFIED_MODE, P11_GATE_REPORT_RELATIVE_PATH,
+        P11_GATE_REPORT_SHA256, qualified_p11_mode,
+    )
+    config = json.loads((SOURCE_DIR / "config.json").read_text(encoding="utf-8"))
+    commander = next((person for person in config.get("person", [])
+                      if isinstance(person, dict) and person.get("role") == "CommanderAgent"), {})
+    requested = commander.get("experimental_p11_mode", P11_CERTIFIED_MODE)
+    if qualified_p11_mode(requested) is None:
+        return
+    report = PROJECT_ROOT / P11_GATE_REPORT_RELATIVE_PATH
+    if (not report.is_file()
+            or hashlib.sha256(report.read_bytes()).hexdigest() != P11_GATE_REPORT_SHA256):
+        raise SystemExit("P11 activation seal missing or hash mismatch.")
+    evidence = json.loads(report.read_text(encoding="utf-8"))
+    if (evidence.get("selected_variant") != P11_CERTIFIED_MODE
+            or evidence.get("statistical_gate_passed") is not True
+            or evidence.get("activation_seal_passed") is not True
+            or evidence.get("unreleased_entry_gate_passed") is not True):
+        raise SystemExit("P11 statistical evidence cannot replace its entry activation seal.")
+    if not P11_RELEASE_MANIFEST.is_file():
+        raise SystemExit("P11 independent source-review manifest is missing.")
+    manifest = json.loads(P11_RELEASE_MANIFEST.read_text(encoding="utf-8"))
+    expected_paths = set(INLINE_MODULES) | {"src/starnet/submission/config.json"}
+    expected_paths.update(str(path.relative_to(PROJECT_ROOT))
+                          for path in (SOURCE_DIR / "prompt").rglob("*") if path.is_file())
+    if (manifest.get("activation_report_sha256") != P11_GATE_REPORT_SHA256
+            or set(manifest.get("files", {})) != expected_paths):
+        raise SystemExit("P11 source-review manifest coverage mismatch.")
+    for relative, expected in manifest["files"].items():
+        if hashlib.sha256((PROJECT_ROOT / relative).read_bytes()).hexdigest() != expected:
+            raise SystemExit(f"P11 reviewed source changed: {relative}")
 
 
 def strip_project_imports(source: str, path: Path) -> str:
@@ -139,6 +222,7 @@ def main() -> None:
     args = parser.parse_args()
     require_source()
     verify_p8_release()
+    verify_p11_release()
     TARGET_DIR.mkdir(parents=True, exist_ok=True)
     # Python 导入后的缓存不属于交付契约；仅删除这一类确定的生成物。
     cache_dir = TARGET_DIR / "__pycache__"
