@@ -1,0 +1,60 @@
+{
+  "config": {
+    "protocol_sha256": "b7b3f65c046064513804f21f34c7650e306c5485ab8a086d84e1aa633b98cd53",
+    "runner_sha256": "0588aa193395df98cf4d66b43e2a2e82f4a109ca6e9d5cb6f92b9ab4892f66f3",
+    "source_snapshot": {
+      "src/starnet/runtime/p11_prompt_controller_experiment.py": "98ae3471bd5eb9d024bd96ac678f19a6807877cccb45df53622b70a614880612",
+      "src/starnet/runtime/p11_prior_discount_experiment.py": "8cfe650b889bc770d0f05c6c88ea92df3ad339df7161b10ee166552406c82201"
+    },
+    "families": [
+      "er_balanced",
+      "ba_negative_hubs",
+      "ws_peace_majority",
+      "sbm_negative_bridges",
+      "sbm_violent_cluster",
+      "three_sparse_components"
+    ],
+    "prompt_values": [
+      15.0,
+      10.0,
+      -5.0
+    ],
+    "cases": 36,
+    "workers": 1
+  },
+  "complete": true,
+  "comparison": {
+    "cases": 36,
+    "mean": 4.750208202740471,
+    "minimum": -7.933780714285717,
+    "maximum": 15.49876269685035,
+    "win_tie_loss": [
+      18,
+      12,
+      6
+    ],
+    "prompt1_best_mean": 4.750208202740478,
+    "family_means": {
+      "er_balanced": 15.498762696850159,
+      "ba_negative_hubs": 0.0,
+      "ws_peace_majority": -7.933780714285622,
+      "sbm_negative_bridges": 14.976079714285788,
+      "sbm_violent_cluster": 0.0,
+      "three_sparse_components": 5.960187519592502
+    },
+    "nonnegative_family_means": 5
+  },
+  "development_gate": {
+    "checks": {
+      "paired_mean_gt_1": true,
+      "prompt1_best_mean_gt_0": true,
+      "at_least_four_nonnegative_family_means": true,
+      "worst_pair_at_least_minus_10": true
+    },
+    "passed": true
+  },
+  "changes_runtime_selection": false,
+  "production_enabled": false,
+  "platform_score": null,
+  "raw_evidence": "experiments/raw/p11-prior-discount-development-20260914/full.json"
+}
