@@ -9,10 +9,12 @@ from typing import Mapping
 MODELS = ("independent", "aligned", "inverse")
 INITIAL_WEIGHTS = {"independent": 0.5, "aligned": 0.25, "inverse": 0.25}
 FIXED_FIRST_DELTA = 12.75
+_DENSITY_BOUND_TOLERANCE = 1e-9
+_KNOWN_PERSONAS = {"和平", "中立", "暴力"}
 
 
 def _response_range(model: str, persona: str) -> tuple[float, float]:
-    if persona not in {"和平", "中立", "暴力"}:
+    if persona not in _KNOWN_PERSONAS:
         raise ValueError("unknown public persona")
     if persona == "中立" or model == "independent":
         return 0.2, 1.5
@@ -25,11 +27,20 @@ def _response_range(model: str, persona: str) -> tuple[float, float]:
 
 def _density(bounds: tuple[float, float], value: float) -> float:
     low, high = bounds
-    return 1.0 / (high - low) if low <= value <= high else 0.0
+    return (
+        1.0 / (high - low)
+        if low - _DENSITY_BOUND_TOLERANCE <= value <= high + _DENSITY_BOUND_TOLERANCE
+        else 0.0
+    )
 
 
 class PublicResponseMixtureLedger:
-    """Update response hypotheses only from public, uncensored first deltas."""
+    """Update response hypotheses only from public, uncensored first deltas.
+
+    The ledger has no node identity, so callers must submit at most one first
+    observation per node. Adding identity now would change the established
+    integration contract; runtime adapters own that deduplication boundary.
+    """
 
     def __init__(self, *, minimum_observations: int = 4,
                  posterior_threshold: float = 0.95) -> None:
@@ -56,6 +67,8 @@ class PublicResponseMixtureLedger:
         )
 
     def predict_first(self, persona: str) -> float:
+        if persona not in _KNOWN_PERSONAS:
+            return FIXED_FIRST_DELTA
         weights = self.weights()
         return 15.0 * sum(
             weights[model] * sum(_response_range(model, persona)) / 2.0
@@ -72,12 +85,29 @@ class PublicResponseMixtureLedger:
         if turn not in (1, 2, 3):
             raise ValueError("invalid communication turn")
         first = observed_first.get(node_id)
+        if first is not None:
+            try:
+                first = float(first)
+            except (TypeError, ValueError):
+                first = None
+            if first is not None and not math.isfinite(first):
+                first = None
         if first is None:
             first = self.predict_gated_first(persona) if gated else self.predict_first(persona)
         return max(0.0, float(first)) * (0.5 ** (turn - 1))
 
     def observe_first(self, persona: str, before: float, new_w: float) -> bool:
-        before, new_w = float(before), float(new_w)
+        if persona not in _KNOWN_PERSONAS:
+            self.censored.append({"reason": "unknown_persona"})
+            return False
+        try:
+            before, new_w = float(before), float(new_w)
+        except (TypeError, ValueError):
+            self.censored.append({"reason": "nonfinite_or_non_numeric"})
+            return False
+        if not math.isfinite(before) or not math.isfinite(new_w):
+            self.censored.append({"reason": "nonfinite_or_non_numeric"})
+            return False
         record: dict[str, object] = {
             "persona": persona, "before": before, "new_w": new_w,
             "delta": new_w - before,
