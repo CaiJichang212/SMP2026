@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 from concurrent.futures import ProcessPoolExecutor, as_completed
+from dataclasses import asdict, is_dataclass
 import hashlib
 import importlib.util
 import json
@@ -65,7 +66,9 @@ def terminal_gain_ranker(payload, decisions=None):
     candidates = payload.get("candidates")
     if not isinstance(candidates, list) or not candidates:
         raise ValueError("mock ranker requires validated candidates")
-    if any(any(key not in item for key in ("candidate_id", "evidence_ids", "score", "reason"))
+    if any(any(key not in item for key in (
+        "candidate_id", "evidence_ids", "score", "roi", "reason", "action",
+    ))
            or not item["evidence_ids"] for item in candidates):
         raise ValueError("candidate payload is incomplete")
     decision = rank_terminal_then_first(payload)
@@ -73,7 +76,16 @@ def terminal_gain_ranker(payload, decisions=None):
         decisions.append({"candidate_ids": [candidate["candidate_id"] for candidate in candidates],
                           "candidate_scores": {candidate["candidate_id"]: candidate["score"]
                                                for candidate in candidates},
+                          "candidate_rois": {candidate["candidate_id"]: candidate["roi"]
+                                             for candidate in candidates},
+                          "candidate_reasons": {candidate["candidate_id"]: candidate["reason"]
+                                                for candidate in candidates},
+                          "candidate_actions": {candidate["candidate_id"]: candidate["action"]
+                                                for candidate in candidates},
                           "selected_candidate_id": decision["candidate_id"],
+                          "budget": payload.get("budget"),
+                          "mode": payload.get("mode"),
+                          "stage": payload.get("stage"),
                           "state_version": payload["state_version"]})
     return decision
 
@@ -82,15 +94,31 @@ def _run_model(model, env: LoggedEnvironment, decisions: list[dict]) -> dict:
     controller = model.controller
     controller.commander.llm_ranker = lambda payload: terminal_gain_ranker(payload, decisions)
     started = time.perf_counter()
+    host_steps = []
     for host_calls in range(1, 121):
         before = len(env.action_log)
+        budget_before = env.get_remaining_budget()
+        state_before = str(controller.state)
         status = model.step()
-        if len(env.action_log) - before > 1:
+        action_delta = len(env.action_log) - before
+        host_steps.append({
+            "host_call": host_calls,
+            "action_delta": action_delta,
+            "budget_before": budget_before,
+            "budget_after": env.get_remaining_budget(),
+            "state_before": state_before,
+            "state_after": str(controller.state),
+            "action": env.action_log[-1] if action_delta == 1 else None,
+        })
+        if action_delta > 1:
             raise RuntimeError("one host step issued multiple public actions")
         if status or controller.stopped or env.get_remaining_budget() < 0.5:
             break
     if not controller.stopped and host_calls >= 120:
         raise RuntimeError("host call cap reached without controller stop")
+    plan = getattr(controller, "p10_plan", None)
+    plan_decision = getattr(controller, "p10_decision", None)
+    estimator = getattr(controller, "p10_response_estimator", None)
     return {
         "score": env.evaluate(),
         "remaining_budget": env.get_remaining_budget(),
@@ -99,21 +127,50 @@ def _run_model(model, env: LoggedEnvironment, decisions: list[dict]) -> dict:
         "action_failures": controller.action_failures,
         "action_log_sha256": json_digest(env.action_log),
         "action_log": env.action_log,
+        "host_steps": host_steps,
+        "host_action_deltas": [item["action_delta"] for item in host_steps],
+        "max_actions_per_host_step": max(item["action_delta"] for item in host_steps),
+        "one_action_per_host_step": all(item["action_delta"] in (0, 1) for item in host_steps),
         "model_decisions": decisions,
-        "llm_calls": controller.llm_calls,
-        "llm_accepted": controller.llm_accepted,
-        "llm_fallbacks": controller.llm_fallbacks,
+        "controller_type": type(controller).__name__,
+        "effective_p8_mode": getattr(controller, "p8_mode", None),
+        "effective_policy_mode": str(getattr(controller, "effective_policy_mode", None)),
+        "stop_reason": str(getattr(controller, "stop_reason", None)),
+        "llm_calls": getattr(controller, "llm_calls", 0),
+        "llm_accepted": getattr(controller, "llm_accepted", None),
+        "llm_fallbacks": getattr(controller, "llm_fallbacks", None),
         "p8_planning_errors": getattr(controller, "p8_planning_errors", 0),
+        "p8_last_planning_error": getattr(controller, "p8_last_planning_error", None),
+        "p8_refresh_reasons": getattr(controller, "p8_refresh_reasons", None),
+        "p10_experiment_mode": getattr(controller, "p10_experiment_mode", None),
+        "p10_searches": getattr(controller, "p10_searches", 0),
+        "p10_search_completed": getattr(controller, "p10_search_completed", None),
         "p10_planning_errors": getattr(controller, "p10_planning_errors", 0),
+        "p10_last_planning_error": getattr(controller, "p10_last_planning_error", None),
+        "p10_plan_id": getattr(controller, "p10_plan_id", None),
+        "p10_plan": asdict(plan) if plan is not None and is_dataclass(plan) else None,
+        "p10_plan_decision": (
+            asdict(plan_decision)
+            if plan_decision is not None and is_dataclass(plan_decision) else None
+        ),
         "p10_approved_plans": getattr(controller, "p10_approved_plans", 0),
+        "p10_baseline_choices": getattr(controller, "p10_baseline_choices", 0),
+        "p10_prefix_successes": getattr(controller, "p10_prefix_successes", 0),
         "p10_prefix_completed": getattr(controller, "p10_prefix_completed", 0),
         "p10_prefix_failures": getattr(controller, "p10_prefix_failures", 0),
+        "p10_pending_count": len(getattr(controller, "p10_pending", ())),
         "p10_response_switches": getattr(controller, "p10_response_switches", 0),
         "p10_response_disabled": getattr(controller, "p10_response_disabled", False),
         "p10_response_disable_reason": getattr(controller, "p10_response_disable_reason", None),
         "p10_response_activation": getattr(
-            getattr(controller, "p10_response_estimator", None), "activation", None,
+            estimator, "activation", None,
         ),
+        "p10_response_final_weights": (
+            estimator.weights() if estimator is not None and callable(getattr(estimator, "weights", None))
+            else None
+        ),
+        "p10_response_accepted": getattr(estimator, "accepted", None),
+        "p10_response_censored": getattr(estimator, "censored", None),
         "elapsed_seconds": time.perf_counter() - started,
     }
 
@@ -278,11 +335,18 @@ def main() -> int:
                   "first_divergence": row["first_divergence"],
                   "arms": {arm: {key: result.get(key) for key in (
                       "score", "remaining_budget", "host_calls", "action_attempts",
-                      "action_failures", "action_log_sha256", "llm_calls", "llm_accepted",
+                      "action_failures", "action_log_sha256", "max_actions_per_host_step",
+                      "one_action_per_host_step",
+                      "controller_type", "effective_p8_mode", "effective_policy_mode",
+                      "llm_calls", "llm_accepted",
                       "llm_fallbacks", "p8_planning_errors", "p10_planning_errors",
-                      "p10_approved_plans", "p10_prefix_completed", "p10_prefix_failures",
+                      "p10_experiment_mode", "p10_searches", "p10_search_completed",
+                      "p10_plan_id", "p10_plan_decision", "p10_approved_plans",
+                      "p10_baseline_choices", "p10_prefix_successes",
+                      "p10_prefix_completed", "p10_prefix_failures", "p10_pending_count",
                       "p10_response_switches", "p10_response_disabled",
-                      "p10_response_disable_reason", "p10_response_activation")}
+                      "p10_response_disable_reason", "p10_response_activation",
+                      "p10_response_final_weights")}
                            for arm, result in row["arms"].items()}}
                  for row in rows],
         "production_enabled": False, "platform_score": None,
