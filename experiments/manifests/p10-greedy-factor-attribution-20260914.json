@@ -12,6 +12,7 @@
   "case_status": "all cases were consumed by prior archive or bounded-response experiments; none is a new holdout",
   "cases": {
     "legacy_six": "SEED_SPECS, repetition 1",
+    "persona_axis": "all four P9 resampled families at repetition 901 for centered_independent and negative_persona_aligned; already consumed development seeds",
     "largest_consumed_p9_losses": [
       ["ba_resampled", 902, "saturated_hubs"],
       ["ba_resampled", 901, "saturated_hubs"],
@@ -26,12 +27,13 @@
       ["ba_resampled", 1001, "wide_degree_positive"],
       ["sbm_resampled", 901, "positive_persona_inverse"]
     ],
-    "total": 18
+    "total": 26
   },
   "factors": {
     "response_estimator": {
       "pooled": "untried targets use the shrinkage mean of public first responses, matching historical experimental behavior",
       "fixed": "untried targets retain the fixed 12.75 first-slot population prior; tried targets use their own public response"
+      ,"persona_sample_prior": "experimental sample-inspired first-slot values peace 20.25, neutral 15 and violent 3; a target's own observed response overrides the prior; this is a hypothesis, not an official rule"
     },
     "structure_mode": {
       "unrestricted": "all legal strictly positive predicted-gain shield/cut actions remain candidates",
@@ -42,10 +44,13 @@
   "arms": [
     "pooled__unrestricted",
     "fixed__unrestricted",
+    "persona__unrestricted",
     "pooled__direction_roi",
     "fixed__direction_roi",
+    "persona__direction_roi",
     "pooled__full_gate",
     "fixed__full_gate",
+    "persona__full_gate",
     "fixed__full_gate_plus_negative_negative_cut",
     "hybrid__full_gate"
   ],
@@ -67,6 +72,7 @@
   "analysis": [
     "report each case and each factor contrast without exclusions",
     "pooling contrast within each fixed structure mode",
+    "persona-prior versus fixed-prior contrast within each fixed structure mode and separately on persona-aligned versus independent consumed seeds",
     "direction/ROI contrast against unrestricted within each fixed response estimator",
     "positive-gate contrast against direction/ROI within each fixed response estimator",
     "do not promote a production change from these consumed cases"
