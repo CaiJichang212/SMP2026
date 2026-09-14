@@ -1,0 +1,4 @@
+experiment	commit	metric	status	description
+0	8435f87	0.000000000	baseline	fixed prompt ID 1 after equal probe actions
+1	cfe6e77	1.000000000	keep_development	best prompt identification accuracy; 72/72 cases
+2	1a74fed	287.390953545	keep_development	mean terminal gain using calibrated best on identical target schedules; 48/24/0
