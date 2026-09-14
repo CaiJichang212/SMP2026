@@ -9,7 +9,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from SMP_Starter_Kit.api_client import RemoteStarNetEnv
+from SMP_Starter_Kit.api_client import RemoteStarNetEnv, RemoteProtocolError
 
 
 def main():
@@ -21,7 +21,15 @@ def main():
               "selection": "scan documented preliminary IDs 1..50; up to two non-saturated IDs per persona, sorted by ID",
               "source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), "rows": []}
     for repetition in range(args.repetitions):
-        env = RemoteStarNetEnv("http://8.222.218.162:5000", timeout=20)
+        try:
+            env = RemoteStarNetEnv("http://8.222.218.162:5000", timeout=20)
+        except RemoteProtocolError as exc:
+            report["status"] = "default_session_unavailable"
+            report["http_status"] = getattr(getattr(exc.__cause__, "response", None), "status_code", None)
+            args.output.parent.mkdir(parents=True, exist_ok=True)
+            args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
+            print(json.dumps({"status": report["status"], "http_status": report["http_status"]}), flush=True)
+            return 1
         row = {"repetition": repetition, "initial_budget": env.get_remaining_budget(), "nodes": {}, "responses": []}
         report["rows"].append(row)
         for node in range(1, 51):
@@ -48,4 +56,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

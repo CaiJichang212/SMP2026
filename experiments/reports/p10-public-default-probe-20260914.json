@@ -1,0 +1,8 @@
+{
+  "purpose": "public default-sandbox distribution diagnostic; not hidden official evaluation",
+  "selection": "scan documented preliminary IDs 1..50; up to two non-saturated IDs per persona, sorted by ID",
+  "source_sha256": "1b6b4e0acd7f6ce040a12cc31cacd7565c59bb350127cdda7840bb1f9bf33881",
+  "rows": [],
+  "status": "default_session_unavailable",
+  "http_status": 400
+}

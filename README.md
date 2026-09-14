@@ -47,7 +47,8 @@ artifacts/submission/<name>.zip       最终上传文件
 游说后的 `[-100,100]` 截断。修正包为
 `artifacts/submission/starnet-p9-bounded-response-20260913.zip`：
 独立 84 对确认相对原 P8 为 24 胜/60 平/0 负，平均增益 +10.4140；
-真实 LLM 公开沙盒成对提高 17.09。新包尚无官方分数，不能据此认定 >900。
+真实 LLM 公开沙盒成对提高 17.09。2026-09-14 用户反馈该修正包官方仍为
+**761.9467**，因此本地边界收益没有转化为这批官方评测的总分提升，目标 >900 未达到。
 资格与实际 ZIP 已验证，详见[交付报告](experiments/reports/p9-bounded-release-20260913.md)。
 详见 [同分归因与本轮实验](experiments/reports/p9-official-feedback-attribution-20260913.md)
 及[倾向边界机制](docs/01_architecture/adr/005-communication-opinion-bounds.md)。
