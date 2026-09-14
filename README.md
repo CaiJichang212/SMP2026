@@ -53,6 +53,11 @@ artifacts/submission/<name>.zip       最终上传文件
 详见 [同分归因与本轮实验](experiments/reports/p9-official-feedback-attribution-20260913.md)
 及[倾向边界机制](docs/01_architecture/adr/005-communication-opinion-bounds.md)。
 
+2026-09-14 的后续优化转向 FAQ Q4 明确要求的黑盒话术识别：此前提交固定话术 1，
+尚未覆盖隐藏话术编号与幅度变化。P11 正在验证完整策略扣除探索成本后的净收益；
+机制实验的增益不能当作原始 P9 对照或官方得分。P10 组合方案因新分布的两个分层退化
+未通过门禁，不作为提交默认。详见[话术参数约束与实验教训](docs/02_research/SMP2026星网干预_调研与实现方案.md#23-样例参数的正确用途)。
+
 `SMP_Starter_Kit/team_submission/` 不是第二份需要维护的策略源码。构建脚本会复制
 `config.json` 与 `prompt/`，并将 `src/starnet` 的策略模块内联为单文件
 `starnet_model.py`。因此不要直接修改该目录；本地 OpenAI 兼容模型运行器、校验和打包都
