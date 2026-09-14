@@ -35,11 +35,15 @@ class StubLLM:
 class P11CanonicalActivationTests(unittest.TestCase):
     def test_disabled_qualification_keeps_canonical_p9(self):
         env = FakeStarNetEnvironment(50, 100.0)
-        model = entry.ParticipantSquadModel(env, [{
-            "role": "CommanderAgent", "experimental_policy_mode": "public_greedy",
-            "experimental_p8_mode": "conservative",
-            "experimental_p11_mode": "prompt_learning",
-        }], StubLLM())
+        with patch.object(entry, "P11_CERTIFIED_MODE", None), \
+             patch.object(p11_qualification, "P11_CERTIFIED_MODE", None), \
+             patch.object(p11_qualification, "P11_GATE_REPORT_SHA256", None), \
+             patch.object(p11_qualification, "P11_GATE_REPORT_RELATIVE_PATH", None):
+            model = entry.ParticipantSquadModel(env, [{
+                "role": "CommanderAgent", "experimental_policy_mode": "public_greedy",
+                "experimental_p8_mode": "conservative",
+                "experimental_p11_mode": "prompt_learning",
+            }], StubLLM())
         self.assertIsInstance(model.controller, P8RuntimeController)
         self.assertNotIsInstance(model.controller, PromptLearningRuntimeController)
 

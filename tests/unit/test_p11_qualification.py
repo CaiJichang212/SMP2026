@@ -7,11 +7,11 @@ from starnet.policy import p11_qualification
 
 
 class P11QualificationTests(unittest.TestCase):
-    def test_default_metadata_is_fail_closed(self):
-        self.assertIsNone(p11_qualification.P11_CERTIFIED_MODE)
-        self.assertIsNone(p11_qualification.P11_GATE_REPORT_SHA256)
-        self.assertIsNone(p11_qualification.P11_GATE_REPORT_RELATIVE_PATH)
-        self.assertIsNone(p11_qualification.qualified_p11_mode("prompt_learning"))
+    def test_missing_metadata_is_fail_closed(self):
+        with patch.object(p11_qualification, "P11_CERTIFIED_MODE", None), \
+             patch.object(p11_qualification, "P11_GATE_REPORT_SHA256", None), \
+             patch.object(p11_qualification, "P11_GATE_REPORT_RELATIVE_PATH", None):
+            self.assertIsNone(p11_qualification.qualified_p11_mode("prompt_learning"))
 
     def test_only_exact_sealed_mode_and_report_identity_can_enable(self):
         with patch.object(p11_qualification, "P11_CERTIFIED_MODE", "prompt_learning"), \
