@@ -1,0 +1,12 @@
+{
+  "release_gate_passed": true,
+  "activation_report_sha256": "438b8fe498e4ea2f649bf3e297cdc39972865cbf2233788a23c36bf325b9ceae",
+  "source_manifest_sha256": "c6c16589cf1143eabda3ad11bbe8317dfbe6044ee4a4e2eab1e24e8f55e14fa6",
+  "archive": "artifacts/submission/starnet-p11-prompt-learning-20260914.zip",
+  "archive_sha256": "5568d38f70974bcc9b3f6d78eb36dd23b81774801dc597cffa81b3bf9c8ec739",
+  "model_sha256": "04a91da1a7e073ffe3139860f60eb9e4a0c30d567ac2ab22a161edf9f2d520ac",
+  "final_entry_sha256": "b59b2e1cf0a0ab72d136fd086729028695f869f14d6b7ce1b6f97d35c836dc9a",
+  "strategy_bytes_match_unreleased_evidence": true,
+  "only_p11_qualification_metadata_changed": true,
+  "platform_score": null
+}
