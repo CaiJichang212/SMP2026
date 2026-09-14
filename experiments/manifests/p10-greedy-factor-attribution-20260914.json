@@ -46,8 +46,10 @@
     "fixed__direction_roi",
     "pooled__full_gate",
     "fixed__full_gate",
+    "fixed__full_gate_plus_negative_negative_cut",
     "hybrid__full_gate"
   ],
+  "narrow_cut_arm": "start from fixed__full_gate and restore only legal positive-gain cuts whose two public endpoints both have w < 0 and persona != peace; all other filtered structure actions remain excluded",
   "hybrid_definition": "use pooled responses when the positive-graph gate is closed and fixed responses otherwise, matching the current public-greedy base planner",
   "interpretation": {
     "response_factor": "normally changes scores and ordering without directly enumerating a different structure set; at an opinion bound it may remove zero-gain communication candidates",
