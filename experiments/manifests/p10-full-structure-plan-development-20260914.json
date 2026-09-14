@@ -1,0 +1,69 @@
+{
+  "experiment": "P10 unrestricted full structural-plan development",
+  "date": "2026-09-14",
+  "objective": "find larger terminal-score gains by executing complete multi-action shield/cut prefixes before the confirmed bounded P9 fallback",
+  "primary_comparator": "current qualified bounded P9 conservative policy",
+  "metric": "paired final score; higher is better",
+  "analysis_unit": "one graph-family/repetition seed paired across all arms",
+  "development": {
+    "families": [
+      "er_balanced",
+      "ba_negative_hubs",
+      "ws_peace_majority",
+      "sbm_negative_bridges",
+      "sbm_violent_cluster",
+      "three_sparse_components"
+    ],
+    "repetitions": [501],
+    "response_stratum": "standard",
+    "status": "previously used development data; exploratory only"
+  },
+  "resource_envelope": {
+    "node_count": 50,
+    "initial_budget": 100.0,
+    "step_limit": 117,
+    "workers": 1,
+    "per_arm_wall_time_seconds": 180
+  },
+  "candidate_search": {
+    "root_domain": "every legal shield and cut; no persona, sign, direction, positive-graph, or singleton-ROI prefilter",
+    "objective": "exact terminal component score after the structural prefix and a bounded mean-response persuasion allocation",
+    "beam": "retain distinct terminal topologies by complete terminal objective at every depth; stopping at any depth is allowed",
+    "refinement": "one deterministic delete-or-exchange neighborhood pass around the best beam plan",
+    "execution": "if the plan passes paired selection and audit scenarios, execute the entire still-legal structural prefix, then return control to bounded P9 conservative",
+    "fallback": "current bounded P9 conservative policy"
+  },
+  "variants": {
+    "beam4": {"maximum_structure_actions": 4, "beam_width": 8},
+    "beam6": {"maximum_structure_actions": 6, "beam_width": 8}
+  },
+  "risk_gate": {
+    "selection": "mean positive and minimum nonnegative over scenarios 0-4 against the same public-greedy first-action continuation",
+    "audit": "mean positive and minimum nonnegative over unused scenarios 5-12",
+    "interpretation": "development decision screen, not a confidence interval or official-score prediction"
+  },
+  "reported_diagnostics": [
+    "searched root actions and expanded topology states",
+    "selected structural prefix and planned persuasion allocation",
+    "executed action counts and remaining budget",
+    "first intervention divergence versus bounded P9",
+    "predicted selection/audit deltas and realized paired delta",
+    "planning and total wall time",
+    "failed or illegal actions"
+  ],
+  "development_decision": [
+    "complete all six paired seeds for both variants",
+    "zero failed or illegal actions",
+    "retain a variant only if mean gain over bounded P9 is positive",
+    "prefer beam4 unless beam6 improves mean by at least 0.5 points",
+    "do not promote, package, or open new confirmation from this exploratory cohort"
+  ],
+  "constraints": [
+    "public Blackboard facts only",
+    "all predictions remain in copied PredictiveState values",
+    "no environment calls during planning",
+    "do not modify P9/P8 frozen policy, runtime, qualification, config, or submission build",
+    "no hidden response factors in policy inputs or reports",
+    "no conversion of local score to official score"
+  ]
+}
