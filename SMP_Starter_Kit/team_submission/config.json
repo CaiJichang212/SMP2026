@@ -9,7 +9,8 @@
       "focus": "基于公开事实完成每次扫描与干预的最终选择。",
       "experimental_policy_mode": "public_greedy",
       "experimental_public_comm_shield_guard": false,
-      "experimental_p8_mode": "conservative"
+      "experimental_p8_mode": "conservative",
+      "experimental_p11_mode": "prompt_learning"
     }
   ]
 }

@@ -53,10 +53,19 @@ artifacts/submission/<name>.zip       最终上传文件
 详见 [同分归因与本轮实验](experiments/reports/p9-official-feedback-attribution-20260913.md)
 及[倾向边界机制](docs/01_architecture/adr/005-communication-opinion-bounds.md)。
 
-2026-09-14 的后续优化转向 FAQ Q4 明确要求的黑盒话术识别：此前提交固定话术 1，
-尚未覆盖隐藏话术编号与幅度变化。P11 正在验证完整策略扣除探索成本后的净收益；
-机制实验的增益不能当作原始 P9 对照或官方得分。P10 组合方案因新分布的两个分层退化
-未通过门禁，不作为提交默认。详见[话术参数约束与实验教训](docs/02_research/SMP2026星网干预_调研与实现方案.md#23-样例参数的正确用途)。
+2026-09-14 已完成并发布本地可提交的 P11 黑盒话术学习包：
+`artifacts/submission/starnet-p11-prompt-learning-20260914.zip`。
+它根据公开反馈学习话术编号和响应幅度，通常用 6 预算完成识别；完整策略直接对比原始
+无探测 P9。252 例开发与 360 例独立确认均通过预注册门禁；确认核心 288 例均值增益
+为 `+211.863855`，95% 拓扑 block 区间 `[195.098663,229.047509]`。
+话术 1 本来最优时仍有平均 `14.840817` 的探索代价，不能保证每个种子都提高，也不能
+把本地增益换算为官方 >900。最终 ZIP 已在真实 CaseVO 的 Python 3.9 与现代环境执行，
+动作与分数一致；368 项测试、构建、打包和字节身份验证通过。
+详见 [P11 交付与限制](experiments/reports/p11-prompt-learning-delivery-20260914.md)。
+
+高影响节点直接探测、固定先验折扣、额外响应 anchor 及 P10 组合方案均因各自门禁失败
+没有进入提交。后续计算遵守[资源约束](docs/04_plan/experiment-resource-policy.md)：
+同一时刻一个重任务，默认单 worker，整个任务最多使用 0.75 核，并降低调度优先级。
 
 `SMP_Starter_Kit/team_submission/` 不是第二份需要维护的策略源码。构建脚本会复制
 `config.json` 与 `prompt/`，并将 `src/starnet` 的策略模块内联为单文件
