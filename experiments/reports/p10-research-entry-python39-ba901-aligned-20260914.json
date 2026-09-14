@@ -1,0 +1,2546 @@
+{
+  "schema_version": 1,
+  "purpose": "Unqualified temporary P10 research entry validation",
+  "production_enabled": false,
+  "qualification_modified": false,
+  "canonical_build_modified": false,
+  "variant": "combined",
+  "dataset": "p9",
+  "family": "ba_resampled",
+  "repetition": 901,
+  "shift": "negative_persona_aligned",
+  "seed_sha256": "ad57a23b5f166c466d6650a4168c4f2bf5e8355e79f70cbf964abb83c4b5a626",
+  "llm_mode": "mock-plan",
+  "environment": "corrected local simulator",
+  "python_version": "3.9.25",
+  "entry_runner_sha256": "9da35db0e01f2b8f36885d425f70e7c89e1560b009267b5d3a96e3b2c34c9f81",
+  "assembly": {
+    "ordered_sources": [
+      "src/starnet/model/blackboard.py",
+      "src/starnet/policy/actions.py",
+      "src/starnet/policy/config.py",
+      "src/starnet/policy/calibration.py",
+      "src/starnet/policy/baseline.py",
+      "src/starnet/runtime/env_adapter.py",
+      "src/starnet/runtime/trace.py",
+      "src/starnet/policy/graph_analysis.py",
+      "src/starnet/policy/candidates.py",
+      "src/starnet/policy/cmg.py",
+      "src/starnet/policy/structural.py",
+      "src/starnet/policy/budget_experiment.py",
+      "src/starnet/policy/fast_settlement_experiment.py",
+      "src/starnet/policy/p8_experiment.py",
+      "src/starnet/policy/p8_qualification.py",
+      "src/starnet/policy/adaptive.py",
+      "src/starnet/runtime/stage.py",
+      "src/starnet/runtime/controller.py",
+      "src/starnet/runtime/p8_controller.py",
+      "src/starnet/policy/public_response_mixture.py",
+      "src/starnet/policy/p9_prefix_experiment.py",
+      "src/starnet/policy/p10_structure_plan_experiment.py",
+      "src/starnet/runtime/p10_controller_experiment.py",
+      "src/starnet/submission/starnet_model.py"
+    ],
+    "source_sha256": {
+      "src/starnet/model/blackboard.py": "78ccfaa356ff08e39d4da8b98635d8384f0af1556dfc9e35b039714eb6e05375",
+      "src/starnet/policy/actions.py": "6c8898c147acbee19e297d534919b33592736b37ed2f16d9dec0a4357628b903",
+      "src/starnet/policy/config.py": "b43c1fb108f8634c3bc036e85614e8a7b0518410bb41d1f1cbab0d5bc3801e6d",
+      "src/starnet/policy/calibration.py": "439c2f6e6acb3e136404f1b9212daad3c698b201304efe940d5f8265a89bf603",
+      "src/starnet/policy/baseline.py": "a06e7bbe07a7d27101d6ee1795fca8654e485d47e4c7c32ae8f6372a4eb326e6",
+      "src/starnet/runtime/env_adapter.py": "4734b571b31137f57e0deeb31cad476b46f70ed5ef9fe915cd59966cf5f9f6ca",
+      "src/starnet/runtime/trace.py": "530895581e0d65bfc16185decb3865f356d5978b3991ad50983af8a58eebda01",
+      "src/starnet/policy/graph_analysis.py": "aa10b77fe1b2388ef2e6d5f03fed0212ae2dddd594ed5fe8238d211a6759596f",
+      "src/starnet/policy/candidates.py": "3d62597170426053aef3e87d30f4abe196af5d8911e759344a8c338c2b37b0fa",
+      "src/starnet/policy/cmg.py": "767367659ce48ed37be1939c0c2e42b5b59fe3ca96a5bd2c35c46bdf970fae8c",
+      "src/starnet/policy/structural.py": "392db9f3497536fab56ac5ee3ff305f47dd0765d518c3905d4aade799fdc763e",
+      "src/starnet/policy/budget_experiment.py": "baacd360e9351a6cfd1266dc147e440f8889c65d8202d2a95db708134f5c5a0c",
+      "src/starnet/policy/fast_settlement_experiment.py": "bdc97091e78c98a8b006e0d81149b8a047322f5c8f3bb05de461076ed1782783",
+      "src/starnet/policy/p8_experiment.py": "30326ab80cee936c6feb57ec01722eafa0994e2d171d606e6f439a3106f334ca",
+      "src/starnet/policy/p8_qualification.py": "ee05d353bb6d1f119231ed188e61125e758b31bddae1a9ebd65892d7fa4fb8d8",
+      "src/starnet/policy/adaptive.py": "551536a0c178431ae13411cc331237603a81f36c191c1c1aa89504676149c391",
+      "src/starnet/runtime/stage.py": "279b958ee1e74227160fecdcf7b4b5e16bc83035762d2e098b0cd971ecb14fe1",
+      "src/starnet/runtime/controller.py": "158330e30d99545dad34543d5787113655c41f9965f14090d0deed2b42ae22b7",
+      "src/starnet/runtime/p8_controller.py": "89507fec9d971ad364355c5c7d2ab6482fd8d21fc8c1084ef3aa869e4676ddaf",
+      "src/starnet/policy/public_response_mixture.py": "ecf3f255b574b4f511a3b158c7be30aa8fe342c22b12506e1abeab74f76c8690",
+      "src/starnet/policy/p9_prefix_experiment.py": "f802fff428cdf2c266f56740a11a26643440aa1aafbc201253f454ccbafb4d93",
+      "src/starnet/policy/p10_structure_plan_experiment.py": "d64a27857007a89de052dbc1e82639c965ea3e1fd05cdc32d8e3de30793dcd70",
+      "src/starnet/runtime/p10_controller_experiment.py": "825cf1ad1616b141ab5bd8613142e205a9209cbb732483738b319b287d1a32cb",
+      "src/starnet/submission/starnet_model.py": "94ae39d85ee63b694cd9ca8b985e556877d359ad82068e59b124f75f343f9480"
+    },
+    "top_level_collisions": [],
+    "residual_starnet_imports": [],
+    "python39_ast_passed": true,
+    "intentional_entry_alias": "ParticipantSquadModel replaces the canonical class only in the temporary bundle"
+  },
+  "assembled_model_sha256": "a3aaa58c72ddb5d6eb9edf1584e74a7270c3b4eda6aad128c2fe37c264e822a6",
+  "complete": true,
+  "networkx_version": "3.1",
+  "framework_model_module": "casevo.model_base",
+  "agent_base_module": "casevo.agent_base",
+  "temporary_model_path_retained": false,
+  "result": {
+    "controller_type": "P10RuntimeController",
+    "experiment_mode": "combined",
+    "score": 321.77537050458733,
+    "local_replay_score": 321.77537050458733,
+    "public_response_error": null,
+    "remaining_budget": 0.0,
+    "host_calls": 81,
+    "action_attempts": 80,
+    "one_step_one_action": true,
+    "max_actions_per_step": 1,
+    "actions_sha256": "a7848afa46e8065b8f06a84288e5c4e94fa79c24bcad72687c743cb3959036b1",
+    "action_sequence": [
+      [
+        "scan",
+        1
+      ],
+      [
+        "scan",
+        4
+      ],
+      [
+        "scan",
+        8
+      ],
+      [
+        "scan",
+        12
+      ],
+      [
+        "scan",
+        22
+      ],
+      [
+        "scan",
+        6
+      ],
+      [
+        "scan",
+        27
+      ],
+      [
+        "scan",
+        31
+      ],
+      [
+        "scan",
+        11
+      ],
+      [
+        "scan",
+        10
+      ],
+      [
+        "scan",
+        39
+      ],
+      [
+        "scan",
+        7
+      ],
+      [
+        "scan",
+        15
+      ],
+      [
+        "scan",
+        13
+      ],
+      [
+        "scan",
+        30
+      ],
+      [
+        "scan",
+        16
+      ],
+      [
+        "scan",
+        3
+      ],
+      [
+        "scan",
+        9
+      ],
+      [
+        "scan",
+        25
+      ],
+      [
+        "scan",
+        28
+      ],
+      [
+        "scan",
+        38
+      ],
+      [
+        "scan",
+        44
+      ],
+      [
+        "scan",
+        33
+      ],
+      [
+        "scan",
+        45
+      ],
+      [
+        "scan",
+        48
+      ],
+      [
+        "scan",
+        35
+      ],
+      [
+        "scan",
+        14
+      ],
+      [
+        "scan",
+        23
+      ],
+      [
+        "scan",
+        32
+      ],
+      [
+        "scan",
+        43
+      ],
+      [
+        "scan",
+        47
+      ],
+      [
+        "scan",
+        49
+      ],
+      [
+        "scan",
+        26
+      ],
+      [
+        "scan",
+        29
+      ],
+      [
+        "scan",
+        41
+      ],
+      [
+        "scan",
+        17
+      ],
+      [
+        "scan",
+        42
+      ],
+      [
+        "scan",
+        46
+      ],
+      [
+        "scan",
+        2
+      ],
+      [
+        "scan",
+        18
+      ],
+      [
+        "scan",
+        21
+      ],
+      [
+        "scan",
+        34
+      ],
+      [
+        "scan",
+        36
+      ],
+      [
+        "scan",
+        20
+      ],
+      [
+        "scan",
+        37
+      ],
+      [
+        "scan",
+        40
+      ],
+      [
+        "scan",
+        50
+      ],
+      [
+        "scan",
+        5
+      ],
+      [
+        "scan",
+        24
+      ],
+      [
+        "scan",
+        19
+      ],
+      [
+        "shield",
+        8
+      ],
+      [
+        "shield",
+        15
+      ],
+      [
+        "shield",
+        26
+      ],
+      [
+        "shield",
+        20
+      ],
+      [
+        "shield",
+        47
+      ],
+      [
+        "comm",
+        27,
+        1
+      ],
+      [
+        "comm",
+        6,
+        1
+      ],
+      [
+        "comm",
+        11,
+        1
+      ],
+      [
+        "comm",
+        4,
+        1
+      ],
+      [
+        "comm",
+        30,
+        1
+      ],
+      [
+        "comm",
+        31,
+        1
+      ],
+      [
+        "comm",
+        4,
+        1
+      ],
+      [
+        "comm",
+        10,
+        1
+      ],
+      [
+        "comm",
+        39,
+        1
+      ],
+      [
+        "comm",
+        14,
+        1
+      ],
+      [
+        "comm",
+        16,
+        1
+      ],
+      [
+        "comm",
+        46,
+        1
+      ],
+      [
+        "comm",
+        44,
+        1
+      ],
+      [
+        "comm",
+        7,
+        1
+      ],
+      [
+        "comm",
+        35,
+        1
+      ],
+      [
+        "comm",
+        48,
+        1
+      ],
+      [
+        "comm",
+        18,
+        1
+      ],
+      [
+        "comm",
+        9,
+        1
+      ],
+      [
+        "comm",
+        6,
+        1
+      ],
+      [
+        "comm",
+        11,
+        1
+      ],
+      [
+        "comm",
+        19,
+        1
+      ],
+      [
+        "comm",
+        25,
+        1
+      ],
+      [
+        "comm",
+        32,
+        1
+      ],
+      [
+        "comm",
+        49,
+        1
+      ],
+      [
+        "comm",
+        10,
+        1
+      ]
+    ],
+    "llm_calls": 76,
+    "llm_accepted": 76,
+    "llm_fallbacks": 0,
+    "transport_errors": 0,
+    "action_failures": 0,
+    "p8_planning_errors": 0,
+    "p10_searches": 1,
+    "p10_planning_errors": 0,
+    "p10_last_planning_error": null,
+    "p10_approved_plans": 1,
+    "p10_baseline_choices": 0,
+    "p10_prefix_successes": 5,
+    "p10_prefix_failures": 0,
+    "p10_prefix_completed": 1,
+    "approved_plan_expected_prefix": [
+      [
+        "shield",
+        8
+      ],
+      [
+        "shield",
+        15
+      ],
+      [
+        "shield",
+        26
+      ],
+      [
+        "shield",
+        20
+      ],
+      [
+        "shield",
+        47
+      ]
+    ],
+    "approved_plan_actual_prefix": [
+      [
+        "shield",
+        8
+      ],
+      [
+        "shield",
+        15
+      ],
+      [
+        "shield",
+        26
+      ],
+      [
+        "shield",
+        20
+      ],
+      [
+        "shield",
+        47
+      ]
+    ],
+    "approved_plan_execution_matches": true,
+    "plan": {
+      "search_completed": true,
+      "plan": {
+        "structure_actions": [
+          {
+            "kind": "shield",
+            "target_node_1": 8,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 15,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 26,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 20,
+            "target_node_2": null,
+            "prompt_id": null
+          },
+          {
+            "kind": "shield",
+            "target_node_1": 47,
+            "target_node_2": null,
+            "prompt_id": null
+          }
+        ],
+        "persuasion_actions": [
+          {
+            "kind": "comm",
+            "target_node_1": 27,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 6,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 11,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 4,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 30,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 31,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 10,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 39,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 14,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 16,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 46,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 27,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 6,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 44,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 7,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 11,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 4,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 28,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 2,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 30,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 31,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 35,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 48,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 10,
+            "target_node_2": null,
+            "prompt_id": 1
+          },
+          {
+            "kind": "comm",
+            "target_node_1": 13,
+            "target_node_2": null,
+            "prompt_id": 1
+          }
+        ],
+        "predicted_score": 248.83507692660544,
+        "baseline_score": 152.43367081339716,
+        "root_actions": 234,
+        "expanded_states": 9170,
+        "planning_seconds": 13.239074937999249
+      },
+      "decision": {
+        "baseline_action": {
+          "kind": "comm",
+          "target_node_1": 27,
+          "target_node_2": null,
+          "prompt_id": 1
+        },
+        "selection_deltas": [
+          5.681626792277086,
+          0.7786891072507842,
+          4.73226940656275,
+          -1.0036267610646519,
+          9.11844575492887
+        ],
+        "audit_deltas": [
+          -13.278098907897771,
+          11.28500567731254,
+          -1.7890763732652317,
+          7.122569758800978,
+          9.779265787218662,
+          -3.2614418814325177,
+          -5.356496547500939,
+          15.974522195782527
+        ],
+        "accepted": true,
+        "rollouts": 26
+      }
+    },
+    "mixture": {
+      "configured": true,
+      "gate_open": true,
+      "activation": {
+        "accepted_observation_count": 11,
+        "posterior_weights": {
+          "independent": 0.03626854682813417,
+          "aligned": 0.9637296397445244,
+          "inverse": 1.8134273414067116e-06
+        }
+      },
+      "accepted_observations": 21,
+      "censored_observations": 0,
+      "disabled": false,
+      "disable_reason": null,
+      "switches": 14
+    },
+    "mock_decisions": [
+      {
+        "state_version": 0,
+        "candidate_ids": [
+          "scan:1",
+          "scan:2",
+          "scan:3",
+          "scan:4"
+        ],
+        "selected_candidate_id": "scan:1"
+      },
+      {
+        "state_version": 1,
+        "candidate_ids": [
+          "scan:4",
+          "scan:8",
+          "scan:12",
+          "scan:35"
+        ],
+        "selected_candidate_id": "scan:4"
+      },
+      {
+        "state_version": 2,
+        "candidate_ids": [
+          "scan:8",
+          "scan:12",
+          "scan:47",
+          "scan:10"
+        ],
+        "selected_candidate_id": "scan:8"
+      },
+      {
+        "state_version": 3,
+        "candidate_ids": [
+          "scan:12",
+          "scan:22",
+          "scan:27",
+          "scan:38"
+        ],
+        "selected_candidate_id": "scan:12"
+      },
+      {
+        "state_version": 4,
+        "candidate_ids": [
+          "scan:22",
+          "scan:27",
+          "scan:38",
+          "scan:44"
+        ],
+        "selected_candidate_id": "scan:22"
+      },
+      {
+        "state_version": 5,
+        "candidate_ids": [
+          "scan:6",
+          "scan:27",
+          "scan:31",
+          "scan:38"
+        ],
+        "selected_candidate_id": "scan:6"
+      },
+      {
+        "state_version": 6,
+        "candidate_ids": [
+          "scan:27",
+          "scan:31",
+          "scan:7",
+          "scan:9"
+        ],
+        "selected_candidate_id": "scan:27"
+      },
+      {
+        "state_version": 7,
+        "candidate_ids": [
+          "scan:31",
+          "scan:11",
+          "scan:39",
+          "scan:45"
+        ],
+        "selected_candidate_id": "scan:31"
+      },
+      {
+        "state_version": 8,
+        "candidate_ids": [
+          "scan:11",
+          "scan:3",
+          "scan:7",
+          "scan:10"
+        ],
+        "selected_candidate_id": "scan:11"
+      },
+      {
+        "state_version": 9,
+        "candidate_ids": [
+          "scan:10",
+          "scan:39",
+          "scan:44",
+          "scan:3"
+        ],
+        "selected_candidate_id": "scan:10"
+      },
+      {
+        "state_version": 10,
+        "candidate_ids": [
+          "scan:39",
+          "scan:44",
+          "scan:45",
+          "scan:2"
+        ],
+        "selected_candidate_id": "scan:39"
+      },
+      {
+        "state_version": 11,
+        "candidate_ids": [
+          "scan:7",
+          "scan:30",
+          "scan:44",
+          "scan:45"
+        ],
+        "selected_candidate_id": "scan:7"
+      },
+      {
+        "state_version": 12,
+        "candidate_ids": [
+          "scan:15",
+          "scan:30",
+          "scan:44",
+          "scan:45"
+        ],
+        "selected_candidate_id": "scan:15"
+      },
+      {
+        "state_version": 13,
+        "candidate_ids": [
+          "scan:13",
+          "scan:30",
+          "scan:44",
+          "scan:45"
+        ],
+        "selected_candidate_id": "scan:13"
+      },
+      {
+        "state_version": 14,
+        "candidate_ids": [
+          "scan:30",
+          "scan:44",
+          "scan:45",
+          "scan:2"
+        ],
+        "selected_candidate_id": "scan:30"
+      },
+      {
+        "state_version": 15,
+        "candidate_ids": [
+          "scan:16",
+          "scan:38",
+          "scan:44",
+          "scan:45"
+        ],
+        "selected_candidate_id": "scan:16"
+      },
+      {
+        "state_version": 16,
+        "candidate_ids": [
+          "scan:3",
+          "scan:9",
+          "scan:28",
+          "scan:38"
+        ],
+        "selected_candidate_id": "scan:3"
+      },
+      {
+        "state_version": 17,
+        "candidate_ids": [
+          "scan:9",
+          "scan:25",
+          "scan:28",
+          "scan:38"
+        ],
+        "selected_candidate_id": "scan:9"
+      },
+      {
+        "state_version": 18,
+        "candidate_ids": [
+          "scan:25",
+          "scan:28",
+          "scan:38",
+          "scan:44"
+        ],
+        "selected_candidate_id": "scan:25"
+      },
+      {
+        "state_version": 19,
+        "candidate_ids": [
+          "scan:28",
+          "scan:38",
+          "scan:44",
+          "scan:45"
+        ],
+        "selected_candidate_id": "scan:28"
+      },
+      {
+        "state_version": 20,
+        "candidate_ids": [
+          "scan:38",
+          "scan:44",
+          "scan:45",
+          "scan:48"
+        ],
+        "selected_candidate_id": "scan:38"
+      },
+      {
+        "state_version": 21,
+        "candidate_ids": [
+          "scan:44",
+          "scan:45",
+          "scan:48",
+          "scan:2"
+        ],
+        "selected_candidate_id": "scan:44"
+      },
+      {
+        "state_version": 22,
+        "candidate_ids": [
+          "scan:33",
+          "scan:45",
+          "scan:48",
+          "scan:2"
+        ],
+        "selected_candidate_id": "scan:33"
+      },
+      {
+        "state_version": 23,
+        "candidate_ids": [
+          "scan:45",
+          "scan:48",
+          "scan:2",
+          "scan:14"
+        ],
+        "selected_candidate_id": "scan:45"
+      },
+      {
+        "state_version": 24,
+        "candidate_ids": [
+          "scan:48",
+          "scan:2",
+          "scan:14",
+          "scan:18"
+        ],
+        "selected_candidate_id": "scan:48"
+      },
+      {
+        "state_version": 25,
+        "candidate_ids": [
+          "scan:35",
+          "scan:47",
+          "scan:2",
+          "scan:14"
+        ],
+        "selected_candidate_id": "scan:35"
+      },
+      {
+        "state_version": 26,
+        "candidate_ids": [
+          "scan:14",
+          "scan:47",
+          "scan:2",
+          "scan:18"
+        ],
+        "selected_candidate_id": "scan:14"
+      },
+      {
+        "state_version": 27,
+        "candidate_ids": [
+          "scan:23",
+          "scan:32",
+          "scan:43",
+          "scan:47"
+        ],
+        "selected_candidate_id": "scan:23"
+      },
+      {
+        "state_version": 28,
+        "candidate_ids": [
+          "scan:32",
+          "scan:43",
+          "scan:47",
+          "scan:2"
+        ],
+        "selected_candidate_id": "scan:32"
+      },
+      {
+        "state_version": 29,
+        "candidate_ids": [
+          "scan:43",
+          "scan:47",
+          "scan:2",
+          "scan:5"
+        ],
+        "selected_candidate_id": "scan:43"
+      },
+      {
+        "state_version": 30,
+        "candidate_ids": [
+          "scan:47",
+          "scan:2",
+          "scan:5",
+          "scan:17"
+        ],
+        "selected_candidate_id": "scan:47"
+      },
+      {
+        "state_version": 31,
+        "candidate_ids": [
+          "scan:49",
+          "scan:2",
+          "scan:5",
+          "scan:17"
+        ],
+        "selected_candidate_id": "scan:49"
+      },
+      {
+        "state_version": 32,
+        "candidate_ids": [
+          "scan:26",
+          "scan:29",
+          "scan:2",
+          "scan:5"
+        ],
+        "selected_candidate_id": "scan:26"
+      },
+      {
+        "state_version": 33,
+        "candidate_ids": [
+          "scan:29",
+          "scan:42",
+          "scan:46",
+          "scan:2"
+        ],
+        "selected_candidate_id": "scan:29"
+      },
+      {
+        "state_version": 34,
+        "candidate_ids": [
+          "scan:41",
+          "scan:42",
+          "scan:46",
+          "scan:2"
+        ],
+        "selected_candidate_id": "scan:41"
+      },
+      {
+        "state_version": 35,
+        "candidate_ids": [
+          "scan:17",
+          "scan:42",
+          "scan:46",
+          "scan:2"
+        ],
+        "selected_candidate_id": "scan:17"
+      },
+      {
+        "state_version": 36,
+        "candidate_ids": [
+          "scan:42",
+          "scan:46",
+          "scan:2",
+          "scan:5"
+        ],
+        "selected_candidate_id": "scan:42"
+      },
+      {
+        "state_version": 37,
+        "candidate_ids": [
+          "scan:46",
+          "scan:2",
+          "scan:5",
+          "scan:18"
+        ],
+        "selected_candidate_id": "scan:46"
+      },
+      {
+        "state_version": 38,
+        "candidate_ids": [
+          "scan:2",
+          "scan:18",
+          "scan:34",
+          "scan:36"
+        ],
+        "selected_candidate_id": "scan:2"
+      },
+      {
+        "state_version": 39,
+        "candidate_ids": [
+          "scan:18",
+          "scan:34",
+          "scan:36",
+          "scan:50"
+        ],
+        "selected_candidate_id": "scan:18"
+      },
+      {
+        "state_version": 40,
+        "candidate_ids": [
+          "scan:21",
+          "scan:34",
+          "scan:36",
+          "scan:50"
+        ],
+        "selected_candidate_id": "scan:21"
+      },
+      {
+        "state_version": 41,
+        "candidate_ids": [
+          "scan:34",
+          "scan:36",
+          "scan:50",
+          "scan:5"
+        ],
+        "selected_candidate_id": "scan:34"
+      },
+      {
+        "state_version": 42,
+        "candidate_ids": [
+          "scan:36",
+          "scan:50",
+          "scan:5",
+          "scan:19"
+        ],
+        "selected_candidate_id": "scan:36"
+      },
+      {
+        "state_version": 43,
+        "candidate_ids": [
+          "scan:20",
+          "scan:40",
+          "scan:50",
+          "scan:5"
+        ],
+        "selected_candidate_id": "scan:20"
+      },
+      {
+        "state_version": 44,
+        "candidate_ids": [
+          "scan:37",
+          "scan:40",
+          "scan:50",
+          "scan:5"
+        ],
+        "selected_candidate_id": "scan:37"
+      },
+      {
+        "state_version": 45,
+        "candidate_ids": [
+          "scan:40",
+          "scan:50",
+          "scan:5",
+          "scan:19"
+        ],
+        "selected_candidate_id": "scan:40"
+      },
+      {
+        "state_version": 46,
+        "candidate_ids": [
+          "scan:50",
+          "scan:5",
+          "scan:19",
+          "scan:24"
+        ],
+        "selected_candidate_id": "scan:50"
+      },
+      {
+        "state_version": 47,
+        "candidate_ids": [
+          "scan:5",
+          "scan:19",
+          "scan:24"
+        ],
+        "selected_candidate_id": "scan:5"
+      },
+      {
+        "state_version": 48,
+        "candidate_ids": [
+          "scan:24",
+          "scan:19"
+        ],
+        "selected_candidate_id": "scan:24"
+      },
+      {
+        "state_version": 49,
+        "candidate_ids": [
+          "scan:19"
+        ],
+        "selected_candidate_id": "scan:19"
+      },
+      {
+        "state_version": 50,
+        "candidate_ids": [
+          "p10-plan:069662b557988fd4",
+          "comm:27:1"
+        ],
+        "selected_candidate_id": "p10-plan:069662b557988fd4"
+      },
+      {
+        "state_version": 55,
+        "candidate_ids": [
+          "comm:27:1",
+          "comm:6:1"
+        ],
+        "selected_candidate_id": "comm:27:1"
+      },
+      {
+        "state_version": 56,
+        "candidate_ids": [
+          "comm:6:1"
+        ],
+        "selected_candidate_id": "comm:6:1"
+      },
+      {
+        "state_version": 57,
+        "candidate_ids": [
+          "comm:11:1",
+          "comm:4:1"
+        ],
+        "selected_candidate_id": "comm:11:1"
+      },
+      {
+        "state_version": 58,
+        "candidate_ids": [
+          "comm:4:1"
+        ],
+        "selected_candidate_id": "comm:4:1"
+      },
+      {
+        "state_version": 59,
+        "candidate_ids": [
+          "comm:30:1",
+          "comm:31:1"
+        ],
+        "selected_candidate_id": "comm:30:1"
+      },
+      {
+        "state_version": 60,
+        "candidate_ids": [
+          "comm:31:1"
+        ],
+        "selected_candidate_id": "comm:31:1"
+      },
+      {
+        "state_version": 61,
+        "candidate_ids": [
+          "comm:4:2"
+        ],
+        "selected_candidate_id": "comm:4:2"
+      },
+      {
+        "state_version": 62,
+        "candidate_ids": [
+          "comm:10:1"
+        ],
+        "selected_candidate_id": "comm:10:1"
+      },
+      {
+        "state_version": 63,
+        "candidate_ids": [
+          "comm:39:1"
+        ],
+        "selected_candidate_id": "comm:39:1"
+      },
+      {
+        "state_version": 64,
+        "candidate_ids": [
+          "comm:14:1",
+          "comm:16:1"
+        ],
+        "selected_candidate_id": "comm:14:1"
+      },
+      {
+        "state_version": 65,
+        "candidate_ids": [
+          "comm:16:1"
+        ],
+        "selected_candidate_id": "comm:16:1"
+      },
+      {
+        "state_version": 66,
+        "candidate_ids": [
+          "comm:46:1"
+        ],
+        "selected_candidate_id": "comm:46:1"
+      },
+      {
+        "state_version": 67,
+        "candidate_ids": [
+          "comm:44:1",
+          "comm:7:1"
+        ],
+        "selected_candidate_id": "comm:44:1"
+      },
+      {
+        "state_version": 68,
+        "candidate_ids": [
+          "comm:7:1"
+        ],
+        "selected_candidate_id": "comm:7:1"
+      },
+      {
+        "state_version": 69,
+        "candidate_ids": [
+          "comm:35:1",
+          "comm:48:1"
+        ],
+        "selected_candidate_id": "comm:35:1"
+      },
+      {
+        "state_version": 70,
+        "candidate_ids": [
+          "comm:48:1"
+        ],
+        "selected_candidate_id": "comm:48:1"
+      },
+      {
+        "state_version": 71,
+        "candidate_ids": [
+          "comm:18:1",
+          "comm:9:1"
+        ],
+        "selected_candidate_id": "comm:18:1"
+      },
+      {
+        "state_version": 72,
+        "candidate_ids": [
+          "comm:9:1"
+        ],
+        "selected_candidate_id": "comm:9:1"
+      },
+      {
+        "state_version": 73,
+        "candidate_ids": [
+          "comm:6:2"
+        ],
+        "selected_candidate_id": "comm:6:2"
+      },
+      {
+        "state_version": 74,
+        "candidate_ids": [
+          "comm:11:2"
+        ],
+        "selected_candidate_id": "comm:11:2"
+      },
+      {
+        "state_version": 75,
+        "candidate_ids": [
+          "comm:19:1",
+          "comm:25:1",
+          "comm:32:1",
+          "comm:49:1"
+        ],
+        "selected_candidate_id": "comm:19:1"
+      },
+      {
+        "state_version": 76,
+        "candidate_ids": [
+          "comm:25:1",
+          "comm:32:1",
+          "comm:49:1",
+          "comm:10:2"
+        ],
+        "selected_candidate_id": "comm:25:1"
+      },
+      {
+        "state_version": 77,
+        "candidate_ids": [
+          "comm:32:1",
+          "comm:49:1",
+          "comm:10:2"
+        ],
+        "selected_candidate_id": "comm:32:1"
+      },
+      {
+        "state_version": 78,
+        "candidate_ids": [
+          "comm:49:1",
+          "comm:10:2"
+        ],
+        "selected_candidate_id": "comm:49:1"
+      },
+      {
+        "state_version": 79,
+        "candidate_ids": [
+          "comm:10:2",
+          "comm:39:2"
+        ],
+        "selected_candidate_id": "comm:10:2"
+      }
+    ],
+    "seconds": 24.39199545106385
+  },
+  "baseline_p9": {
+    "archive": "starnet-p9-bounded-response-20260913.zip",
+    "archive_sha256": "4df04b79f44d8bc7a21cad890bf6bc241531b976899cafbbdc5574bb6772f460",
+    "model_sha256": "a8559f83b061dc3a77ead4449f14d221b9e5fd763e0e7ef657be1a94ec26ddb2",
+    "framework_model_module": "casevo.model_base",
+    "controller_type": "P8RuntimeController",
+    "score": 278.3994032686567,
+    "local_replay_score": 278.3994032686567,
+    "public_response_error": null,
+    "remaining_budget": 0.0,
+    "host_calls": 81,
+    "one_step_one_action": true,
+    "max_actions_per_step": 1,
+    "actions_sha256": "08e96b534f0459ee5b7387e897fe9cb4779f7bc391fe2b1dde3a307929f30657",
+    "action_sequence": [
+      [
+        "scan",
+        1
+      ],
+      [
+        "scan",
+        4
+      ],
+      [
+        "scan",
+        8
+      ],
+      [
+        "scan",
+        12
+      ],
+      [
+        "scan",
+        22
+      ],
+      [
+        "scan",
+        6
+      ],
+      [
+        "scan",
+        27
+      ],
+      [
+        "scan",
+        31
+      ],
+      [
+        "scan",
+        11
+      ],
+      [
+        "scan",
+        10
+      ],
+      [
+        "scan",
+        39
+      ],
+      [
+        "scan",
+        7
+      ],
+      [
+        "scan",
+        15
+      ],
+      [
+        "scan",
+        13
+      ],
+      [
+        "scan",
+        30
+      ],
+      [
+        "scan",
+        16
+      ],
+      [
+        "scan",
+        3
+      ],
+      [
+        "scan",
+        9
+      ],
+      [
+        "scan",
+        25
+      ],
+      [
+        "scan",
+        28
+      ],
+      [
+        "scan",
+        38
+      ],
+      [
+        "scan",
+        44
+      ],
+      [
+        "scan",
+        33
+      ],
+      [
+        "scan",
+        45
+      ],
+      [
+        "scan",
+        48
+      ],
+      [
+        "scan",
+        35
+      ],
+      [
+        "scan",
+        14
+      ],
+      [
+        "scan",
+        23
+      ],
+      [
+        "scan",
+        32
+      ],
+      [
+        "scan",
+        43
+      ],
+      [
+        "scan",
+        47
+      ],
+      [
+        "scan",
+        49
+      ],
+      [
+        "scan",
+        26
+      ],
+      [
+        "scan",
+        29
+      ],
+      [
+        "scan",
+        41
+      ],
+      [
+        "scan",
+        17
+      ],
+      [
+        "scan",
+        42
+      ],
+      [
+        "scan",
+        46
+      ],
+      [
+        "scan",
+        2
+      ],
+      [
+        "scan",
+        18
+      ],
+      [
+        "scan",
+        21
+      ],
+      [
+        "scan",
+        34
+      ],
+      [
+        "scan",
+        36
+      ],
+      [
+        "scan",
+        20
+      ],
+      [
+        "scan",
+        37
+      ],
+      [
+        "scan",
+        40
+      ],
+      [
+        "scan",
+        50
+      ],
+      [
+        "scan",
+        5
+      ],
+      [
+        "scan",
+        24
+      ],
+      [
+        "scan",
+        19
+      ],
+      [
+        "comm",
+        27,
+        1
+      ],
+      [
+        "comm",
+        6,
+        1
+      ],
+      [
+        "shield",
+        8
+      ],
+      [
+        "comm",
+        4,
+        1
+      ],
+      [
+        "comm",
+        11,
+        1
+      ],
+      [
+        "comm",
+        4,
+        1
+      ],
+      [
+        "comm",
+        30,
+        1
+      ],
+      [
+        "comm",
+        31,
+        1
+      ],
+      [
+        "comm",
+        10,
+        1
+      ],
+      [
+        "shield",
+        26
+      ],
+      [
+        "comm",
+        15,
+        1
+      ],
+      [
+        "comm",
+        16,
+        1
+      ],
+      [
+        "comm",
+        39,
+        1
+      ],
+      [
+        "comm",
+        14,
+        1
+      ],
+      [
+        "comm",
+        46,
+        1
+      ],
+      [
+        "shield",
+        47
+      ],
+      [
+        "comm",
+        7,
+        1
+      ],
+      [
+        "comm",
+        6,
+        1
+      ],
+      [
+        "comm",
+        11,
+        1
+      ],
+      [
+        "comm",
+        10,
+        1
+      ],
+      [
+        "comm",
+        44,
+        1
+      ],
+      [
+        "comm",
+        7,
+        1
+      ],
+      [
+        "shield",
+        13
+      ],
+      [
+        "comm",
+        28,
+        1
+      ],
+      [
+        "comm",
+        2,
+        1
+      ],
+      [
+        "comm",
+        36,
+        1
+      ],
+      [
+        "shield",
+        20
+      ],
+      [
+        "comm",
+        48,
+        1
+      ],
+      [
+        "comm",
+        31,
+        1
+      ],
+      [
+        "comm",
+        39,
+        1
+      ]
+    ],
+    "llm_calls": 80,
+    "llm_accepted": 80,
+    "llm_fallbacks": 0,
+    "transport_errors": 0,
+    "action_failures": 0,
+    "p8_planning_errors": 0,
+    "p8_mode": "conservative",
+    "mock_decisions": [
+      {
+        "state_version": 0,
+        "candidate_ids": [
+          "scan:1",
+          "scan:2",
+          "scan:3",
+          "scan:4"
+        ],
+        "selected_candidate_id": "scan:1"
+      },
+      {
+        "state_version": 1,
+        "candidate_ids": [
+          "scan:4",
+          "scan:8",
+          "scan:12",
+          "scan:35"
+        ],
+        "selected_candidate_id": "scan:4"
+      },
+      {
+        "state_version": 2,
+        "candidate_ids": [
+          "scan:8",
+          "scan:12",
+          "scan:47",
+          "scan:10"
+        ],
+        "selected_candidate_id": "scan:8"
+      },
+      {
+        "state_version": 3,
+        "candidate_ids": [
+          "scan:12",
+          "scan:22",
+          "scan:27",
+          "scan:38"
+        ],
+        "selected_candidate_id": "scan:12"
+      },
+      {
+        "state_version": 4,
+        "candidate_ids": [
+          "scan:22",
+          "scan:27",
+          "scan:38",
+          "scan:44"
+        ],
+        "selected_candidate_id": "scan:22"
+      },
+      {
+        "state_version": 5,
+        "candidate_ids": [
+          "scan:6",
+          "scan:27",
+          "scan:31",
+          "scan:38"
+        ],
+        "selected_candidate_id": "scan:6"
+      },
+      {
+        "state_version": 6,
+        "candidate_ids": [
+          "scan:27",
+          "scan:31",
+          "scan:7",
+          "scan:9"
+        ],
+        "selected_candidate_id": "scan:27"
+      },
+      {
+        "state_version": 7,
+        "candidate_ids": [
+          "scan:31",
+          "scan:11",
+          "scan:39",
+          "scan:45"
+        ],
+        "selected_candidate_id": "scan:31"
+      },
+      {
+        "state_version": 8,
+        "candidate_ids": [
+          "scan:11",
+          "scan:3",
+          "scan:7",
+          "scan:10"
+        ],
+        "selected_candidate_id": "scan:11"
+      },
+      {
+        "state_version": 9,
+        "candidate_ids": [
+          "scan:10",
+          "scan:39",
+          "scan:44",
+          "scan:3"
+        ],
+        "selected_candidate_id": "scan:10"
+      },
+      {
+        "state_version": 10,
+        "candidate_ids": [
+          "scan:39",
+          "scan:44",
+          "scan:45",
+          "scan:2"
+        ],
+        "selected_candidate_id": "scan:39"
+      },
+      {
+        "state_version": 11,
+        "candidate_ids": [
+          "scan:7",
+          "scan:30",
+          "scan:44",
+          "scan:45"
+        ],
+        "selected_candidate_id": "scan:7"
+      },
+      {
+        "state_version": 12,
+        "candidate_ids": [
+          "scan:15",
+          "scan:30",
+          "scan:44",
+          "scan:45"
+        ],
+        "selected_candidate_id": "scan:15"
+      },
+      {
+        "state_version": 13,
+        "candidate_ids": [
+          "scan:13",
+          "scan:30",
+          "scan:44",
+          "scan:45"
+        ],
+        "selected_candidate_id": "scan:13"
+      },
+      {
+        "state_version": 14,
+        "candidate_ids": [
+          "scan:30",
+          "scan:44",
+          "scan:45",
+          "scan:2"
+        ],
+        "selected_candidate_id": "scan:30"
+      },
+      {
+        "state_version": 15,
+        "candidate_ids": [
+          "scan:16",
+          "scan:38",
+          "scan:44",
+          "scan:45"
+        ],
+        "selected_candidate_id": "scan:16"
+      },
+      {
+        "state_version": 16,
+        "candidate_ids": [
+          "scan:3",
+          "scan:9",
+          "scan:28",
+          "scan:38"
+        ],
+        "selected_candidate_id": "scan:3"
+      },
+      {
+        "state_version": 17,
+        "candidate_ids": [
+          "scan:9",
+          "scan:25",
+          "scan:28",
+          "scan:38"
+        ],
+        "selected_candidate_id": "scan:9"
+      },
+      {
+        "state_version": 18,
+        "candidate_ids": [
+          "scan:25",
+          "scan:28",
+          "scan:38",
+          "scan:44"
+        ],
+        "selected_candidate_id": "scan:25"
+      },
+      {
+        "state_version": 19,
+        "candidate_ids": [
+          "scan:28",
+          "scan:38",
+          "scan:44",
+          "scan:45"
+        ],
+        "selected_candidate_id": "scan:28"
+      },
+      {
+        "state_version": 20,
+        "candidate_ids": [
+          "scan:38",
+          "scan:44",
+          "scan:45",
+          "scan:48"
+        ],
+        "selected_candidate_id": "scan:38"
+      },
+      {
+        "state_version": 21,
+        "candidate_ids": [
+          "scan:44",
+          "scan:45",
+          "scan:48",
+          "scan:2"
+        ],
+        "selected_candidate_id": "scan:44"
+      },
+      {
+        "state_version": 22,
+        "candidate_ids": [
+          "scan:33",
+          "scan:45",
+          "scan:48",
+          "scan:2"
+        ],
+        "selected_candidate_id": "scan:33"
+      },
+      {
+        "state_version": 23,
+        "candidate_ids": [
+          "scan:45",
+          "scan:48",
+          "scan:2",
+          "scan:14"
+        ],
+        "selected_candidate_id": "scan:45"
+      },
+      {
+        "state_version": 24,
+        "candidate_ids": [
+          "scan:48",
+          "scan:2",
+          "scan:14",
+          "scan:18"
+        ],
+        "selected_candidate_id": "scan:48"
+      },
+      {
+        "state_version": 25,
+        "candidate_ids": [
+          "scan:35",
+          "scan:47",
+          "scan:2",
+          "scan:14"
+        ],
+        "selected_candidate_id": "scan:35"
+      },
+      {
+        "state_version": 26,
+        "candidate_ids": [
+          "scan:14",
+          "scan:47",
+          "scan:2",
+          "scan:18"
+        ],
+        "selected_candidate_id": "scan:14"
+      },
+      {
+        "state_version": 27,
+        "candidate_ids": [
+          "scan:23",
+          "scan:32",
+          "scan:43",
+          "scan:47"
+        ],
+        "selected_candidate_id": "scan:23"
+      },
+      {
+        "state_version": 28,
+        "candidate_ids": [
+          "scan:32",
+          "scan:43",
+          "scan:47",
+          "scan:2"
+        ],
+        "selected_candidate_id": "scan:32"
+      },
+      {
+        "state_version": 29,
+        "candidate_ids": [
+          "scan:43",
+          "scan:47",
+          "scan:2",
+          "scan:5"
+        ],
+        "selected_candidate_id": "scan:43"
+      },
+      {
+        "state_version": 30,
+        "candidate_ids": [
+          "scan:47",
+          "scan:2",
+          "scan:5",
+          "scan:17"
+        ],
+        "selected_candidate_id": "scan:47"
+      },
+      {
+        "state_version": 31,
+        "candidate_ids": [
+          "scan:49",
+          "scan:2",
+          "scan:5",
+          "scan:17"
+        ],
+        "selected_candidate_id": "scan:49"
+      },
+      {
+        "state_version": 32,
+        "candidate_ids": [
+          "scan:26",
+          "scan:29",
+          "scan:2",
+          "scan:5"
+        ],
+        "selected_candidate_id": "scan:26"
+      },
+      {
+        "state_version": 33,
+        "candidate_ids": [
+          "scan:29",
+          "scan:42",
+          "scan:46",
+          "scan:2"
+        ],
+        "selected_candidate_id": "scan:29"
+      },
+      {
+        "state_version": 34,
+        "candidate_ids": [
+          "scan:41",
+          "scan:42",
+          "scan:46",
+          "scan:2"
+        ],
+        "selected_candidate_id": "scan:41"
+      },
+      {
+        "state_version": 35,
+        "candidate_ids": [
+          "scan:17",
+          "scan:42",
+          "scan:46",
+          "scan:2"
+        ],
+        "selected_candidate_id": "scan:17"
+      },
+      {
+        "state_version": 36,
+        "candidate_ids": [
+          "scan:42",
+          "scan:46",
+          "scan:2",
+          "scan:5"
+        ],
+        "selected_candidate_id": "scan:42"
+      },
+      {
+        "state_version": 37,
+        "candidate_ids": [
+          "scan:46",
+          "scan:2",
+          "scan:5",
+          "scan:18"
+        ],
+        "selected_candidate_id": "scan:46"
+      },
+      {
+        "state_version": 38,
+        "candidate_ids": [
+          "scan:2",
+          "scan:18",
+          "scan:34",
+          "scan:36"
+        ],
+        "selected_candidate_id": "scan:2"
+      },
+      {
+        "state_version": 39,
+        "candidate_ids": [
+          "scan:18",
+          "scan:34",
+          "scan:36",
+          "scan:50"
+        ],
+        "selected_candidate_id": "scan:18"
+      },
+      {
+        "state_version": 40,
+        "candidate_ids": [
+          "scan:21",
+          "scan:34",
+          "scan:36",
+          "scan:50"
+        ],
+        "selected_candidate_id": "scan:21"
+      },
+      {
+        "state_version": 41,
+        "candidate_ids": [
+          "scan:34",
+          "scan:36",
+          "scan:50",
+          "scan:5"
+        ],
+        "selected_candidate_id": "scan:34"
+      },
+      {
+        "state_version": 42,
+        "candidate_ids": [
+          "scan:36",
+          "scan:50",
+          "scan:5",
+          "scan:19"
+        ],
+        "selected_candidate_id": "scan:36"
+      },
+      {
+        "state_version": 43,
+        "candidate_ids": [
+          "scan:20",
+          "scan:40",
+          "scan:50",
+          "scan:5"
+        ],
+        "selected_candidate_id": "scan:20"
+      },
+      {
+        "state_version": 44,
+        "candidate_ids": [
+          "scan:37",
+          "scan:40",
+          "scan:50",
+          "scan:5"
+        ],
+        "selected_candidate_id": "scan:37"
+      },
+      {
+        "state_version": 45,
+        "candidate_ids": [
+          "scan:40",
+          "scan:50",
+          "scan:5",
+          "scan:19"
+        ],
+        "selected_candidate_id": "scan:40"
+      },
+      {
+        "state_version": 46,
+        "candidate_ids": [
+          "scan:50",
+          "scan:5",
+          "scan:19",
+          "scan:24"
+        ],
+        "selected_candidate_id": "scan:50"
+      },
+      {
+        "state_version": 47,
+        "candidate_ids": [
+          "scan:5",
+          "scan:19",
+          "scan:24"
+        ],
+        "selected_candidate_id": "scan:5"
+      },
+      {
+        "state_version": 48,
+        "candidate_ids": [
+          "scan:24",
+          "scan:19"
+        ],
+        "selected_candidate_id": "scan:24"
+      },
+      {
+        "state_version": 49,
+        "candidate_ids": [
+          "scan:19"
+        ],
+        "selected_candidate_id": "scan:19"
+      },
+      {
+        "state_version": 50,
+        "candidate_ids": [
+          "comm:27:1"
+        ],
+        "selected_candidate_id": "comm:27:1"
+      },
+      {
+        "state_version": 51,
+        "candidate_ids": [
+          "comm:6:1"
+        ],
+        "selected_candidate_id": "comm:6:1"
+      },
+      {
+        "state_version": 52,
+        "candidate_ids": [
+          "shield:8",
+          "comm:4:1"
+        ],
+        "selected_candidate_id": "shield:8"
+      },
+      {
+        "state_version": 53,
+        "candidate_ids": [
+          "comm:4:1"
+        ],
+        "selected_candidate_id": "comm:4:1"
+      },
+      {
+        "state_version": 54,
+        "candidate_ids": [
+          "comm:11:1"
+        ],
+        "selected_candidate_id": "comm:11:1"
+      },
+      {
+        "state_version": 55,
+        "candidate_ids": [
+          "comm:4:2"
+        ],
+        "selected_candidate_id": "comm:4:2"
+      },
+      {
+        "state_version": 56,
+        "candidate_ids": [
+          "comm:30:1",
+          "comm:31:1"
+        ],
+        "selected_candidate_id": "comm:30:1"
+      },
+      {
+        "state_version": 57,
+        "candidate_ids": [
+          "comm:31:1"
+        ],
+        "selected_candidate_id": "comm:31:1"
+      },
+      {
+        "state_version": 58,
+        "candidate_ids": [
+          "comm:10:1"
+        ],
+        "selected_candidate_id": "comm:10:1"
+      },
+      {
+        "state_version": 59,
+        "candidate_ids": [
+          "shield:26"
+        ],
+        "selected_candidate_id": "shield:26"
+      },
+      {
+        "state_version": 60,
+        "candidate_ids": [
+          "comm:15:1",
+          "comm:16:1",
+          "comm:39:1"
+        ],
+        "selected_candidate_id": "comm:15:1"
+      },
+      {
+        "state_version": 61,
+        "candidate_ids": [
+          "comm:16:1",
+          "comm:39:1"
+        ],
+        "selected_candidate_id": "comm:16:1"
+      },
+      {
+        "state_version": 62,
+        "candidate_ids": [
+          "comm:39:1"
+        ],
+        "selected_candidate_id": "comm:39:1"
+      },
+      {
+        "state_version": 63,
+        "candidate_ids": [
+          "comm:14:1",
+          "comm:46:1"
+        ],
+        "selected_candidate_id": "comm:14:1"
+      },
+      {
+        "state_version": 64,
+        "candidate_ids": [
+          "comm:46:1"
+        ],
+        "selected_candidate_id": "comm:46:1"
+      },
+      {
+        "state_version": 65,
+        "candidate_ids": [
+          "shield:47"
+        ],
+        "selected_candidate_id": "shield:47"
+      },
+      {
+        "state_version": 66,
+        "candidate_ids": [
+          "comm:7:1"
+        ],
+        "selected_candidate_id": "comm:7:1"
+      },
+      {
+        "state_version": 67,
+        "candidate_ids": [
+          "comm:6:2"
+        ],
+        "selected_candidate_id": "comm:6:2"
+      },
+      {
+        "state_version": 68,
+        "candidate_ids": [
+          "comm:11:2"
+        ],
+        "selected_candidate_id": "comm:11:2"
+      },
+      {
+        "state_version": 69,
+        "candidate_ids": [
+          "comm:10:2",
+          "comm:44:1"
+        ],
+        "selected_candidate_id": "comm:10:2"
+      },
+      {
+        "state_version": 70,
+        "candidate_ids": [
+          "comm:44:1",
+          "comm:7:2"
+        ],
+        "selected_candidate_id": "comm:44:1"
+      },
+      {
+        "state_version": 71,
+        "candidate_ids": [
+          "comm:7:2"
+        ],
+        "selected_candidate_id": "comm:7:2"
+      },
+      {
+        "state_version": 72,
+        "candidate_ids": [
+          "shield:13"
+        ],
+        "selected_candidate_id": "shield:13"
+      },
+      {
+        "state_version": 73,
+        "candidate_ids": [
+          "comm:28:1",
+          "comm:2:1",
+          "comm:36:1",
+          "comm:48:1"
+        ],
+        "selected_candidate_id": "comm:28:1"
+      },
+      {
+        "state_version": 74,
+        "candidate_ids": [
+          "comm:2:1",
+          "comm:36:1",
+          "comm:48:1",
+          "comm:4:3"
+        ],
+        "selected_candidate_id": "comm:2:1"
+      },
+      {
+        "state_version": 75,
+        "candidate_ids": [
+          "comm:36:1",
+          "comm:48:1",
+          "comm:4:3"
+        ],
+        "selected_candidate_id": "comm:36:1"
+      },
+      {
+        "state_version": 76,
+        "candidate_ids": [
+          "p8:shield:20:None:76",
+          "comm:48:1"
+        ],
+        "selected_candidate_id": "p8:shield:20:None:76"
+      },
+      {
+        "state_version": 77,
+        "candidate_ids": [
+          "comm:48:1"
+        ],
+        "selected_candidate_id": "comm:48:1"
+      },
+      {
+        "state_version": 78,
+        "candidate_ids": [
+          "comm:31:2"
+        ],
+        "selected_candidate_id": "comm:31:2"
+      },
+      {
+        "state_version": 79,
+        "candidate_ids": [
+          "comm:39:2",
+          "comm:4:3"
+        ],
+        "selected_candidate_id": "comm:39:2"
+      }
+    ]
+  },
+  "paired": {
+    "score_delta": 43.3759672359306,
+    "local_replay_delta": 43.3759672359306,
+    "first_divergence": {
+      "action_index": 51,
+      "candidate": [
+        "shield",
+        8
+      ],
+      "baseline_p9": [
+        "comm",
+        27,
+        1
+      ]
+    }
+  },
+  "entry_gate_passed": true,
+  "source_unchanged": true
+}
