@@ -6,7 +6,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import math
 from pathlib import Path
 import statistics
 import sys
@@ -21,18 +20,19 @@ from starnet.experiments.p9_distribution_seeds import seed_payload as p9_seed_pa
 from starnet.experiments.seeds import SEED_SPECS, seed_payload as legacy_seed_payload
 from starnet.model.blackboard import Blackboard
 from starnet.policy.actions import Action, is_legal_action
-from starnet.policy.baseline import _response, public_response
+from starnet.policy.baseline import public_response
 from starnet.policy.calibration import DEFAULT_CALIBRATION_PROFILE
 from starnet.policy.structural import ExperimentalPublicGreedyPlanner
 from starnet.runtime.env_adapter import apply_action_outcome
 
 
-PROTOCOL = ROOT / "experiments/manifests/p10-online-response-mixture-development-20260914.json"
-MODELS = ("independent", "aligned", "inverse")
-INITIAL_WEIGHTS = {"independent": 0.5, "aligned": 0.25, "inverse": 0.25}
+from starnet.policy.public_response_mixture import PublicResponseMixtureLedger
+
+
+PROTOCOL = ROOT / "experiments/manifests/p10-gated-online-mixture-development-20260914.json"
 ARMS = (
-    "mixture__unrestricted", "pooled__unrestricted", "fixed__unrestricted",
-    "mixture__full_gate", "pooled__full_gate", "fixed__full_gate",
+    "mixture__unrestricted", "gated__unrestricted", "fixed__unrestricted",
+    "mixture__full_gate", "gated__full_gate", "fixed__full_gate",
 )
 
 
@@ -46,62 +46,7 @@ def json_digest(value: object) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
-def _range(model: str, persona: str) -> tuple[float, float]:
-    if persona == "中立" or model == "independent":
-        return 0.2, 1.5
-    if model == "aligned":
-        return (1.05, 1.5) if persona == "和平" else (0.2, 0.65)
-    if model == "inverse":
-        return (0.2, 0.65) if persona == "和平" else (1.05, 1.5)
-    raise ValueError("unknown response model or persona")
-
-
-def _density(bounds: tuple[float, float], value: float) -> float:
-    low, high = bounds
-    return 1.0 / (high - low) if low <= value <= high else 0.0
-
-
-class OnlineResponseMixture:
-    def __init__(self) -> None:
-        self.log_weights = {model: math.log(INITIAL_WEIGHTS[model]) for model in MODELS}
-        self.accepted: list[dict[str, object]] = []
-        self.censored: list[dict[str, object]] = []
-
-    def weights(self) -> dict[str, float]:
-        peak = max(self.log_weights.values())
-        raw = {model: math.exp(value - peak) for model, value in self.log_weights.items()}
-        total = sum(raw.values())
-        return {model: raw[model] / total for model in MODELS}
-
-    def predict_first(self, persona: str) -> float:
-        weights = self.weights()
-        return 15.0 * sum(
-            weights[model] * sum(_range(model, persona)) / 2.0 for model in MODELS
-        )
-
-    def observe_first(self, persona: str, before: float, new_w: float) -> bool:
-        record = {"persona": persona, "before": before, "new_w": new_w,
-                  "delta": new_w - before}
-        if before < -100.0 or before > 100.0 or abs(new_w) >= 100.0 - 1e-12:
-            record["reason"] = "opinion_bound"
-            self.censored.append(record)
-            return False
-        response_factor = (new_w - before) / 15.0
-        independent_density = _density((0.2, 1.5), response_factor)
-        if independent_density <= 0.0:
-            record["reason"] = "outside_registered_support"
-            self.censored.append(record)
-            return False
-        for model in MODELS:
-            likelihood = (
-                0.9 * _density(_range(model, persona), response_factor)
-                + 0.1 * independent_density
-            )
-            self.log_weights[model] += math.log(likelihood)
-        record["response_factor"] = response_factor
-        record["posterior_weights"] = self.weights()
-        self.accepted.append(record)
-        return True
+OnlineResponseMixture = PublicResponseMixtureLedger
 
 
 def action_payload(action: Action | None):
@@ -113,15 +58,13 @@ def action_payload(action: Action | None):
 
 def response_fn(estimator: str, board: Blackboard, observed: dict[int, float],
                 mixture: OnlineResponseMixture):
-    if estimator == "mixture":
+    if estimator in {"mixture", "gated"}:
         def estimate(node_id, node, turn):
-            first = observed.get(node_id)
-            if first is None:
-                first = mixture.predict_first(node.persona)
-            return max(0.0, float(first)) * (0.5 ** (turn - 1))
+            return mixture.predict(
+                node_id, node.persona, turn, observed, gated=estimator == "gated",
+            )
         return estimate
-    selected = _response if estimator == "pooled" else public_response
-    return lambda node_id, node, turn: selected(
+    return lambda node_id, node, turn: public_response(
         node_id, node.persona, turn, observed, DEFAULT_CALIBRATION_PROFILE, None,
     )
 
@@ -158,6 +101,7 @@ def run_arm(seed: dict, arm: str) -> dict:
             "action_index": len(env.action_log) + 1,
             "budget": budget,
             "posterior_weights": mixture.weights(),
+            "mixture_gate_open": mixture.gate_open(),
             "selected_action": action_payload(selected.action if selected else None),
             "selected_candidate_id": selected.candidate_id if selected else None,
             "candidate_ids_by_kind": {
@@ -180,13 +124,15 @@ def run_arm(seed: dict, arm: str) -> dict:
         if action.kind == "comm" and turn == 1:
             new_w = board.nodes[action.target_node_1].w
             observed[action.target_node_1] = new_w - old_w
-            if arm.startswith("mixture__"):
+            if arm.startswith(("mixture__", "gated__")):
                 mixture.observe_first(persona, old_w, new_w)
     return {
         "score": env.evaluate(), "remaining_budget": env.get_remaining_budget(),
         "action_attempts": len(env.action_log), "action_failures": 0,
         "action_log_sha256": json_digest(env.action_log), "action_log": env.action_log,
         "decisions": decisions, "final_weights": mixture.weights(),
+        "gate_activation": mixture.activation,
+        "pre_gate_decisions": sum(not item["mixture_gate_open"] for item in decisions),
         "accepted_observations": mixture.accepted, "censored_observations": mixture.censored,
         "elapsed_seconds": time.perf_counter() - started,
     }
@@ -209,10 +155,11 @@ def comparisons():
     result = []
     for structure in ("unrestricted", "full_gate"):
         result.extend((
+            (f"gated__{structure}", f"fixed__{structure}", "gated_vs_fixed"),
+            (f"gated__{structure}", f"mixture__{structure}", "gated_vs_soft"),
             (f"mixture__{structure}", f"fixed__{structure}", "mixture_vs_fixed"),
-            (f"mixture__{structure}", f"pooled__{structure}", "mixture_vs_pooled"),
         ))
-    for estimator in ("mixture", "pooled", "fixed"):
+    for estimator in ("mixture", "gated", "fixed"):
         result.append((f"{estimator}__unrestricted", f"{estimator}__full_gate",
                        "unrestricted_vs_full_gate"))
     return result
@@ -237,9 +184,9 @@ def write_json(path: Path, value: object) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--raw-output", type=Path,
-                        default=ROOT / "experiments/raw/p10-online-response-mixture-20260914/full.json")
+                        default=ROOT / "experiments/raw/p10-gated-online-mixture-20260914/full.json")
     parser.add_argument("--output", type=Path,
-                        default=ROOT / "experiments/reports/p10-online-response-mixture-20260914.json")
+                        default=ROOT / "experiments/reports/p10-gated-online-mixture-20260914.json")
     args = parser.parse_args()
     config = {"protocol_sha256": digest(PROTOCOL), "runner_sha256": digest(Path(__file__)),
               "arms": list(ARMS), "cases": 18, "worker_limit": 1,
@@ -293,6 +240,8 @@ def main() -> None:
                             "action_failures": value["action_failures"],
                             "action_log_sha256": value["action_log_sha256"],
                             "final_weights": value["final_weights"],
+                            "gate_activation": value["gate_activation"],
+                            "pre_gate_decisions": value["pre_gate_decisions"],
                             "accepted_observation_count": len(value["accepted_observations"]),
                             "censored_observation_count": len(value["censored_observations"])}
                      for arm, value in row["arms"].items()}
