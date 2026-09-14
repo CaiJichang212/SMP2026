@@ -1,0 +1,24 @@
+{
+  "stage": "selection before opening fresh confirmation",
+  "selected_variant": "prompt_learning",
+  "canonical_freeze_commit": "07ac5f9",
+  "runtime_sha256": "98ae3471bd5eb9d024bd96ac678f19a6807877cccb45df53622b70a614880612",
+  "development_audit": "experiments/reports/p11-full-policy-development-audit-20260914.json",
+  "development_raw_sha256": "1a7af53669f16da719217ec8232f558585fdf8da7ac8ef0e2e4a52c8424864d3",
+  "decision": "Original low-reference P11 passed its complete full-cost 252-case gate. All screened additions are rejected and remain excluded from canonical source.",
+  "rejected_additions": {
+    "high_influence_id_probe": "36 pairs: mean +39.3036 but minimum -22.4697 violated the preregistered -10 floor",
+    "unknown_prior_discount_0_9": "expanded development aborted on pair 43 with -12.694049, violating the same preregistered floor",
+    "selected_prompt_response_anchor": "expanded development aborted on resampled WS wide-amplitude case with -47.081441, violating the preregistered floor"
+  },
+  "confirmation": {
+    "protocol": "experiments/manifests/p11-full-policy-validation-20260914.json",
+    "repetitions": [1401, 1402, 1403],
+    "cases": 360,
+    "runner": "scripts/run_p11_full_policy_cached.py",
+    "candidate_executions": "Every P11 case executes freshly. Deterministic references may use explicitly marked, action-replayed exact reuse within identical hidden states and dispatched strengths.",
+    "gate": "Unchanged preregistered core, edge, degree-stress, exploration-cost, known-ID-gap and resource gates. No rejected additions or new policy tuning on confirmation."
+  },
+  "qualification_enabled": false,
+  "official_score_claim": null
+}
