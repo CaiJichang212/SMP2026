@@ -1,0 +1,59 @@
+{
+  "experiment": "P10 budget-depth structural plans with mean-audited risk",
+  "date": "2026-09-14",
+  "parent_screen": "p10-full-structure-plan-development-20260914",
+  "reason_for_new_arm": "the original strict arm remains passed only on one of six P8-501 seeds; several positive-mean complete plans were rejected solely by individual scenario losses",
+  "objective": "test a mean-score decision rule without rewriting the original strict result",
+  "primary_comparator": "qualified bounded P9 conservative",
+  "development_cohorts": [
+    {
+      "name": "p8_501",
+      "families": ["er_balanced", "ba_negative_hubs", "ws_peace_majority", "sbm_negative_bridges", "sbm_violent_cluster", "three_sparse_components"],
+      "repetition": 501,
+      "response_stratum": "standard",
+      "status": "previously consumed development data"
+    },
+    {
+      "name": "legacy_rep1",
+      "families": ["er_balanced", "ba_negative_hubs", "ws_peace_majority", "sbm_negative_bridges", "sbm_violent_cluster", "three_sparse_components"],
+      "repetition": 1,
+      "response_stratum": "generator default",
+      "status": "previously consumed original six-family distribution"
+    }
+  ],
+  "search": {
+    "maximum_structure_actions": 12,
+    "beam_width": 4,
+    "root_domain": "every legal shield and cut without persona, sign, direction, positive-graph, or singleton-ROI prefilter",
+    "terminal_objective": "exact structure end-state score plus bounded mean-response persuasion allocation",
+    "redundancy_rule": "never shield a node after cutting an incident edge; deduplicate identical topologies",
+    "execution": "force the accepted structure prefix only, then return to bounded P9"
+  },
+  "risk_arms": {
+    "strict": "selection scenarios 0-4 have positive mean and nonnegative minimum; unused audit scenarios 5-12 also have positive mean and nonnegative minimum",
+    "mean_audited": "selection scenarios 0-4 have positive mean; unused audit scenarios 5-12 also have positive mean; individual scenario losses are permitted and fully reported"
+  },
+  "resource_limits": {
+    "workers": 1,
+    "node_count": 50,
+    "initial_budget": 100.0,
+    "step_limit": 117,
+    "per_arm_wall_time_seconds": 180
+  },
+  "reporting": [
+    "paired mean, minimum, maximum and win/tie/loss by cohort and arm",
+    "all realized losses without exclusion",
+    "selection and audit minimums and means",
+    "complete searched and executed structure prefixes",
+    "planned persuasion allocation and final actual action counts",
+    "first divergence, budget, failed actions, expanded states and wall time",
+    "exact baseline equality for every rejected plan"
+  ],
+  "decision": [
+    "complete all 24 paired arm cases",
+    "zero failed or illegal actions and valid budget/step use",
+    "report mean_audited only as development-success if its combined mean versus P9 is positive",
+    "do not relabel the prior strict result",
+    "do not open confirmation, promote, modify production, or infer an official score"
+  ]
+}
