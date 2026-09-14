@@ -145,6 +145,14 @@ def _action_payload(action):
     }
 
 
+def _action_call(action):
+    if action.kind == "comm":
+        return ("comm", action.target_node_1, action.prompt_id)
+    if action.kind == "cut":
+        return ("cut", action.target_node_1, action.target_node_2)
+    return (action.kind, action.target_node_1)
+
+
 def _plan_payload(controller):
     plan = getattr(controller, "p10_plan", None)
     decision = getattr(controller, "p10_decision", None)
@@ -300,6 +308,15 @@ def main() -> int:
             calls = env.shadow.calls if args.remote else env.calls
             plan = _plan_payload(controller)
             mixture = _mixture_payload(controller)
+            expected_prefix = (
+                tuple(_action_call(action) for action in controller.p10_plan.structure_actions)
+                if controller.p10_plan is not None and controller.p10_approved_plans else ()
+            )
+            first_intervention = next(
+                (index for index, call in enumerate(calls) if call[0] != "scan"),
+                len(calls),
+            )
+            actual_prefix = tuple(calls[first_intervention:first_intervention + len(expected_prefix)])
             result = {
                 "controller_type": type(controller).__name__,
                 "experiment_mode": controller.p10_experiment_mode,
@@ -327,6 +344,9 @@ def main() -> int:
                 "p10_prefix_successes": controller.p10_prefix_successes,
                 "p10_prefix_failures": controller.p10_prefix_failures,
                 "p10_prefix_completed": controller.p10_prefix_completed,
+                "approved_plan_expected_prefix": [list(call) for call in expected_prefix],
+                "approved_plan_actual_prefix": [list(call) for call in actual_prefix],
+                "approved_plan_execution_matches": actual_prefix == expected_prefix,
                 "plan": plan,
                 "mixture": mixture,
                 "mock_decisions": mock_decisions,
@@ -344,6 +364,9 @@ def main() -> int:
                 and result["p8_planning_errors"] == 0
                 and result["p10_planning_errors"] == 0
                 and result["p10_prefix_failures"] == 0
+                and (not result["p10_approved_plans"]
+                     or (result["approved_plan_execution_matches"]
+                         and result["p10_prefix_completed"] == result["p10_approved_plans"]))
                 and (not plan_required or result["p10_searches"] == 1)
                 and (not args.remote or result["public_response_error"] <= 1e-8)
                 and (args.llm_mode != "real" or result["llm_accepted"] > 0)
