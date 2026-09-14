@@ -62,6 +62,7 @@ def run_arm(seed, arm):
         p8_mode="conservative", max_probe_budget=6.0, max_probe_nodes=1,
         require_stage_envelope=True,
     )
+    controller = model.controller
     result = run_model(model, env)
     result["arm"] = arm
     if arm == "anchor":
