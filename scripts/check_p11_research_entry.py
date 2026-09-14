@@ -131,6 +131,8 @@ def main() -> int:
         "schema_version": 1,
         "purpose": "Unqualified temporary P11 research entry validation",
         "production_enabled": False,
+        "unreleased_candidate_assembly": True,
+        "final_zip_execution": False,
         "qualification_modified": False,
         "canonical_entry_modified": False,
         "prompt_values_visible_to_policy": False,
