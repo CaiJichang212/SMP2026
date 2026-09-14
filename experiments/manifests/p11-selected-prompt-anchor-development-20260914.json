@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "experiment": "p11-selected-prompt-anchor-development-20260914",
+  "status": "preregistered",
+  "registered_before_results": true,
+  "purpose": "Separate prompt-ID identification from the response magnitude transferred to unknown nodes by adding one selected-prompt anchor on an influential target.",
+  "cohort": {
+    "status": "consumed development only",
+    "families": ["er_balanced", "ba_negative_hubs", "ws_peace_majority", "sbm_negative_bridges", "sbm_violent_cluster", "three_sparse_components"],
+    "repetition": 1,
+    "prompt_values": "all six permutations of [15,10,-5]",
+    "pairs": 36
+  },
+  "arms": {
+    "low": "Frozen P11: one low-degree node identifies prompt ID and also supplies the initial unknown-node response magnitude.",
+    "anchor": "Use the same low node and prompt 1/2/3 sequence for identification. If the selected prompt response is positive, request one selected-prompt communication on the highest public component-influence untouched node satisfying the original probe eligibility."
+  },
+  "anchor": {
+    "cost": 2.0,
+    "maximum_total_calibration_cost": 8.0,
+    "candidate": "A single Python-generated legal communication candidate selected by the injected LLM, with one action per host step.",
+    "success_update": "After a successful uncensored anchor, estimate unknown-node response only from distinct post-calibration selected-prompt first-equivalent observations; exclude the low identification probe magnitude. Concrete observed nodes retain their own value.",
+    "fallback": "Failure, clipping, no legal anchor target, or nonpositive selected prompt retains frozen P11 behavior and never updates the anchor prior."
+  },
+  "attribution_limit": "This is a compound anchor-plus-transfer-prior intervention, not a pure selector effect. Report structure/communication reordering and persuasion later erased by shielding.",
+  "gate": [
+    "anchor-minus-low symmetric mean greater than 1 terminal unit",
+    "anchor-minus-low prompt-1-best mean greater than 0",
+    "at least four of six family means are nonnegative",
+    "minimum paired anchor-minus-low delta is at least -10",
+    "all cases correctly identify the best prompt with zero action/planning/runtime failures and ordinary successful calibration cost at most 8"
+  ],
+  "decision": "Passing is development screening only. Do not combine with the 0.9 unknown-prior discount and do not open repetitions 1401-1403.",
+  "production_enabled": false,
+  "new_holdout_opened": false,
+  "workers": 1
+}
