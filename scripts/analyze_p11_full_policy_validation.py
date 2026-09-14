@@ -189,6 +189,9 @@ def audit_p11_calibration(result, seed, best_ids):
         "calibrated_prompt_ids": list(rebuilt.calibrated_prompt_ids),
         "normalized_values": rebuilt.normalized_values(),
     }
+    # JSON converts integer mapping keys to strings. Normalize before sorting;
+    # otherwise probe nodes 2 and 10 acquire different numeric/lexical orders.
+    rebuilt_payload = json.loads(json.dumps(rebuilt_payload, allow_nan=False))
     if json_digest(reported) != json_digest(rebuilt_payload):
         raise ValueError("P11 ledger cannot be reconstructed from public probe actions")
     selected = result["p11_selected_prompt_id"]
@@ -204,8 +207,33 @@ def audit_p11_calibration(result, seed, best_ids):
     later = communications[successes:]
     if any(record["prompt_id"] != expected_later_prompt for record in later):
         raise ValueError("post-probe communication used an unexpected prompt ID")
-    if result["p11_selected_prompt_dispatches"] != (0 if fallback else len(later)):
-        raise ValueError("selected-prompt dispatch accounting mismatch")
+    observations = {}
+    censored = []
+    observation_attempts = 0
+    if not fallback:
+        for record in later:
+            node_id = str(record["node_id"])
+            if node_id in observations:
+                continue
+            observation_attempts += 1
+            if (record["before"] < -100.0 or record["before"] > 100.0
+                    or abs(record["new_w"]) >= 100.0 - 1e-12):
+                censored.append({**record, "reason": "opinion_bound"})
+                continue
+            normalized = ((record["new_w"] - record["before"])
+                          / (0.5 ** (record["turn"] - 1)))
+            if not math.isfinite(normalized):
+                censored.append({**record, "reason": "nonfinite_response"})
+                continue
+            observations[node_id] = normalized
+    # The frozen controller's unfortunately named legacy counter increments
+    # only when trying to obtain a node's first uncensored selected response.
+    # Actual dispatches are independently checked above from every action.
+    if result["p11_selected_prompt_dispatches"] != observation_attempts:
+        raise ValueError("selected-response observation-attempt accounting mismatch")
+    if (result["p11_selected_prompt_observations"] != observations
+            or result["p11_selected_response_censored"] != censored):
+        raise ValueError("selected-response history disagrees with public actions")
     return selected in best_ids if selected is not None else False
 
 
