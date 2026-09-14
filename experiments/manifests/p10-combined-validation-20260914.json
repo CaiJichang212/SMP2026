@@ -1,0 +1,35 @@
+{
+  "objective": "improve actual final allocations on ordinary graphs, rather than only saturation edge cases",
+  "registered_before_confirmation": true,
+  "development": {
+    "case_set": "the previously consumed 18 mixture cases (legacy six repetition 1 plus four resampled families repetition 901 across independent/aligned/inverse)",
+    "arms": ["p9", "plan_only", "response_only", "combined"],
+    "structural_policy": "depth12 width4 complete structure prefix, positive selection/audit means; one search after full scan",
+    "response_policy": "minimum four uncensored first responses and aligned/inverse posterior >=0.95; otherwise exact P9 fallback",
+    "selection": "select the highest mean above P9 with zero protocol failures; prefer simpler arm if means differ by less than one point; report every group's mean and every loss"
+  },
+  "confirmation": {
+    "repetitions": [1201, 1202, 1203],
+    "families": ["er_resampled", "ba_resampled", "ws_resampled", "sbm_resampled"],
+    "strata": ["independent", "aligned_contaminated", "inverse_contaminated", "degree_correlated"],
+    "pairs": 48,
+    "population": "50 nodes, 100 budget, 120 step/API cap; independently resample graph, labels and initial opinions; initial w from existing base-opinion ranges so upper saturation is unreachable",
+    "responses": "independent Uniform(.2,1.5); aligned/inverse use 80% persona-conditional draws and 20% independent contamination, unlike the policy's 10% likelihood contamination; degree-correlated uses normalized degree plus bounded jitter and no persona dependence",
+    "unlock": "freeze selected source and complete development first; 1201-1203 are never tuning data",
+    "controls": ["original starnet-p9-bounded-response-20260913.zip", "historical best experimental ZIP as secondary comparator"],
+    "execution": "actual CaseVO model/controller path; deterministic valid model choices for paired comparison, with separate real-LLM trials",
+    "estimator": "equally weighted 16 family-stratum cells; paired graph/repetition blocks preserve all four strata during bootstrap",
+    "bootstrap": {"draws": 10000, "seed": 20260914},
+    "release_gate": [
+      "complete all 48 pairs, no action/planning/resource/identity failures",
+      "mean paired gain vs P9 positive and bootstrap 95% lower endpoint strictly positive",
+      "each of four stratum means vs P9 nonnegative",
+      "at least two topology families show positive mean gain",
+      "show actual action/allocation changes and compare historical-best results without exclusions",
+      "real LLM approves and executes at least one complete structural plan if selected arm includes plans; response activation verified when arm includes response adaptation",
+      "Python3.9/FAQ-compatible real framework and final ZIP execution pass"
+    ]
+  },
+  "limits": "local gains are not official scores; no statement that >900 has been achieved without platform feedback",
+  "production_enabled": false
+}
