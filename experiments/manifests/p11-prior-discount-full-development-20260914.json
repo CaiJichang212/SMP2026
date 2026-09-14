@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "experiment": "P11 unknown-node prior discount full-distribution development",
+  "registered_before_results": true,
+  "candidate": "development-only P11 with 0.9 multiplier on the selected-prompt empirical prior transferred to unknown nodes",
+  "control": "the exact original-P11 arm records from the frozen 252-case full-policy development experiment",
+  "cohort": "the same 252 consumed development cases: 10 topology blocks, three amplitude families and all six prompt permutations",
+  "execution": "run only the discounted arm; bind every reused control score, case identity, seed hash and source hash to the completed frozen full-policy evidence",
+  "invariants": [
+    "same selected prompt ID and probe budget as the original-P11 control",
+    "same P9 conservative structure boundary",
+    "concrete-node selected-prompt observations remain raw and unscaled",
+    "no canonical entry, qualification, config or INLINE changes"
+  ],
+  "gate": {
+    "topology_weighted_mean_gain_over_original_p11": ">1",
+    "prompt1_best_mean_gain": ">0",
+    "nonnegative_topology_means": ">=8 of 10",
+    "nonnegative_amplitude_means": "3 of 3",
+    "worst_pair_gain": ">=-10"
+  },
+  "early_rejection": "Stop immediately after any paired gain below -10; mark the candidate aborted and rejected, and do not claim a complete 252-case result.",
+  "interpretation": "Passing is development screening only and does not modify canonical P11 or open the fresh 1401-1403 confirmation cohort.",
+  "production_enabled": false,
+  "confirmation_opened": false,
+  "workers": 1
+}
