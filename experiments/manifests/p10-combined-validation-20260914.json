@@ -17,7 +17,7 @@
     "responses": "independent Uniform(.2,1.5); aligned/inverse use 80% persona-conditional draws and 20% independent contamination, unlike the policy's 10% likelihood contamination; degree-correlated uses normalized degree plus bounded jitter and no persona dependence",
     "unlock": "freeze selected source and complete development first; 1201-1203 are never tuning data",
     "controls": ["original starnet-p9-bounded-response-20260913.zip", "historical best experimental ZIP as secondary comparator"],
-    "execution": "actual CaseVO model/controller path; deterministic valid model choices for paired comparison, with separate real-LLM trials",
+    "execution": "actual CaseVO model/controller path; when a complete-plan terminal comparison is exposed, deterministic valid mock selects maximum terminal score with candidate_id tie-break across P10 plan, P8 and PG reference; ordinary P9 immediate candidates retain list-first selection; separate real-LLM trials remain required",
     "estimator": "equally weighted 16 family-stratum cells; paired graph/repetition blocks preserve all four strata during bootstrap",
     "bootstrap": {"draws": 10000, "seed": 20260914},
     "release_gate": [

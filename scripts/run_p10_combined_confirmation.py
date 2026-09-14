@@ -22,6 +22,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from scripts.build_submission import INLINE_MODULES
 from scripts.compare_submission_archives import CountingLLM, extract_submission
 from scripts.run_p10_casevo_trial import P10TrialModel
+from scripts.run_p10_runtime_arm_comparison import rank_terminal_then_first
 from scripts.run_p9_distribution_validation import LoggedEnvironment
 from starnet.experiments.p10_confirmation_seeds import (
     CONFIRMATION_REPETITIONS, FAMILIES, STRATA, seed_payload,
@@ -39,6 +40,7 @@ EXPERIMENT_MODULES = (
     "src/starnet/policy/p10_structure_plan_experiment.py",
     "src/starnet/runtime/p10_controller_experiment.py",
     "scripts/run_p10_casevo_trial.py",
+    "scripts/run_p10_runtime_arm_comparison.py",
 )
 
 
@@ -59,31 +61,26 @@ def source_snapshot() -> dict[str, str]:
     return {str(path.relative_to(ROOT)): digest(path) for path in paths}
 
 
-def first_candidate_ranker(payload, decisions=None):
+def terminal_gain_ranker(payload, decisions=None):
     candidates = payload.get("candidates")
     if not isinstance(candidates, list) or not candidates:
         raise ValueError("mock ranker requires validated candidates")
-    item = candidates[0]
-    required = ("candidate_id", "evidence_ids")
-    if any(key not in item for key in required) or not item["evidence_ids"]:
+    if any(any(key not in item for key in ("candidate_id", "evidence_ids", "score", "reason"))
+           or not item["evidence_ids"] for item in candidates):
         raise ValueError("candidate payload is incomplete")
-    decision = {
-        "state_version": payload["state_version"],
-        "mode": "single_action",
-        "candidate_id": item["candidate_id"],
-        "reason_code": "paired_first_candidate",
-        "evidence_ids": [item["evidence_ids"][0]],
-    }
+    decision = rank_terminal_then_first(payload)
     if decisions is not None:
         decisions.append({"candidate_ids": [candidate["candidate_id"] for candidate in candidates],
-                          "selected_candidate_id": item["candidate_id"],
+                          "candidate_scores": {candidate["candidate_id"]: candidate["score"]
+                                               for candidate in candidates},
+                          "selected_candidate_id": decision["candidate_id"],
                           "state_version": payload["state_version"]})
     return decision
 
 
 def _run_model(model, env: LoggedEnvironment, decisions: list[dict]) -> dict:
     controller = model.controller
-    controller.commander.llm_ranker = lambda payload: first_candidate_ranker(payload, decisions)
+    controller.commander.llm_ranker = lambda payload: terminal_gain_ranker(payload, decisions)
     started = time.perf_counter()
     for host_calls in range(1, 121):
         before = len(env.action_log)
@@ -245,7 +242,7 @@ def main() -> int:
         "repetitions": list(CONFIRMATION_REPETITIONS),
         "archive_sha256": {arm: digest(ROOT / "artifacts/submission" / filename)
                            for arm, filename in ARCHIVES.items()},
-        "ranker": "valid first candidate", "confirmation_opened": True,
+        "ranker": "max terminal score for P10/P8/PG comparisons; list-first for ordinary P9",
     }
     progress = args.raw_output.with_suffix(".progress.json")
     rows = []
