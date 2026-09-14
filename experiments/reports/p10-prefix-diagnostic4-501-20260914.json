@@ -1,0 +1,7180 @@
+{
+  "schema_version": 1,
+  "protocol": "p10-structure-prefix-development-20260914",
+  "config": {
+    "schema_version": 1,
+    "protocol": "p10-structure-prefix-development-20260914",
+    "stage": "diagnostic4-501",
+    "families": [
+      "ba_negative_hubs",
+      "sbm_violent_cluster",
+      "double_bridge_communities",
+      "bipartite"
+    ],
+    "repetitions": [
+      501
+    ],
+    "policy_sha256": "f802fff428cdf2c266f56740a11a26643440aa1aafbc201253f454ccbafb4d93",
+    "p8_policy_sha256": "30326ab80cee936c6feb57ec01722eafa0994e2d171d606e6f439a3106f334ca"
+  },
+  "families": [
+    "ba_negative_hubs",
+    "sbm_violent_cluster",
+    "double_bridge_communities",
+    "bipartite"
+  ],
+  "repetitions": [
+    501
+  ],
+  "selection_scenarios": 5,
+  "audit_scenarios": 8,
+  "rows": [
+    {
+      "family": "ba_negative_hubs",
+      "repetition": 501,
+      "seed_sha256": "0065cacb1b5fc96a80267c2cbceb8f6efbb325f76c96829405f0edb734bafb73",
+      "p9_bounded": {
+        "score": 303.6875601323529,
+        "actions": {
+          "scan": 50,
+          "comm": 17,
+          "cut": 0,
+          "shield": 8
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 75,
+        "planning_calls": 26,
+        "rollouts": 126,
+        "deviation_count": 2,
+        "deviations": [
+          {
+            "step": 52,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 6,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "p7_budget_structure",
+            "mean_delta": 24.33977841142583,
+            "minimum_delta": 14.25,
+            "paired_deltas": [
+              14.25,
+              38.55886796033556,
+              24.16448012523358,
+              17.221866397194617,
+              27.503677574365383
+            ],
+            "audit_mean_delta": 0.0,
+            "audit_minimum_delta": 0.0,
+            "audit_paired_deltas": [],
+            "compared_actions": [
+              {
+                "kind": "shield",
+                "target_node_1": 6,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "comm",
+                "target_node_1": 6,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ]
+          },
+          {
+            "step": 55,
+            "action": {
+              "kind": "shield",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "shield",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "source": "immediate_structure_gain",
+            "mean_delta": 16.043081843559037,
+            "minimum_delta": 2.9838545425402003,
+            "paired_deltas": [
+              14.249999999999943,
+              2.9838545425402003,
+              24.594274591431486,
+              29.560699347003492,
+              8.826580736820063
+            ],
+            "audit_mean_delta": 0.0,
+            "audit_minimum_delta": 0.0,
+            "audit_paired_deltas": [],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 5,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 14,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 5,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "e85e006c463498f05b85339436e6c572b2cce8d25ef79348f04d41311d585d99",
+        "seconds": 4.155882477993146
+      },
+      "first": {
+        "score": 303.6875601323529,
+        "actions": {
+          "scan": 50,
+          "comm": 17,
+          "cut": 0,
+          "shield": 8
+        },
+        "action_sequence": [
+          [
+            "scan",
+            1
+          ],
+          [
+            "scan",
+            2
+          ],
+          [
+            "scan",
+            3
+          ],
+          [
+            "scan",
+            4
+          ],
+          [
+            "scan",
+            5
+          ],
+          [
+            "scan",
+            6
+          ],
+          [
+            "scan",
+            7
+          ],
+          [
+            "scan",
+            8
+          ],
+          [
+            "scan",
+            9
+          ],
+          [
+            "scan",
+            10
+          ],
+          [
+            "scan",
+            11
+          ],
+          [
+            "scan",
+            12
+          ],
+          [
+            "scan",
+            13
+          ],
+          [
+            "scan",
+            14
+          ],
+          [
+            "scan",
+            15
+          ],
+          [
+            "scan",
+            16
+          ],
+          [
+            "scan",
+            17
+          ],
+          [
+            "scan",
+            18
+          ],
+          [
+            "scan",
+            19
+          ],
+          [
+            "scan",
+            20
+          ],
+          [
+            "scan",
+            21
+          ],
+          [
+            "scan",
+            22
+          ],
+          [
+            "scan",
+            23
+          ],
+          [
+            "scan",
+            24
+          ],
+          [
+            "scan",
+            25
+          ],
+          [
+            "scan",
+            26
+          ],
+          [
+            "scan",
+            27
+          ],
+          [
+            "scan",
+            28
+          ],
+          [
+            "scan",
+            29
+          ],
+          [
+            "scan",
+            30
+          ],
+          [
+            "scan",
+            31
+          ],
+          [
+            "scan",
+            32
+          ],
+          [
+            "scan",
+            33
+          ],
+          [
+            "scan",
+            34
+          ],
+          [
+            "scan",
+            35
+          ],
+          [
+            "scan",
+            36
+          ],
+          [
+            "scan",
+            37
+          ],
+          [
+            "scan",
+            38
+          ],
+          [
+            "scan",
+            39
+          ],
+          [
+            "scan",
+            40
+          ],
+          [
+            "scan",
+            41
+          ],
+          [
+            "scan",
+            42
+          ],
+          [
+            "scan",
+            43
+          ],
+          [
+            "scan",
+            44
+          ],
+          [
+            "scan",
+            45
+          ],
+          [
+            "scan",
+            46
+          ],
+          [
+            "scan",
+            47
+          ],
+          [
+            "scan",
+            48
+          ],
+          [
+            "scan",
+            49
+          ],
+          [
+            "scan",
+            50
+          ],
+          [
+            "comm",
+            3,
+            1
+          ],
+          [
+            "shield",
+            3
+          ],
+          [
+            "shield",
+            6
+          ],
+          [
+            "shield",
+            1
+          ],
+          [
+            "shield",
+            5
+          ],
+          [
+            "shield",
+            14
+          ],
+          [
+            "comm",
+            17,
+            1
+          ],
+          [
+            "shield",
+            20
+          ],
+          [
+            "shield",
+            7
+          ],
+          [
+            "comm",
+            15,
+            1
+          ],
+          [
+            "comm",
+            2,
+            1
+          ],
+          [
+            "comm",
+            35,
+            1
+          ],
+          [
+            "comm",
+            2,
+            1
+          ],
+          [
+            "comm",
+            13,
+            1
+          ],
+          [
+            "comm",
+            23,
+            1
+          ],
+          [
+            "comm",
+            8,
+            1
+          ],
+          [
+            "comm",
+            9,
+            1
+          ],
+          [
+            "shield",
+            17
+          ],
+          [
+            "comm",
+            23,
+            1
+          ],
+          [
+            "comm",
+            21,
+            1
+          ],
+          [
+            "comm",
+            33,
+            1
+          ],
+          [
+            "comm",
+            11,
+            1
+          ],
+          [
+            "comm",
+            27,
+            1
+          ],
+          [
+            "comm",
+            28,
+            1
+          ],
+          [
+            "comm",
+            29,
+            1
+          ]
+        ],
+        "remaining_budget": 1.0,
+        "steps": 75,
+        "failures": 0,
+        "planning_calls": 26,
+        "rollouts": 412,
+        "collaborative_opportunities": 9,
+        "accepted_prefixes": 0,
+        "decisions": [
+          {
+            "step": 51,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 6,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 45.087570280558026,
+            "synergy_mean_delta": 45.087570280558026,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 6,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 52,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 6,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 53,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 6,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 14,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 6,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 6,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 6,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 54,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 14,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 1,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 1,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 1,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 14,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 55,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 14,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 5,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 5,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": -17.01638642629891,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 17.01638642629891,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 14,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 56,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 14,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 14,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 14,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 14,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 57,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 7,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 17,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 58,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 7,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 59,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 7,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 17,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 7,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 7,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 7,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          }
+        ]
+      },
+      "full": {
+        "score": 308.5054180735294,
+        "actions": {
+          "scan": 50,
+          "comm": 17,
+          "cut": 0,
+          "shield": 8
+        },
+        "action_sequence": [
+          [
+            "scan",
+            1
+          ],
+          [
+            "scan",
+            2
+          ],
+          [
+            "scan",
+            3
+          ],
+          [
+            "scan",
+            4
+          ],
+          [
+            "scan",
+            5
+          ],
+          [
+            "scan",
+            6
+          ],
+          [
+            "scan",
+            7
+          ],
+          [
+            "scan",
+            8
+          ],
+          [
+            "scan",
+            9
+          ],
+          [
+            "scan",
+            10
+          ],
+          [
+            "scan",
+            11
+          ],
+          [
+            "scan",
+            12
+          ],
+          [
+            "scan",
+            13
+          ],
+          [
+            "scan",
+            14
+          ],
+          [
+            "scan",
+            15
+          ],
+          [
+            "scan",
+            16
+          ],
+          [
+            "scan",
+            17
+          ],
+          [
+            "scan",
+            18
+          ],
+          [
+            "scan",
+            19
+          ],
+          [
+            "scan",
+            20
+          ],
+          [
+            "scan",
+            21
+          ],
+          [
+            "scan",
+            22
+          ],
+          [
+            "scan",
+            23
+          ],
+          [
+            "scan",
+            24
+          ],
+          [
+            "scan",
+            25
+          ],
+          [
+            "scan",
+            26
+          ],
+          [
+            "scan",
+            27
+          ],
+          [
+            "scan",
+            28
+          ],
+          [
+            "scan",
+            29
+          ],
+          [
+            "scan",
+            30
+          ],
+          [
+            "scan",
+            31
+          ],
+          [
+            "scan",
+            32
+          ],
+          [
+            "scan",
+            33
+          ],
+          [
+            "scan",
+            34
+          ],
+          [
+            "scan",
+            35
+          ],
+          [
+            "scan",
+            36
+          ],
+          [
+            "scan",
+            37
+          ],
+          [
+            "scan",
+            38
+          ],
+          [
+            "scan",
+            39
+          ],
+          [
+            "scan",
+            40
+          ],
+          [
+            "scan",
+            41
+          ],
+          [
+            "scan",
+            42
+          ],
+          [
+            "scan",
+            43
+          ],
+          [
+            "scan",
+            44
+          ],
+          [
+            "scan",
+            45
+          ],
+          [
+            "scan",
+            46
+          ],
+          [
+            "scan",
+            47
+          ],
+          [
+            "scan",
+            48
+          ],
+          [
+            "scan",
+            49
+          ],
+          [
+            "scan",
+            50
+          ],
+          [
+            "shield",
+            6
+          ],
+          [
+            "shield",
+            3
+          ],
+          [
+            "shield",
+            1
+          ],
+          [
+            "shield",
+            5
+          ],
+          [
+            "shield",
+            14
+          ],
+          [
+            "comm",
+            17,
+            1
+          ],
+          [
+            "shield",
+            20
+          ],
+          [
+            "shield",
+            7
+          ],
+          [
+            "comm",
+            15,
+            1
+          ],
+          [
+            "comm",
+            2,
+            1
+          ],
+          [
+            "comm",
+            35,
+            1
+          ],
+          [
+            "comm",
+            2,
+            1
+          ],
+          [
+            "comm",
+            13,
+            1
+          ],
+          [
+            "comm",
+            23,
+            1
+          ],
+          [
+            "comm",
+            8,
+            1
+          ],
+          [
+            "comm",
+            9,
+            1
+          ],
+          [
+            "shield",
+            17
+          ],
+          [
+            "comm",
+            23,
+            1
+          ],
+          [
+            "comm",
+            21,
+            1
+          ],
+          [
+            "comm",
+            33,
+            1
+          ],
+          [
+            "comm",
+            11,
+            1
+          ],
+          [
+            "comm",
+            27,
+            1
+          ],
+          [
+            "comm",
+            28,
+            1
+          ],
+          [
+            "comm",
+            29,
+            1
+          ],
+          [
+            "comm",
+            31,
+            1
+          ]
+        ],
+        "remaining_budget": 1.0,
+        "steps": 75,
+        "failures": 0,
+        "planning_calls": 25,
+        "rollouts": 413,
+        "collaborative_opportunities": 9,
+        "accepted_prefixes": 1,
+        "decisions": [
+          {
+            "step": 51,
+            "accepted": true,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 6,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 6,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 45.087570280558026,
+            "synergy_mean_delta": 45.087570280558026,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 6,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 53,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 14,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 1,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 1,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 1,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 14,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 54,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 14,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 5,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 5,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": -18.36875028184721,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 18.36875028184721,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 14,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 55,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 14,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 14,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 14,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 14,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 56,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 7,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 17,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 57,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 7,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 58,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 7,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 17,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 7,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 7,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 7,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 59,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 17,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 31,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 15,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 15,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": -3.461133374381551,
+            "synergy_mean_delta": -3.461133374381551,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 60,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 17,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 31,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 2,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 2,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": -4.068277438777259,
+            "synergy_mean_delta": -4.068277438777259,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 17,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          }
+        ]
+      },
+      "first_minus_p9_bounded": 0.0,
+      "full_minus_p9_bounded": 4.817857941176499,
+      "full_minus_first": 4.817857941176499
+    },
+    {
+      "family": "sbm_violent_cluster",
+      "repetition": 501,
+      "seed_sha256": "1521ffc56052cb4f6db8983df71c8064cdcbc9f3d6d6d3f9cbcd2b6f60f7a3a5",
+      "p9_bounded": {
+        "score": 199.13262254497351,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "planning_calls": 25,
+        "rollouts": 120,
+        "deviation_count": 0,
+        "deviations": [],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "06930c8c8a9a5fef9751f4bfb71e812db4aff6e2ddaca7f956b830365dd23f5c",
+        "seconds": 2.7635957839665934
+      },
+      "first": {
+        "score": 199.13262254497351,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "action_sequence": [
+          [
+            "scan",
+            1
+          ],
+          [
+            "scan",
+            2
+          ],
+          [
+            "scan",
+            3
+          ],
+          [
+            "scan",
+            4
+          ],
+          [
+            "scan",
+            5
+          ],
+          [
+            "scan",
+            6
+          ],
+          [
+            "scan",
+            7
+          ],
+          [
+            "scan",
+            8
+          ],
+          [
+            "scan",
+            9
+          ],
+          [
+            "scan",
+            10
+          ],
+          [
+            "scan",
+            11
+          ],
+          [
+            "scan",
+            12
+          ],
+          [
+            "scan",
+            13
+          ],
+          [
+            "scan",
+            14
+          ],
+          [
+            "scan",
+            15
+          ],
+          [
+            "scan",
+            16
+          ],
+          [
+            "scan",
+            17
+          ],
+          [
+            "scan",
+            18
+          ],
+          [
+            "scan",
+            19
+          ],
+          [
+            "scan",
+            20
+          ],
+          [
+            "scan",
+            21
+          ],
+          [
+            "scan",
+            22
+          ],
+          [
+            "scan",
+            23
+          ],
+          [
+            "scan",
+            24
+          ],
+          [
+            "scan",
+            25
+          ],
+          [
+            "scan",
+            26
+          ],
+          [
+            "scan",
+            27
+          ],
+          [
+            "scan",
+            28
+          ],
+          [
+            "scan",
+            29
+          ],
+          [
+            "scan",
+            30
+          ],
+          [
+            "scan",
+            31
+          ],
+          [
+            "scan",
+            32
+          ],
+          [
+            "scan",
+            33
+          ],
+          [
+            "scan",
+            34
+          ],
+          [
+            "scan",
+            35
+          ],
+          [
+            "scan",
+            36
+          ],
+          [
+            "scan",
+            37
+          ],
+          [
+            "scan",
+            38
+          ],
+          [
+            "scan",
+            39
+          ],
+          [
+            "scan",
+            40
+          ],
+          [
+            "scan",
+            41
+          ],
+          [
+            "scan",
+            42
+          ],
+          [
+            "scan",
+            43
+          ],
+          [
+            "scan",
+            44
+          ],
+          [
+            "scan",
+            45
+          ],
+          [
+            "scan",
+            46
+          ],
+          [
+            "scan",
+            47
+          ],
+          [
+            "scan",
+            48
+          ],
+          [
+            "scan",
+            49
+          ],
+          [
+            "scan",
+            50
+          ],
+          [
+            "shield",
+            4
+          ],
+          [
+            "shield",
+            16
+          ],
+          [
+            "shield",
+            5
+          ],
+          [
+            "shield",
+            2
+          ],
+          [
+            "comm",
+            18,
+            1
+          ],
+          [
+            "comm",
+            49,
+            1
+          ],
+          [
+            "comm",
+            6,
+            1
+          ],
+          [
+            "shield",
+            25
+          ],
+          [
+            "shield",
+            21
+          ],
+          [
+            "comm",
+            45,
+            1
+          ],
+          [
+            "comm",
+            46,
+            1
+          ],
+          [
+            "comm",
+            48,
+            1
+          ],
+          [
+            "shield",
+            24
+          ],
+          [
+            "comm",
+            27,
+            1
+          ],
+          [
+            "comm",
+            29,
+            1
+          ],
+          [
+            "comm",
+            31,
+            1
+          ],
+          [
+            "comm",
+            33,
+            1
+          ],
+          [
+            "comm",
+            36,
+            1
+          ],
+          [
+            "shield",
+            18
+          ],
+          [
+            "comm",
+            40,
+            1
+          ],
+          [
+            "comm",
+            47,
+            1
+          ],
+          [
+            "comm",
+            50,
+            1
+          ],
+          [
+            "shield",
+            10
+          ],
+          [
+            "comm",
+            50,
+            1
+          ]
+        ],
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "failures": 0,
+        "planning_calls": 25,
+        "rollouts": 630,
+        "collaborative_opportunities": 15,
+        "accepted_prefixes": 1,
+        "decisions": [
+          {
+            "step": 51,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 16,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 5,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 4,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 4,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": -2.2212177696030264,
+            "full_mean_delta": -2.2212177696030264,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 52,
+            "accepted": true,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 16,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 5,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 16,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 18,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 2.0090510166619575,
+            "full_mean_delta": 2.0090510166619575,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 53,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 5,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 2,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 5,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 5,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 54,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 2,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 25,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 2,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 2,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 2,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 55,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 25,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 18,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 18,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 56,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 25,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 49,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 49,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 57,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 25,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 6,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 6,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 58,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 25,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 25,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 59,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 24,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 64,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 27,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 3.075940040917072,
+            "full_mean_delta": 3.075940040917072,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 65,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 29,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 2.695356634588675,
+            "full_mean_delta": 2.695356634588675,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 66,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 31,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 31,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": -10.265285696240495,
+            "full_mean_delta": 0.4805012307254427,
+            "synergy_mean_delta": 10.745786926965938,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 67,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 33,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 33,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": -8.443029840209933,
+            "full_mean_delta": 3.810722218048478,
+            "synergy_mean_delta": 12.25375205825841,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 68,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 36,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 36,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": -10.130729711143822,
+            "full_mean_delta": 2.155728451800653,
+            "synergy_mean_delta": 12.286458162944475,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 69,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 18,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 10,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 18,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 18,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 18,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          }
+        ]
+      },
+      "full": {
+        "score": 199.13262254497351,
+        "actions": {
+          "scan": 50,
+          "comm": 15,
+          "cut": 0,
+          "shield": 9
+        },
+        "action_sequence": [
+          [
+            "scan",
+            1
+          ],
+          [
+            "scan",
+            2
+          ],
+          [
+            "scan",
+            3
+          ],
+          [
+            "scan",
+            4
+          ],
+          [
+            "scan",
+            5
+          ],
+          [
+            "scan",
+            6
+          ],
+          [
+            "scan",
+            7
+          ],
+          [
+            "scan",
+            8
+          ],
+          [
+            "scan",
+            9
+          ],
+          [
+            "scan",
+            10
+          ],
+          [
+            "scan",
+            11
+          ],
+          [
+            "scan",
+            12
+          ],
+          [
+            "scan",
+            13
+          ],
+          [
+            "scan",
+            14
+          ],
+          [
+            "scan",
+            15
+          ],
+          [
+            "scan",
+            16
+          ],
+          [
+            "scan",
+            17
+          ],
+          [
+            "scan",
+            18
+          ],
+          [
+            "scan",
+            19
+          ],
+          [
+            "scan",
+            20
+          ],
+          [
+            "scan",
+            21
+          ],
+          [
+            "scan",
+            22
+          ],
+          [
+            "scan",
+            23
+          ],
+          [
+            "scan",
+            24
+          ],
+          [
+            "scan",
+            25
+          ],
+          [
+            "scan",
+            26
+          ],
+          [
+            "scan",
+            27
+          ],
+          [
+            "scan",
+            28
+          ],
+          [
+            "scan",
+            29
+          ],
+          [
+            "scan",
+            30
+          ],
+          [
+            "scan",
+            31
+          ],
+          [
+            "scan",
+            32
+          ],
+          [
+            "scan",
+            33
+          ],
+          [
+            "scan",
+            34
+          ],
+          [
+            "scan",
+            35
+          ],
+          [
+            "scan",
+            36
+          ],
+          [
+            "scan",
+            37
+          ],
+          [
+            "scan",
+            38
+          ],
+          [
+            "scan",
+            39
+          ],
+          [
+            "scan",
+            40
+          ],
+          [
+            "scan",
+            41
+          ],
+          [
+            "scan",
+            42
+          ],
+          [
+            "scan",
+            43
+          ],
+          [
+            "scan",
+            44
+          ],
+          [
+            "scan",
+            45
+          ],
+          [
+            "scan",
+            46
+          ],
+          [
+            "scan",
+            47
+          ],
+          [
+            "scan",
+            48
+          ],
+          [
+            "scan",
+            49
+          ],
+          [
+            "scan",
+            50
+          ],
+          [
+            "shield",
+            4
+          ],
+          [
+            "shield",
+            16
+          ],
+          [
+            "shield",
+            5
+          ],
+          [
+            "shield",
+            2
+          ],
+          [
+            "comm",
+            18,
+            1
+          ],
+          [
+            "comm",
+            49,
+            1
+          ],
+          [
+            "comm",
+            6,
+            1
+          ],
+          [
+            "shield",
+            25
+          ],
+          [
+            "shield",
+            21
+          ],
+          [
+            "comm",
+            45,
+            1
+          ],
+          [
+            "comm",
+            46,
+            1
+          ],
+          [
+            "comm",
+            48,
+            1
+          ],
+          [
+            "shield",
+            24
+          ],
+          [
+            "comm",
+            27,
+            1
+          ],
+          [
+            "comm",
+            29,
+            1
+          ],
+          [
+            "comm",
+            31,
+            1
+          ],
+          [
+            "comm",
+            33,
+            1
+          ],
+          [
+            "comm",
+            36,
+            1
+          ],
+          [
+            "shield",
+            18
+          ],
+          [
+            "comm",
+            40,
+            1
+          ],
+          [
+            "comm",
+            47,
+            1
+          ],
+          [
+            "comm",
+            50,
+            1
+          ],
+          [
+            "shield",
+            10
+          ],
+          [
+            "comm",
+            50,
+            1
+          ]
+        ],
+        "remaining_budget": 0.0,
+        "steps": 74,
+        "failures": 0,
+        "planning_calls": 24,
+        "rollouts": 594,
+        "collaborative_opportunities": 14,
+        "accepted_prefixes": 1,
+        "decisions": [
+          {
+            "step": 51,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 16,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 5,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 4,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 4,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": -2.2212177696030264,
+            "full_mean_delta": -2.2212177696030264,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 52,
+            "accepted": true,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 16,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 5,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 16,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 5,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 18,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 2.0090510166619575,
+            "full_mean_delta": 2.0090510166619575,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 54,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 2,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 25,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 2,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 2,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 2,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 55,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 25,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 18,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 18,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 56,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 25,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 49,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 49,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 57,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 25,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 6,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 6,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 58,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 25,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 25,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 59,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 24,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 64,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 27,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 27,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 3.075940040917072,
+            "full_mean_delta": 3.075940040917072,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 65,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 29,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 2.695356634588675,
+            "full_mean_delta": 2.695356634588675,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 66,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 31,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 31,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": -10.265285696240495,
+            "full_mean_delta": 0.4805012307254427,
+            "synergy_mean_delta": 10.745786926965938,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 67,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 33,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 33,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": -8.443029840209933,
+            "full_mean_delta": 3.810722218048478,
+            "synergy_mean_delta": 12.25375205825841,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 68,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 36,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 36,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": -10.130729711143822,
+            "full_mean_delta": 2.155728451800653,
+            "synergy_mean_delta": 12.286458162944475,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 69,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 18,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 10,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 18,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 18,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 18,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          }
+        ]
+      },
+      "first_minus_p9_bounded": 0.0,
+      "full_minus_p9_bounded": 0.0,
+      "full_minus_first": 0.0
+    },
+    {
+      "family": "double_bridge_communities",
+      "repetition": 501,
+      "seed_sha256": "8098627caaeacfec1c00e13d6b1c84035df3f7132ad1c1305a3445e022daee58",
+      "p9_bounded": {
+        "score": 402.05358908000005,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "failures": 0,
+        "remaining_budget": 1.0,
+        "steps": 78,
+        "planning_calls": 29,
+        "rollouts": 193,
+        "deviation_count": 2,
+        "deviations": [
+          {
+            "step": 51,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 13,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 13,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "proposed_action": {
+              "kind": "comm",
+              "target_node_1": 13,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "untried_comm_roi",
+            "mean_delta": 26.980394957407167,
+            "minimum_delta": 15.768805557140752,
+            "paired_deltas": [
+              20.40379090263974,
+              26.693293149379315,
+              20.671238293436033,
+              51.36484688444,
+              15.768805557140752
+            ],
+            "audit_mean_delta": 0.0,
+            "audit_minimum_delta": 0.0,
+            "audit_paired_deltas": [],
+            "compared_actions": [
+              {
+                "kind": "shield",
+                "target_node_1": 13,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "comm",
+                "target_node_1": 13,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ]
+          },
+          {
+            "step": 67,
+            "action": {
+              "kind": "comm",
+              "target_node_1": 19,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 44,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "comm",
+              "target_node_1": 19,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "source": "untried_comm_roi",
+            "mean_delta": 1.4505051733333971,
+            "minimum_delta": 0.7188907487251299,
+            "paired_deltas": [
+              1.4505051733333971,
+              2.182119597941721,
+              0.7188907487251299,
+              2.15742524757178,
+              0.7435850990949575
+            ],
+            "audit_mean_delta": 0.0,
+            "audit_minimum_delta": 0.0,
+            "audit_paired_deltas": [],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 44,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "comm",
+                "target_node_1": 19,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ]
+          }
+        ],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "b96c54cb9fc47025a690abe7a5c852c5fc6230768dcd9bc769a45cf0658c7b25",
+        "seconds": 3.5205405429005623
+      },
+      "first": {
+        "score": 402.05358908000005,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "action_sequence": [
+          [
+            "scan",
+            1
+          ],
+          [
+            "scan",
+            2
+          ],
+          [
+            "scan",
+            3
+          ],
+          [
+            "scan",
+            4
+          ],
+          [
+            "scan",
+            5
+          ],
+          [
+            "scan",
+            6
+          ],
+          [
+            "scan",
+            7
+          ],
+          [
+            "scan",
+            8
+          ],
+          [
+            "scan",
+            9
+          ],
+          [
+            "scan",
+            10
+          ],
+          [
+            "scan",
+            11
+          ],
+          [
+            "scan",
+            12
+          ],
+          [
+            "scan",
+            13
+          ],
+          [
+            "scan",
+            14
+          ],
+          [
+            "scan",
+            15
+          ],
+          [
+            "scan",
+            16
+          ],
+          [
+            "scan",
+            17
+          ],
+          [
+            "scan",
+            18
+          ],
+          [
+            "scan",
+            19
+          ],
+          [
+            "scan",
+            20
+          ],
+          [
+            "scan",
+            21
+          ],
+          [
+            "scan",
+            22
+          ],
+          [
+            "scan",
+            23
+          ],
+          [
+            "scan",
+            24
+          ],
+          [
+            "scan",
+            25
+          ],
+          [
+            "scan",
+            26
+          ],
+          [
+            "scan",
+            27
+          ],
+          [
+            "scan",
+            28
+          ],
+          [
+            "scan",
+            29
+          ],
+          [
+            "scan",
+            30
+          ],
+          [
+            "scan",
+            31
+          ],
+          [
+            "scan",
+            32
+          ],
+          [
+            "scan",
+            33
+          ],
+          [
+            "scan",
+            34
+          ],
+          [
+            "scan",
+            35
+          ],
+          [
+            "scan",
+            36
+          ],
+          [
+            "scan",
+            37
+          ],
+          [
+            "scan",
+            38
+          ],
+          [
+            "scan",
+            39
+          ],
+          [
+            "scan",
+            40
+          ],
+          [
+            "scan",
+            41
+          ],
+          [
+            "scan",
+            42
+          ],
+          [
+            "scan",
+            43
+          ],
+          [
+            "scan",
+            44
+          ],
+          [
+            "scan",
+            45
+          ],
+          [
+            "scan",
+            46
+          ],
+          [
+            "scan",
+            47
+          ],
+          [
+            "scan",
+            48
+          ],
+          [
+            "scan",
+            49
+          ],
+          [
+            "scan",
+            50
+          ],
+          [
+            "comm",
+            13,
+            1
+          ],
+          [
+            "shield",
+            7
+          ],
+          [
+            "shield",
+            16
+          ],
+          [
+            "comm",
+            25,
+            1
+          ],
+          [
+            "comm",
+            38,
+            1
+          ],
+          [
+            "shield",
+            1
+          ],
+          [
+            "shield",
+            11
+          ],
+          [
+            "comm",
+            22,
+            1
+          ],
+          [
+            "comm",
+            26,
+            1
+          ],
+          [
+            "comm",
+            29,
+            1
+          ],
+          [
+            "comm",
+            32,
+            1
+          ],
+          [
+            "comm",
+            35,
+            1
+          ],
+          [
+            "comm",
+            41,
+            1
+          ],
+          [
+            "comm",
+            44,
+            1
+          ],
+          [
+            "comm",
+            47,
+            1
+          ],
+          [
+            "comm",
+            50,
+            1
+          ],
+          [
+            "comm",
+            19,
+            1
+          ],
+          [
+            "comm",
+            44,
+            1
+          ],
+          [
+            "comm",
+            50,
+            1
+          ],
+          [
+            "comm",
+            28,
+            1
+          ],
+          [
+            "comm",
+            3,
+            1
+          ],
+          [
+            "comm",
+            25,
+            1
+          ],
+          [
+            "shield",
+            21
+          ],
+          [
+            "shield",
+            23
+          ],
+          [
+            "comm",
+            10,
+            1
+          ],
+          [
+            "comm",
+            14,
+            1
+          ],
+          [
+            "comm",
+            18,
+            1
+          ],
+          [
+            "comm",
+            27,
+            1
+          ]
+        ],
+        "remaining_budget": 1.0,
+        "steps": 78,
+        "failures": 0,
+        "planning_calls": 29,
+        "rollouts": 1090,
+        "collaborative_opportunities": 24,
+        "accepted_prefixes": 0,
+        "decisions": [
+          {
+            "step": 51,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 10,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 16,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 13,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 13,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": -14.439189169567722,
+            "full_mean_delta": -14.439189169567722,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 10,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 52,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 10,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 16,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 7,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 7,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": -14.821287341415191,
+            "full_mean_delta": -14.821287341415191,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 10,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 53,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 16,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 1,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 16,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 54,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 1,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 12,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 25,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 1.0385982160323255,
+            "synergy_mean_delta": 1.0385982160323255,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 1,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 55,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 12,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 1,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 38,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 38,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.998798595949342,
+            "full_mean_delta": 0.998798595949342,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 12,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 56,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 12,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 1,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 1,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 1,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.7774388270563184,
+            "full_mean_delta": 0.7774388270563184,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 12,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 57,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 12,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 11,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 11,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.7774388270563184,
+            "full_mean_delta": 1.54559207715536,
+            "synergy_mean_delta": 0.7681532500990416,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 12,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 58,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 22,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 22,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": -0.43033460113966054,
+            "full_mean_delta": -0.43729576169396556,
+            "synergy_mean_delta": -0.006961160554305013,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 59,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 26,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 26,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 1.17262734617175,
+            "full_mean_delta": 1.17262734617175,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 60,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 29,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.6035808921616089,
+            "full_mean_delta": 0.6035808921616089,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 61,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 32,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 32,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.5145165143163257,
+            "full_mean_delta": 0.5145165143163257,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 62,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 35,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 35,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.7083493794575413,
+            "full_mean_delta": 0.7083493794575413,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 63,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 41,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 41,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": -0.07057283824971924,
+            "full_mean_delta": -0.07057283824971924,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 64,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 44,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 44,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": -0.07057283824972362,
+            "full_mean_delta": -0.07057283824972362,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 65,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 47,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 47,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": -0.07057283824971486,
+            "full_mean_delta": -0.07057283824971486,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 66,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 50,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": -0.07057283824971486,
+            "full_mean_delta": -0.07057283824971486,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 67,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 19,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 19,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": -0.07057283824971486,
+            "full_mean_delta": -0.07057283824971486,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 68,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 44,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 44,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 69,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 50,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 70,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 28,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 28,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 71,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 72,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 25,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 73,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 74,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 8,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 23,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 2.5648211193196655,
+            "synergy_mean_delta": 2.5648211193196655,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 23,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          }
+        ]
+      },
+      "full": {
+        "score": 402.05358908000005,
+        "actions": {
+          "scan": 50,
+          "comm": 22,
+          "cut": 0,
+          "shield": 6
+        },
+        "action_sequence": [
+          [
+            "scan",
+            1
+          ],
+          [
+            "scan",
+            2
+          ],
+          [
+            "scan",
+            3
+          ],
+          [
+            "scan",
+            4
+          ],
+          [
+            "scan",
+            5
+          ],
+          [
+            "scan",
+            6
+          ],
+          [
+            "scan",
+            7
+          ],
+          [
+            "scan",
+            8
+          ],
+          [
+            "scan",
+            9
+          ],
+          [
+            "scan",
+            10
+          ],
+          [
+            "scan",
+            11
+          ],
+          [
+            "scan",
+            12
+          ],
+          [
+            "scan",
+            13
+          ],
+          [
+            "scan",
+            14
+          ],
+          [
+            "scan",
+            15
+          ],
+          [
+            "scan",
+            16
+          ],
+          [
+            "scan",
+            17
+          ],
+          [
+            "scan",
+            18
+          ],
+          [
+            "scan",
+            19
+          ],
+          [
+            "scan",
+            20
+          ],
+          [
+            "scan",
+            21
+          ],
+          [
+            "scan",
+            22
+          ],
+          [
+            "scan",
+            23
+          ],
+          [
+            "scan",
+            24
+          ],
+          [
+            "scan",
+            25
+          ],
+          [
+            "scan",
+            26
+          ],
+          [
+            "scan",
+            27
+          ],
+          [
+            "scan",
+            28
+          ],
+          [
+            "scan",
+            29
+          ],
+          [
+            "scan",
+            30
+          ],
+          [
+            "scan",
+            31
+          ],
+          [
+            "scan",
+            32
+          ],
+          [
+            "scan",
+            33
+          ],
+          [
+            "scan",
+            34
+          ],
+          [
+            "scan",
+            35
+          ],
+          [
+            "scan",
+            36
+          ],
+          [
+            "scan",
+            37
+          ],
+          [
+            "scan",
+            38
+          ],
+          [
+            "scan",
+            39
+          ],
+          [
+            "scan",
+            40
+          ],
+          [
+            "scan",
+            41
+          ],
+          [
+            "scan",
+            42
+          ],
+          [
+            "scan",
+            43
+          ],
+          [
+            "scan",
+            44
+          ],
+          [
+            "scan",
+            45
+          ],
+          [
+            "scan",
+            46
+          ],
+          [
+            "scan",
+            47
+          ],
+          [
+            "scan",
+            48
+          ],
+          [
+            "scan",
+            49
+          ],
+          [
+            "scan",
+            50
+          ],
+          [
+            "comm",
+            13,
+            1
+          ],
+          [
+            "shield",
+            7
+          ],
+          [
+            "shield",
+            16
+          ],
+          [
+            "comm",
+            25,
+            1
+          ],
+          [
+            "comm",
+            38,
+            1
+          ],
+          [
+            "shield",
+            1
+          ],
+          [
+            "shield",
+            11
+          ],
+          [
+            "comm",
+            22,
+            1
+          ],
+          [
+            "comm",
+            26,
+            1
+          ],
+          [
+            "comm",
+            29,
+            1
+          ],
+          [
+            "comm",
+            32,
+            1
+          ],
+          [
+            "comm",
+            35,
+            1
+          ],
+          [
+            "comm",
+            41,
+            1
+          ],
+          [
+            "comm",
+            44,
+            1
+          ],
+          [
+            "comm",
+            47,
+            1
+          ],
+          [
+            "comm",
+            50,
+            1
+          ],
+          [
+            "comm",
+            19,
+            1
+          ],
+          [
+            "comm",
+            44,
+            1
+          ],
+          [
+            "comm",
+            50,
+            1
+          ],
+          [
+            "comm",
+            28,
+            1
+          ],
+          [
+            "comm",
+            3,
+            1
+          ],
+          [
+            "comm",
+            25,
+            1
+          ],
+          [
+            "shield",
+            21
+          ],
+          [
+            "shield",
+            23
+          ],
+          [
+            "comm",
+            10,
+            1
+          ],
+          [
+            "comm",
+            14,
+            1
+          ],
+          [
+            "comm",
+            18,
+            1
+          ],
+          [
+            "comm",
+            27,
+            1
+          ]
+        ],
+        "remaining_budget": 1.0,
+        "steps": 78,
+        "failures": 0,
+        "planning_calls": 29,
+        "rollouts": 1090,
+        "collaborative_opportunities": 24,
+        "accepted_prefixes": 0,
+        "decisions": [
+          {
+            "step": 51,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 10,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 16,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 13,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 13,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": -14.439189169567722,
+            "full_mean_delta": -14.439189169567722,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 10,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 52,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 10,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 16,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 7,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 7,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": -14.821287341415191,
+            "full_mean_delta": -14.821287341415191,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 10,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 53,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 16,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 1,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 16,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 16,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 54,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 1,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 12,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 25,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 1.0385982160323255,
+            "synergy_mean_delta": 1.0385982160323255,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 1,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 55,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 12,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 1,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 38,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 38,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.998798595949342,
+            "full_mean_delta": 0.998798595949342,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 12,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 56,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 12,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 1,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 1,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 1,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.7774388270563184,
+            "full_mean_delta": 0.7774388270563184,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 12,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 57,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 12,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 11,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 11,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.7774388270563184,
+            "full_mean_delta": 1.54559207715536,
+            "synergy_mean_delta": 0.7681532500990416,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 12,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 58,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 20,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 22,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 22,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": -0.43033460113966054,
+            "full_mean_delta": -0.43729576169396556,
+            "synergy_mean_delta": -0.006961160554305013,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 20,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 59,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 26,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 26,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 1.17262734617175,
+            "full_mean_delta": 1.17262734617175,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 60,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 29,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 29,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.6035808921616089,
+            "full_mean_delta": 0.6035808921616089,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 61,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 32,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 32,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.5145165143163257,
+            "full_mean_delta": 0.5145165143163257,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 62,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 35,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 35,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.7083493794575413,
+            "full_mean_delta": 0.7083493794575413,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 63,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 41,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 41,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": -0.07057283824971924,
+            "full_mean_delta": -0.07057283824971924,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 64,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 44,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 44,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": -0.07057283824972362,
+            "full_mean_delta": -0.07057283824972362,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 65,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 47,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 47,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": -0.07057283824971486,
+            "full_mean_delta": -0.07057283824971486,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 66,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 50,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": -0.07057283824971486,
+            "full_mean_delta": -0.07057283824971486,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 67,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 19,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 19,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": -0.07057283824971486,
+            "full_mean_delta": -0.07057283824971486,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 68,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 44,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 44,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 69,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 50,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 50,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 70,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 28,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 28,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 71,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 3,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 3,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 72,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "comm",
+                "target_node_1": 25,
+                "target_node_2": null,
+                "prompt_id": 1
+              }
+            ],
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 25,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 73,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 21,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 0.0,
+            "synergy_mean_delta": 0.0,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 21,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          },
+          {
+            "step": 74,
+            "accepted": false,
+            "proposed_prefix": [
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              },
+              {
+                "kind": "shield",
+                "target_node_1": 8,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "executed_sequence": [
+              {
+                "kind": "shield",
+                "target_node_1": 23,
+                "target_node_2": null,
+                "prompt_id": null
+              }
+            ],
+            "baseline_action": {
+              "kind": "shield",
+              "target_node_1": 23,
+              "target_node_2": null,
+              "prompt_id": null
+            },
+            "first_mean_delta": 0.0,
+            "full_mean_delta": 2.5648211193196655,
+            "synergy_mean_delta": 2.5648211193196655,
+            "first_action": {
+              "kind": "shield",
+              "target_node_1": 23,
+              "target_node_2": null,
+              "prompt_id": null
+            }
+          }
+        ]
+      },
+      "first_minus_p9_bounded": 0.0,
+      "full_minus_p9_bounded": 0.0,
+      "full_minus_first": 0.0
+    },
+    {
+      "family": "bipartite",
+      "repetition": 501,
+      "seed_sha256": "59f67294f4cc518047d3af9e5c1bf1c4d67d9d9f1f7d671fc1d4a0fbe9e8b86d",
+      "p9_bounded": {
+        "score": 510.12337716393466,
+        "actions": {
+          "scan": 50,
+          "comm": 36,
+          "cut": 1,
+          "shield": 0
+        },
+        "failures": 0,
+        "remaining_budget": 0.0,
+        "steps": 87,
+        "planning_calls": 38,
+        "rollouts": 40,
+        "deviation_count": 1,
+        "deviations": [
+          {
+            "step": 51,
+            "action": {
+              "kind": "cut",
+              "target_node_1": 28,
+              "target_node_2": 36,
+              "prompt_id": null
+            },
+            "baseline_action": {
+              "kind": "comm",
+              "target_node_1": 33,
+              "target_node_2": null,
+              "prompt_id": 1
+            },
+            "proposed_action": {
+              "kind": "cut",
+              "target_node_1": 28,
+              "target_node_2": 36,
+              "prompt_id": null
+            },
+            "source": "p7_budget_structure",
+            "mean_delta": 4.661617690617459,
+            "minimum_delta": 0.6825964946066279,
+            "paired_deltas": [
+              6.7602479376784,
+              0.7373507049565546,
+              6.651855114088789,
+              0.6825964946066279,
+              8.476038201756921
+            ],
+            "audit_mean_delta": 0.0,
+            "audit_minimum_delta": 0.0,
+            "audit_paired_deltas": [],
+            "compared_actions": [
+              {
+                "kind": "comm",
+                "target_node_1": 33,
+                "target_node_2": null,
+                "prompt_id": 1
+              },
+              {
+                "kind": "cut",
+                "target_node_1": 28,
+                "target_node_2": 36,
+                "prompt_id": null
+              }
+            ]
+          }
+        ],
+        "audit_rejection_count": 0,
+        "audit_rejections": [],
+        "public_board_salt": "c6c58a0e74c5f052cd3b82bb288c04ebb41570920404877380bb19cc33251332",
+        "seconds": 3.3303436420392245
+      },
+      "first": {
+        "score": 510.12337716393466,
+        "actions": {
+          "scan": 50,
+          "comm": 36,
+          "cut": 1,
+          "shield": 0
+        },
+        "action_sequence": [
+          [
+            "scan",
+            1
+          ],
+          [
+            "scan",
+            2
+          ],
+          [
+            "scan",
+            3
+          ],
+          [
+            "scan",
+            4
+          ],
+          [
+            "scan",
+            5
+          ],
+          [
+            "scan",
+            6
+          ],
+          [
+            "scan",
+            7
+          ],
+          [
+            "scan",
+            8
+          ],
+          [
+            "scan",
+            9
+          ],
+          [
+            "scan",
+            10
+          ],
+          [
+            "scan",
+            11
+          ],
+          [
+            "scan",
+            12
+          ],
+          [
+            "scan",
+            13
+          ],
+          [
+            "scan",
+            14
+          ],
+          [
+            "scan",
+            15
+          ],
+          [
+            "scan",
+            16
+          ],
+          [
+            "scan",
+            17
+          ],
+          [
+            "scan",
+            18
+          ],
+          [
+            "scan",
+            19
+          ],
+          [
+            "scan",
+            20
+          ],
+          [
+            "scan",
+            21
+          ],
+          [
+            "scan",
+            22
+          ],
+          [
+            "scan",
+            23
+          ],
+          [
+            "scan",
+            24
+          ],
+          [
+            "scan",
+            25
+          ],
+          [
+            "scan",
+            26
+          ],
+          [
+            "scan",
+            27
+          ],
+          [
+            "scan",
+            28
+          ],
+          [
+            "scan",
+            29
+          ],
+          [
+            "scan",
+            30
+          ],
+          [
+            "scan",
+            31
+          ],
+          [
+            "scan",
+            32
+          ],
+          [
+            "scan",
+            33
+          ],
+          [
+            "scan",
+            34
+          ],
+          [
+            "scan",
+            35
+          ],
+          [
+            "scan",
+            36
+          ],
+          [
+            "scan",
+            37
+          ],
+          [
+            "scan",
+            38
+          ],
+          [
+            "scan",
+            39
+          ],
+          [
+            "scan",
+            40
+          ],
+          [
+            "scan",
+            41
+          ],
+          [
+            "scan",
+            42
+          ],
+          [
+            "scan",
+            43
+          ],
+          [
+            "scan",
+            44
+          ],
+          [
+            "scan",
+            45
+          ],
+          [
+            "scan",
+            46
+          ],
+          [
+            "scan",
+            47
+          ],
+          [
+            "scan",
+            48
+          ],
+          [
+            "scan",
+            49
+          ],
+          [
+            "scan",
+            50
+          ],
+          [
+            "cut",
+            28,
+            36
+          ],
+          [
+            "comm",
+            33,
+            1
+          ],
+          [
+            "comm",
+            4,
+            1
+          ],
+          [
+            "comm",
+            21,
+            1
+          ],
+          [
+            "comm",
+            29,
+            1
+          ],
+          [
+            "comm",
+            3,
+            1
+          ],
+          [
+            "comm",
+            49,
+            1
+          ],
+          [
+            "comm",
+            7,
+            1
+          ],
+          [
+            "comm",
+            3,
+            1
+          ],
+          [
+            "comm",
+            10,
+            1
+          ],
+          [
+            "comm",
+            13,
+            1
+          ],
+          [
+            "comm",
+            18,
+            1
+          ],
+          [
+            "comm",
+            22,
+            1
+          ],
+          [
+            "comm",
+            23,
+            1
+          ],
+          [
+            "comm",
+            24,
+            1
+          ],
+          [
+            "comm",
+            25,
+            1
+          ],
+          [
+            "comm",
+            26,
+            1
+          ],
+          [
+            "comm",
+            31,
+            1
+          ],
+          [
+            "comm",
+            41,
+            1
+          ],
+          [
+            "comm",
+            46,
+            1
+          ],
+          [
+            "comm",
+            36,
+            1
+          ],
+          [
+            "comm",
+            50,
+            1
+          ],
+          [
+            "comm",
+            11,
+            1
+          ],
+          [
+            "comm",
+            15,
+            1
+          ],
+          [
+            "comm",
+            1,
+            1
+          ],
+          [
+            "comm",
+            20,
+            1
+          ],
+          [
+            "comm",
+            27,
+            1
+          ],
+          [
+            "comm",
+            2,
+            1
+          ],
+          [
+            "comm",
+            30,
+            1
+          ],
+          [
+            "comm",
+            35,
+            1
+          ],
+          [
+            "comm",
+            43,
+            1
+          ],
+          [
+            "comm",
+            48,
+            1
+          ],
+          [
+            "comm",
+            6,
+            1
+          ],
+          [
+            "comm",
+            8,
+            1
+          ],
+          [
+            "comm",
+            9,
+            1
+          ],
+          [
+            "comm",
+            41,
+            1
+          ],
+          [
+            "comm",
+            10,
+            1
+          ]
+        ],
+        "remaining_budget": 0.0,
+        "steps": 87,
+        "failures": 0,
+        "planning_calls": 38,
+        "rollouts": 40,
+        "collaborative_opportunities": 0,
+        "accepted_prefixes": 0,
+        "decisions": []
+      },
+      "full": {
+        "score": 510.12337716393466,
+        "actions": {
+          "scan": 50,
+          "comm": 36,
+          "cut": 1,
+          "shield": 0
+        },
+        "action_sequence": [
+          [
+            "scan",
+            1
+          ],
+          [
+            "scan",
+            2
+          ],
+          [
+            "scan",
+            3
+          ],
+          [
+            "scan",
+            4
+          ],
+          [
+            "scan",
+            5
+          ],
+          [
+            "scan",
+            6
+          ],
+          [
+            "scan",
+            7
+          ],
+          [
+            "scan",
+            8
+          ],
+          [
+            "scan",
+            9
+          ],
+          [
+            "scan",
+            10
+          ],
+          [
+            "scan",
+            11
+          ],
+          [
+            "scan",
+            12
+          ],
+          [
+            "scan",
+            13
+          ],
+          [
+            "scan",
+            14
+          ],
+          [
+            "scan",
+            15
+          ],
+          [
+            "scan",
+            16
+          ],
+          [
+            "scan",
+            17
+          ],
+          [
+            "scan",
+            18
+          ],
+          [
+            "scan",
+            19
+          ],
+          [
+            "scan",
+            20
+          ],
+          [
+            "scan",
+            21
+          ],
+          [
+            "scan",
+            22
+          ],
+          [
+            "scan",
+            23
+          ],
+          [
+            "scan",
+            24
+          ],
+          [
+            "scan",
+            25
+          ],
+          [
+            "scan",
+            26
+          ],
+          [
+            "scan",
+            27
+          ],
+          [
+            "scan",
+            28
+          ],
+          [
+            "scan",
+            29
+          ],
+          [
+            "scan",
+            30
+          ],
+          [
+            "scan",
+            31
+          ],
+          [
+            "scan",
+            32
+          ],
+          [
+            "scan",
+            33
+          ],
+          [
+            "scan",
+            34
+          ],
+          [
+            "scan",
+            35
+          ],
+          [
+            "scan",
+            36
+          ],
+          [
+            "scan",
+            37
+          ],
+          [
+            "scan",
+            38
+          ],
+          [
+            "scan",
+            39
+          ],
+          [
+            "scan",
+            40
+          ],
+          [
+            "scan",
+            41
+          ],
+          [
+            "scan",
+            42
+          ],
+          [
+            "scan",
+            43
+          ],
+          [
+            "scan",
+            44
+          ],
+          [
+            "scan",
+            45
+          ],
+          [
+            "scan",
+            46
+          ],
+          [
+            "scan",
+            47
+          ],
+          [
+            "scan",
+            48
+          ],
+          [
+            "scan",
+            49
+          ],
+          [
+            "scan",
+            50
+          ],
+          [
+            "cut",
+            28,
+            36
+          ],
+          [
+            "comm",
+            33,
+            1
+          ],
+          [
+            "comm",
+            4,
+            1
+          ],
+          [
+            "comm",
+            21,
+            1
+          ],
+          [
+            "comm",
+            29,
+            1
+          ],
+          [
+            "comm",
+            3,
+            1
+          ],
+          [
+            "comm",
+            49,
+            1
+          ],
+          [
+            "comm",
+            7,
+            1
+          ],
+          [
+            "comm",
+            3,
+            1
+          ],
+          [
+            "comm",
+            10,
+            1
+          ],
+          [
+            "comm",
+            13,
+            1
+          ],
+          [
+            "comm",
+            18,
+            1
+          ],
+          [
+            "comm",
+            22,
+            1
+          ],
+          [
+            "comm",
+            23,
+            1
+          ],
+          [
+            "comm",
+            24,
+            1
+          ],
+          [
+            "comm",
+            25,
+            1
+          ],
+          [
+            "comm",
+            26,
+            1
+          ],
+          [
+            "comm",
+            31,
+            1
+          ],
+          [
+            "comm",
+            41,
+            1
+          ],
+          [
+            "comm",
+            46,
+            1
+          ],
+          [
+            "comm",
+            36,
+            1
+          ],
+          [
+            "comm",
+            50,
+            1
+          ],
+          [
+            "comm",
+            11,
+            1
+          ],
+          [
+            "comm",
+            15,
+            1
+          ],
+          [
+            "comm",
+            1,
+            1
+          ],
+          [
+            "comm",
+            20,
+            1
+          ],
+          [
+            "comm",
+            27,
+            1
+          ],
+          [
+            "comm",
+            2,
+            1
+          ],
+          [
+            "comm",
+            30,
+            1
+          ],
+          [
+            "comm",
+            35,
+            1
+          ],
+          [
+            "comm",
+            43,
+            1
+          ],
+          [
+            "comm",
+            48,
+            1
+          ],
+          [
+            "comm",
+            6,
+            1
+          ],
+          [
+            "comm",
+            8,
+            1
+          ],
+          [
+            "comm",
+            9,
+            1
+          ],
+          [
+            "comm",
+            41,
+            1
+          ],
+          [
+            "comm",
+            10,
+            1
+          ]
+        ],
+        "remaining_budget": 0.0,
+        "steps": 87,
+        "failures": 0,
+        "planning_calls": 38,
+        "rollouts": 40,
+        "collaborative_opportunities": 0,
+        "accepted_prefixes": 0,
+        "decisions": []
+      },
+      "first_minus_p9_bounded": 0.0,
+      "full_minus_p9_bounded": 0.0,
+      "full_minus_first": 0.0
+    }
+  ],
+  "summary": {
+    "first_minus_p9_bounded_mean": 0.0,
+    "full_minus_p9_bounded_mean": 1.2044644852941246,
+    "full_minus_first_mean": 1.2044644852941246,
+    "collaborative_opportunities": 47,
+    "accepted_full_prefixes": 2,
+    "failures": 0,
+    "win_tie_loss_vs_p9_bounded": [
+      1,
+      3,
+      0
+    ]
+  },
+  "new_holdout_opened": false,
+  "production_promotion_allowed": false
+}
