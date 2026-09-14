@@ -1,0 +1,51 @@
+{
+  "experiment": "P11 public prompt-ID calibration",
+  "date": "2026-09-14",
+  "trigger": "FAQ Q4 states that the three prompt correction values are hidden and must be learned from feedback",
+  "objective": "identify the best prompt ID from public communication returns before allocating the remaining persuasion budget",
+  "estimator": {
+    "probe_sequence_per_node": [1, 2, 3],
+    "published_turn_multipliers": [1.0, 0.5, 0.25],
+    "normalized_observation": "(new_w-before_w)/turn_multiplier",
+    "identification": "within-node prompt ordering cancels the node-specific multiplicative response factor",
+    "verification": "require the same unique best prompt on two complete probe nodes; otherwise fall back to prompt 1",
+    "ties": "no calibrated winner when normalized values tie within 1e-9"
+  },
+  "probe_policy": {
+    "maximum_nodes": 2,
+    "maximum_budget": 12.0,
+    "node_requirements": "publicly scanned, alive, comm_left=3, peace or neutral persona, opinion strictly inside [-60,60]",
+    "ranking": "lowest initial public degree, then largest distance from opinion bounds, then node ID",
+    "reason": "avoid nodes likely to be shielded and limit the terminal cost of testing a weak or negative prompt"
+  },
+  "safety": {
+    "clipping": "observations ending at either opinion bound are censored and cannot rank a prompt",
+    "zero_or_negative": "finite zero and negative deltas are valid ordering evidence",
+    "failed_action": "do not record or advance a prompt after an unsuccessful environment return",
+    "state": "ledger receives only node ID, prompt ID, public turn, before_w and returned new_w; it cannot access seed prompts or response factors",
+    "fallback": "missing, conflicting, tied or censored calibration keeps prompt 1"
+  },
+  "development": {
+    "seeds": "six previously consumed legacy family repetition-1 graphs",
+    "prompt_configs": {
+      "base_permutations": "all six permutations of [15,10,-5]",
+      "wide_rotations": [[24,7,-12],[-12,24,7],[7,-12,24]],
+      "close_rotations": [[6,5,4],[4,6,5],[5,4,6]]
+    },
+    "cases": 72,
+    "workers": 1,
+    "metrics": [
+      "unique best prompt identification accuracy",
+      "complete/tied/conflicting/censored calibration counts",
+      "probe budget and successful action count",
+      "selected public node IDs and normalized observations",
+      "terminal score of using calibrated best versus fixed prompt 1 after equal probe actions"
+    ]
+  },
+  "decision": [
+    "complete all 72 declared development cases",
+    "zero illegal or failed probe actions",
+    "calibrated ID must equal the true unique best in every uncensored case",
+    "do not open a new holdout, modify production, or infer an official score"
+  ]
+}
