@@ -8,3 +8,5 @@ experiment	commit	metric	status	description
 6	50e41b1	39.3036	reject_screen	high-influence ID probe vs low P11; 36 pairs; minimum -22.4697 fails -10 gate
 7	2b94e59	4.750208	keep_screen	unknown-node prior times 0.9 vs low P11; 36 pairs; not qualified
 8	86a8e74	34.2151	keep_screen	low ID probe plus selected-prompt response anchor vs low P11; 36 pairs; not qualified
+9	25f949a	-12.694049	reject_expanded	prior discount aborted at pair 43/252 on the preregistered -10 floor; metric is the rejecting pair, not a cohort mean
+10	f535d48	-47.081441	reject_expanded	response anchor aborted at pair 187/252 on the preregistered -10 floor; metric is the rejecting pair, not a cohort mean
