@@ -61,6 +61,20 @@ class P11ResponseAnchorExperimentTests(unittest.TestCase):
         self.assertEqual(controller.p11_anchor_skip_reason, "nonpositive_or_missing_prompt")
         self.assertEqual(controller.p11_selected_prompt_prior, -2.0)
 
+    def test_second_probe_node_plus_anchor_is_bounded_at_fourteen(self):
+        env = PromptEnvironment((-5.0, 15.0, 10.0), factors=(0.0, 1.0, 0.6))
+        controller = AnchoredPromptLearningController(
+            env, valid_first, node_count=3, p8_mode="conservative",
+            config=PolicyConfig(policy_mode=PolicyMode.PUBLIC_GREEDY, max_llm_calls=30),
+            max_probe_budget=12.0, max_probe_nodes=2,
+        )
+        self.drive_anchor(env, controller)
+        self.assertEqual(controller.p11_probe_nodes, (1, 2))
+        self.assertEqual(controller.p11_probe_budget, 12.0)
+        self.assertEqual(controller.p11_anchor_target, 3)
+        self.assertEqual(controller.p11_anchor_budget, 2.0)
+        self.assertEqual(controller.p11_probe_budget + controller.p11_anchor_budget, 14.0)
+
 
 if __name__ == "__main__":
     unittest.main()

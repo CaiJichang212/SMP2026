@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "experiment": "p11-anchor-full-development-20260914",
+  "status": "preregistered",
+  "registered_before_results": true,
+  "candidate": "Frozen low-node P11 prompt identification followed, for a positive selected prompt, by one selected-ID response anchor on the highest public component-influence eligible node excluding every node reserved in p11_probe_nodes. Unknown-node magnitude then uses distinct post-calibration selected-ID returns and excludes the low identification probe magnitude.",
+  "control": "Reuse the already completed and independently audited original-P11 arm from the 252-case full-policy development raw report; never cache or synthesize the anchor arm.",
+  "cohort": "The exact consumed 252 development cases: ten topology blocks, base/wide/close amplitudes, and all six prompt-ID permutations.",
+  "resources": {
+    "ordinary": "one informative probe node costs 6 and one anchor costs 2, total 8",
+    "worst_case": "two probe nodes after all-zero, clipping or failure cost up to 12; a subsequent anchor costs 2, total up to 14",
+    "anchor_target": "highest public component influence among untouched peace/neutral nodes with comm_left=3 and opinion strictly inside (-60,60), excluding all nodes reserved in p11_probe_nodes",
+    "action_protocol": "anchor is one legal LLM-selected action in one host step; failure or clipping does not update the anchor prior"
+  },
+  "primary_estimand": "Average anchor-minus-original-P11 within each topology block first, then equally average the ten topology means.",
+  "gate": [
+    "topology-weighted mean greater than 1 terminal unit",
+    "prompt-1-best mean greater than 0",
+    "at least eight of ten topology means nonnegative",
+    "base, wide and close amplitude means all nonnegative",
+    "minimum paired gain at least -10",
+    "all 252 candidate episodes pass prompt identity, calibration/probe identity, action, planning, budget and public-history replay checks"
+  ],
+  "early_abort": "The first nonfinite gain or paired gain below -10 records rejected=true, aborted=true and complete=false, then stops. A partial run can never satisfy the development gate.",
+  "attribution_limit": "Anchor action and transfer-prior composition change downstream communication/structure ordering; this is not a pure selector or pure two-budget effect.",
+  "decision": "Passing remains development evidence only. Do not combine with the 0.9 discount and do not open 1401-1403 without a separate decision and frozen protocol.",
+  "production_enabled": false,
+  "confirmation_opened": false,
+  "workers": 1
+}
