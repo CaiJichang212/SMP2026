@@ -1,0 +1,26 @@
+{
+  "purpose": "Address the failed P10 combined stratum gate without changing or reclassifying that failure",
+  "previous_confirmation": "1201-1203 is consumed diagnostic data; combined remains unqualified",
+  "variant": "guarded_combined",
+  "changes": {
+    "structure": "retain depth12/width4 search but require positive means and nonnegative minima in both five-scenario selection and eight-scenario audit",
+    "posterior": "at least eight uncensored distinct first responses and a dominant aligned/inverse posterior >=0.99",
+    "public_covariate_guard": "disable persona adaptation when absolute Pearson correlation between observed first responses and initial public degrees is >=0.8; do not infer initial degree from altered topology",
+    "contrast_guard": "require at least two samples in each of one persona pair, with observed mean r separation >=0.15 in the dominant model's predicted direction; a globally high/low response alone is insufficient",
+    "fallback": "original P9 behavior whenever any new adaptation guard is closed; preserve explicit LLM approval and per-step legality for structure prefixes"
+  },
+  "rationale": "0.99 is a conventional stronger posterior evidence threshold; the public degree guard addresses observed confounding and the contrast guard requires the type difference actually used for prediction. These do not encode case IDs or tune on future results.",
+  "development": {
+    "cases": "the consumed 48 cases 1201-1203, paired with original P9; full replay, not only selected failures",
+    "promotion_to_new_confirmation": "positive mean, each of four stratum means nonnegative, zero action/planning/resource failures"
+  },
+  "new_confirmation": {
+    "repetitions": [1301, 1302, 1303],
+    "cases": 48,
+    "population": "same four fully resampled topology families and four response strata as P10, using new P10 random streams from distinct repetition IDs",
+    "unlock": "only after development completes and guarded source is frozen",
+    "gate": "same as original P10: mean vs P9 positive, family-block bootstrap 95% lower >0, every stratum mean nonnegative, at least two family means positive, complete public-action/identity/resource audits and real entry validation",
+    "bootstrap": {"draws": 10000, "seed": 20260914}
+  },
+  "production_enabled": false
+}
