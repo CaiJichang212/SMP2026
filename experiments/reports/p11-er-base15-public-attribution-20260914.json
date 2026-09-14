@@ -1,0 +1,110 @@
+{
+  "case_id": "legacy:er_balanced:1:base:15.0_10.0_-5.0",
+  "seed_sha256": "db6910b99174ab78acea7ed1794abe64d7552390a151e3fff03b0498d1480a99",
+  "scope": "public-trace accounting in the calibrated local model; not official-score attribution",
+  "same_final_graph": true,
+  "observed_score_difference": -51.00350968503915,
+  "p11_communications_on_finally_removed_nodes": [
+    {
+      "index": 54,
+      "kind": "comm",
+      "target_node_1": 17,
+      "target_node_2": null,
+      "prompt_id": 1,
+      "budget_before": 69.0,
+      "budget_after": 67.0,
+      "success": true,
+      "public_result": {
+        "status": "success",
+        "new_w": -10.158532000000001
+      }
+    }
+  ],
+  "p9_communications_on_finally_removed_nodes": [],
+  "p11_erased_communication_budget": 2.0,
+  "interpretation_limit": "The accounting is not an additive causal decomposition of probe selection, estimation, and structure policies.",
+  "node_decomposition": [
+    {
+      "node_id": 7,
+      "p11_final_w": 29.075068,
+      "p9_final_w": 38.4271705,
+      "public_final_influence": 1.4146981627296589,
+      "score_contribution": -13.23040222440945
+    },
+    {
+      "node_id": 38,
+      "p11_final_w": -1.5020290000000003,
+      "p9_final_w": 6.929688499999999,
+      "public_final_influence": 1.5433070866141734,
+      "score_contribution": -13.012729370078741
+    },
+    {
+      "node_id": 29,
+      "p11_final_w": 42.733062000000004,
+      "p9_final_w": 52.530904500000005,
+      "public_final_influence": 1.2860892388451446,
+      "score_contribution": -12.600899803149611
+    },
+    {
+      "node_id": 37,
+      "p11_final_w": -10.266348999999998,
+      "p9_final_w": -0.7287339999999976,
+      "public_final_influence": 1.2860892388451446,
+      "score_contribution": -12.266224015748035
+    },
+    {
+      "node_id": 28,
+      "p11_final_w": 20.528257,
+      "p9_final_w": 29.1646345,
+      "public_final_influence": 1.4146981627296589,
+      "score_contribution": -12.217867381889763
+    },
+    {
+      "node_id": 18,
+      "p11_final_w": 1.7305210000000004,
+      "p9_final_w": -4.324094,
+      "public_final_influence": 0.9002624671916011,
+      "score_contribution": 5.450742637795276
+    },
+    {
+      "node_id": 2,
+      "p11_final_w": 18.270065000000002,
+      "p9_final_w": 0.454115,
+      "public_final_influence": 0.38582677165354334,
+      "score_contribution": 6.873870472440946
+    }
+  ],
+  "accounted_score_difference": -51.003509685039376,
+  "accounting_residual": 2.2737367544323206e-13,
+  "cohort_complete_at_analysis": false,
+  "runtime_source_snapshot": {
+    "src/starnet/model/blackboard.py": "78ccfaa356ff08e39d4da8b98635d8384f0af1556dfc9e35b039714eb6e05375",
+    "src/starnet/policy/actions.py": "6c8898c147acbee19e297d534919b33592736b37ed2f16d9dec0a4357628b903",
+    "src/starnet/policy/config.py": "b43c1fb108f8634c3bc036e85614e8a7b0518410bb41d1f1cbab0d5bc3801e6d",
+    "src/starnet/policy/calibration.py": "439c2f6e6acb3e136404f1b9212daad3c698b201304efe940d5f8265a89bf603",
+    "src/starnet/policy/baseline.py": "a06e7bbe07a7d27101d6ee1795fca8654e485d47e4c7c32ae8f6372a4eb326e6",
+    "src/starnet/runtime/env_adapter.py": "4734b571b31137f57e0deeb31cad476b46f70ed5ef9fe915cd59966cf5f9f6ca",
+    "src/starnet/runtime/trace.py": "530895581e0d65bfc16185decb3865f356d5978b3991ad50983af8a58eebda01",
+    "src/starnet/policy/graph_analysis.py": "aa10b77fe1b2388ef2e6d5f03fed0212ae2dddd594ed5fe8238d211a6759596f",
+    "src/starnet/policy/candidates.py": "3d62597170426053aef3e87d30f4abe196af5d8911e759344a8c338c2b37b0fa",
+    "src/starnet/policy/cmg.py": "767367659ce48ed37be1939c0c2e42b5b59fe3ca96a5bd2c35c46bdf970fae8c",
+    "src/starnet/policy/structural.py": "392db9f3497536fab56ac5ee3ff305f47dd0765d518c3905d4aade799fdc763e",
+    "src/starnet/policy/budget_experiment.py": "baacd360e9351a6cfd1266dc147e440f8889c65d8202d2a95db708134f5c5a0c",
+    "src/starnet/policy/fast_settlement_experiment.py": "bdc97091e78c98a8b006e0d81149b8a047322f5c8f3bb05de461076ed1782783",
+    "src/starnet/policy/p8_experiment.py": "30326ab80cee936c6feb57ec01722eafa0994e2d171d606e6f439a3106f334ca",
+    "src/starnet/policy/p8_qualification.py": "ee05d353bb6d1f119231ed188e61125e758b31bddae1a9ebd65892d7fa4fb8d8",
+    "src/starnet/policy/adaptive.py": "551536a0c178431ae13411cc331237603a81f36c191c1c1aa89504676149c391",
+    "src/starnet/runtime/stage.py": "279b958ee1e74227160fecdcf7b4b5e16bc83035762d2e098b0cd971ecb14fe1",
+    "src/starnet/runtime/controller.py": "158330e30d99545dad34543d5787113655c41f9965f14090d0deed2b42ae22b7",
+    "src/starnet/runtime/p8_controller.py": "89507fec9d971ad364355c5c7d2ab6482fd8d21fc8c1084ef3aa869e4676ddaf",
+    "src/starnet/policy/prompt_calibration_experiment.py": "fe3b2731d483a392ed3593e02d2e65a82a287640afcc96808503b8a142f12d47",
+    "src/starnet/policy/p11_qualification.py": "e4adeafb73b693d5e349ae82915afe62067379a996031e3efd36c9d12a5eaa99",
+    "src/starnet/runtime/p11_prompt_controller_experiment.py": "98ae3471bd5eb9d024bd96ac678f19a6807877cccb45df53622b70a614880612",
+    "src/starnet/submission/starnet_model.py": "80d946670634ffa9ab77dff339597ade1dd907b6e06df88233c96dc9b020abd2",
+    "src/starnet/submission/prompt/commander_react.txt": "9b9f32d4aab547bd10888741810d8144961b04543bf6b6c2eb0e844c2f71233e",
+    "src/starnet/submission/prompt/executor_react.txt": "657c464cbc8097519a632fbd8c678c224c3c655f22ab94ac9d39e1dc10b4e380",
+    "src/starnet/submission/prompt/reflect.txt": "970987c97bbf1a0bce0f4e0da76184b8a51dc0b9e4cf00cd926813c1f28d9dbd",
+    "src/starnet/submission/prompt/scout_react.txt": "8d16979f0c6bdd487d311686eb7561b8949320cce7be847dcf4aacbfe83a0b01",
+    "src/starnet/submission/config.json": "57e20328e9c97fbaf996a3e3641f34909c47bccfd6c10f94696b2725017a4fa2"
+  }
+}
