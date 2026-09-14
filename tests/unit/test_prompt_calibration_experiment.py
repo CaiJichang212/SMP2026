@@ -43,6 +43,32 @@ class PromptCalibrationTests(unittest.TestCase):
         self.assertIsNone(tied.calibrated_prompt_id)
         self.assertEqual(tied.best_or_default(), 1)
 
+    def test_tied_best_prompts_do_not_fall_back_to_known_harmful_default(self):
+        ledger = PromptCalibrationLedger()
+        for node_id, factor in ((1, 0.5), (2, 1.2)):
+            opinion = 0.0
+            for turn, strength in enumerate((-5.0, 15.0, 15.0), 1):
+                new_w = opinion + strength * factor * (0.5 ** (turn - 1))
+                ledger.observe_success(node_id, turn, turn, opinion, new_w)
+                opinion = new_w
+        self.assertTrue(ledger.confident)
+        self.assertEqual(ledger.calibrated_prompt_ids, (2, 3))
+        self.assertEqual(ledger.best_or_default(), 2)
+
+    def test_zero_response_node_does_not_erase_one_informative_ranking(self):
+        ledger = PromptCalibrationLedger()
+        for node_id, factor in ((1, 0.0), (2, 1.0)):
+            opinion = 0.0
+            for turn, strength in enumerate((-5.0, 15.0, 10.0), 1):
+                new_w = opinion + strength * factor * (0.5 ** (turn - 1))
+                ledger.observe_success(node_id, turn, turn, opinion, new_w)
+                opinion = new_w
+        self.assertTrue(ledger.calibration_complete)
+        self.assertFalse(ledger.confident)
+        self.assertIsNone(ledger.calibrated_prompt_id)
+        self.assertEqual(ledger.provisional_prompt_ids, (2,))
+        self.assertEqual(ledger.best_or_default(), 2)
+
     def test_clipped_or_conflicting_nodes_do_not_claim_confidence(self):
         clipped = PromptCalibrationLedger(required_complete_nodes=1)
         self.assertFalse(clipped.observe_success(1, 1, 1, 99.0, 100.0))

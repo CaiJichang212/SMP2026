@@ -113,18 +113,49 @@ class PromptCalibrationLedger:
             if node_id in self._invalid_nodes or set(values) != set(PROMPT_IDS):
                 continue
             ordered = sorted(PROMPT_IDS, key=lambda prompt_id: (-values[prompt_id], prompt_id))
-            if abs(values[ordered[0]] - values[ordered[1]]) <= self.tie_tolerance:
-                continue
             rankings[node_id] = tuple(ordered)
         return rankings
 
+    def node_best_prompt_ids(self) -> Mapping[int, tuple[int, ...]]:
+        result = {}
+        for node_id, ranking in self.node_rankings().items():
+            values = self._normalized[node_id]
+            best = values[ranking[0]]
+            result[node_id] = tuple(
+                prompt_id for prompt_id in PROMPT_IDS
+                if abs(values[prompt_id] - best) <= self.tie_tolerance
+            )
+        return result
+
+    def _informative_best_sets(self) -> list[set[int]]:
+        result = []
+        for node_id, best_ids in self.node_best_prompt_ids().items():
+            values = self._normalized[node_id].values()
+            if max(values) - min(values) > self.tie_tolerance:
+                result.append(set(best_ids))
+        return result
+
+    @property
+    def provisional_prompt_ids(self) -> tuple[int, ...]:
+        """Return prompt IDs not contradicted by any informative probe node."""
+        sets = self._informative_best_sets()
+        if not sets:
+            return ()
+        common = set.intersection(*sets)
+        return tuple(sorted(common))
+
+    @property
+    def calibrated_prompt_ids(self) -> tuple[int, ...]:
+        sets = self._informative_best_sets()
+        if len(sets) < self.required_complete_nodes:
+            return ()
+        common = set.intersection(*sets)
+        return tuple(sorted(common))
+
     @property
     def calibrated_prompt_id(self) -> int | None:
-        rankings = self.node_rankings()
-        if len(rankings) < self.required_complete_nodes:
-            return None
-        winners = {ranking[0] for ranking in rankings.values()}
-        return next(iter(winners)) if len(winners) == 1 else None
+        prompt_ids = self.calibrated_prompt_ids
+        return prompt_ids[0] if prompt_ids else None
 
     @property
     def confident(self) -> bool:
@@ -135,7 +166,8 @@ class PromptCalibrationLedger:
         return len(self.node_rankings()) >= self.required_complete_nodes
 
     def best_or_default(self) -> int:
-        return self.calibrated_prompt_id or self.default_prompt_id
+        prompt_ids = self.calibrated_prompt_ids or self.provisional_prompt_ids
+        return prompt_ids[0] if prompt_ids else self.default_prompt_id
 
     def normalized_values(self) -> dict[int, dict[int, float]]:
         return {node_id: dict(values) for node_id, values in self._normalized.items()}
