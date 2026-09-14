@@ -19,10 +19,11 @@ from starnet.policy.p8_experiment import public_board_salt
 from starnet.runtime.p8_controller import P8RuntimeController
 from starnet.runtime.controller import MAX_BATCH_ACTIONS, RuntimeController
 from starnet.policy.public_response_mixture import PublicResponseMixtureLedger
+from starnet.policy.guarded_response_mixture import GuardedResponseMixtureLedger
 from starnet.policy.structural import ExperimentalPublicGreedyPlanner
 
 
-P10ExperimentMode = Literal["plan_only", "response_only", "combined"]
+P10ExperimentMode = Literal["plan_only", "response_only", "combined", "guarded_combined"]
 
 
 def _p10_action_name(action: Action) -> str:
@@ -39,16 +40,22 @@ class P10RuntimeController(P8RuntimeController):
                  **kwargs):
         super().__init__(*args, **kwargs)
         if (max_structures <= 0 or beam_width <= 0
-                or experiment_mode not in ("plan_only", "response_only", "combined")):
+                or experiment_mode not in (
+                    "plan_only", "response_only", "combined", "guarded_combined",
+                )):
             raise ValueError("invalid P10 search bounds")
         self.p10_experiment_mode = experiment_mode
         self.p10_max_structures = max_structures
         self.p10_beam_width = beam_width
-        self.p10_response_estimator = (
-            response_estimator
-            if response_estimator is not None or experiment_mode == "plan_only"
-            else PublicResponseMixtureLedger()
-        )
+        if response_estimator is not None or experiment_mode == "plan_only":
+            self.p10_response_estimator = response_estimator
+        elif experiment_mode == "guarded_combined":
+            self.p10_response_estimator = GuardedResponseMixtureLedger()
+        else:
+            self.p10_response_estimator = PublicResponseMixtureLedger()
+        self.p10_initial_degrees_configured = False
+        self.p10_initial_degree_count = 0
+        self.p10_initial_degree_config_errors = 0
         self.p10_response_disabled = False
         self.p10_response_disable_reason = None
         self.p10_response_switches = 0
@@ -70,6 +77,7 @@ class P10RuntimeController(P8RuntimeController):
         self.p10_prefix_completed = 0
 
     def _refresh_candidates(self, budget: float, phase: str) -> None:
+        self._configure_guarded_initial_degrees()
         if self.p10_pending:
             action = self.p10_pending[0]
             if is_legal_action(action, self.blackboard, budget):
@@ -121,7 +129,11 @@ class P10RuntimeController(P8RuntimeController):
                 self.blackboard, budget, self.response_estimates,
                 remaining_steps=max(0, self._safe_step_limit - self.action_attempts),
                 salt=self.p8_salt, max_structures=self.p10_max_structures,
-                beam_width=self.p10_beam_width, risk_mode="mean_audited",
+                beam_width=self.p10_beam_width,
+                risk_mode=(
+                    "strict" if self.p10_experiment_mode == "guarded_combined"
+                    else "mean_audited"
+                ),
                 proposed_plan=plan,
             )
         except Exception as exc:
@@ -266,13 +278,17 @@ class P10RuntimeController(P8RuntimeController):
 
     def _plan_mode_enabled(self) -> bool:
         return (
-            self.p10_experiment_mode in ("plan_only", "combined")
+            self.p10_experiment_mode in ("plan_only", "combined", "guarded_combined")
             and self._p10_envelope_open()
+            and not (
+                self.p10_experiment_mode == "guarded_combined"
+                and (self.p10_response_disabled or not self.p10_initial_degrees_configured)
+            )
         )
 
     def _response_mode_enabled(self) -> bool:
         return (
-            self.p10_experiment_mode in ("response_only", "combined")
+            self.p10_experiment_mode in ("response_only", "combined", "guarded_combined")
             and self.p10_response_estimator is not None
             and not self.p10_response_disabled
             and self._p10_envelope_open()
@@ -287,6 +303,35 @@ class P10RuntimeController(P8RuntimeController):
     def _disable_response(self, reason: str) -> None:
         self.p10_response_disabled = True
         self.p10_response_disable_reason = reason
+
+    def _configure_guarded_initial_degrees(self) -> None:
+        if (self.p10_experiment_mode != "guarded_combined"
+                or self.p10_initial_degrees_configured
+                or self.p10_response_disabled
+                or len(self.blackboard.scanned_ids) != self.node_count):
+            return
+        configure = getattr(self.p10_response_estimator, "configure_initial_degrees", None)
+        if not callable(configure):
+            self.p10_initial_degree_config_errors += 1
+            self._disable_response("missing_configure_initial_degrees")
+            return
+        degrees = {node_id: 0 for node_id in self.blackboard.nodes}
+        for left, right in self.blackboard.edges:
+            if left in degrees and right in degrees:
+                degrees[left] += 1
+                degrees[right] += 1
+        try:
+            configured = configure(degrees)
+        except Exception as exc:
+            self.p10_initial_degree_config_errors += 1
+            self._disable_response(type(exc).__name__)
+            return
+        if configured is not True:
+            self.p10_initial_degree_config_errors += 1
+            self._disable_response("initial_degree_configuration_rejected")
+            return
+        self.p10_initial_degrees_configured = True
+        self.p10_initial_degree_count = len(degrees)
 
     def _response_gate_open(self) -> bool:
         if not self._response_mode_enabled():
@@ -332,12 +377,19 @@ class P10RuntimeController(P8RuntimeController):
         persona = node.persona if node is not None else None
         first_turn = bool(action.kind == "comm" and node is not None and node.comm_left == 3)
         success = super()._attempt_action(action, candidate_id, budget)
-        observe = getattr(self.p10_response_estimator, "observe_first", None)
+        observe_name = (
+            "observe_node_first"
+            if self.p10_experiment_mode == "guarded_combined" else "observe_first"
+        )
+        observe = getattr(self.p10_response_estimator, observe_name, None)
         current = self.blackboard.nodes.get(action.target_node_1)
         if (success and first_turn and callable(observe) and before is not None
                 and persona is not None and current is not None):
             try:
-                observe(persona, before, current.w)
+                if observe_name == "observe_node_first":
+                    observe(action.target_node_1, persona, before, current.w)
+                else:
+                    observe(persona, before, current.w)
             except Exception as exc:
                 self._disable_response(type(exc).__name__)
         return success

@@ -117,7 +117,9 @@ def main() -> int:
     parser.add_argument("--repetition", type=int, choices=DEVELOPMENT_REPETITIONS, default=501)
     parser.add_argument("--llm-mode", choices=("real", "mock-plan", "mock-baseline", "unavailable"),
                         default="mock-plan")
-    parser.add_argument("--experiment-mode", choices=("plan_only", "response_only", "combined"),
+    parser.add_argument("--experiment-mode", choices=(
+        "plan_only", "response_only", "combined", "guarded_combined",
+    ),
                         default="plan_only")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()

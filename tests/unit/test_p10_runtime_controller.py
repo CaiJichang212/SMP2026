@@ -8,6 +8,7 @@ from starnet.policy.candidates import Candidate
 from starnet.policy.config import PolicyConfig, PolicyMode
 from starnet.policy.p10_structure_plan_experiment import FullPlanDecision, FullStructurePlan
 from starnet.policy.public_response_mixture import PublicResponseMixtureLedger
+from starnet.policy.guarded_response_mixture import GuardedResponseMixtureLedger
 from starnet.runtime.controller import ControllerState
 from starnet.runtime.env_adapter import apply_action_outcome
 from starnet.runtime.p10_controller_experiment import P10RuntimeController
@@ -399,6 +400,79 @@ class P10RuntimeControllerTests(unittest.TestCase):
         self.assertIsNone(controller.p8_mode)
         self.assertEqual(controller.p10_searches, 0)
         self.assertEqual(controller.p10_response_switches, 0)
+
+    def test_guarded_mode_freezes_initial_degrees_before_structure_changes(self):
+        env = PrefixEnvironment()
+        controller = P10RuntimeController(
+            env, None, node_count=3, p8_mode="conservative",
+            experiment_mode="guarded_combined",
+            config=PolicyConfig(policy_mode=PolicyMode.PUBLIC_GREEDY, max_llm_calls=0),
+        )
+        for node_id in (1, 2, 3):
+            apply_action_outcome(env, controller.blackboard, Action("scan", node_id),
+                                 env.get_remaining_budget())
+        with patch("starnet.runtime.p10_controller_experiment.P8RuntimeController._refresh_candidates",
+                   self.baseline_refresh), \
+             patch("starnet.runtime.p10_controller_experiment.search_full_structure_plan",
+                   return_value=None):
+            controller._refresh_candidates(env.get_remaining_budget(), "test")
+        self.assertTrue(controller.p10_initial_degrees_configured)
+        self.assertEqual(controller.p10_initial_degree_count, 3)
+        self.assertEqual(controller.p10_response_estimator._initial_degrees, {1: 1, 2: 2, 3: 1})
+        controller._attempt_action(Action("shield", 1), "test", env.get_remaining_budget())
+        controller._configure_guarded_initial_degrees()
+        self.assertEqual(controller.p10_response_estimator._initial_degrees, {1: 1, 2: 2, 3: 1})
+
+    def test_guarded_mode_uses_strict_plan_gate(self):
+        env, controller = self.controller(None)
+        controller.p10_experiment_mode = "guarded_combined"
+        controller.p10_response_estimator = GuardedResponseMixtureLedger()
+        plan, decision = plan_fixture()
+        with patch("starnet.runtime.p10_controller_experiment.P8RuntimeController._refresh_candidates",
+                   self.baseline_refresh), \
+             patch("starnet.runtime.p10_controller_experiment.search_full_structure_plan",
+                   return_value=plan), \
+             patch("starnet.runtime.p10_controller_experiment.choose_full_plan",
+                   return_value=decision) as choose:
+            controller._refresh_candidates(env.get_remaining_budget(), "test")
+        self.assertEqual(choose.call_args.kwargs["risk_mode"], "strict")
+
+    def test_guarded_degree_configuration_exception_disables_response_and_keeps_p9(self):
+        class BrokenGuard:
+            def configure_initial_degrees(self, degrees):
+                raise TimeoutError
+
+            def gate_open(self):
+                return False
+
+        env, controller = self.controller(None)
+        controller.p10_experiment_mode = "guarded_combined"
+        controller.p10_response_estimator = BrokenGuard()
+        with patch("starnet.runtime.p10_controller_experiment.P8RuntimeController._refresh_candidates",
+                   self.baseline_refresh), \
+             patch("starnet.runtime.p10_controller_experiment.search_full_structure_plan",
+                   return_value=None) as search:
+            controller._refresh_candidates(env.get_remaining_budget(), "test")
+        search.assert_not_called()
+        self.assertTrue(controller.p10_response_disabled)
+        self.assertEqual(controller.p10_response_disable_reason, "TimeoutError")
+        self.assertEqual(set(controller.candidates), {"baseline"})
+
+    def test_guarded_adapter_records_node_identity_and_frozen_degree(self):
+        env = PrefixEnvironment()
+        controller = P10RuntimeController(
+            env, None, node_count=3, p8_mode="conservative",
+            experiment_mode="guarded_combined",
+            config=PolicyConfig(policy_mode=PolicyMode.PUBLIC_GREEDY, max_llm_calls=0),
+        )
+        for node_id in (1, 2, 3):
+            apply_action_outcome(env, controller.blackboard, Action("scan", node_id),
+                                 env.get_remaining_budget())
+        controller._configure_guarded_initial_degrees()
+        controller._attempt_action(Action("comm", 3, prompt_id=1), "test",
+                                   env.get_remaining_budget())
+        self.assertEqual(controller.p10_response_estimator.accepted[0]["node_id"], 3)
+        self.assertEqual(controller.p10_response_estimator.accepted[0]["initial_degree"], 1)
 
     def test_observe_error_disables_estimator_after_public_fact_is_recorded(self):
         class BrokenObserve:

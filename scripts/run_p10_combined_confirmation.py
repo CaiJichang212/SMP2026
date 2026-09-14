@@ -38,6 +38,7 @@ ARCHIVES = {
 EXPERIMENT_MODULES = (
     "src/starnet/experiments/p9_distribution_seeds.py",
     "src/starnet/policy/public_response_mixture.py",
+    "src/starnet/policy/guarded_response_mixture.py",
     "src/starnet/policy/p10_structure_plan_experiment.py",
     "src/starnet/runtime/p10_controller_experiment.py",
     "scripts/run_p10_casevo_trial.py",
@@ -162,6 +163,13 @@ def _run_model(model, env: LoggedEnvironment, decisions: list[dict]) -> dict:
         "p10_response_switches": getattr(controller, "p10_response_switches", 0),
         "p10_response_disabled": getattr(controller, "p10_response_disabled", False),
         "p10_response_disable_reason": getattr(controller, "p10_response_disable_reason", None),
+        "p10_initial_degrees_configured": getattr(
+            controller, "p10_initial_degrees_configured", None,
+        ),
+        "p10_initial_degree_count": getattr(controller, "p10_initial_degree_count", 0),
+        "p10_initial_degree_config_errors": getattr(
+            controller, "p10_initial_degree_config_errors", 0,
+        ),
         "p10_response_activation": getattr(
             estimator, "activation", None,
         ),
