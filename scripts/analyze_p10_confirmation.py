@@ -379,6 +379,49 @@ def analyze(report):
             if abs(float(row["paired_deltas"][name]) - value) > 1e-8:
                 raise ValueError("paired delta mismatch")
     passed, primary, ci, by_stratum, by_family, positive_families = statistical_gate(rows)
+    candidate_results = [row["arms"]["candidate"] for row in rows]
+    loss_mechanisms = []
+    for row in rows:
+        delta = float(row["paired_deltas"][PRIMARY])
+        if delta >= -1e-8:
+            continue
+        candidate = row["arms"]["candidate"]
+        plan_active = (
+            candidate.get("p10_approved_plans") == 1
+            and candidate.get("p10_prefix_completed") == 1
+        )
+        response_active = (
+            candidate.get("p10_response_activation") is not None
+            and candidate.get("p10_response_switches", 0) > 0
+        )
+        loss_mechanisms.append({
+            "family": row["family"], "repetition": row["repetition"],
+            "stratum": row["stratum"], "delta": delta,
+            "activated_mechanisms": [
+                name for name, active in (("complete_plan", plan_active),
+                                          ("gated_response", response_active))
+                if active
+            ],
+            "plan_prefix": (
+                candidate.get("p10_plan", {}).get("structure_actions", [])
+                if plan_active else []
+            ),
+            "response_activation": candidate.get("p10_response_activation"),
+            "response_switches": candidate.get("p10_response_switches", 0),
+            "first_divergence_vs_p9": row.get("first_divergence", {}).get(PRIMARY),
+            "attribution_limit": (
+                "joint log cannot identify an additive causal split"
+                if plan_active and response_active else None
+            ),
+        })
+    gate_components = {
+        "mean_positive": primary["mean"] > 0.0,
+        "bootstrap_lower_positive": ci[0] > 0.0,
+        "all_stratum_means_nonnegative": all(
+            item["mean"] >= -1e-8 for item in by_stratum.values()
+        ),
+        "at_least_two_positive_topology_families": positive_families >= 2,
+    }
     return {
         "schema_version": 1,
         "cohort": "p10_confirmation",
@@ -388,8 +431,42 @@ def analyze(report):
         "primary_vs_p9": {**primary, "family_block_bootstrap_ci95": ci},
         "primary_by_stratum": by_stratum,
         "primary_by_family": by_family,
+        "primary_loss_mechanisms": loss_mechanisms,
         "positive_topology_family_count": positive_families,
+        "gate_components": gate_components,
         "secondary_vs_official_best": _layered(rows, SECONDARY),
+        "runtime_audit": {
+            "episodes_replayed": 48 * len(ARMS),
+            "max_actions_per_host_step": max(
+                result["max_actions_per_host_step"]
+                for row in rows for result in row["arms"].values()
+            ),
+            "max_host_calls": max(
+                result["host_calls"] for row in rows for result in row["arms"].values()
+            ),
+            "max_llm_calls": max(
+                result["llm_calls"] for row in rows for result in row["arms"].values()
+            ),
+            "action_failures": sum(
+                result["action_failures"] for row in rows for result in row["arms"].values()
+            ),
+            "candidate_plan_approvals": sum(
+                result["p10_approved_plans"] for result in candidate_results
+            ),
+            "candidate_prefix_completions": sum(
+                result["p10_prefix_completed"] for result in candidate_results
+            ),
+            "candidate_prefix_failures": sum(
+                result["p10_prefix_failures"] for result in candidate_results
+            ),
+            "candidate_response_activations": sum(
+                result["p10_response_activation"] is not None for result in candidate_results
+            ),
+            "candidate_response_disabled": sum(
+                result["p10_response_disabled"] is True for result in candidate_results
+            ),
+        },
+        "archive_sha256": expected_archives,
         "statistical_gate_passed": passed,
         "public_history_resource_audit_passed": True,
         "selected_variant": "combined" if passed else None,

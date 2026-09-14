@@ -1,0 +1,1142 @@
+{
+  "schema_version": 1,
+  "cohort": "p10_confirmation",
+  "pairs": 48,
+  "protocol_sha256": "56205a19d516b639f0a9f39d2c0f5e6f5762d273956dfd749d7885f03f26c0e9",
+  "source_snapshot": {
+    "src/starnet/model/blackboard.py": "78ccfaa356ff08e39d4da8b98635d8384f0af1556dfc9e35b039714eb6e05375",
+    "src/starnet/policy/actions.py": "6c8898c147acbee19e297d534919b33592736b37ed2f16d9dec0a4357628b903",
+    "src/starnet/policy/config.py": "b43c1fb108f8634c3bc036e85614e8a7b0518410bb41d1f1cbab0d5bc3801e6d",
+    "src/starnet/policy/calibration.py": "439c2f6e6acb3e136404f1b9212daad3c698b201304efe940d5f8265a89bf603",
+    "src/starnet/policy/baseline.py": "a06e7bbe07a7d27101d6ee1795fca8654e485d47e4c7c32ae8f6372a4eb326e6",
+    "src/starnet/runtime/env_adapter.py": "4734b571b31137f57e0deeb31cad476b46f70ed5ef9fe915cd59966cf5f9f6ca",
+    "src/starnet/runtime/trace.py": "530895581e0d65bfc16185decb3865f356d5978b3991ad50983af8a58eebda01",
+    "src/starnet/policy/graph_analysis.py": "aa10b77fe1b2388ef2e6d5f03fed0212ae2dddd594ed5fe8238d211a6759596f",
+    "src/starnet/policy/candidates.py": "3d62597170426053aef3e87d30f4abe196af5d8911e759344a8c338c2b37b0fa",
+    "src/starnet/policy/cmg.py": "767367659ce48ed37be1939c0c2e42b5b59fe3ca96a5bd2c35c46bdf970fae8c",
+    "src/starnet/policy/structural.py": "392db9f3497536fab56ac5ee3ff305f47dd0765d518c3905d4aade799fdc763e",
+    "src/starnet/policy/budget_experiment.py": "baacd360e9351a6cfd1266dc147e440f8889c65d8202d2a95db708134f5c5a0c",
+    "src/starnet/policy/fast_settlement_experiment.py": "bdc97091e78c98a8b006e0d81149b8a047322f5c8f3bb05de461076ed1782783",
+    "src/starnet/policy/p8_experiment.py": "30326ab80cee936c6feb57ec01722eafa0994e2d171d606e6f439a3106f334ca",
+    "src/starnet/policy/p8_qualification.py": "ee05d353bb6d1f119231ed188e61125e758b31bddae1a9ebd65892d7fa4fb8d8",
+    "src/starnet/policy/adaptive.py": "551536a0c178431ae13411cc331237603a81f36c191c1c1aa89504676149c391",
+    "src/starnet/runtime/stage.py": "279b958ee1e74227160fecdcf7b4b5e16bc83035762d2e098b0cd971ecb14fe1",
+    "src/starnet/runtime/controller.py": "158330e30d99545dad34543d5787113655c41f9965f14090d0deed2b42ae22b7",
+    "src/starnet/runtime/p8_controller.py": "89507fec9d971ad364355c5c7d2ab6482fd8d21fc8c1084ef3aa869e4676ddaf",
+    "src/starnet/submission/starnet_model.py": "94ae39d85ee63b694cd9ca8b985e556877d359ad82068e59b124f75f343f9480",
+    "src/starnet/experiments/p9_distribution_seeds.py": "5fcdb499528d7b03844051f7763616e14c84f40b05ac38be22762f8c6b47b0ca",
+    "src/starnet/policy/public_response_mixture.py": "ecf3f255b574b4f511a3b158c7be30aa8fe342c22b12506e1abeab74f76c8690",
+    "src/starnet/policy/p10_structure_plan_experiment.py": "d64a27857007a89de052dbc1e82639c965ea3e1fd05cdc32d8e3de30793dcd70",
+    "src/starnet/runtime/p10_controller_experiment.py": "825cf1ad1616b141ab5bd8613142e205a9209cbb732483738b319b287d1a32cb",
+    "scripts/run_p10_casevo_trial.py": "43bb3d23e867238c174b254843cd16f95518dda6e6ccefabba55e428451ed69d",
+    "scripts/run_p10_runtime_arm_comparison.py": "8153fc32706cfddf7427bfa49067180f76e9fe3d1ca4919b59839e12b76fb843",
+    "src/starnet/submission/config.json": "bc336a75943b1b24b4a4a3ca618129f0455beba8a5a856e00ec164fe23085bde",
+    "src/starnet/submission/prompt/commander_react.txt": "9b9f32d4aab547bd10888741810d8144961b04543bf6b6c2eb0e844c2f71233e",
+    "src/starnet/submission/prompt/executor_react.txt": "657c464cbc8097519a632fbd8c678c224c3c655f22ab94ac9d39e1dc10b4e380",
+    "src/starnet/submission/prompt/reflect.txt": "970987c97bbf1a0bce0f4e0da76184b8a51dc0b9e4cf00cd926813c1f28d9dbd",
+    "src/starnet/submission/prompt/scout_react.txt": "8d16979f0c6bdd487d311686eb7561b8949320cce7be847dcf4aacbfe83a0b01"
+  },
+  "primary_vs_p9": {
+    "cases": 48,
+    "mean": 11.934473176612599,
+    "minimum": -21.107569854461644,
+    "maximum": 72.92009061837473,
+    "win_tie_loss": [
+      24,
+      16,
+      8
+    ],
+    "losses": [
+      {
+        "family": "ba_resampled",
+        "repetition": 1201,
+        "stratum": "aligned_contaminated",
+        "delta": -4.288336630434799
+      },
+      {
+        "family": "er_resampled",
+        "repetition": 1203,
+        "stratum": "independent",
+        "delta": -7.018086070381287
+      },
+      {
+        "family": "er_resampled",
+        "repetition": 1203,
+        "stratum": "inverse_contaminated",
+        "delta": -0.4061250650290731
+      },
+      {
+        "family": "sbm_resampled",
+        "repetition": 1201,
+        "stratum": "degree_correlated",
+        "delta": -21.107569854461644
+      },
+      {
+        "family": "sbm_resampled",
+        "repetition": 1201,
+        "stratum": "independent",
+        "delta": -6.770002689098874
+      },
+      {
+        "family": "ws_resampled",
+        "repetition": 1201,
+        "stratum": "degree_correlated",
+        "delta": -2.371457428554095
+      },
+      {
+        "family": "ws_resampled",
+        "repetition": 1201,
+        "stratum": "independent",
+        "delta": -12.963773699045873
+      },
+      {
+        "family": "ws_resampled",
+        "repetition": 1202,
+        "stratum": "degree_correlated",
+        "delta": -1.7021186893202866
+      }
+    ],
+    "family_block_bootstrap_ci95": [
+      8.318038753067112,
+      15.457919388253053
+    ]
+  },
+  "primary_by_stratum": {
+    "independent": {
+      "cases": 12,
+      "mean": -0.8908775101338241,
+      "minimum": -12.963773699045873,
+      "maximum": 8.319747870900642,
+      "win_tie_loss": [
+        2,
+        7,
+        3
+      ],
+      "losses": [
+        {
+          "family": "er_resampled",
+          "repetition": 1203,
+          "stratum": "independent",
+          "delta": -7.018086070381287
+        },
+        {
+          "family": "sbm_resampled",
+          "repetition": 1201,
+          "stratum": "independent",
+          "delta": -6.770002689098874
+        },
+        {
+          "family": "ws_resampled",
+          "repetition": 1201,
+          "stratum": "independent",
+          "delta": -12.963773699045873
+        }
+      ]
+    },
+    "aligned_contaminated": {
+      "cases": 12,
+      "mean": 29.28988956390296,
+      "minimum": -4.288336630434799,
+      "maximum": 72.92009061837473,
+      "win_tie_loss": [
+        11,
+        0,
+        1
+      ],
+      "losses": [
+        {
+          "family": "ba_resampled",
+          "repetition": 1201,
+          "stratum": "aligned_contaminated",
+          "delta": -4.288336630434799
+        }
+      ]
+    },
+    "inverse_contaminated": {
+      "cases": 12,
+      "mean": 20.787419537435525,
+      "minimum": -0.4061250650290731,
+      "maximum": 67.81474290076329,
+      "win_tie_loss": [
+        10,
+        1,
+        1
+      ],
+      "losses": [
+        {
+          "family": "er_resampled",
+          "repetition": 1203,
+          "stratum": "inverse_contaminated",
+          "delta": -0.4061250650290731
+        }
+      ]
+    },
+    "degree_correlated": {
+      "cases": 12,
+      "mean": -1.4485388847542708,
+      "minimum": -21.107569854461644,
+      "maximum": 7.798679355284776,
+      "win_tie_loss": [
+        1,
+        8,
+        3
+      ],
+      "losses": [
+        {
+          "family": "sbm_resampled",
+          "repetition": 1201,
+          "stratum": "degree_correlated",
+          "delta": -21.107569854461644
+        },
+        {
+          "family": "ws_resampled",
+          "repetition": 1201,
+          "stratum": "degree_correlated",
+          "delta": -2.371457428554095
+        },
+        {
+          "family": "ws_resampled",
+          "repetition": 1202,
+          "stratum": "degree_correlated",
+          "delta": -1.7021186893202866
+        }
+      ]
+    }
+  },
+  "primary_by_family": {
+    "er_resampled": {
+      "cases": 12,
+      "mean": 18.57620111667609,
+      "minimum": -7.018086070381287,
+      "maximum": 72.92009061837473,
+      "win_tie_loss": [
+        5,
+        5,
+        2
+      ],
+      "losses": [
+        {
+          "family": "er_resampled",
+          "repetition": 1203,
+          "stratum": "independent",
+          "delta": -7.018086070381287
+        },
+        {
+          "family": "er_resampled",
+          "repetition": 1203,
+          "stratum": "inverse_contaminated",
+          "delta": -0.4061250650290731
+        }
+      ]
+    },
+    "ba_resampled": {
+      "cases": 12,
+      "mean": 9.637585368254895,
+      "minimum": -4.288336630434799,
+      "maximum": 39.07012355850384,
+      "win_tie_loss": [
+        7,
+        4,
+        1
+      ],
+      "losses": [
+        {
+          "family": "ba_resampled",
+          "repetition": 1201,
+          "stratum": "aligned_contaminated",
+          "delta": -4.288336630434799
+        }
+      ]
+    },
+    "ws_resampled": {
+      "cases": 12,
+      "mean": 16.683967279265545,
+      "minimum": -12.963773699045873,
+      "maximum": 67.81474290076329,
+      "win_tie_loss": [
+        7,
+        2,
+        3
+      ],
+      "losses": [
+        {
+          "family": "ws_resampled",
+          "repetition": 1201,
+          "stratum": "degree_correlated",
+          "delta": -2.371457428554095
+        },
+        {
+          "family": "ws_resampled",
+          "repetition": 1201,
+          "stratum": "independent",
+          "delta": -12.963773699045873
+        },
+        {
+          "family": "ws_resampled",
+          "repetition": 1202,
+          "stratum": "degree_correlated",
+          "delta": -1.7021186893202866
+        }
+      ]
+    },
+    "sbm_resampled": {
+      "cases": 12,
+      "mean": 2.8401389422538634,
+      "minimum": -21.107569854461644,
+      "maximum": 26.61599240740759,
+      "win_tie_loss": [
+        5,
+        5,
+        2
+      ],
+      "losses": [
+        {
+          "family": "sbm_resampled",
+          "repetition": 1201,
+          "stratum": "degree_correlated",
+          "delta": -21.107569854461644
+        },
+        {
+          "family": "sbm_resampled",
+          "repetition": 1201,
+          "stratum": "independent",
+          "delta": -6.770002689098874
+        }
+      ]
+    }
+  },
+  "primary_loss_mechanisms": [
+    {
+      "family": "ba_resampled",
+      "repetition": 1201,
+      "stratum": "aligned_contaminated",
+      "delta": -4.288336630434799,
+      "activated_mechanisms": [
+        "gated_response"
+      ],
+      "plan_prefix": [],
+      "response_activation": {
+        "accepted_observation_count": 5,
+        "posterior_weights": {
+          "independent": 0.03626854682813422,
+          "aligned": 0.9637296397445244,
+          "inverse": 1.813427341406715e-06
+        }
+      },
+      "response_switches": 10,
+      "first_divergence_vs_p9": {
+        "action_index": 59,
+        "candidate": {
+          "index": 59,
+          "kind": "comm",
+          "target_node_1": 22,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 56.0,
+          "budget_after": 54.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 33.648095999999995
+          }
+        },
+        "control": {
+          "index": 59,
+          "kind": "comm",
+          "target_node_1": 21,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 56.0,
+          "budget_after": 54.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": -7.002616
+          }
+        }
+      },
+      "attribution_limit": null
+    },
+    {
+      "family": "er_resampled",
+      "repetition": 1203,
+      "stratum": "independent",
+      "delta": -7.018086070381287,
+      "activated_mechanisms": [
+        "gated_response"
+      ],
+      "plan_prefix": [],
+      "response_activation": {
+        "accepted_observation_count": 6,
+        "posterior_weights": {
+          "independent": 0.03626854682813422,
+          "aligned": 0.9637296397445244,
+          "inverse": 1.813427341406715e-06
+        }
+      },
+      "response_switches": 9,
+      "first_divergence_vs_p9": {
+        "action_index": 57,
+        "candidate": {
+          "index": 57,
+          "kind": "comm",
+          "target_node_1": 4,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 63.0,
+          "budget_after": 61.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 39.5573
+          }
+        },
+        "control": {
+          "index": 57,
+          "kind": "comm",
+          "target_node_1": 22,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 63.0,
+          "budget_after": 61.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": -5.547484000000001
+          }
+        }
+      },
+      "attribution_limit": null
+    },
+    {
+      "family": "er_resampled",
+      "repetition": 1203,
+      "stratum": "inverse_contaminated",
+      "delta": -0.4061250650290731,
+      "activated_mechanisms": [
+        "gated_response"
+      ],
+      "plan_prefix": [],
+      "response_activation": {
+        "accepted_observation_count": 16,
+        "posterior_weights": {
+          "independent": 0.025557153991500204,
+          "aligned": 3.4502157888525714e-12,
+          "inverse": 0.9744428460050495
+        }
+      },
+      "response_switches": 26,
+      "first_divergence_vs_p9": {
+        "action_index": 58,
+        "candidate": {
+          "index": 58,
+          "kind": "comm",
+          "target_node_1": 40,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 61.0,
+          "budget_after": 59.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": -7.493048000000002
+          }
+        },
+        "control": {
+          "index": 58,
+          "kind": "comm",
+          "target_node_1": 23,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 61.0,
+          "budget_after": 59.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 10.047648
+          }
+        }
+      },
+      "attribution_limit": null
+    },
+    {
+      "family": "sbm_resampled",
+      "repetition": 1201,
+      "stratum": "degree_correlated",
+      "delta": -21.107569854461644,
+      "activated_mechanisms": [
+        "complete_plan"
+      ],
+      "plan_prefix": [
+        {
+          "kind": "cut",
+          "target_node_1": 5,
+          "target_node_2": 9,
+          "prompt_id": null
+        },
+        {
+          "kind": "shield",
+          "target_node_1": 25,
+          "target_node_2": null,
+          "prompt_id": null
+        },
+        {
+          "kind": "shield",
+          "target_node_1": 30,
+          "target_node_2": null,
+          "prompt_id": null
+        }
+      ],
+      "response_activation": null,
+      "response_switches": 0,
+      "first_divergence_vs_p9": {
+        "action_index": 51,
+        "candidate": {
+          "index": 51,
+          "kind": "cut",
+          "target_node_1": 5,
+          "target_node_2": 9,
+          "prompt_id": null,
+          "budget_before": 75.0,
+          "budget_after": 72.0,
+          "success": true,
+          "public_result": true
+        },
+        "control": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 15,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 15.347577000000001
+          }
+        }
+      },
+      "attribution_limit": null
+    },
+    {
+      "family": "sbm_resampled",
+      "repetition": 1201,
+      "stratum": "independent",
+      "delta": -6.770002689098874,
+      "activated_mechanisms": [
+        "complete_plan"
+      ],
+      "plan_prefix": [
+        {
+          "kind": "cut",
+          "target_node_1": 5,
+          "target_node_2": 9,
+          "prompt_id": null
+        },
+        {
+          "kind": "shield",
+          "target_node_1": 25,
+          "target_node_2": null,
+          "prompt_id": null
+        },
+        {
+          "kind": "shield",
+          "target_node_1": 30,
+          "target_node_2": null,
+          "prompt_id": null
+        }
+      ],
+      "response_activation": null,
+      "response_switches": 0,
+      "first_divergence_vs_p9": {
+        "action_index": 51,
+        "candidate": {
+          "index": 51,
+          "kind": "cut",
+          "target_node_1": 5,
+          "target_node_2": 9,
+          "prompt_id": null,
+          "budget_before": 75.0,
+          "budget_after": 72.0,
+          "success": true,
+          "public_result": true
+        },
+        "control": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 15,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": -0.7693529999999997
+          }
+        }
+      },
+      "attribution_limit": null
+    },
+    {
+      "family": "ws_resampled",
+      "repetition": 1201,
+      "stratum": "degree_correlated",
+      "delta": -2.371457428554095,
+      "activated_mechanisms": [
+        "complete_plan"
+      ],
+      "plan_prefix": [
+        {
+          "kind": "shield",
+          "target_node_1": 28,
+          "target_node_2": null,
+          "prompt_id": null
+        },
+        {
+          "kind": "shield",
+          "target_node_1": 45,
+          "target_node_2": null,
+          "prompt_id": null
+        },
+        {
+          "kind": "shield",
+          "target_node_1": 47,
+          "target_node_2": null,
+          "prompt_id": null
+        }
+      ],
+      "response_activation": null,
+      "response_switches": 0,
+      "first_divergence_vs_p9": {
+        "action_index": 51,
+        "candidate": {
+          "index": 51,
+          "kind": "shield",
+          "target_node_1": 28,
+          "target_node_2": null,
+          "prompt_id": null,
+          "budget_before": 75.0,
+          "budget_after": 70.0,
+          "success": true,
+          "public_result": true
+        },
+        "control": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 34,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 28.890766
+          }
+        }
+      },
+      "attribution_limit": null
+    },
+    {
+      "family": "ws_resampled",
+      "repetition": 1201,
+      "stratum": "independent",
+      "delta": -12.963773699045873,
+      "activated_mechanisms": [
+        "complete_plan"
+      ],
+      "plan_prefix": [
+        {
+          "kind": "shield",
+          "target_node_1": 28,
+          "target_node_2": null,
+          "prompt_id": null
+        },
+        {
+          "kind": "shield",
+          "target_node_1": 45,
+          "target_node_2": null,
+          "prompt_id": null
+        },
+        {
+          "kind": "shield",
+          "target_node_1": 47,
+          "target_node_2": null,
+          "prompt_id": null
+        }
+      ],
+      "response_activation": null,
+      "response_switches": 0,
+      "first_divergence_vs_p9": {
+        "action_index": 51,
+        "candidate": {
+          "index": 51,
+          "kind": "shield",
+          "target_node_1": 28,
+          "target_node_2": null,
+          "prompt_id": null,
+          "budget_before": 75.0,
+          "budget_after": 70.0,
+          "success": true,
+          "public_result": true
+        },
+        "control": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 34,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 23.033866
+          }
+        }
+      },
+      "attribution_limit": null
+    },
+    {
+      "family": "ws_resampled",
+      "repetition": 1202,
+      "stratum": "degree_correlated",
+      "delta": -1.7021186893202866,
+      "activated_mechanisms": [
+        "complete_plan",
+        "gated_response"
+      ],
+      "plan_prefix": [
+        {
+          "kind": "shield",
+          "target_node_1": 4,
+          "target_node_2": null,
+          "prompt_id": null
+        },
+        {
+          "kind": "shield",
+          "target_node_1": 23,
+          "target_node_2": null,
+          "prompt_id": null
+        },
+        {
+          "kind": "shield",
+          "target_node_1": 36,
+          "target_node_2": null,
+          "prompt_id": null
+        }
+      ],
+      "response_activation": {
+        "accepted_observation_count": 13,
+        "posterior_weights": {
+          "independent": 0.04908932961049014,
+          "aligned": 0.9509106041189148,
+          "inverse": 6.6270594974162e-08
+        }
+      },
+      "response_switches": 1,
+      "first_divergence_vs_p9": {
+        "action_index": 51,
+        "candidate": {
+          "index": 51,
+          "kind": "shield",
+          "target_node_1": 4,
+          "target_node_2": null,
+          "prompt_id": null,
+          "budget_before": 75.0,
+          "budget_after": 70.0,
+          "success": true,
+          "public_result": true
+        },
+        "control": {
+          "index": 51,
+          "kind": "comm",
+          "target_node_1": 11,
+          "target_node_2": null,
+          "prompt_id": 1,
+          "budget_before": 75.0,
+          "budget_after": 73.0,
+          "success": true,
+          "public_result": {
+            "status": "success",
+            "new_w": 14.938510999999998
+          }
+        }
+      },
+      "attribution_limit": "joint log cannot identify an additive causal split"
+    }
+  ],
+  "positive_topology_family_count": 4,
+  "gate_components": {
+    "mean_positive": true,
+    "bootstrap_lower_positive": true,
+    "all_stratum_means_nonnegative": false,
+    "at_least_two_positive_topology_families": true
+  },
+  "secondary_vs_official_best": {
+    "overall": {
+      "cases": 48,
+      "mean": 19.040764126491,
+      "minimum": -11.56562817665781,
+      "maximum": 87.68540855020342,
+      "win_tie_loss": [
+        36,
+        5,
+        7
+      ],
+      "losses": [
+        {
+          "family": "ba_resampled",
+          "repetition": 1202,
+          "stratum": "degree_correlated",
+          "delta": -1.9264593894926065
+        },
+        {
+          "family": "ba_resampled",
+          "repetition": 1203,
+          "stratum": "independent",
+          "delta": -11.345031203548047
+        },
+        {
+          "family": "er_resampled",
+          "repetition": 1203,
+          "stratum": "independent",
+          "delta": -6.052037419354974
+        },
+        {
+          "family": "er_resampled",
+          "repetition": 1203,
+          "stratum": "inverse_contaminated",
+          "delta": -4.395497514204521
+        },
+        {
+          "family": "sbm_resampled",
+          "repetition": 1201,
+          "stratum": "degree_correlated",
+          "delta": -4.24201551197973
+        },
+        {
+          "family": "sbm_resampled",
+          "repetition": 1201,
+          "stratum": "independent",
+          "delta": -6.770002689098874
+        },
+        {
+          "family": "ws_resampled",
+          "repetition": 1201,
+          "stratum": "independent",
+          "delta": -11.56562817665781
+        }
+      ]
+    },
+    "by_stratum": {
+      "independent": {
+        "cases": 12,
+        "mean": 1.7478098324892812,
+        "minimum": -11.56562817665781,
+        "maximum": 15.672714447313979,
+        "win_tie_loss": [
+          5,
+          3,
+          4
+        ],
+        "losses": [
+          {
+            "family": "ba_resampled",
+            "repetition": 1203,
+            "stratum": "independent",
+            "delta": -11.345031203548047
+          },
+          {
+            "family": "er_resampled",
+            "repetition": 1203,
+            "stratum": "independent",
+            "delta": -6.052037419354974
+          },
+          {
+            "family": "sbm_resampled",
+            "repetition": 1201,
+            "stratum": "independent",
+            "delta": -6.770002689098874
+          },
+          {
+            "family": "ws_resampled",
+            "repetition": 1201,
+            "stratum": "independent",
+            "delta": -11.56562817665781
+          }
+        ]
+      },
+      "aligned_contaminated": {
+        "cases": 12,
+        "mean": 38.63298759919637,
+        "minimum": 5.716862608695635,
+        "maximum": 87.68540855020342,
+        "win_tie_loss": [
+          12,
+          0,
+          0
+        ],
+        "losses": []
+      },
+      "inverse_contaminated": {
+        "cases": 12,
+        "mean": 22.109863810435673,
+        "minimum": -4.395497514204521,
+        "maximum": 53.99659849236639,
+        "win_tie_loss": [
+          10,
+          1,
+          1
+        ],
+        "losses": [
+          {
+            "family": "er_resampled",
+            "repetition": 1203,
+            "stratum": "inverse_contaminated",
+            "delta": -4.395497514204521
+          }
+        ]
+      },
+      "degree_correlated": {
+        "cases": 12,
+        "mean": 13.672395263842668,
+        "minimum": -4.24201551197973,
+        "maximum": 37.33824705852874,
+        "win_tie_loss": [
+          9,
+          1,
+          2
+        ],
+        "losses": [
+          {
+            "family": "ba_resampled",
+            "repetition": 1202,
+            "stratum": "degree_correlated",
+            "delta": -1.9264593894926065
+          },
+          {
+            "family": "sbm_resampled",
+            "repetition": 1201,
+            "stratum": "degree_correlated",
+            "delta": -4.24201551197973
+          }
+        ]
+      }
+    },
+    "by_family": {
+      "er_resampled": {
+        "cases": 12,
+        "mean": 28.95534108035649,
+        "minimum": -6.052037419354974,
+        "maximum": 87.68540855020342,
+        "win_tie_loss": [
+          9,
+          1,
+          2
+        ],
+        "losses": [
+          {
+            "family": "er_resampled",
+            "repetition": 1203,
+            "stratum": "independent",
+            "delta": -6.052037419354974
+          },
+          {
+            "family": "er_resampled",
+            "repetition": 1203,
+            "stratum": "inverse_contaminated",
+            "delta": -4.395497514204521
+          }
+        ]
+      },
+      "ba_resampled": {
+        "cases": 12,
+        "mean": 15.72821285888449,
+        "minimum": -11.345031203548047,
+        "maximum": 48.51059277052184,
+        "win_tie_loss": [
+          10,
+          0,
+          2
+        ],
+        "losses": [
+          {
+            "family": "ba_resampled",
+            "repetition": 1202,
+            "stratum": "degree_correlated",
+            "delta": -1.9264593894926065
+          },
+          {
+            "family": "ba_resampled",
+            "repetition": 1203,
+            "stratum": "independent",
+            "delta": -11.345031203548047
+          }
+        ]
+      },
+      "ws_resampled": {
+        "cases": 12,
+        "mean": 24.078244254774656,
+        "minimum": -11.56562817665781,
+        "maximum": 59.67434020992357,
+        "win_tie_loss": [
+          11,
+          0,
+          1
+        ],
+        "losses": [
+          {
+            "family": "ws_resampled",
+            "repetition": 1201,
+            "stratum": "independent",
+            "delta": -11.56562817665781
+          }
+        ]
+      },
+      "sbm_resampled": {
+        "cases": 12,
+        "mean": 7.401258311948358,
+        "minimum": -6.770002689098874,
+        "maximum": 26.61599240740759,
+        "win_tie_loss": [
+          6,
+          4,
+          2
+        ],
+        "losses": [
+          {
+            "family": "sbm_resampled",
+            "repetition": 1201,
+            "stratum": "degree_correlated",
+            "delta": -4.24201551197973
+          },
+          {
+            "family": "sbm_resampled",
+            "repetition": 1201,
+            "stratum": "independent",
+            "delta": -6.770002689098874
+          }
+        ]
+      }
+    },
+    "by_repetition": {
+      "1201": {
+        "cases": 16,
+        "mean": 16.289840093993615,
+        "minimum": -11.56562817665781,
+        "maximum": 87.68540855020342,
+        "win_tie_loss": [
+          13,
+          0,
+          3
+        ],
+        "losses": [
+          {
+            "family": "sbm_resampled",
+            "repetition": 1201,
+            "stratum": "degree_correlated",
+            "delta": -4.24201551197973
+          },
+          {
+            "family": "sbm_resampled",
+            "repetition": 1201,
+            "stratum": "independent",
+            "delta": -6.770002689098874
+          },
+          {
+            "family": "ws_resampled",
+            "repetition": 1201,
+            "stratum": "independent",
+            "delta": -11.56562817665781
+          }
+        ]
+      },
+      "1202": {
+        "cases": 16,
+        "mean": 21.876060108695327,
+        "minimum": -1.9264593894926065,
+        "maximum": 54.396860392976464,
+        "win_tie_loss": [
+          12,
+          3,
+          1
+        ],
+        "losses": [
+          {
+            "family": "ba_resampled",
+            "repetition": 1202,
+            "stratum": "degree_correlated",
+            "delta": -1.9264593894926065
+          }
+        ]
+      },
+      "1203": {
+        "cases": 16,
+        "mean": 18.956392176784053,
+        "minimum": -11.345031203548047,
+        "maximum": 59.67434020992357,
+        "win_tie_loss": [
+          11,
+          2,
+          3
+        ],
+        "losses": [
+          {
+            "family": "ba_resampled",
+            "repetition": 1203,
+            "stratum": "independent",
+            "delta": -11.345031203548047
+          },
+          {
+            "family": "er_resampled",
+            "repetition": 1203,
+            "stratum": "independent",
+            "delta": -6.052037419354974
+          },
+          {
+            "family": "er_resampled",
+            "repetition": 1203,
+            "stratum": "inverse_contaminated",
+            "delta": -4.395497514204521
+          }
+        ]
+      }
+    }
+  },
+  "runtime_audit": {
+    "episodes_replayed": 144,
+    "max_actions_per_host_step": 1,
+    "max_host_calls": 88,
+    "max_llm_calls": 87,
+    "action_failures": 0,
+    "candidate_plan_approvals": 28,
+    "candidate_prefix_completions": 28,
+    "candidate_prefix_failures": 0,
+    "candidate_response_activations": 25,
+    "candidate_response_disabled": 0
+  },
+  "archive_sha256": {
+    "p9_archive": "4df04b79f44d8bc7a21cad890bf6bc241531b976899cafbbdc5574bb6772f460",
+    "official_best_archive": "8f981950058919555be2991e28c6cf5794654be96bee1d76788d8eafd9d8d6c5"
+  },
+  "statistical_gate_passed": false,
+  "public_history_resource_audit_passed": true,
+  "selected_variant": null,
+  "release_gate_passed": false,
+  "release_gate_pending": [
+    "sealed entry evidence",
+    "real LLM plan approval and response activation",
+    "Python 3.9 FAQ runtime",
+    "final ZIP identity verification"
+  ],
+  "production_enabled": false,
+  "platform_score": null,
+  "raw_input": {
+    "path": "experiments/raw/p10-combined-confirmation-20260914/full.json",
+    "sha256": "ffcbfd38103c4ffd06551036279625efc8402658c5a9a29aed586078278d8ca4",
+    "committed": false
+  }
+}

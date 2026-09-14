@@ -12,3 +12,4 @@ experiment	commit	metric	status	description
 10	a6bdf04	6.467052725	development	plan_only versus P9 over complete consumed 18-case matrix; 8/7/3
 11	a6bdf04	20.157101689	keep_development	response_only versus P9 over complete consumed 18-case matrix; 8/10/0
 12	a6bdf04	26.018475900	selected_development	combined versus P9 over complete consumed 18-case matrix; 13/4/1
+13	983ba5d	11.934473177	reject_confirmation	combined 48-case fresh confirmation; CI positive but independent and degree-correlated stratum means negative
