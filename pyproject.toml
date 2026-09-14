@@ -22,3 +22,8 @@ addopts = "-q"
 
 [tool.uv.sources]
 casevo = { path = "../casevo", editable = true }
+
+[dependency-groups]
+dev = [
+    "scipy>=1.11.1",
+]

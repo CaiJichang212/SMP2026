@@ -1,0 +1,15 @@
+{
+  "purpose": "Joint retained-node/edge and persuasion-slot integer optimization as a structural candidate generator",
+  "registered_before_measurement": true,
+  "cohort": "previously consumed P8 six legacy families, repetition 501, standard response",
+  "model": "binary alive nodes, retained edges, monotone communication slots and edge-slot products; fixed shield counts 1,3,5,8,12,15; two fractional-objective updates per count",
+  "limits": "0.5 seconds per MILP, at most six distinct proposals; one worker; solver time limits may produce machine-dependent incumbents, which must be reported without optimality claims",
+  "rescoring": "exact component settlement after all shields, with mean-response communication allocation; best plan selected on five paired scenarios and checked on eight unused paired scenarios",
+  "arms": ["strict", "mean_audited"],
+  "strict": "positive mean and nonnegative minimum in both selection and audit",
+  "mean_audited": "positive mean in both selection and audit; report negative individual scenarios and realized losses",
+  "execution": "search once after full scan, execute only the accepted complete shield prefix, then resume the current bounded P9 policy",
+  "decision": "complete six cases in both arms; only a positive mean over P9 with zero failed actions can proceed to wider development; no qualification from this cohort",
+  "no_hidden_inputs": true,
+  "production_enabled": false
+}
