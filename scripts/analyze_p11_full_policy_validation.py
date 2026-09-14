@@ -27,6 +27,8 @@ from starnet.policy.fast_settlement_experiment import FastComponentSettlement
 
 PROTOCOL = ROOT / "experiments/manifests/p11-full-policy-validation-20260914.json"
 RUNNER = ROOT / "scripts/run_p11_full_policy_validation.py"
+CACHED_RUNNER = ROOT / "scripts/run_p11_full_policy_cached.py"
+CACHE_HELPER = ROOT / "scripts/p11_reference_cache.py"
 SEED_SOURCE = ROOT / "src/starnet/experiments/p11_validation_seeds.py"
 LEDGER = ROOT / "src/starnet/policy/prompt_calibration_experiment.py"
 P9_ARCHIVE = ROOT / "artifacts/submission/starnet-p9-bounded-response-20260913.zip"
@@ -166,12 +168,16 @@ def analyze(raw, *, confirmation):
     rows = {row["case_id"]: row for row in raw["rows"]}
     if len(rows) != len(raw["rows"]) or set(rows) != set(expected):
         raise ValueError("cohort Cartesian identity mismatch")
+    cached = config.get("runner_sha256") == digest(CACHED_RUNNER)
     if (config.get("protocol_sha256") != digest(PROTOCOL)
-            or config.get("runner_sha256") != digest(RUNNER)
+            or config.get("runner_sha256") not in {digest(RUNNER), digest(CACHED_RUNNER)}
             or config.get("seed_source_sha256") != digest(SEED_SOURCE)
             or config.get("ledger_sha256") != digest(LEDGER)
             or config.get("p9_archive_sha256") != digest(P9_ARCHIVE)):
         raise ValueError("source identity mismatch")
+    if cached and (config.get("base_runner_sha256") != digest(RUNNER)
+                   or config.get("reference_cache_sha256") != digest(CACHE_HELPER)):
+        raise ValueError("cached runner identity mismatch")
     snapshot = config.get("source_snapshot", {})
     if set(snapshot) != source_snapshot_paths() or any(
         digest(ROOT / path) != value for path, value in snapshot.items()
@@ -199,6 +205,42 @@ def analyze(raw, *, confirmation):
         if any(abs(row["paired"][key] - value) > 1e-8 for key, value in expected_pairs.items()):
             raise ValueError("paired score mismatch")
         ordered.append(row)
+
+    if cached:
+        from scripts.p11_reference_cache import reuse_known_best_result, reuse_prompt1_result
+        for row in ordered:
+            target_seed = expected[row["case_id"]][2]
+            for arm in ("p9_no_probe", "fixed1_online_magnitude_no_probe",
+                        "known_best_id_p9_reference"):
+                result = row["arms"][arm]
+                cache = result.get("reference_cache", {})
+                kind = cache.get("kind")
+                if kind == "fresh_execution":
+                    if cache.get("source_case_id") != row["case_id"]:
+                        raise ValueError("fresh cache marker has another source")
+                    continue
+                source_id = cache.get("source_case_id")
+                if source_id not in rows:
+                    raise ValueError("cache source case is absent")
+                source_result = rows[source_id]["arms"][arm]
+                source_seed = expected[source_id][2]
+                if kind == "identical_prompt1_execution":
+                    reproduced = reuse_prompt1_result(
+                        source_result, source_seed, target_seed, source_case_id=source_id,
+                    )
+                elif kind == "equal_strength_known_id_relabel":
+                    reproduced = reuse_known_best_result(
+                        source_result, source_seed, target_seed,
+                        source_prompt_id=cache["source_prompt_id"],
+                        target_prompt_id=cache["target_prompt_id"], source_case_id=source_id,
+                    )
+                else:
+                    raise ValueError("cached reference lacks an explicit reuse kind")
+                if reproduced != result:
+                    raise ValueError("cached reference cannot be reproduced exactly")
+        if any(row["arms"]["p11"].get("reference_cache", {}).get("kind")
+               != "not_cacheable_p11_execution" for row in ordered):
+            raise ValueError("P11 candidate was incorrectly marked as cached")
 
     def mean(rows_, key="p11_vs_p9"):
         return statistics.fmean(row["paired"][key] for row in rows_)
