@@ -1,0 +1,632 @@
+{
+  "schema_version": 1,
+  "purpose": "Unqualified temporary P11 research entry validation",
+  "production_enabled": false,
+  "qualification_modified": false,
+  "canonical_entry_modified": false,
+  "prompt_values_visible_to_policy": false,
+  "family": "er_balanced",
+  "prompt_case": "prompt2_best",
+  "true_best_prompt_ids": [
+    2
+  ],
+  "seed_sha256": "245b31d866737b90364ac5f7a0e76cefe790ab58268d6b2bec9b9466747db6be",
+  "llm_mode": "unavailable",
+  "environment": "corrected local simulator",
+  "python_version": "3.12.3",
+  "entry_runner_sha256": "806f48840399a412ef357e449426b4c77b1872d6e4b6787c2a1bdb3742fb8fb8",
+  "assembly": {
+    "ordered_sources": [
+      "src/starnet/model/blackboard.py",
+      "src/starnet/policy/actions.py",
+      "src/starnet/policy/config.py",
+      "src/starnet/policy/calibration.py",
+      "src/starnet/policy/baseline.py",
+      "src/starnet/runtime/env_adapter.py",
+      "src/starnet/runtime/trace.py",
+      "src/starnet/policy/graph_analysis.py",
+      "src/starnet/policy/candidates.py",
+      "src/starnet/policy/cmg.py",
+      "src/starnet/policy/structural.py",
+      "src/starnet/policy/budget_experiment.py",
+      "src/starnet/policy/fast_settlement_experiment.py",
+      "src/starnet/policy/p8_experiment.py",
+      "src/starnet/policy/p8_qualification.py",
+      "src/starnet/policy/adaptive.py",
+      "src/starnet/runtime/stage.py",
+      "src/starnet/runtime/controller.py",
+      "src/starnet/runtime/p8_controller.py",
+      "src/starnet/policy/prompt_calibration_experiment.py",
+      "src/starnet/policy/p11_qualification.py",
+      "src/starnet/runtime/p11_prompt_controller_experiment.py",
+      "src/starnet/submission/starnet_model.py"
+    ],
+    "source_sha256": {
+      "src/starnet/model/blackboard.py": "78ccfaa356ff08e39d4da8b98635d8384f0af1556dfc9e35b039714eb6e05375",
+      "src/starnet/policy/actions.py": "6c8898c147acbee19e297d534919b33592736b37ed2f16d9dec0a4357628b903",
+      "src/starnet/policy/config.py": "b43c1fb108f8634c3bc036e85614e8a7b0518410bb41d1f1cbab0d5bc3801e6d",
+      "src/starnet/policy/calibration.py": "439c2f6e6acb3e136404f1b9212daad3c698b201304efe940d5f8265a89bf603",
+      "src/starnet/policy/baseline.py": "a06e7bbe07a7d27101d6ee1795fca8654e485d47e4c7c32ae8f6372a4eb326e6",
+      "src/starnet/runtime/env_adapter.py": "4734b571b31137f57e0deeb31cad476b46f70ed5ef9fe915cd59966cf5f9f6ca",
+      "src/starnet/runtime/trace.py": "530895581e0d65bfc16185decb3865f356d5978b3991ad50983af8a58eebda01",
+      "src/starnet/policy/graph_analysis.py": "aa10b77fe1b2388ef2e6d5f03fed0212ae2dddd594ed5fe8238d211a6759596f",
+      "src/starnet/policy/candidates.py": "3d62597170426053aef3e87d30f4abe196af5d8911e759344a8c338c2b37b0fa",
+      "src/starnet/policy/cmg.py": "767367659ce48ed37be1939c0c2e42b5b59fe3ca96a5bd2c35c46bdf970fae8c",
+      "src/starnet/policy/structural.py": "392db9f3497536fab56ac5ee3ff305f47dd0765d518c3905d4aade799fdc763e",
+      "src/starnet/policy/budget_experiment.py": "baacd360e9351a6cfd1266dc147e440f8889c65d8202d2a95db708134f5c5a0c",
+      "src/starnet/policy/fast_settlement_experiment.py": "bdc97091e78c98a8b006e0d81149b8a047322f5c8f3bb05de461076ed1782783",
+      "src/starnet/policy/p8_experiment.py": "30326ab80cee936c6feb57ec01722eafa0994e2d171d606e6f439a3106f334ca",
+      "src/starnet/policy/p8_qualification.py": "ee05d353bb6d1f119231ed188e61125e758b31bddae1a9ebd65892d7fa4fb8d8",
+      "src/starnet/policy/adaptive.py": "551536a0c178431ae13411cc331237603a81f36c191c1c1aa89504676149c391",
+      "src/starnet/runtime/stage.py": "279b958ee1e74227160fecdcf7b4b5e16bc83035762d2e098b0cd971ecb14fe1",
+      "src/starnet/runtime/controller.py": "158330e30d99545dad34543d5787113655c41f9965f14090d0deed2b42ae22b7",
+      "src/starnet/runtime/p8_controller.py": "89507fec9d971ad364355c5c7d2ab6482fd8d21fc8c1084ef3aa869e4676ddaf",
+      "src/starnet/policy/prompt_calibration_experiment.py": "fe3b2731d483a392ed3593e02d2e65a82a287640afcc96808503b8a142f12d47",
+      "src/starnet/policy/p11_qualification.py": "e4adeafb73b693d5e349ae82915afe62067379a996031e3efd36c9d12a5eaa99",
+      "src/starnet/runtime/p11_prompt_controller_experiment.py": "98ae3471bd5eb9d024bd96ac678f19a6807877cccb45df53622b70a614880612",
+      "src/starnet/submission/starnet_model.py": "80d946670634ffa9ab77dff339597ade1dd907b6e06df88233c96dc9b020abd2"
+    },
+    "top_level_collisions": [],
+    "residual_starnet_imports": [],
+    "python39_ast_passed": true
+  },
+  "model_sha256": "1dff3faf3057a199e1b68f526380e57dfc65a1a5e185a8320fa344eca8c99e97",
+  "complete": true,
+  "temporary_qualification_metadata": {
+    "P11_CERTIFIED_MODE": "prompt_learning",
+    "P11_GATE_REPORT_SHA256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "P11_GATE_REPORT_RELATIVE_PATH": "experiments/reports/p11-research-only.json"
+  },
+  "qualification_injected_after_import": true,
+  "p11_config_field_stripped": true,
+  "networkx_version": "3.6.1",
+  "framework_model_module": "casevo.model_base",
+  "agent_base_module": "casevo.agent_base",
+  "controller_type": "PromptLearningRuntimeController",
+  "p11_experiment_mode": "prompt_learning",
+  "p11_enabled": true,
+  "p11_calibration_finished": true,
+  "p11_selected_prompt_id": 2,
+  "p11_probe_attempts": 3,
+  "p11_probe_successes": 3,
+  "p11_probe_failures": 0,
+  "p11_probe_budget": 6.0,
+  "p11_fallback_to_p9": false,
+  "p11_errors": 0,
+  "p11_last_error": null,
+  "p11_response_switches": 34,
+  "selected_prompt_dispatch_count": 32,
+  "action_failures": 0,
+  "p8_planning_errors": 0,
+  "p11_planning_errors": 0,
+  "one_action_per_host_step": true,
+  "max_actions_per_host_step": 1,
+  "action_sha256": "50d7a9ff514a79cabbb1832fd44d3c4c9dd1ae30741cabeb1f12b98d003429b0",
+  "result": {
+    "score": 746.7619440524936,
+    "local_replay_score": 746.7619440524936,
+    "public_response_error": null,
+    "remaining_budget": 0.0,
+    "host_calls": 87,
+    "action_attempts": 86,
+    "one_action_per_host_step": true,
+    "max_actions_per_host_step": 1,
+    "action_sha256": "50d7a9ff514a79cabbb1832fd44d3c4c9dd1ae30741cabeb1f12b98d003429b0",
+    "action_sequence": [
+      [
+        "scan",
+        1
+      ],
+      [
+        "scan",
+        14
+      ],
+      [
+        "scan",
+        15
+      ],
+      [
+        "scan",
+        39
+      ],
+      [
+        "scan",
+        23
+      ],
+      [
+        "scan",
+        10
+      ],
+      [
+        "scan",
+        33
+      ],
+      [
+        "scan",
+        5
+      ],
+      [
+        "scan",
+        35
+      ],
+      [
+        "scan",
+        24
+      ],
+      [
+        "scan",
+        38
+      ],
+      [
+        "scan",
+        17
+      ],
+      [
+        "scan",
+        12
+      ],
+      [
+        "scan",
+        7
+      ],
+      [
+        "scan",
+        50
+      ],
+      [
+        "scan",
+        19
+      ],
+      [
+        "scan",
+        44
+      ],
+      [
+        "scan",
+        29
+      ],
+      [
+        "scan",
+        28
+      ],
+      [
+        "scan",
+        37
+      ],
+      [
+        "scan",
+        46
+      ],
+      [
+        "scan",
+        36
+      ],
+      [
+        "scan",
+        8
+      ],
+      [
+        "scan",
+        9
+      ],
+      [
+        "scan",
+        45
+      ],
+      [
+        "scan",
+        20
+      ],
+      [
+        "scan",
+        16
+      ],
+      [
+        "scan",
+        3
+      ],
+      [
+        "scan",
+        47
+      ],
+      [
+        "scan",
+        40
+      ],
+      [
+        "scan",
+        25
+      ],
+      [
+        "scan",
+        30
+      ],
+      [
+        "scan",
+        41
+      ],
+      [
+        "scan",
+        48
+      ],
+      [
+        "scan",
+        18
+      ],
+      [
+        "scan",
+        49
+      ],
+      [
+        "scan",
+        11
+      ],
+      [
+        "scan",
+        34
+      ],
+      [
+        "scan",
+        32
+      ],
+      [
+        "scan",
+        26
+      ],
+      [
+        "scan",
+        21
+      ],
+      [
+        "scan",
+        27
+      ],
+      [
+        "scan",
+        6
+      ],
+      [
+        "scan",
+        42
+      ],
+      [
+        "scan",
+        13
+      ],
+      [
+        "scan",
+        22
+      ],
+      [
+        "scan",
+        4
+      ],
+      [
+        "scan",
+        43
+      ],
+      [
+        "scan",
+        31
+      ],
+      [
+        "scan",
+        2
+      ],
+      [
+        "comm",
+        2,
+        1
+      ],
+      [
+        "comm",
+        2,
+        2
+      ],
+      [
+        "comm",
+        2,
+        3
+      ],
+      [
+        "comm",
+        17,
+        2
+      ],
+      [
+        "comm",
+        38,
+        2
+      ],
+      [
+        "comm",
+        47,
+        2
+      ],
+      [
+        "comm",
+        5,
+        2
+      ],
+      [
+        "comm",
+        15,
+        2
+      ],
+      [
+        "comm",
+        39,
+        2
+      ],
+      [
+        "comm",
+        45,
+        2
+      ],
+      [
+        "comm",
+        7,
+        2
+      ],
+      [
+        "comm",
+        16,
+        2
+      ],
+      [
+        "comm",
+        28,
+        2
+      ],
+      [
+        "comm",
+        10,
+        2
+      ],
+      [
+        "comm",
+        19,
+        2
+      ],
+      [
+        "comm",
+        29,
+        2
+      ],
+      [
+        "comm",
+        37,
+        2
+      ],
+      [
+        "comm",
+        8,
+        2
+      ],
+      [
+        "comm",
+        12,
+        2
+      ],
+      [
+        "comm",
+        23,
+        2
+      ],
+      [
+        "comm",
+        46,
+        2
+      ],
+      [
+        "comm",
+        18,
+        2
+      ],
+      [
+        "comm",
+        39,
+        2
+      ],
+      [
+        "comm",
+        16,
+        2
+      ],
+      [
+        "shield",
+        17
+      ],
+      [
+        "comm",
+        20,
+        2
+      ],
+      [
+        "comm",
+        24,
+        2
+      ],
+      [
+        "comm",
+        25,
+        2
+      ],
+      [
+        "comm",
+        34,
+        2
+      ],
+      [
+        "comm",
+        3,
+        2
+      ],
+      [
+        "comm",
+        44,
+        2
+      ],
+      [
+        "comm",
+        49,
+        2
+      ],
+      [
+        "comm",
+        9,
+        2
+      ],
+      [
+        "comm",
+        47,
+        2
+      ],
+      [
+        "comm",
+        15,
+        2
+      ],
+      [
+        "comm",
+        11,
+        2
+      ]
+    ],
+    "probe_action_sequence": [
+      [
+        "comm",
+        2,
+        1
+      ],
+      [
+        "comm",
+        2,
+        2
+      ],
+      [
+        "comm",
+        2,
+        3
+      ]
+    ],
+    "model_decisions": [],
+    "llm_calls": 86,
+    "llm_accepted": 0,
+    "llm_fallbacks": 86,
+    "transport_errors": 0,
+    "action_failures": 0,
+    "p8_planning_errors": 0,
+    "p11_planning_errors": 0,
+    "p11_experiment_mode": "prompt_learning",
+    "p11_enabled": true,
+    "p11_calibration_finished": true,
+    "p11_selected_prompt_id": 2,
+    "p11_selected_prompt_prior": 15.078117931034482,
+    "p11_prompt_positive": true,
+    "p11_probe_nodes": [
+      2,
+      1
+    ],
+    "p11_probe_attempts": 3,
+    "p11_probe_successes": 3,
+    "p11_probe_failures": 0,
+    "p11_probe_budget": 6.0,
+    "p11_fallback_to_p9": false,
+    "p11_errors": 0,
+    "p11_last_error": null,
+    "p11_response_switches": 34,
+    "selected_prompt_dispatch_count": 32,
+    "selected_observation_attempts": 28,
+    "selected_prompt_observations": {
+      "17": 14.711295,
+      "38": 16.863435,
+      "47": 17.561655,
+      "5": 7.8399600000000005,
+      "15": 17.728545,
+      "39": 19.619310000000002,
+      "45": 6.129615000000001,
+      "7": 18.704205,
+      "16": 21.287594999999996,
+      "28": 17.272755,
+      "10": 10.495709999999999,
+      "19": 9.38466,
+      "29": 19.595685000000003,
+      "37": 19.07523,
+      "8": 8.97288,
+      "12": 18.98046,
+      "23": 6.074235,
+      "46": 16.77261,
+      "18": 6.054615,
+      "20": 20.07963,
+      "24": 14.080964999999999,
+      "25": 22.23594,
+      "34": 7.857074999999999,
+      "3": 20.13531,
+      "44": 20.74839,
+      "49": 13.633004999999997,
+      "9": 11.240879999999999,
+      "11": 19.87701
+    },
+    "selected_response_censored": [],
+    "ledger": {
+      "confident": false,
+      "calibration_complete": false,
+      "calibrated_prompt_id": null,
+      "calibrated_prompt_ids": [],
+      "provisional_prompt_ids": [
+        2
+      ],
+      "informative_node_ids": [
+        2
+      ],
+      "node_rankings": {
+        "2": [
+          2,
+          3,
+          1
+        ]
+      },
+      "normalized_values": {
+        "2": {
+          "1": -4.75092,
+          "2": 14.25276,
+          "3": 9.501840000000001
+        }
+      },
+      "accepted": [
+        {
+          "node_id": 2,
+          "prompt_id": 1,
+          "turn": 1,
+          "before": 0.454115,
+          "new_w": -4.296805,
+          "delta": -4.75092,
+          "normalized_response": -4.75092
+        },
+        {
+          "node_id": 2,
+          "prompt_id": 2,
+          "turn": 2,
+          "before": -4.296805,
+          "new_w": 2.829575,
+          "delta": 7.12638,
+          "normalized_response": 14.25276
+        },
+        {
+          "node_id": 2,
+          "prompt_id": 3,
+          "turn": 3,
+          "before": 2.829575,
+          "new_w": 5.2050350000000005,
+          "delta": 2.3754600000000003,
+          "normalized_response": 9.501840000000001
+        }
+      ],
+      "censored": [],
+      "failures": []
+    }
+  },
+  "entry_gate_passed": true,
+  "source_unchanged": true
+}
