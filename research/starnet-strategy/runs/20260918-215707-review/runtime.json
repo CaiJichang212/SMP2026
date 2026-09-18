@@ -1,0 +1,9 @@
+{
+  "python": "3.12.3",
+  "casevo": "0.3.19",
+  "mesa": "2.4.0",
+  "chromadb": "1.5.9",
+  "networkx": "3.6.1",
+  "requests": "2.34.2",
+  "pydantic": "2.13.5"
+}

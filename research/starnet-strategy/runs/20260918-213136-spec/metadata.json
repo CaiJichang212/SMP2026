@@ -1,0 +1,68 @@
+{
+  "sources": [
+    {
+      "url": "https://arxiv.org/abs/1003.3967",
+      "status": 200,
+      "sha256": "eded4f0186475c9018670e27e8899ecd7c311ed3b5c62deffb22fafeec780fbf",
+      "bytes": 43659,
+      "retrieved_at": "2026-09-18T13:30:58.640505+00:00",
+      "used": true,
+      "exclusion": null
+    },
+    {
+      "url": "https://arxiv.org/abs/1511.00863",
+      "status": 200,
+      "sha256": "0377c62ca456e6cceb23f22999e00f919aef3f934c7460e3332ac7c2faebcc33",
+      "bytes": 42207,
+      "retrieved_at": "2026-09-18T13:30:58.868504+00:00",
+      "used": false,
+      "exclusion": "unrelated quantum-lattice article"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/rgCASS/casevo/main/README.md",
+      "status": 200,
+      "sha256": "d533f95b72e44e0a8d13504a7032e0a67590f149975fc43f40849ad2bd261514",
+      "bytes": 36257,
+      "retrieved_at": "2026-09-18T13:30:59.131503+00:00",
+      "used": true,
+      "exclusion": null
+    },
+    {
+      "url": "https://raw.githubusercontent.com/raoneng26/SMP2026/main/README.md",
+      "status": 200,
+      "sha256": "99cd6b3a74c6ac8fe1f977023df4fce05e408df73c3b1c83a003e0a9e9c322a7",
+      "bytes": 4160,
+      "retrieved_at": "2026-09-18T13:30:59.370502+00:00",
+      "used": true,
+      "exclusion": null
+    },
+    {
+      "url": "https://www.cs.cornell.edu/home/kleinber/kdd03-inf.pdf",
+      "status": 200,
+      "sha256": "1c42da9b157c55588fe765062774d15e9446d3686c71857fa3a9e72386b964e0",
+      "bytes": 156424,
+      "retrieved_at": "2026-09-18T13:31:01.183495+00:00",
+      "used": true,
+      "exclusion": null
+    },
+    {
+      "url": "https://arxiv.org/abs/2210.03629",
+      "status": 200,
+      "sha256": "66a324b6bf6075b6534db3df10867474023791818c05099d5d6e7e776a624d87",
+      "bytes": 44231,
+      "retrieved_at": "2026-09-18T13:33:47.130565+00:00",
+      "used": true,
+      "exclusion": null
+    },
+    {
+      "url": "https://api.crossref.org/works/10.1080/01621459.1974.10480137",
+      "status": 200,
+      "sha256": "a0c2ba022ba8d8ad3a481c551324a8a09d902811e54bd1c3e9cafa7153b8cee0",
+      "bytes": 3534,
+      "retrieved_at": "2026-09-18T13:33:47.677562+00:00",
+      "used": true,
+      "exclusion": null
+    }
+  ],
+  "runtime_boundary": "Python3.9 lightweight contracts; real local CaseVO on Python3.12; platform unverified"
+}

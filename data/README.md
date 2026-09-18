@@ -1,6 +1,7 @@
-# 数据目录
+# 测试数据
 
-这里存放体积较小、允许共享的测试数据。原始演示种子位于
-`SMP_Starter_Kit/custom_seeds/my_test_network.json`，并非官方隐藏测试种子。
-生成数据放在 `data/generated/`，私有数据放在 `data/private/`；这两个目录均被
-Git 忽略。每次实验都应记录数据来源和种子参数。
+`public_seeds/`是scripts/research_compare.py生成的公开自建验证网络：41为10节点/30预算，42为50节点/100预算，43为100节点/200预算。
+三个话术强度按种子轮换，各节点人设系数有变化。它们不是官方隐藏种子。
+
+测试runner把种子发给官方沙盒建局；参赛模型只能通过合法API获得观测，不读取这些文件，也不能访问隐藏r或话术数值。
+`generated/`与`private/`被Git忽略，严禁打入提交包。
