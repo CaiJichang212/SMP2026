@@ -17,6 +17,7 @@ htmlcov/
 
 # 保留人工编写的研究记录，忽略原始实验输出。
 research/**/runs/**/raw/
+research/**/runs/**/email-result*.json
 data/generated/
 data/private/
 logs/
