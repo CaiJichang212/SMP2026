@@ -16,6 +16,7 @@ venv/
 runs/
 artifacts/
 experiments/raw/
+experiments/reports/*.progress.json
 htmlcov/
 .coverage*
 build/

@@ -12,11 +12,11 @@ class P10CombinedConfirmationRunnerTests(unittest.TestCase):
             "state_version": 7,
             "candidates": [
                 {"candidate_id": "p10-plan:first", "evidence_ids": ["plan-proof"],
-                 "score": 9.0, "reason": "P10 COMPLETE"},
+                 "score": 9.0, "roi": 0.18, "reason": "P10 COMPLETE", "action": {"kind": "shield"}},
                 {"candidate_id": "pg:baseline", "evidence_ids": ["pg-proof"],
-                 "score": 0.0, "reason": "PG REFERENCE: baseline"},
+                 "score": 0.0, "roi": 0.0, "reason": "PG REFERENCE: baseline", "action": {"kind": "comm"}},
                 {"candidate_id": "p8:proposal", "evidence_ids": ["p8-proof"],
-                 "score": 7.0, "reason": "P8 terminal"},
+                 "score": 7.0, "roi": 0.14, "reason": "P8 terminal", "action": {"kind": "shield"}},
             ],
         }
         self.assertEqual(terminal_gain_ranker(payload, decisions), {
@@ -29,9 +29,9 @@ class P10CombinedConfirmationRunnerTests(unittest.TestCase):
     def test_mock_ranker_uses_first_for_ordinary_p9_candidates(self) -> None:
         payload = {"state_version": 1, "candidates": [
             {"candidate_id": "comm:first", "evidence_ids": ["a"],
-             "score": 1.0, "reason": "ordinary"},
+             "score": 1.0, "roi": 0.5, "reason": "ordinary", "action": {"kind": "comm"}},
             {"candidate_id": "comm:second", "evidence_ids": ["b"],
-             "score": 99.0, "reason": "ordinary"},
+             "score": 99.0, "roi": 49.5, "reason": "ordinary", "action": {"kind": "comm"}},
         ]}
         self.assertEqual(terminal_gain_ranker(payload)["candidate_id"], "comm:first")
 
