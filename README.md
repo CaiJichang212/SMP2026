@@ -1,82 +1,50 @@
-# 🛸 SMP 2026 星网挑战赛 - 开发者本地调试 SDK
+# SMP 2026 星网赛题
 
-欢迎参加 **SMP 2026 社交媒体预测挑战赛（拯救地球之星网文明降临）**！
-本 SDK 工具包旨在帮助您在本地环境调试、验证基于 CaseVO 框架编写的智能体系统。
+本仓库用于星网赛题研究、实验与提交。规则以 [`docs/task/赛题任务.md`](docs/task/赛题任务.md)、
+[`docs/task/补充信息.md`](docs/task/补充信息.md) 和常见问题解答为准；
+`SMP_Starter_Kit/` 是原始参考 SDK，不代表已验证通过的提交方案。
 
----
+## 目录
 
-## 📂 目录结构说明
+| 路径 | 用途 |
+| --- | --- |
+| `docs/task/` | 用户提供的赛题、补充规则和常见问题解答 |
+| `SMP_Starter_Kit/` | 原始示例、测试客户端、示例种子和基线提交 |
+| `src/starnet/` | 后续可测试的算法/编排源代码 |
+| `data/` | 小型公开测试数据；`generated/`、`private/` 不跟踪 |
+| `research/starnet-strategy/` | research-lab 状态、阶段记录和证据 |
+| `tests/`、`scripts/` | 测试与受限实验工具 |
+| `submissions/` | 生成的 ZIP 包（不跟踪） |
 
-请仔细阅读以下目录结构，明确哪些是**本地测试工具**，哪些是**您的提交代码**：
+提交 ZIP 的根目录只能包含 `config.json`、`prompt/` 和
+`starnet_model.py`，不能将整个 `SMP_Starter_Kit/` 或工作目录打包。
+示例包位于 `SMP_Starter_Kit/team_submission/`；目前尚无经验证的最终提交包。
 
-```text
-SMP_Starter_Kit/
-├── 📄 local_test_run.py      # 【测试入口】本地运行测试的主脚本
-├── 📄 api_client.py          # 【系统工具】连接官方测试沙盒的 HTTP 代理
-├── 📄 zhipu.py               # 【系统工具】智谱大模型 API 接口封装
-├── 📁 custom_seeds/          # 【系统工具】存放本地测试的网络图 JSON
-│
-└── 📁 team_submission/       # 🎯【核心工作区】您需要修改并最终打包提交的代码文件夹！
-    ├── config.json           # 参赛者的智能体角色配置文件
-    ├── 📁 prompt/            # 各智能体的大语言模型提示词模板
-    └── starnet_model.py      # CaseVO 主控逻辑代码（类名必须为 ParticipantSquadModel）
-```
+## 开发环境
 
-## 🚀 快速开始 (Quick Start)
-
-### 1. 环境准备
-确保您的电脑上已安装 Python 3.8+，并安装以下依赖：
+要求 uv 和本机 Python 3.9。项目只锁定轻量图分析/HTTP 依赖，不预装
+CaseVO/Chroma，也不预设线上旧版 `agent_mesa` 与本地 `casevo` 等价。
 
 ```bash
-pip install requests networkx zhipuai
+UV_CACHE_DIR=/tmp/smp20260918-uv-cache uv sync --locked
+UV_CACHE_DIR=/tmp/smp20260918-uv-cache uv run python -c 'import networkx, requests; print("ok")'
 ```
 
-### 2. 配置您的 API Key
-本地调试时，大模型推理消耗的是您自己的算力。请打开根目录下的 `local_test_run.py`，找到以下行并填入您自己的智谱 API Key：
+根目录 `.env` 是本地测试凭证，已忽略；`.env.example` 仅展示变量名。
+已有本地 LLM 配置可以用于后续受控测试，线上只用主办方注入的 LLM，
+任何密钥都不得进入代码、日志或 ZIP。不要直接运行原始
+`SMP_Starter_Kit/local_test.py`：其中仍有占位 Key、旧的 50 步限制，
+而且远端请求没有超时。后续建立适配器并验证 API 后再运行实际测评。
 
-```python
-YOUR_KEY = "您的智谱API_KEY"
-```
+## 主机限制和进度
 
-### 3. 运行本地测试
-在终端中执行以下命令：
+主机为 2 vCPU、约 4 GB 内存。耗资源命令使用
+`bash scripts/run_limited.sh uv run <命令>` 串行运行；脚本限制单核、
+线程数、10 分钟实际运行时间和 2.5 GiB 虚拟地址空间。先跑小种子，
+记录峰值内存、耗时、步数、LLM 调用数与剩余预算，确认稳定后再扩展。
+如地址空间限制导致框架无法启动，先记录并分析原因，不直接去掉限制。
 
-```bash
-python local_test_run.py
-```
-终端将演示基础 API 的调用方法，随后您的 CaseVO 智能体会自动接管并开始干预网络，最终由官方沙盒服务器返回最终得分！
-
-## 📡 沙盒环境 (Environment API) 指南
-
-您的智能体需要通过调用 `self.env` 提供的 API 来感知世界并实施打击。
-
-- `self.env.get_remaining_budget()`：获取当前剩余精神力预算。
-- `self.env.scan_node(node_id)`：扫描节点，消耗 `0.5` 预算。返回节点详细信息（含 `comm_left` 剩余沟通次数）。
-- `self.env.communicate(node_id, prompt_id)`：话术游说，消耗 `2.0` 预算。
-- `self.env.cut_link(u, v)`：切断链路，消耗 `3.0` 预算。
-- `self.env.shield_node(node_id)`：全域屏蔽，消耗 `5.0` 预算。
-
-## ⚠️ 极度警告：硬性限制规则
-
-为了考验算法效率，官方评测机对代码进行了严格限制：
-
-- **双路熔断限额**：为了考验算法效率并防止代码死锁，官方线上评测机设置了**双路熔断限额（初赛为 120，复赛为 250）**：
-
-大模型限流（API Limits）：对大模型（LLM）的调用次数触碰限额将触发熔断（防止内部无限开会）。
-
-死循环保护（Step Limits）：向环境发起操作的循环步数触碰限额将触发熔断（防止 while True 卡死）。
-只要上述任何一项率先达标，系统将立刻强制停机！请结合图论算法精简您的调用策略。
-- **禁止白盒篡改**：您的 `ParticipantSquadModel` 必须通过 `self.env` 交互，严禁尝试篡改沙盒底层内存，否则按作弊处理。
-
-## 📤 如何打包提交？ (极其重要)
-
-当您完成调试准备提交时，请务必严格按照官方推文的标准打包：
-
-- **清理隐私**：绝对不要把您的 API Key 写死在 `team_submission` 的任何代码里！
-- **正确打包 ZIP**：进入 `team_submission/` 文件夹内部，将里面的 `config.json`、`prompt/` 文件夹、`starnet_model.py` 这三个项目全部选中，右键打包为 `.zip` 压缩包（命名为您队伍的名称，例如 `Tsinghua_AI.zip`）。
-- **结构自查**：请双击打开您刚生成的 ZIP 包，里面必须直接是 `config.json` 等文件，**绝对不能**多套一层名为 `team_submission` 的外壳文件夹！
-- **平台上传**：在规定时间段内，将该 ZIP 文件提交至官方指定通道。
-
----
-
-🎉 **祝各位指挥官好运，期待您拯救星网文明！**
+当前只完成任务准备，不宣称策略得分或线上兼容性。
+研究进度和下一阶段见 [`research/starnet-strategy/state.md`](research/starnet-strategy/state.md)。
+若实验需要用户协助且本地方案已穷尽，给 `li_y_c@qq.com` 发送
+问题、证据和明确所需操作；不在邮件中包含凭证。
