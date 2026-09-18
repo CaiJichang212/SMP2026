@@ -1,0 +1,12 @@
+[project]
+name = "smp20260918"
+version = "0.1.0"
+description = "SMP 2026 星网赛题研究与本地开发"
+requires-python = ">=3.9,<3.13"
+dependencies = [
+    "networkx>=3.1,<4",
+    "requests>=2.29,<3",
+]
+
+[tool.uv]
+package = false

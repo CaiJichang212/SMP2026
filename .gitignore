@@ -1,0 +1,24 @@
+.agents
+.codex
+
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage*
+htmlcov/
+.uv-cache/
+
+# 保留人工编写的研究记录，忽略原始实验输出。
+research/**/runs/**/raw/
+data/generated/
+data/private/
+logs/
+submissions/*.zip
+*.log
