@@ -1,0 +1,1 @@
+{"edges": [[1, 2], [2, 3]], "global_setting": {"max_api_calls": 120, "max_budget": 20}, "nodes": [{"comm_left": 3, "id": 1, "persona": "和平", "r": 1, "w": 100}, {"comm_left": 3, "id": 2, "persona": "和平", "r": 1, "w": 0}, {"comm_left": 3, "id": 3, "persona": "和平", "r": 1, "w": 0}], "original_total": 100, "prompts": {"1": 0, "2": 0, "3": 0}}
