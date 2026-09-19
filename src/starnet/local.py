@@ -18,10 +18,19 @@ class RemoteEnv:
     def request(self, endpoint, **data):
         if self.sid is not None:
             data['session_id'] = self.sid
-        self.calls += 1
-        r = self.session.post(self.url + '/api/' + endpoint, json=data, timeout=(5, 20))
-        r.raise_for_status()
-        result = r.json()
+        attempts = 2 if endpoint == 'get_budget' else 1
+        for attempt in range(attempts):
+            self.calls += 1
+            try:
+                r = self.session.post(self.url + '/api/' + endpoint, json=data, timeout=(5, 20))
+                r.raise_for_status()
+                result = r.json()
+                break
+            except requests.RequestException as exc:
+                self.trace.append({'endpoint': endpoint, 'error_type': type(exc).__name__,
+                                   'retry': attempt + 1 < attempts})
+                if attempt + 1 == attempts:
+                    raise
         if not isinstance(result, dict) or 'error' in result:
             raise RuntimeError('sandbox protocol error: ' + endpoint)
         self.trace.append({'endpoint': endpoint, 'arguments': {k:v for k,v in data.items() if k not in ('session_id','seed')}, 'result': result if endpoint != 'start_session' else {'created': True}})

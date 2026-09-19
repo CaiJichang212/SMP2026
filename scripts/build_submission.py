@@ -12,10 +12,15 @@ SOURCE=ROOT/'src/starnet'
 
 def build(output):
     policy=(SOURCE/'policy.py').read_text()
+    topology=(SOURCE/'topology.py').read_text()
     model=(SOURCE/'model.py').read_text()
     line='from .policy import ObservationBook, finite_number, validate_plan\n'
     if model.count(line)!=1:raise ValueError('unexpected module boundary')
-    code=policy+'\n\n'+model.replace(line,'')
+    topology_import='from .policy import ObservationBook, finite_number\n'
+    model_import='from .topology import TopologyBook\n'
+    if topology.count(topology_import)!=1 or model.count(model_import)!=1:
+        raise ValueError('unexpected topology module boundary')
+    code=policy+'\n\n'+topology.replace(topology_import,'')+'\n\n'+model.replace(line,'').replace(model_import,'')
     tree=ast.parse(code,feature_version=(3,9))
     allowed={'get_remaining_budget','scan_node','communicate','cut_link','shield_node'}
     for node in ast.walk(tree):
@@ -46,4 +51,4 @@ def build(output):
     print(json.dumps(result,ensure_ascii=False,indent=2));return result
 
 if __name__=='__main__':
-    ap=argparse.ArgumentParser();ap.add_argument('--output',default=str(ROOT/'submissions/starnet-20260918.zip'));build(ap.parse_args().output)
+    ap=argparse.ArgumentParser();ap.add_argument('--output',default=str(ROOT/'submissions/starnet-20260918-v2.zip'));build(ap.parse_args().output)

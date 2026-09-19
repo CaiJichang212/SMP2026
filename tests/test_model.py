@@ -101,5 +101,17 @@ class ModelTests(unittest.TestCase):
                 return 1.0 if self.reads>=3 else 100
         env=Changing();m=self.model(env)
         self.assertEqual(m.step(),1);self.assertEqual(env.actions,[])
+    def test_authorized_cut_executes_once_and_replans(self):
+        class CutEnv(Env):
+            def cut_link(self,u,v):self.actions.append(('cut',u,v));self.budget-=3;return True
+        env=CutEnv();m=load_model()(env,[{'node_count':2}],LLM())
+        for n in (1,2):
+            m.book.record_scan(n,{'w':-10,'persona':'和平','comm_left':0,'neighbors':[3-n]})
+        cut={'action':'cut','node':1,'other':2,'cost':3}
+        m.book.candidates=lambda budget:('intervene',[cut],1)
+        self.assertEqual(m.step(),0)
+        self.assertEqual(env.actions,[('cut',1,2)])
+        self.assertEqual(m.pending,[])
+        self.assertEqual(m.audit[0]['approved'][0],cut)
 
 if __name__=='__main__':unittest.main()

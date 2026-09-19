@@ -13,6 +13,7 @@ except ModuleNotFoundError as exc:
     from casevo import AgentBase, ModelBase
 
 from .policy import ObservationBook, finite_number, validate_plan
+from .topology import TopologyBook
 
 
 class CommanderAgent(AgentBase):
@@ -67,7 +68,7 @@ class ParticipantSquadModel(ModelBase):
         self.llm_timeout = 55.0
         self.steps = 0
         self.llm_calls = 0
-        self.book = ObservationBook(node_count)
+        self.book = TopologyBook(node_count)
         self.pending = []
         self.audit = []
         self.stopped = False
@@ -102,6 +103,7 @@ class ParticipantSquadModel(ModelBase):
                     return self._stop('no_safe_candidate')
                 batch_limit = min(batch_limit, self.max_steps - self.steps + 1)
                 node_ids = {a['node'] for a in candidates}
+                node_ids.update(a['other'] for a in candidates if a['action'] == 'cut')
                 observed = {n: {'w': x['w'], 'persona': x['persona'], 'comm_left': x['comm_left'], 'degree': len(x['neighbors'])}
                             for n,x in self.book.nodes.items() if n in node_ids}
                 payload = {'phase': phase, 'budget': budget, 'batch_limit': batch_limit,
@@ -136,6 +138,10 @@ class ParticipantSquadModel(ModelBase):
                 self.book.record_scan(action['node'], self.env.scan_node(action['node']))
             elif action['action'] == 'shield':
                 self.book.record_shield(action['node'], self.env.shield_node(action['node']))
+                self.pending = []
+            elif action['action'] == 'cut':
+                self.book.record_cut(action['node'], action['other'],
+                                     self.env.cut_link(action['node'], action['other']))
                 self.pending = []
             else:
                 result = self.env.communicate(action['node'], action['prompt_id'])

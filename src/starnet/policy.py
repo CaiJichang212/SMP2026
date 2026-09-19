@@ -153,8 +153,8 @@ def validate_plan(response, candidates, limit, book, budget):
         action = dict(candidates[choice])
         if action['node'] in targets or not book.valid(action, remaining):
             raise ValueError('duplicate or unaffordable action')
-        if action['action'] == 'shield' and len(choices) != 1:
-            raise ValueError('shield requires replanning')
+        if action['action'] in ('shield', 'cut') and len(choices) != 1:
+            raise ValueError('topology changes require replanning')
         remaining -= action['cost']
         targets.add(action['node'])
         selected.append(action)
