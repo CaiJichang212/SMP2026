@@ -1,0 +1,1252 @@
+{
+  "recorded_at": "2026-09-18T16:04:14.537473+00:00",
+  "evidence": "official-sandbox-custom-seed-real-local-llm",
+  "pairs": [
+    {
+      "seed": "120",
+      "baseline": {
+        "evidence": "official-sandbox-custom-seed-real-llm",
+        "seed": "seed-120.json",
+        "seed_sha256": "9f14cf8632b3a0b11a62aa14ad605f15dc7568c0b086628d30c8da2068ce41ad",
+        "zip_sha256": "e643b36711591c8f3e31a52db80ff0587f1df8277ca9904cf167307c18f5a543",
+        "python": "3.12.3",
+        "framework": "casevo.model_base",
+        "llm_model": "gpt-5.6-luna",
+        "initial_budget": 100,
+        "natural_score": -310.81,
+        "score": -37.19,
+        "delta": 273.62,
+        "remaining_budget": 1.0,
+        "steps": 88,
+        "llm_calls": 19,
+        "model_llm_calls": 19,
+        "http_calls": 268,
+        "seconds": 236.25753656006418,
+        "rss_kib": 148324,
+        "stop_reason": "budget",
+        "usage": [
+          {
+            "prompt_tokens": 1039,
+            "completion_tokens": 211,
+            "total_tokens": 1250,
+            "completion_tokens_details": {
+              "reasoning_tokens": 148
+            }
+          },
+          {
+            "prompt_tokens": 1054,
+            "completion_tokens": 255,
+            "total_tokens": 1309,
+            "completion_tokens_details": {
+              "reasoning_tokens": 188
+            }
+          },
+          {
+            "prompt_tokens": 1054,
+            "completion_tokens": 219,
+            "total_tokens": 1273,
+            "completion_tokens_details": {
+              "reasoning_tokens": 151
+            }
+          },
+          {
+            "prompt_tokens": 1054,
+            "completion_tokens": 232,
+            "total_tokens": 1286,
+            "completion_tokens_details": {
+              "reasoning_tokens": 170
+            }
+          },
+          {
+            "prompt_tokens": 1054,
+            "completion_tokens": 148,
+            "total_tokens": 1202,
+            "completion_tokens_details": {
+              "reasoning_tokens": 82
+            }
+          },
+          {
+            "prompt_tokens": 886,
+            "completion_tokens": 214,
+            "total_tokens": 1100,
+            "completion_tokens_details": {
+              "reasoning_tokens": 146
+            }
+          },
+          {
+            "prompt_tokens": 662,
+            "completion_tokens": 106,
+            "total_tokens": 768,
+            "completion_tokens_details": {
+              "reasoning_tokens": 55
+            }
+          },
+          {
+            "prompt_tokens": 1102,
+            "completion_tokens": 92,
+            "total_tokens": 1194,
+            "completion_tokens_details": {
+              "reasoning_tokens": 40
+            }
+          },
+          {
+            "prompt_tokens": 757,
+            "completion_tokens": 97,
+            "total_tokens": 854,
+            "completion_tokens_details": {
+              "reasoning_tokens": 45
+            }
+          },
+          {
+            "prompt_tokens": 776,
+            "completion_tokens": 102,
+            "total_tokens": 878,
+            "completion_tokens_details": {
+              "reasoning_tokens": 47
+            }
+          },
+          {
+            "prompt_tokens": 1976,
+            "completion_tokens": 329,
+            "total_tokens": 2305,
+            "completion_tokens_details": {
+              "reasoning_tokens": 262
+            }
+          },
+          {
+            "prompt_tokens": 2097,
+            "completion_tokens": 582,
+            "total_tokens": 2679,
+            "completion_tokens_details": {
+              "reasoning_tokens": 516
+            }
+          },
+          {
+            "prompt_tokens": 2238,
+            "completion_tokens": 578,
+            "total_tokens": 2816,
+            "completion_tokens_details": {
+              "reasoning_tokens": 516
+            }
+          },
+          {
+            "prompt_tokens": 2218,
+            "completion_tokens": 394,
+            "total_tokens": 2612,
+            "completion_tokens_details": {
+              "reasoning_tokens": 326
+            }
+          },
+          {
+            "prompt_tokens": 2220,
+            "completion_tokens": 815,
+            "total_tokens": 3035,
+            "completion_tokens_details": {
+              "reasoning_tokens": 756
+            }
+          },
+          {
+            "prompt_tokens": 2213,
+            "completion_tokens": 584,
+            "total_tokens": 2797,
+            "completion_tokens_details": {
+              "reasoning_tokens": 516
+            }
+          },
+          {
+            "prompt_tokens": 2214,
+            "completion_tokens": 336,
+            "total_tokens": 2550,
+            "completion_tokens_details": {
+              "reasoning_tokens": 277
+            }
+          },
+          {
+            "prompt_tokens": 2222,
+            "completion_tokens": 588,
+            "total_tokens": 2810,
+            "completion_tokens_details": {
+              "reasoning_tokens": 516
+            }
+          },
+          {
+            "prompt_tokens": 2228,
+            "completion_tokens": 1098,
+            "total_tokens": 3326,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1034
+            }
+          }
+        ],
+        "authorized_actions": 87,
+        "action_counts": {
+          "scan": 50,
+          "comm": 37
+        }
+      },
+      "candidate": {
+        "evidence": "official-sandbox-custom-seed-real-llm",
+        "seed": "seed-120.json",
+        "seed_sha256": "9f14cf8632b3a0b11a62aa14ad605f15dc7568c0b086628d30c8da2068ce41ad",
+        "zip_sha256": "38f37e009a82589486a16abd3b71635e68fd8edc98101adfc99deb6d0bdf6206",
+        "python": "3.12.3",
+        "framework": "casevo.model_base",
+        "llm_model": "gpt-5.6-luna",
+        "initial_budget": 100,
+        "natural_score": -310.81,
+        "score": 243.98,
+        "delta": 554.79,
+        "remaining_budget": 0.0,
+        "steps": 78,
+        "llm_calls": 22,
+        "model_llm_calls": 22,
+        "http_calls": 238,
+        "seconds": 169.61814665608108,
+        "rss_kib": 148092,
+        "stop_reason": "budget",
+        "usage": [
+          {
+            "prompt_tokens": 1190,
+            "completion_tokens": 180,
+            "total_tokens": 1370,
+            "completion_tokens_details": {
+              "reasoning_tokens": 112
+            }
+          },
+          {
+            "prompt_tokens": 1205,
+            "completion_tokens": 197,
+            "total_tokens": 1402,
+            "completion_tokens_details": {
+              "reasoning_tokens": 128
+            }
+          },
+          {
+            "prompt_tokens": 1205,
+            "completion_tokens": 226,
+            "total_tokens": 1431,
+            "completion_tokens_details": {
+              "reasoning_tokens": 154
+            }
+          },
+          {
+            "prompt_tokens": 1205,
+            "completion_tokens": 229,
+            "total_tokens": 1434,
+            "completion_tokens_details": {
+              "reasoning_tokens": 165
+            }
+          },
+          {
+            "prompt_tokens": 1205,
+            "completion_tokens": 181,
+            "total_tokens": 1386,
+            "completion_tokens_details": {
+              "reasoning_tokens": 110
+            }
+          },
+          {
+            "prompt_tokens": 1037,
+            "completion_tokens": 210,
+            "total_tokens": 1247,
+            "completion_tokens_details": {
+              "reasoning_tokens": 148
+            }
+          },
+          {
+            "prompt_tokens": 813,
+            "completion_tokens": 128,
+            "total_tokens": 941,
+            "completion_tokens_details": {
+              "reasoning_tokens": 77
+            }
+          },
+          {
+            "prompt_tokens": 1253,
+            "completion_tokens": 112,
+            "total_tokens": 1365,
+            "completion_tokens_details": {
+              "reasoning_tokens": 59
+            }
+          },
+          {
+            "prompt_tokens": 908,
+            "completion_tokens": 119,
+            "total_tokens": 1027,
+            "completion_tokens_details": {
+              "reasoning_tokens": 66
+            }
+          },
+          {
+            "prompt_tokens": 927,
+            "completion_tokens": 92,
+            "total_tokens": 1019,
+            "completion_tokens_details": {
+              "reasoning_tokens": 32
+            }
+          },
+          {
+            "prompt_tokens": 3006,
+            "completion_tokens": 212,
+            "total_tokens": 3218,
+            "completion_tokens_details": {
+              "reasoning_tokens": 150
+            }
+          },
+          {
+            "prompt_tokens": 3010,
+            "completion_tokens": 131,
+            "total_tokens": 3141,
+            "completion_tokens_details": {
+              "reasoning_tokens": 71
+            }
+          },
+          {
+            "prompt_tokens": 3024,
+            "completion_tokens": 115,
+            "total_tokens": 3139,
+            "completion_tokens_details": {
+              "reasoning_tokens": 63
+            }
+          },
+          {
+            "prompt_tokens": 2992,
+            "completion_tokens": 226,
+            "total_tokens": 3218,
+            "completion_tokens_details": {
+              "reasoning_tokens": 169
+            }
+          },
+          {
+            "prompt_tokens": 3044,
+            "completion_tokens": 148,
+            "total_tokens": 3192,
+            "completion_tokens_details": {
+              "reasoning_tokens": 94
+            }
+          },
+          {
+            "prompt_tokens": 2536,
+            "completion_tokens": 200,
+            "total_tokens": 2736,
+            "completion_tokens_details": {
+              "reasoning_tokens": 143
+            }
+          },
+          {
+            "prompt_tokens": 2971,
+            "completion_tokens": 121,
+            "total_tokens": 3092,
+            "completion_tokens_details": {
+              "reasoning_tokens": 67
+            }
+          },
+          {
+            "prompt_tokens": 2321,
+            "completion_tokens": 303,
+            "total_tokens": 2624,
+            "completion_tokens_details": {
+              "reasoning_tokens": 241
+            }
+          },
+          {
+            "prompt_tokens": 2506,
+            "completion_tokens": 319,
+            "total_tokens": 2825,
+            "completion_tokens_details": {
+              "reasoning_tokens": 263
+            }
+          },
+          {
+            "prompt_tokens": 2661,
+            "completion_tokens": 174,
+            "total_tokens": 2835,
+            "completion_tokens_details": {
+              "reasoning_tokens": 114
+            }
+          },
+          {
+            "prompt_tokens": 2660,
+            "completion_tokens": 243,
+            "total_tokens": 2903,
+            "completion_tokens_details": {
+              "reasoning_tokens": 178
+            }
+          },
+          {
+            "prompt_tokens": 2669,
+            "completion_tokens": 241,
+            "total_tokens": 2910,
+            "completion_tokens_details": {
+              "reasoning_tokens": 186
+            }
+          }
+        ],
+        "authorized_actions": 77,
+        "action_counts": {
+          "scan": 50,
+          "comm": 20,
+          "shield": 7
+        }
+      },
+      "delta": 281.16999999999996
+    },
+    {
+      "seed": "124",
+      "baseline": {
+        "evidence": "official-sandbox-custom-seed-real-llm",
+        "seed": "seed-124.json",
+        "seed_sha256": "2f4e828ad4420f7e513ee435b3fc99dfdd74f0a8dc0f3922b15d8e83850ebf3f",
+        "zip_sha256": "e643b36711591c8f3e31a52db80ff0587f1df8277ca9904cf167307c18f5a543",
+        "python": "3.12.3",
+        "framework": "casevo.model_base",
+        "llm_model": "gpt-5.6-luna",
+        "initial_budget": 100,
+        "natural_score": -879.07,
+        "score": -26.03,
+        "delta": 853.0400000000001,
+        "remaining_budget": 0.0,
+        "steps": 87,
+        "llm_calls": 20,
+        "model_llm_calls": 20,
+        "http_calls": 265,
+        "seconds": 192.63367431005463,
+        "rss_kib": 148324,
+        "stop_reason": "budget",
+        "usage": [
+          {
+            "prompt_tokens": 1039,
+            "completion_tokens": 114,
+            "total_tokens": 1153,
+            "completion_tokens_details": {
+              "reasoning_tokens": 51
+            }
+          },
+          {
+            "prompt_tokens": 1054,
+            "completion_tokens": 160,
+            "total_tokens": 1214,
+            "completion_tokens_details": {
+              "reasoning_tokens": 88
+            }
+          },
+          {
+            "prompt_tokens": 1054,
+            "completion_tokens": 143,
+            "total_tokens": 1197,
+            "completion_tokens_details": {
+              "reasoning_tokens": 82
+            }
+          },
+          {
+            "prompt_tokens": 1054,
+            "completion_tokens": 148,
+            "total_tokens": 1202,
+            "completion_tokens_details": {
+              "reasoning_tokens": 85
+            }
+          },
+          {
+            "prompt_tokens": 1054,
+            "completion_tokens": 179,
+            "total_tokens": 1233,
+            "completion_tokens_details": {
+              "reasoning_tokens": 114
+            }
+          },
+          {
+            "prompt_tokens": 886,
+            "completion_tokens": 207,
+            "total_tokens": 1093,
+            "completion_tokens_details": {
+              "reasoning_tokens": 142
+            }
+          },
+          {
+            "prompt_tokens": 662,
+            "completion_tokens": 149,
+            "total_tokens": 811,
+            "completion_tokens_details": {
+              "reasoning_tokens": 94
+            }
+          },
+          {
+            "prompt_tokens": 1102,
+            "completion_tokens": 219,
+            "total_tokens": 1321,
+            "completion_tokens_details": {
+              "reasoning_tokens": 165
+            }
+          },
+          {
+            "prompt_tokens": 760,
+            "completion_tokens": 103,
+            "total_tokens": 863,
+            "completion_tokens_details": {
+              "reasoning_tokens": 48
+            }
+          },
+          {
+            "prompt_tokens": 768,
+            "completion_tokens": 72,
+            "total_tokens": 840,
+            "completion_tokens_details": {
+              "reasoning_tokens": 21
+            }
+          },
+          {
+            "prompt_tokens": 1991,
+            "completion_tokens": 238,
+            "total_tokens": 2229,
+            "completion_tokens_details": {
+              "reasoning_tokens": 179
+            }
+          },
+          {
+            "prompt_tokens": 1761,
+            "completion_tokens": 222,
+            "total_tokens": 1983,
+            "completion_tokens_details": {
+              "reasoning_tokens": 159
+            }
+          },
+          {
+            "prompt_tokens": 1938,
+            "completion_tokens": 244,
+            "total_tokens": 2182,
+            "completion_tokens_details": {
+              "reasoning_tokens": 178
+            }
+          },
+          {
+            "prompt_tokens": 2066,
+            "completion_tokens": 378,
+            "total_tokens": 2444,
+            "completion_tokens_details": {
+              "reasoning_tokens": 312
+            }
+          },
+          {
+            "prompt_tokens": 1912,
+            "completion_tokens": 302,
+            "total_tokens": 2214,
+            "completion_tokens_details": {
+              "reasoning_tokens": 237
+            }
+          },
+          {
+            "prompt_tokens": 2080,
+            "completion_tokens": 405,
+            "total_tokens": 2485,
+            "completion_tokens_details": {
+              "reasoning_tokens": 337
+            }
+          },
+          {
+            "prompt_tokens": 2053,
+            "completion_tokens": 544,
+            "total_tokens": 2597,
+            "completion_tokens_details": {
+              "reasoning_tokens": 476
+            }
+          },
+          {
+            "prompt_tokens": 2095,
+            "completion_tokens": 437,
+            "total_tokens": 2532,
+            "completion_tokens_details": {
+              "reasoning_tokens": 374
+            }
+          },
+          {
+            "prompt_tokens": 2157,
+            "completion_tokens": 578,
+            "total_tokens": 2735,
+            "completion_tokens_details": {
+              "reasoning_tokens": 516
+            }
+          },
+          {
+            "prompt_tokens": 2127,
+            "completion_tokens": 179,
+            "total_tokens": 2306,
+            "completion_tokens_details": {
+              "reasoning_tokens": 131
+            }
+          }
+        ],
+        "authorized_actions": 86,
+        "action_counts": {
+          "scan": 50,
+          "comm": 35,
+          "shield": 1
+        }
+      },
+      "candidate": {
+        "evidence": "official-sandbox-custom-seed-real-llm",
+        "seed": "seed-124.json",
+        "seed_sha256": "2f4e828ad4420f7e513ee435b3fc99dfdd74f0a8dc0f3922b15d8e83850ebf3f",
+        "zip_sha256": "38f37e009a82589486a16abd3b71635e68fd8edc98101adfc99deb6d0bdf6206",
+        "python": "3.12.3",
+        "framework": "casevo.model_base",
+        "llm_model": "gpt-5.6-luna",
+        "initial_budget": 100,
+        "natural_score": -879.07,
+        "score": 88.67,
+        "delta": 967.74,
+        "remaining_budget": 0.0,
+        "steps": 78,
+        "llm_calls": 33,
+        "model_llm_calls": 33,
+        "http_calls": 238,
+        "seconds": 237.26840539788827,
+        "rss_kib": 148344,
+        "stop_reason": "budget",
+        "usage": [
+          {
+            "prompt_tokens": 1190,
+            "completion_tokens": 134,
+            "total_tokens": 1324,
+            "completion_tokens_details": {
+              "reasoning_tokens": 67
+            }
+          },
+          {
+            "prompt_tokens": 1205,
+            "completion_tokens": 193,
+            "total_tokens": 1398,
+            "completion_tokens_details": {
+              "reasoning_tokens": 119
+            }
+          },
+          {
+            "prompt_tokens": 1205,
+            "completion_tokens": 223,
+            "total_tokens": 1428,
+            "completion_tokens_details": {
+              "reasoning_tokens": 146
+            }
+          },
+          {
+            "prompt_tokens": 1205,
+            "completion_tokens": 194,
+            "total_tokens": 1399,
+            "completion_tokens_details": {
+              "reasoning_tokens": 120
+            }
+          },
+          {
+            "prompt_tokens": 1205,
+            "completion_tokens": 174,
+            "total_tokens": 1379,
+            "completion_tokens_details": {
+              "reasoning_tokens": 109
+            }
+          },
+          {
+            "prompt_tokens": 1037,
+            "completion_tokens": 153,
+            "total_tokens": 1190,
+            "completion_tokens_details": {
+              "reasoning_tokens": 89
+            }
+          },
+          {
+            "prompt_tokens": 813,
+            "completion_tokens": 85,
+            "total_tokens": 898,
+            "completion_tokens_details": {
+              "reasoning_tokens": 32
+            }
+          },
+          {
+            "prompt_tokens": 1253,
+            "completion_tokens": 110,
+            "total_tokens": 1363,
+            "completion_tokens_details": {
+              "reasoning_tokens": 56
+            }
+          },
+          {
+            "prompt_tokens": 908,
+            "completion_tokens": 128,
+            "total_tokens": 1036,
+            "completion_tokens_details": {
+              "reasoning_tokens": 74
+            }
+          },
+          {
+            "prompt_tokens": 931,
+            "completion_tokens": 81,
+            "total_tokens": 1012,
+            "completion_tokens_details": {
+              "reasoning_tokens": 30
+            }
+          },
+          {
+            "prompt_tokens": 2999,
+            "completion_tokens": 104,
+            "total_tokens": 3103,
+            "completion_tokens_details": {
+              "reasoning_tokens": 50
+            }
+          },
+          {
+            "prompt_tokens": 3026,
+            "completion_tokens": 162,
+            "total_tokens": 3188,
+            "completion_tokens_details": {
+              "reasoning_tokens": 109
+            }
+          },
+          {
+            "prompt_tokens": 2969,
+            "completion_tokens": 124,
+            "total_tokens": 3093,
+            "completion_tokens_details": {
+              "reasoning_tokens": 68
+            }
+          },
+          {
+            "prompt_tokens": 3002,
+            "completion_tokens": 125,
+            "total_tokens": 3127,
+            "completion_tokens_details": {
+              "reasoning_tokens": 75
+            }
+          },
+          {
+            "prompt_tokens": 2976,
+            "completion_tokens": 184,
+            "total_tokens": 3160,
+            "completion_tokens_details": {
+              "reasoning_tokens": 135
+            }
+          },
+          {
+            "prompt_tokens": 2635,
+            "completion_tokens": 189,
+            "total_tokens": 2824,
+            "completion_tokens_details": {
+              "reasoning_tokens": 131
+            }
+          },
+          {
+            "prompt_tokens": 3021,
+            "completion_tokens": 192,
+            "total_tokens": 3213,
+            "completion_tokens_details": {
+              "reasoning_tokens": 133
+            }
+          },
+          {
+            "prompt_tokens": 2451,
+            "completion_tokens": 267,
+            "total_tokens": 2718,
+            "completion_tokens_details": {
+              "reasoning_tokens": 208
+            }
+          },
+          {
+            "prompt_tokens": 2512,
+            "completion_tokens": 294,
+            "total_tokens": 2806,
+            "completion_tokens_details": {
+              "reasoning_tokens": 234
+            }
+          },
+          {
+            "prompt_tokens": 2540,
+            "completion_tokens": 262,
+            "total_tokens": 2802,
+            "completion_tokens_details": {
+              "reasoning_tokens": 201
+            }
+          },
+          {
+            "prompt_tokens": 2579,
+            "completion_tokens": 261,
+            "total_tokens": 2840,
+            "completion_tokens_details": {
+              "reasoning_tokens": 201
+            }
+          },
+          {
+            "prompt_tokens": 2568,
+            "completion_tokens": 149,
+            "total_tokens": 2717,
+            "completion_tokens_details": {
+              "reasoning_tokens": 89
+            }
+          },
+          {
+            "prompt_tokens": 2617,
+            "completion_tokens": 154,
+            "total_tokens": 2771,
+            "completion_tokens_details": {
+              "reasoning_tokens": 101
+            }
+          },
+          {
+            "prompt_tokens": 2635,
+            "completion_tokens": 232,
+            "total_tokens": 2867,
+            "completion_tokens_details": {
+              "reasoning_tokens": 175
+            }
+          },
+          {
+            "prompt_tokens": 2699,
+            "completion_tokens": 272,
+            "total_tokens": 2971,
+            "completion_tokens_details": {
+              "reasoning_tokens": 214
+            }
+          },
+          {
+            "prompt_tokens": 2788,
+            "completion_tokens": 215,
+            "total_tokens": 3003,
+            "completion_tokens_details": {
+              "reasoning_tokens": 159
+            }
+          },
+          {
+            "prompt_tokens": 2793,
+            "completion_tokens": 204,
+            "total_tokens": 2997,
+            "completion_tokens_details": {
+              "reasoning_tokens": 141
+            }
+          },
+          {
+            "prompt_tokens": 2790,
+            "completion_tokens": 148,
+            "total_tokens": 2938,
+            "completion_tokens_details": {
+              "reasoning_tokens": 89
+            }
+          },
+          {
+            "prompt_tokens": 2790,
+            "completion_tokens": 338,
+            "total_tokens": 3128,
+            "completion_tokens_details": {
+              "reasoning_tokens": 277
+            }
+          },
+          {
+            "prompt_tokens": 2788,
+            "completion_tokens": 208,
+            "total_tokens": 2996,
+            "completion_tokens_details": {
+              "reasoning_tokens": 147
+            }
+          },
+          {
+            "prompt_tokens": 2768,
+            "completion_tokens": 205,
+            "total_tokens": 2973,
+            "completion_tokens_details": {
+              "reasoning_tokens": 142
+            }
+          },
+          {
+            "prompt_tokens": 2786,
+            "completion_tokens": 232,
+            "total_tokens": 3018,
+            "completion_tokens_details": {
+              "reasoning_tokens": 166
+            }
+          },
+          {
+            "prompt_tokens": 2646,
+            "completion_tokens": 193,
+            "total_tokens": 2839,
+            "completion_tokens_details": {
+              "reasoning_tokens": 135
+            }
+          }
+        ],
+        "authorized_actions": 77,
+        "action_counts": {
+          "scan": 50,
+          "comm": 20,
+          "shield": 7
+        }
+      },
+      "delta": 114.7
+    },
+    {
+      "seed": "134",
+      "baseline": {
+        "evidence": "official-sandbox-custom-seed-real-llm",
+        "seed": "seed-134.json",
+        "seed_sha256": "5d9a11545e76b47fcc147d737cf6d80c8d7972db4d23fb05640ec590d3b6d883",
+        "zip_sha256": "e643b36711591c8f3e31a52db80ff0587f1df8277ca9904cf167307c18f5a543",
+        "python": "3.12.3",
+        "framework": "casevo.model_base",
+        "llm_model": "gpt-5.6-luna",
+        "initial_budget": 100,
+        "natural_score": 764.23,
+        "score": 2061.44,
+        "delta": 1297.21,
+        "remaining_budget": 1.0,
+        "steps": 88,
+        "llm_calls": 19,
+        "model_llm_calls": 19,
+        "http_calls": 268,
+        "seconds": 174.38947720080614,
+        "rss_kib": 148452,
+        "stop_reason": "budget",
+        "usage": [
+          {
+            "prompt_tokens": 1039,
+            "completion_tokens": 212,
+            "total_tokens": 1251,
+            "completion_tokens_details": {
+              "reasoning_tokens": 142
+            }
+          },
+          {
+            "prompt_tokens": 1054,
+            "completion_tokens": 226,
+            "total_tokens": 1280,
+            "completion_tokens_details": {
+              "reasoning_tokens": 153
+            }
+          },
+          {
+            "prompt_tokens": 1054,
+            "completion_tokens": 156,
+            "total_tokens": 1210,
+            "completion_tokens_details": {
+              "reasoning_tokens": 89
+            }
+          },
+          {
+            "prompt_tokens": 1054,
+            "completion_tokens": 180,
+            "total_tokens": 1234,
+            "completion_tokens_details": {
+              "reasoning_tokens": 116
+            }
+          },
+          {
+            "prompt_tokens": 1054,
+            "completion_tokens": 221,
+            "total_tokens": 1275,
+            "completion_tokens_details": {
+              "reasoning_tokens": 157
+            }
+          },
+          {
+            "prompt_tokens": 886,
+            "completion_tokens": 179,
+            "total_tokens": 1065,
+            "completion_tokens_details": {
+              "reasoning_tokens": 111
+            }
+          },
+          {
+            "prompt_tokens": 662,
+            "completion_tokens": 141,
+            "total_tokens": 803,
+            "completion_tokens_details": {
+              "reasoning_tokens": 91
+            }
+          },
+          {
+            "prompt_tokens": 1101,
+            "completion_tokens": 126,
+            "total_tokens": 1227,
+            "completion_tokens_details": {
+              "reasoning_tokens": 78
+            }
+          },
+          {
+            "prompt_tokens": 753,
+            "completion_tokens": 99,
+            "total_tokens": 852,
+            "completion_tokens_details": {
+              "reasoning_tokens": 49
+            }
+          },
+          {
+            "prompt_tokens": 776,
+            "completion_tokens": 88,
+            "total_tokens": 864,
+            "completion_tokens_details": {
+              "reasoning_tokens": 26
+            }
+          },
+          {
+            "prompt_tokens": 1756,
+            "completion_tokens": 226,
+            "total_tokens": 1982,
+            "completion_tokens_details": {
+              "reasoning_tokens": 170
+            }
+          },
+          {
+            "prompt_tokens": 1955,
+            "completion_tokens": 304,
+            "total_tokens": 2259,
+            "completion_tokens_details": {
+              "reasoning_tokens": 238
+            }
+          },
+          {
+            "prompt_tokens": 2057,
+            "completion_tokens": 211,
+            "total_tokens": 2268,
+            "completion_tokens_details": {
+              "reasoning_tokens": 147
+            }
+          },
+          {
+            "prompt_tokens": 1988,
+            "completion_tokens": 465,
+            "total_tokens": 2453,
+            "completion_tokens_details": {
+              "reasoning_tokens": 405
+            }
+          },
+          {
+            "prompt_tokens": 1998,
+            "completion_tokens": 285,
+            "total_tokens": 2283,
+            "completion_tokens_details": {
+              "reasoning_tokens": 224
+            }
+          },
+          {
+            "prompt_tokens": 2047,
+            "completion_tokens": 355,
+            "total_tokens": 2402,
+            "completion_tokens_details": {
+              "reasoning_tokens": 294
+            }
+          },
+          {
+            "prompt_tokens": 2104,
+            "completion_tokens": 528,
+            "total_tokens": 2632,
+            "completion_tokens_details": {
+              "reasoning_tokens": 467
+            }
+          },
+          {
+            "prompt_tokens": 2063,
+            "completion_tokens": 404,
+            "total_tokens": 2467,
+            "completion_tokens_details": {
+              "reasoning_tokens": 345
+            }
+          },
+          {
+            "prompt_tokens": 1998,
+            "completion_tokens": 387,
+            "total_tokens": 2385,
+            "completion_tokens_details": {
+              "reasoning_tokens": 328
+            }
+          }
+        ],
+        "authorized_actions": 87,
+        "action_counts": {
+          "scan": 50,
+          "comm": 37
+        }
+      },
+      "candidate": {
+        "evidence": "official-sandbox-custom-seed-real-llm",
+        "seed": "seed-134.json",
+        "seed_sha256": "5d9a11545e76b47fcc147d737cf6d80c8d7972db4d23fb05640ec590d3b6d883",
+        "zip_sha256": "38f37e009a82589486a16abd3b71635e68fd8edc98101adfc99deb6d0bdf6206",
+        "python": "3.12.3",
+        "framework": "casevo.model_base",
+        "llm_model": "gpt-5.6-luna",
+        "initial_budget": 100,
+        "natural_score": 764.23,
+        "score": 2061.44,
+        "delta": 1297.21,
+        "remaining_budget": 1.0,
+        "steps": 88,
+        "llm_calls": 19,
+        "model_llm_calls": 19,
+        "http_calls": 268,
+        "seconds": 183.57903357804753,
+        "rss_kib": 148356,
+        "stop_reason": "budget",
+        "usage": [
+          {
+            "prompt_tokens": 1190,
+            "completion_tokens": 113,
+            "total_tokens": 1303,
+            "completion_tokens_details": {
+              "reasoning_tokens": 44
+            }
+          },
+          {
+            "prompt_tokens": 1205,
+            "completion_tokens": 188,
+            "total_tokens": 1393,
+            "completion_tokens_details": {
+              "reasoning_tokens": 117
+            }
+          },
+          {
+            "prompt_tokens": 1205,
+            "completion_tokens": 204,
+            "total_tokens": 1409,
+            "completion_tokens_details": {
+              "reasoning_tokens": 135
+            }
+          },
+          {
+            "prompt_tokens": 1205,
+            "completion_tokens": 202,
+            "total_tokens": 1407,
+            "completion_tokens_details": {
+              "reasoning_tokens": 135
+            }
+          },
+          {
+            "prompt_tokens": 1205,
+            "completion_tokens": 178,
+            "total_tokens": 1383,
+            "completion_tokens_details": {
+              "reasoning_tokens": 108
+            }
+          },
+          {
+            "prompt_tokens": 1037,
+            "completion_tokens": 163,
+            "total_tokens": 1200,
+            "completion_tokens_details": {
+              "reasoning_tokens": 93
+            }
+          },
+          {
+            "prompt_tokens": 813,
+            "completion_tokens": 132,
+            "total_tokens": 945,
+            "completion_tokens_details": {
+              "reasoning_tokens": 73
+            }
+          },
+          {
+            "prompt_tokens": 1252,
+            "completion_tokens": 129,
+            "total_tokens": 1381,
+            "completion_tokens_details": {
+              "reasoning_tokens": 85
+            }
+          },
+          {
+            "prompt_tokens": 904,
+            "completion_tokens": 93,
+            "total_tokens": 997,
+            "completion_tokens_details": {
+              "reasoning_tokens": 41
+            }
+          },
+          {
+            "prompt_tokens": 927,
+            "completion_tokens": 117,
+            "total_tokens": 1044,
+            "completion_tokens_details": {
+              "reasoning_tokens": 60
+            }
+          },
+          {
+            "prompt_tokens": 2304,
+            "completion_tokens": 191,
+            "total_tokens": 2495,
+            "completion_tokens_details": {
+              "reasoning_tokens": 131
+            }
+          },
+          {
+            "prompt_tokens": 2503,
+            "completion_tokens": 292,
+            "total_tokens": 2795,
+            "completion_tokens_details": {
+              "reasoning_tokens": 231
+            }
+          },
+          {
+            "prompt_tokens": 2644,
+            "completion_tokens": 480,
+            "total_tokens": 3124,
+            "completion_tokens_details": {
+              "reasoning_tokens": 420
+            }
+          },
+          {
+            "prompt_tokens": 2634,
+            "completion_tokens": 362,
+            "total_tokens": 2996,
+            "completion_tokens_details": {
+              "reasoning_tokens": 304
+            }
+          },
+          {
+            "prompt_tokens": 2633,
+            "completion_tokens": 232,
+            "total_tokens": 2865,
+            "completion_tokens_details": {
+              "reasoning_tokens": 168
+            }
+          },
+          {
+            "prompt_tokens": 2602,
+            "completion_tokens": 215,
+            "total_tokens": 2817,
+            "completion_tokens_details": {
+              "reasoning_tokens": 154
+            }
+          },
+          {
+            "prompt_tokens": 2625,
+            "completion_tokens": 266,
+            "total_tokens": 2891,
+            "completion_tokens_details": {
+              "reasoning_tokens": 208
+            }
+          },
+          {
+            "prompt_tokens": 2638,
+            "completion_tokens": 180,
+            "total_tokens": 2818,
+            "completion_tokens_details": {
+              "reasoning_tokens": 124
+            }
+          },
+          {
+            "prompt_tokens": 2649,
+            "completion_tokens": 345,
+            "total_tokens": 2994,
+            "completion_tokens_details": {
+              "reasoning_tokens": 289
+            }
+          }
+        ],
+        "authorized_actions": 87,
+        "action_counts": {
+          "scan": 50,
+          "comm": 37
+        }
+      },
+      "delta": 0.0
+    }
+  ],
+  "complete_pairs": 3,
+  "baseline_mean": 666.0733333333334,
+  "candidate_mean": 798.03,
+  "paired_mean_delta": 131.95666666666665,
+  "natural_mean": -141.88333333333335,
+  "wins": 2,
+  "losses": 0
+}

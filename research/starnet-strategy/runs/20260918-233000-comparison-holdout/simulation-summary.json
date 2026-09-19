@@ -1,0 +1,53 @@
+{
+  "complete_paired_seeds": [
+    126,
+    127,
+    128,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136,
+    137,
+    138,
+    139,
+    140,
+    141,
+    142,
+    143
+  ],
+  "failed_attempts": 0,
+  "policies": {
+    "completion": {
+      "mean": 638.6145146853341,
+      "wins_vs_incumbent": 12,
+      "losses_vs_incumbent": 2,
+      "mean_delta": 31.44413010511147,
+      "worst_delta": -40.55515557370677,
+      "max_steps": 87,
+      "llm_calls": 0
+    },
+    "incumbent": {
+      "mean": 607.1703845802226,
+      "wins_vs_incumbent": 0,
+      "losses_vs_incumbent": 0,
+      "mean_delta": 0.0,
+      "worst_delta": 0.0,
+      "max_steps": 87,
+      "llm_calls": 0
+    },
+    "natural": {
+      "mean": -468.0499618287337,
+      "wins_vs_incumbent": 0,
+      "losses_vs_incumbent": 18,
+      "mean_delta": -1075.2203464089564,
+      "worst_delta": -2026.94659580554,
+      "max_steps": 0,
+      "llm_calls": 0
+    }
+  },
+  "proxy_errors": []
+}

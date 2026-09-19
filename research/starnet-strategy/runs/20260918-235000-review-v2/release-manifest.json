@@ -1,0 +1,35 @@
+{
+  "verified_at": "2026-09-18T16:18:31.809192+00:00",
+  "unit_tests": 40,
+  "python39_syntax": "pass",
+  "archive_byte_match": "pass",
+  "public_api_ast": "pass",
+  "package_secret_scan": "pass",
+  "changed_file_secret_scan": {
+    "files": 83,
+    "matches": 0
+  },
+  "sha256": {
+    "src/starnet/policy.py": "27769983648c3b8253a0777f9bc2f75a3da8b7d27901737db548b256e4f2760f",
+    "src/starnet/topology.py": "965dafa444d658694be23595049fde1f7cb792b391a1059a5f41599b07873515",
+    "src/starnet/model.py": "913eb2fd9e811d91d7a752d0122e9316d0409e8bbd4311bc07aff0b52a8ffa9f",
+    "src/starnet/config.json": "9914a17459afb853e53ef14cdfe519c9d5c8a25d5f7610d8a91c152b8f920dd4",
+    "src/starnet/prompt/commander.txt": "922c650b4a8a8bd19f1673aa47d803534672849d3e2d1046833c571618ee7e9a",
+    "scripts/build_submission.py": "0632928420b409c96835aaecff0057aadbe450b01a78abfd6dcf48e436ce96b5",
+    "submissions/starnet-20260918.zip": "e643b36711591c8f3e31a52db80ff0587f1df8277ca9904cf167307c18f5a543",
+    "submissions/starnet-20260918-v2.zip": "38f37e009a82589486a16abd3b71635e68fd8edc98101adfc99deb6d0bdf6206"
+  },
+  "official_target": 950,
+  "official_target_verified": false,
+  "official_incumbent_score_user_reported": 531.1233,
+  "excluded_attempts": [
+    "raw/120-baseline.json"
+  ],
+  "successful_real_llm_episodes": 8,
+  "failed_real_llm_attempts": 1,
+  "handoff": {
+    "recipient": "li_y_c@qq.com",
+    "gmail_label": "SENT",
+    "official_score_received": false
+  }
+}

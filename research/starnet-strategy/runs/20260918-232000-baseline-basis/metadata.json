@@ -1,0 +1,20 @@
+{
+  "evidence": "official-sandbox-custom-seed",
+  "evaluations": 38,
+  "graphs": [
+    "ba9",
+    "barbell",
+    "clique5",
+    "cycle6",
+    "path5",
+    "star6"
+  ],
+  "score_mae": 0.0011248495459019502,
+  "score_max_error": 0.004864864864864593,
+  "llm_calls": 0,
+  "steps": 0,
+  "http_calls": 76,
+  "seconds": 14.867519482970238,
+  "rss_kib": 37160,
+  "python": "3.9.25"
+}

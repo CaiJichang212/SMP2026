@@ -1,0 +1,143 @@
+{
+  "negative": {
+    "complete_paired_seeds": [
+      144
+    ],
+    "failed_attempts": 0,
+    "policies": {
+      "natural": {
+        "mean": -452.59,
+        "wins_vs_incumbent": 0,
+        "losses_vs_incumbent": 0,
+        "mean_delta": null,
+        "worst_delta": null,
+        "max_steps": 0,
+        "llm_calls": 0
+      },
+      "production": {
+        "mean": -16.2,
+        "wins_vs_incumbent": 0,
+        "losses_vs_incumbent": 0,
+        "mean_delta": null,
+        "worst_delta": null,
+        "max_steps": 67,
+        "llm_calls": 0
+      }
+    },
+    "proxy_errors": [
+      {
+        "seed": 144,
+        "policy": "natural",
+        "prediction": -452.59210743801674,
+        "actual": -452.59,
+        "error": -0.0021074380167647178,
+        "relative_error_floor50": 4.656395450108747e-06
+      },
+      {
+        "seed": 144,
+        "policy": "production",
+        "prediction": -16.232628070175444,
+        "actual": -16.2,
+        "error": -0.03262807017544489,
+        "relative_error_floor50": 0.0006525614035088978
+      }
+    ],
+    "proxy_mae": 0.017367754096104804,
+    "proxy_max_error": 0.03262807017544489,
+    "proxy_relative_mae_floor50": 0.0003286088994795033
+  },
+  "zero": {
+    "complete_paired_seeds": [
+      145
+    ],
+    "failed_attempts": 0,
+    "policies": {
+      "natural": {
+        "mean": -114.21,
+        "wins_vs_incumbent": 0,
+        "losses_vs_incumbent": 0,
+        "mean_delta": null,
+        "worst_delta": null,
+        "max_steps": 0,
+        "llm_calls": 0
+      },
+      "production": {
+        "mean": 251.37,
+        "wins_vs_incumbent": 0,
+        "losses_vs_incumbent": 0,
+        "mean_delta": null,
+        "worst_delta": null,
+        "max_steps": 67,
+        "llm_calls": 0
+      }
+    },
+    "proxy_errors": [
+      {
+        "seed": 145,
+        "policy": "natural",
+        "prediction": -114.24771999999999,
+        "actual": -114.21,
+        "error": -0.03771999999999309,
+        "relative_error_floor50": 0.0003302688030819814
+      },
+      {
+        "seed": 145,
+        "policy": "production",
+        "prediction": 252.00874328947367,
+        "actual": 251.37,
+        "error": 0.6387432894736662,
+        "relative_error_floor50": 0.002541048213683678
+      }
+    ],
+    "proxy_mae": 0.33823164473682965,
+    "proxy_max_error": 0.6387432894736662,
+    "proxy_relative_mae_floor50": 0.0014356585083828298
+  },
+  "n100": {
+    "complete_paired_seeds": [
+      151
+    ],
+    "failed_attempts": 0,
+    "policies": {
+      "natural": {
+        "mean": -1211.67,
+        "wins_vs_incumbent": 0,
+        "losses_vs_incumbent": 0,
+        "mean_delta": null,
+        "worst_delta": null,
+        "max_steps": 0,
+        "llm_calls": 0
+      },
+      "production": {
+        "mean": 462.8,
+        "wins_vs_incumbent": 0,
+        "losses_vs_incumbent": 0,
+        "mean_delta": null,
+        "worst_delta": null,
+        "max_steps": 154,
+        "llm_calls": 0
+      }
+    },
+    "proxy_errors": [
+      {
+        "seed": 151,
+        "policy": "natural",
+        "prediction": -1211.72818,
+        "actual": -1211.67,
+        "error": -0.058179999999993015,
+        "relative_error_floor50": 4.801637409525119e-05
+      },
+      {
+        "seed": 151,
+        "policy": "production",
+        "prediction": 472.1759169444444,
+        "actual": 462.8,
+        "error": 9.375916944444384,
+        "relative_error_floor50": 0.02025911180735606
+      }
+    ],
+    "proxy_mae": 4.717048472222189,
+    "proxy_max_error": 9.375916944444384,
+    "proxy_relative_mae_floor50": 0.010153564090725656
+  }
+}

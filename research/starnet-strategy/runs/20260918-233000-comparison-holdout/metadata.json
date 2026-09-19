@@ -1,0 +1,189 @@
+{
+  "complete_paired_seeds": [
+    126,
+    127,
+    134,
+    135,
+    142,
+    143
+  ],
+  "failed_attempts": 0,
+  "policies": {
+    "completion": {
+      "mean": 666.445,
+      "wins_vs_incumbent": 4,
+      "losses_vs_incumbent": 1,
+      "mean_delta": 29.680000000000003,
+      "worst_delta": -22.539999999999964,
+      "max_steps": 87,
+      "llm_calls": 0
+    },
+    "incumbent": {
+      "mean": 636.765,
+      "wins_vs_incumbent": 0,
+      "losses_vs_incumbent": 0,
+      "mean_delta": 0.0,
+      "worst_delta": 0.0,
+      "max_steps": 87,
+      "llm_calls": 0
+    },
+    "natural": {
+      "mean": -375.9433333333334,
+      "wins_vs_incumbent": 0,
+      "losses_vs_incumbent": 6,
+      "mean_delta": -1012.7083333333334,
+      "worst_delta": -1297.21,
+      "max_steps": 0,
+      "llm_calls": 0
+    }
+  },
+  "proxy_errors": [
+    {
+      "seed": 126,
+      "policy": "natural",
+      "prediction": -564.0805991735535,
+      "actual": -564.08,
+      "error": -0.0005991735534962572,
+      "relative_error_floor50": 1.062213787931246e-06
+    },
+    {
+      "seed": 126,
+      "policy": "incumbent",
+      "prediction": 184.78714576271187,
+      "actual": 186.48,
+      "error": -1.6928542372881168,
+      "relative_error_floor50": 0.009077939925397452
+    },
+    {
+      "seed": 126,
+      "policy": "completion",
+      "prediction": 270.35834820779235,
+      "actual": 270.22,
+      "error": 0.13834820779231904,
+      "relative_error_floor50": 0.0005119835977807676
+    },
+    {
+      "seed": 127,
+      "policy": "natural",
+      "prediction": -485.7366200000001,
+      "actual": -485.46,
+      "error": -0.27662000000009357,
+      "relative_error_floor50": 0.0005698100770405257
+    },
+    {
+      "seed": 127,
+      "policy": "incumbent",
+      "prediction": 157.1117118303571,
+      "actual": 155.38,
+      "error": 1.7317118303571135,
+      "relative_error_floor50": 0.011145011136292403
+    },
+    {
+      "seed": 127,
+      "policy": "completion",
+      "prediction": 159.7183093816631,
+      "actual": 159.67,
+      "error": 0.04830938166310261,
+      "relative_error_floor50": 0.00030255766056931557
+    },
+    {
+      "seed": 134,
+      "policy": "natural",
+      "prediction": 764.2327225130891,
+      "actual": 764.23,
+      "error": 0.0027225130891110894,
+      "relative_error_floor50": 3.5624263495427937e-06
+    },
+    {
+      "seed": 134,
+      "policy": "incumbent",
+      "prediction": 2061.4380890052357,
+      "actual": 2061.44,
+      "error": -0.0019109947643300984,
+      "relative_error_floor50": 9.270193478006143e-07
+    },
+    {
+      "seed": 134,
+      "policy": "completion",
+      "prediction": 2061.4380890052357,
+      "actual": 2061.44,
+      "error": -0.0019109947643300984,
+      "relative_error_floor50": 9.270193478006143e-07
+    },
+    {
+      "seed": 135,
+      "policy": "natural",
+      "prediction": 603.4492446043165,
+      "actual": 603.52,
+      "error": -0.07075539568347722,
+      "relative_error_floor50": 0.00011723786400364068
+    },
+    {
+      "seed": 135,
+      "policy": "incumbent",
+      "prediction": 1804.1909532374102,
+      "actual": 1804.12,
+      "error": 0.07095323741032189,
+      "relative_error_floor50": 3.932844678309752e-05
+    },
+    {
+      "seed": 135,
+      "policy": "completion",
+      "prediction": 1782.1516494296575,
+      "actual": 1781.58,
+      "error": 0.5716494296575547,
+      "relative_error_floor50": 0.0003208665508467511
+    },
+    {
+      "seed": 142,
+      "policy": "natural",
+      "prediction": -721.9539754098361,
+      "actual": -721.95,
+      "error": -0.003975409836016297,
+      "relative_error_floor50": 5.5064891419299075e-06
+    },
+    {
+      "seed": 142,
+      "policy": "incumbent",
+      "prediction": 251.97317777777778,
+      "actual": 251.97,
+      "error": 0.003177777777779056,
+      "relative_error_floor50": 1.2611730673409755e-05
+    },
+    {
+      "seed": 142,
+      "policy": "completion",
+      "prediction": 317.38253122362863,
+      "actual": 317.38,
+      "error": 0.0025312236286367806,
+      "relative_error_floor50": 7.975372199372301e-06
+    },
+    {
+      "seed": 143,
+      "policy": "natural",
+      "prediction": -1852.6635246575347,
+      "actual": -1851.92,
+      "error": -0.7435246575346355,
+      "relative_error_floor50": 0.00040148854029042045
+    },
+    {
+      "seed": 143,
+      "policy": "incumbent",
+      "prediction": -639.2532729524918,
+      "actual": -638.8,
+      "error": -0.45327295249182953,
+      "relative_error_floor50": 0.0007095694309515178
+    },
+    {
+      "seed": 143,
+      "policy": "completion",
+      "prediction": -591.4553431013379,
+      "actual": -591.62,
+      "error": 0.16465689866208777,
+      "relative_error_floor50": 0.00027831530148082854
+    }
+  ],
+  "proxy_mae": 0.3321935731085751,
+  "proxy_max_error": 1.7317118303571135,
+  "proxy_relative_mae_floor50": 0.0013059267112380281
+}
