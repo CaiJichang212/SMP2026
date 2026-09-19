@@ -1,9 +1,11 @@
 # SMP 2026 星网智能体
 
-实现：公开观测建图 → 同节点反馈校准三个隐藏话术 → LLM比较游说/屏蔽候选并批准有限计划 → 逐步校验预算执行。
-单个指挥Agent继承CaseVO/agent_mesa的AgentBase，主类继承ModelBase。只使用公开环境API；未启用切边。
+实现：公开观测建图 → 同节点话术校准 → 估计结构边际与剩余预算机会成本 → LLM选择游说/屏蔽/切边 → 逐步校验执行。
+单个指挥Agent继承CaseVO/agent_mesa的AgentBase，主类继承ModelBase。只使用五个公开环境API。
 
-提交包：`submissions/starnet-20260918.zip`。包内仅`config.json`、`prompt/`、`starnet_model.py`。
+原提交包：`submissions/starnet-20260918.zip`，用户反馈官方531.1233分，保留不覆盖。
+V2候选包：`submissions/starnet-20260918-v2.zip`。包内仅`config.json`、`prompt/`、`starnet_model.py`。
+V2官方≥950目标尚未验证；研究状态和实际验证结果见[续研报告](research/starnet-strategy/report-v2.md)。
 研究对照、真实LLM实验与官方隐藏平台结果分别记录；**本地验证不代表官方完赛或排名**。
 
 ## 目录
@@ -49,7 +51,7 @@ bash scripts/run_limited.sh uv run python scripts/research_compare.py \
 ANONYMIZED_TELEMETRY=False bash scripts/run_limited.sh \
   uv run --no-project --python /home/ubuntu/SMP2026casevo/SMP2026/.venv/bin/python \
   python scripts/run_submission.py \
-  --zip submissions/starnet-20260918.zip \
+  --zip submissions/starnet-20260918-v2.zip \
   --seed data/public_seeds/42-n50.json \
   --output /tmp/starnet-real-llm/result.json
 ```
@@ -63,5 +65,22 @@ ANONYMIZED_TELEMETRY=False bash scripts/run_limited.sh \
 - [赛题](docs/task/赛题任务.md)、[补充规则](docs/task/补充信息.md)、[FAQ](docs/task/SMP2026常见问题解答.md)
 - [当前状态](research/starnet-strategy/state.md)、[决策](research/starnet-strategy/decision.md)、[论文与开源来源](research/starnet-strategy/sources.md)
 
-120/250步与LLM调用分别计数。坏JSON最多重问一次；LLM失败时不自动切换为硬编码干预；屏蔽后立即重规划。
+120/250步与LLM调用分别计数。坏JSON最多重问一次；LLM失败时不自动切换为硬编码干预；屏蔽/切边后立即重规划。
 完整原始日志留在各run的`raw/`（Git忽略），摘要及指标在受跟踪的研究文件中。平台提交需用户账号，隐藏种子结果不得用自建种子分数代替。
+
+## V2配对矩阵
+
+固定自建种子在`data/optimization_matrix/`，包含六类拓扑、六种话术排列、
+不同响应系数与初始分布。`optimization_matrix.py`的纯算法对照不是参赛智能体。
+
+```bash
+bash scripts/run_limited.sh uv run python scripts/optimization_matrix.py \
+  --remote --seeds 126,127,134,135,142,143 \
+  --policies natural,incumbent,completion --output /tmp/starnet-v2-matrix/results.jsonl
+UV_CACHE_DIR=/tmp/smp20260918-uv-cache uv run python scripts/compare_submission_pair.py \
+  --baseline submissions/starnet-20260918.zip --candidate submissions/starnet-20260918-v2.zip \
+  --seed-dir data/optimization_matrix --seeds 120,124,134 --output /tmp/starnet-v2-pairs
+```
+
+配对脚本内部逐局调用资源限制器，不并行实验。断连或超时的动作局单列，
+不用失败成绩参与均值；只读预算查询最多重试一次，修改状态的API不重试。
